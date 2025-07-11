@@ -9,7 +9,8 @@ export function calculateValuation(companyData: CompanyData): ValuationResult {
   }
 
   const multiple = sectorConfig.multiple;
-  const adjustedEbitda = companyData.ebitda;
+  // Use the average of result2024 and expectedResult2025 as EBITDA proxy
+  const adjustedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
 
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;

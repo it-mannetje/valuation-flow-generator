@@ -29,6 +29,7 @@ export default function PDFGenerationStep({
   const { toast } = useToast();
 
   const sectorConfig = SECTORS.find(s => s.id === companyData.sector);
+  const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
 
   const handleGeneratePDF = async () => {
     setIsGeneratingPDF(true);
@@ -39,18 +40,24 @@ export default function PDFGenerationStep({
       
       // Create PDF data (mock implementation)
       const pdfData = {
-        companyName: companyData.companyName,
         contactName: `${contactData.firstName} ${contactData.lastName}`,
+        companyName: contactData.companyName,
         valuation: valuationResult.baseValuation,
         minValuation: valuationResult.minValuation,
         maxValuation: valuationResult.maxValuation,
         sector: valuationResult.sector,
         multiple: valuationResult.multiple,
-        ebitda: companyData.ebitda,
-        revenue: companyData.revenue,
+        estimatedEbitda: estimatedEbitda,
+        lastYearRevenue: companyData.lastYearRevenue,
+        recurringRevenuePercentage: companyData.recurringRevenuePercentage,
+        result2024: companyData.result2024,
+        expectedResult2025: companyData.expectedResult2025,
         employees: companyData.employees,
-        location: companyData.location,
-        foundedYear: companyData.foundedYear,
+        wasLossmaking: companyData.wasLossmaking,
+        prospects: companyData.prospects,
+        averageYearlyInvestment: companyData.averageYearlyInvestment,
+        largestClientDependency: companyData.largestClientDependency,
+        largestSupplierRisk: companyData.largestSupplierRisk,
         sectorText: sectorConfig?.text || 'Sectorspecifieke informatie niet beschikbaar.'
       };
 
@@ -59,7 +66,7 @@ export default function PDFGenerationStep({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Bedrijfswaardering_${companyData.companyName.replace(/\s+/g, '_')}.json`;
+      a.download = `Bedrijfswaardering_${contactData.companyName.replace(/\s+/g, '_')}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -98,10 +105,12 @@ export default function PDFGenerationStep({
         jobtitle: contactData.position,
         company_valuation: valuationResult.baseValuation,
         company_sector: valuationResult.sector,
-        company_ebitda: companyData.ebitda,
-        company_revenue: companyData.revenue,
+        company_estimated_ebitda: estimatedEbitda,
+        company_last_year_revenue: companyData.lastYearRevenue,
         company_employees: companyData.employees,
-        valuation_multiple: valuationResult.multiple
+        valuation_multiple: valuationResult.multiple,
+        company_prospects: companyData.prospects,
+        largest_client_dependency: companyData.largestClientDependency
       };
 
       console.log('Submitting to HubSpot:', hubspotData);
@@ -163,7 +172,7 @@ export default function PDFGenerationStep({
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Bedrijfsinformatie: {companyData.companyName}</span>
+                  <span>Bedrijfsinformatie: {contactData.companyName}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle className="w-4 h-4 text-success" />
@@ -272,7 +281,7 @@ export default function PDFGenerationStep({
               <div className="text-2xl font-bold text-foreground mb-1">
                 {valuationResult.multiple.toFixed(1)}x
               </div>
-              <div className="text-sm text-muted-foreground">EBITDA Multiple</div>
+              <div className="text-sm text-muted-foreground">Resultaat Multiple</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-foreground mb-1">

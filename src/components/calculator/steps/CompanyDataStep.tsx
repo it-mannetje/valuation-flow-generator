@@ -7,19 +7,31 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { CompanyData, SECTORS } from '@/types/calculator';
 import { Building2, Calculator } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const companyDataSchema = z.object({
-  companyName: z.string().min(2, 'Bedrijfsnaam moet minimaal 2 karakters bevatten'),
+  // Omzet
+  lastYearRevenue: z.number().min(1000, 'Omzet moet minimaal €1.000 zijn'),
+  recurringRevenuePercentage: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
+  
+  // Bedrijfsresultaat
+  result2024: z.number(),
+  expectedResult2025: z.number(),
+  wasLossmaking: z.boolean(),
+  prospects: z.string().min(1, 'Selecteer vooruitzichten'),
+  
+  // Investeringen
+  averageYearlyInvestment: z.number().min(0, 'Investeringen kunnen niet negatief zijn'),
+  
+  // Overig
   sector: z.string().min(1, 'Selecteer een sector'),
-  ebitda: z.number().min(1000, 'EBITDA moet minimaal €1.000 zijn').max(1000000000, 'EBITDA mag niet hoger zijn dan €1 miljard'),
-  revenue: z.number().min(1000, 'Omzet moet minimaal €1.000 zijn').max(10000000000, 'Omzet mag niet hoger zijn dan €10 miljard'),
-  employees: z.number().min(1, 'Aantal werknemers moet minimaal 1 zijn').max(1000000, 'Aantal werknemers mag niet hoger zijn dan 1 miljoen'),
-  foundedYear: z.number().min(1800, 'Oprichtingsjaar moet na 1800 zijn').max(new Date().getFullYear(), 'Oprichtingsjaar kan niet in de toekomst liggen'),
-  location: z.string().min(2, 'Locatie moet minimaal 2 karakters bevatten')
+  employees: z.number().min(1, 'Aantal werknemers moet minimaal 1 zijn'),
+  largestClientDependency: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
+  largestSupplierRisk: z.string().min(1, 'Selecteer een optie')
 });
 
 interface CompanyDataStepProps {
@@ -32,13 +44,17 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
   const form = useForm<CompanyData>({
     resolver: zodResolver(companyDataSchema),
     defaultValues: {
-      companyName: data.companyName || '',
+      lastYearRevenue: data.lastYearRevenue || 0,
+      recurringRevenuePercentage: data.recurringRevenuePercentage || 0,
+      result2024: data.result2024 || 0,
+      expectedResult2025: data.expectedResult2025 || 0,
+      wasLossmaking: data.wasLossmaking || false,
+      prospects: data.prospects || '',
+      averageYearlyInvestment: data.averageYearlyInvestment || 0,
       sector: data.sector || '',
-      ebitda: data.ebitda || 0,
-      revenue: data.revenue || 0,
       employees: data.employees || 0,
-      foundedYear: data.foundedYear || new Date().getFullYear(),
-      location: data.location || ''
+      largestClientDependency: data.largestClientDependency || 0,
+      largestSupplierRisk: data.largestSupplierRisk || ''
     }
   });
 
@@ -62,21 +78,122 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
       <CardContent className="p-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-            {/* Company Name & Sector */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+            
+            {/* Omzet Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Omzet</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="lastYearRevenue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Wat was uw omzet het afgelopen jaar? (€) *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="500000"
+                          className="h-12"
+                          {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="recurringRevenuePercentage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Welk deel is hiervan jaarlijks terugkerende omzet? (%) *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="80"
+                          min="0"
+                          max="100"
+                          className="h-12"
+                          {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Bedrijfsresultaat Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Bedrijfsresultaat</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="result2024"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Wat was het resultaat in 2024? (€) *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="75000"
+                          className="h-12"
+                          {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="expectedResult2025"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Welk resultaat verwacht u voor 2025? (€) *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="85000"
+                          className="h-12"
+                          {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
-                name="companyName"
+                name="wasLossmaking"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Bedrijfsnaam *</FormLabel>
+                    <FormLabel className="text-base font-medium">Was de onderneming in één van de afgelopen 3 jaar verlieslatend? *</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Bijv. Mijn Bedrijf B.V."
-                        className="h-12"
-                        {...field}
-                      />
+                      <RadioGroup
+                        onValueChange={(value) => field.onChange(value === 'true')}
+                        value={field.value ? 'true' : 'false'}
+                        className="flex gap-6"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="false" id="no-loss" />
+                          <Label htmlFor="no-loss">Nee</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="true" id="yes-loss" />
+                          <Label htmlFor="yes-loss">Ja</Label>
+                        </div>
+                      </RadioGroup>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -85,25 +202,21 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
               <FormField
                 control={form.control}
-                name="sector"
+                name="prospects"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Sector *</FormLabel>
+                    <FormLabel className="text-base font-medium">De vooruitzichten zijn: *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Selecteer uw sector" />
+                          <SelectValue placeholder="Selecteer vooruitzichten" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {SECTORS.map((sector) => (
-                          <SelectItem key={sector.id} value={sector.id}>
-                            <div className="flex flex-col">
-                              <span className="font-medium">{sector.name}</span>
-                              <span className="text-sm text-muted-foreground">{sector.description}</span>
-                            </div>
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="krimpend">Krimpend</SelectItem>
+                        <SelectItem value="wisselend">Wisselend</SelectItem>
+                        <SelectItem value="gelijkblijvend">Gelijkblijvend</SelectItem>
+                        <SelectItem value="stijgend">Stijgend</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -112,67 +225,95 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
               />
             </div>
 
-            {/* Financial Data */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Investeringen Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Investeringen</h3>
               <FormField
                 control={form.control}
-                name="ebitda"
+                name="averageYearlyInvestment"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">EBITDA (€) *</FormLabel>
+                    <FormLabel className="text-base font-medium">Wat investeert u gemiddeld per jaar? (€) *</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="250000"
+                        placeholder="25000"
                         className="h-12"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                       />
                     </FormControl>
-                    <p className="text-sm text-muted-foreground">
-                      Earnings Before Interest, Taxes, Depreciation & Amortization
-                    </p>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="revenue"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-base font-medium">Jaaromzet (€) *</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="1000000"
-                        className="h-12"
-                        {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                      />
-                    </FormControl>
-                    <p className="text-sm text-muted-foreground">
-                      Totale omzet van het afgelopen boekjaar
-                    </p>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            {/* Company Details */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Overig Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Overig</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="sector"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">In welke sector is het bedrijf actief? *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="h-12">
+                            <SelectValue placeholder="Selecteer sector" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {SECTORS.map((sector) => (
+                            <SelectItem key={sector.id} value={sector.id}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{sector.name}</span>
+                                <span className="text-sm text-muted-foreground">{sector.description}</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="employees"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) werken er? *</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="15"
+                          className="h-12"
+                          {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
-                name="employees"
+                name="largestClientDependency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Aantal werknemers *</FormLabel>
+                    <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant? (%) *</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         placeholder="25"
+                        min="0"
+                        max="100"
                         className="h-12"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
@@ -185,37 +326,23 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
               <FormField
                 control={form.control}
-                name="foundedYear"
+                name="largestSupplierRisk"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Oprichtingsjaar *</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="2015"
-                        className="h-12"
-                        {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-base font-medium">Locatie *</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Amsterdam"
-                        className="h-12"
-                        {...field}
-                      />
-                    </FormControl>
+                    <FormLabel className="text-base font-medium">Als mijn grootste toeleverancier er mee ophoudt dan: *</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="Selecteer optie" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="geen-probleem">Geen probleem, ik heb alternatieven</SelectItem>
+                        <SelectItem value="korte-onderbreking">Korte onderbreking mogelijk</SelectItem>
+                        <SelectItem value="grote-problemen">Grote problemen voor mijn bedrijf</SelectItem>
+                        <SelectItem value="bedrijf-in-gevaar">Mijn bedrijf komt in gevaar</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

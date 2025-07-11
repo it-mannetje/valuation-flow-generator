@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
 import { formatCurrency, formatNumber } from '@/lib/calculator';
-import { TrendingUp, Building2, Users, Calendar, MapPin, FileText, ChevronLeft, Download } from 'lucide-react';
+import { TrendingUp, Building2, Users, DollarSign, FileText, ChevronLeft, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ValuationResultStepProps {
@@ -22,8 +22,7 @@ export default function ValuationResultStep({
   onNext, 
   onBack 
 }: ValuationResultStepProps) {
-  const currentYear = new Date().getFullYear();
-  const companyAge = currentYear - companyData.foundedYear;
+  const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -33,7 +32,7 @@ export default function ValuationResultStep({
           Uw Bedrijfswaardering
         </h2>
         <p className="text-lg text-muted-foreground">
-          Hallo {contactData.firstName}, hier is de professionele waardering van {companyData.companyName}
+          Hallo {contactData.firstName}, hier is de professionele waardering van uw bedrijf
         </p>
       </div>
 
@@ -83,8 +82,8 @@ export default function ValuationResultStep({
               <h3 className="text-lg font-semibold text-foreground mb-4">Waardering Details</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">EBITDA</span>
-                  <span className="font-medium">{formatCurrency(companyData.ebitda)}</span>
+                  <span className="text-muted-foreground">Gem. Resultaat</span>
+                  <span className="font-medium">{formatCurrency(estimatedEbitda)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Multiple</span>
@@ -118,26 +117,23 @@ export default function ValuationResultStep({
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <div className="text-sm text-muted-foreground">Bedrijfsnaam</div>
-                <div className="font-medium">{companyData.companyName}</div>
-              </div>
-              <div>
                 <div className="text-sm text-muted-foreground">Sector</div>
                 <div className="font-medium">{valuationResult.sector}</div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Locatie</div>
+                <div className="text-sm text-muted-foreground">Werknemers</div>
                 <div className="font-medium flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  {companyData.location}
+                  <Users className="w-4 h-4" />
+                  {formatNumber(companyData.employees)} FTE
                 </div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Opgericht</div>
-                <div className="font-medium flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {companyData.foundedYear} ({companyAge} jaar)
-                </div>
+                <div className="text-sm text-muted-foreground">Vooruitzichten</div>
+                <div className="font-medium capitalize">{companyData.prospects}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Klant Afhankelijkheid</div>
+                <div className="font-medium">{companyData.largestClientDependency}%</div>
               </div>
             </div>
           </CardContent>
@@ -147,7 +143,7 @@ export default function ValuationResultStep({
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
+              <DollarSign className="w-5 h-5 text-primary" />
               Financiële Kerncijfers
             </CardTitle>
           </CardHeader>
@@ -155,24 +151,27 @@ export default function ValuationResultStep({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">Jaaromzet</div>
-                <div className="font-medium">{formatCurrency(companyData.revenue)}</div>
+                <div className="font-medium">{formatCurrency(companyData.lastYearRevenue)}</div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">EBITDA</div>
-                <div className="font-medium">{formatCurrency(companyData.ebitda)}</div>
+                <div className="text-sm text-muted-foreground">Terugkerend (%)</div>
+                <div className="font-medium">{companyData.recurringRevenuePercentage}%</div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Werknemers</div>
-                <div className="font-medium flex items-center gap-1">
-                  <Users className="w-4 h-4" />
-                  {formatNumber(companyData.employees)}
-                </div>
+                <div className="text-sm text-muted-foreground">Resultaat 2024</div>
+                <div className="font-medium">{formatCurrency(companyData.result2024)}</div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">EBITDA Marge</div>
-                <div className="font-medium">
-                  {((companyData.ebitda / companyData.revenue) * 100).toFixed(1)}%
-                </div>
+                <div className="text-sm text-muted-foreground">Verwacht 2025</div>
+                <div className="font-medium">{formatCurrency(companyData.expectedResult2025)}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Gem. Investering</div>
+                <div className="font-medium">{formatCurrency(companyData.averageYearlyInvestment)}</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Verlieslatend 3 jr</div>
+                <div className="font-medium">{companyData.wasLossmaking ? 'Ja' : 'Nee'}</div>
               </div>
             </div>
           </CardContent>
@@ -189,7 +188,7 @@ export default function ValuationResultStep({
             <div>
               <h3 className="font-semibold text-foreground mb-2">Belangrijke Disclaimer</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Deze waardering is een indicatie gebaseerd op EBITDA-multiples en sectorgemiddelden. 
+                Deze waardering is een indicatie gebaseerd op bedrijfsresultaten en sectorgemiddelden. 
                 De werkelijke waarde van uw bedrijf kan afwijken door factoren zoals marktpositie, 
                 groeiperspectieven, activa, schulden en marktontwikkelingen. Voor een definitieve 
                 waardering adviseren wij een professionele due diligence.

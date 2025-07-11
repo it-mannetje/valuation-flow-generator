@@ -1,11 +1,22 @@
 export interface CompanyData {
-  companyName: string;
+  // Omzet
+  lastYearRevenue: number;
+  recurringRevenuePercentage: number;
+  
+  // Bedrijfsresultaat
+  result2024: number;
+  expectedResult2025: number;
+  wasLossmaking: boolean;
+  prospects: string;
+  
+  // Investeringen
+  averageYearlyInvestment: number;
+  
+  // Overig
   sector: string;
-  ebitda: number;
-  revenue: number;
   employees: number;
-  foundedYear: number;
-  location: string;
+  largestClientDependency: number;
+  largestSupplierRisk: string;
 }
 
 export interface ContactData {
