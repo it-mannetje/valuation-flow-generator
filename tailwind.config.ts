@@ -18,7 +18,12 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ["Source Sans Pro", "sans-serif"],
+				heading: ["Poppins", "sans-serif"],
+			},
 			colors: {
+				'steps-accent': 'hsl(var(--steps-accent))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

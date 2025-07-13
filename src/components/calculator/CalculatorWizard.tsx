@@ -145,7 +145,7 @@ export default function CalculatorWizard() {
         <Card className="mb-8 shadow-card">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-foreground">
+              <h2 className="text-xl font-semibold text-foreground font-heading">
                 Stap {state.currentStep} van {STEPS.length}
               </h2>
               <span className="text-sm text-muted-foreground">
@@ -170,9 +170,9 @@ export default function CalculatorWizard() {
                       "w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium mb-2",
                       "transition-all duration-300",
                       state.currentStep > step.id
-                        ? "bg-primary text-primary-foreground shadow-primary"
+                        ? "bg-steps-accent text-white"
                         : state.currentStep === step.id
-                        ? "bg-gradient-primary text-primary-foreground shadow-primary"
+                        ? "bg-steps-accent text-white"
                         : "bg-muted text-muted-foreground"
                     )}
                   >
@@ -180,12 +180,12 @@ export default function CalculatorWizard() {
                   </div>
                   <div className="max-w-[120px]">
                     <p className={cn(
-                      "text-sm font-medium mb-1",
+                      "text-sm font-medium mb-1 font-heading",
                       state.currentStep >= step.id ? "text-foreground" : "text-muted-foreground"
                     )}>
                       {step.title}
                     </p>
-                    <p className="text-xs text-muted-foreground hidden sm:block">
+                    <p className="text-xs text-muted-foreground hidden sm:block font-sans">
                       {step.description}
                     </p>
                   </div>

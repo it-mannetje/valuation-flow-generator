@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,6 +51,9 @@ All colors MUST be HSL.
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
+    
+    /* Supporting Color */
+    --steps-accent: 197 100% 38%; /* #0083c1 */
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));

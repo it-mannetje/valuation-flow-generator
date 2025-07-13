@@ -65,7 +65,8 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
   return (
     <div className="max-w-4xl mx-auto bg-background rounded-lg p-8">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Bedrijf Waardebepaling Calculator</h1>
+        <h1 className="text-3xl font-bold text-white font-heading mb-2">Bedrijfswaardering Calculator</h1>
+        <p className="text-lg text-white font-sans">Ontdek de waarde van uw bedrijf met onze professionele waarderingstool</p>
       </div>
 
       <div className="bg-card rounded-lg p-6">
@@ -74,8 +75,8 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
             
             {/* Invoer Financieel Section */}
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Invoer Financieel</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h3 className="text-xl font-semibold text-foreground mb-4 font-heading">Invoer Financieel</h3>
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="lastYearRevenue"
@@ -83,13 +84,13 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormItem>
                       <FormLabel className="text-base font-medium">Wat was uw omzet het afgelopen jaar? (€) *</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="500000"
-                          className="h-12"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
+                         <Input
+                           type="number"
+                           placeholder="500000"
+                           className="h-12 bg-input text-black"
+                           {...field}
+                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -103,15 +104,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormItem>
                       <FormLabel className="text-base font-medium">Welk deel is hiervan jaarlijks terugkerende omzet? (%) *</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="80"
-                          min="0"
-                          max="100"
-                          className="h-12"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
+                         <Input
+                           type="number"
+                           placeholder="80"
+                           min="0"
+                           max="100"
+                           className="h-12 bg-input text-black"
+                           {...field}
+                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -122,8 +123,8 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
             {/* Bedrijfsresultaat Section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Bedrijfsresultaat</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2 font-heading">Bedrijfsresultaat</h3>
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="result2024"
@@ -131,13 +132,13 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormItem>
                       <FormLabel className="text-base font-medium">Wat was het resultaat in 2024? (€) *</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="75000"
-                          className="h-12"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
+                         <Input
+                           type="number"
+                           placeholder="75000"
+                           className="h-12 bg-input text-black"
+                           {...field}
+                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -151,13 +152,13 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormItem>
                       <FormLabel className="text-base font-medium">Welk resultaat verwacht u voor 2025? (€) *</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="85000"
-                          className="h-12"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
+                         <Input
+                           type="number"
+                           placeholder="85000"
+                           className="h-12 bg-input text-black"
+                           {...field}
+                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -219,7 +220,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
             {/* Investeringen Section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Investeringen</h3>
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2 font-heading">Investeringen</h3>
               <FormField
                 control={form.control}
                 name="averageYearlyInvestment"
@@ -227,13 +228,13 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   <FormItem>
                     <FormLabel className="text-base font-medium">Wat investeert u gemiddeld per jaar? (€) *</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="25000"
-                        className="h-12"
-                        {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                      />
+                       <Input
+                         type="number"
+                         placeholder="25000"
+                         className="h-12 bg-input text-black"
+                         {...field}
+                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -243,8 +244,8 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
 
             {/* Overig Section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Overig</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2 font-heading">Overig</h3>
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="sector"
@@ -253,9 +254,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                       <FormLabel className="text-base font-medium">In welke sector is het bedrijf actief? *</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Selecteer sector" />
-                          </SelectTrigger>
+                           <SelectTrigger className="h-12 bg-input text-black">
+                             <SelectValue placeholder="Selecteer sector" />
+                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {SECTORS.map((sector) => (
@@ -280,36 +281,35 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormItem>
                       <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) werken er? *</FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="15"
-                          className="h-12"
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                         <Input
+                           type="number"
+                           placeholder="15"
+                           className="h-12 bg-input text-black"
+                           {...field}
+                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         />
+                       </FormControl>
+                       <FormMessage />
+                     </FormItem>
+                   )}
+                  />
 
-              <FormField
+                <FormField
                 control={form.control}
                 name="largestClientDependency"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant? (%) *</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="25"
-                        min="0"
-                        max="100"
-                        className="h-12"
-                        {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                      />
+                       <Input
+                         type="number"
+                         placeholder="25"
+                         min="0"
+                         max="100"
+                         className="h-12 bg-input text-black"
+                         {...field}
+                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -324,9 +324,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormLabel className="text-base font-medium">Als mijn grootste toeleverancier er mee ophoudt dan: *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Selecteer optie" />
-                        </SelectTrigger>
+                         <SelectTrigger className="h-12 bg-input text-black">
+                           <SelectValue placeholder="Selecteer optie" />
+                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="geen-probleem">Geen probleem, ik heb alternatieven</SelectItem>
@@ -337,8 +337,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     </Select>
                     <FormMessage />
                   </FormItem>
-                )}
-              />
+                 )}
+               />
+              </div>
             </div>
 
             {/* Submit Button */}
