@@ -63,26 +63,18 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
   };
 
   return (
-    <Card className="max-w-4xl mx-auto shadow-lg">
-      <CardHeader className="bg-gradient-card border-b">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Building2 className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <CardTitle className="text-2xl text-foreground">Bedrijfsgegevens</CardTitle>
-            <p className="text-muted-foreground">Voer de basisgegevens van uw bedrijf in voor een accurate waardering</p>
-          </div>
-        </div>
-      </CardHeader>
+    <div className="max-w-4xl mx-auto bg-background rounded-lg p-8">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-foreground mb-2">Bedrijf Waardebepaling Calculator</h1>
+      </div>
 
-      <CardContent className="p-8">
+      <div className="bg-card rounded-lg p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
             
-            {/* Omzet Section */}
+            {/* Invoer Financieel Section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2">Omzet</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">Invoer Financieel</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
@@ -208,9 +200,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormLabel className="text-base font-medium">De vooruitzichten zijn: *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Selecteer vooruitzichten" />
-                        </SelectTrigger>
+                         <SelectTrigger className="h-12 bg-input text-black">
+                           <SelectValue placeholder="Krimpend" />
+                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="krimpend">Krimpend</SelectItem>
@@ -375,7 +367,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
             </div>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
