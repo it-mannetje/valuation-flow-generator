@@ -83,15 +83,20 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Wat was uw omzet het afgelopen jaar? (€) *</FormLabel>
-                      <FormControl>
-                         <Input
-                           type="number"
-                           placeholder="500000"
-                           className="h-12 bg-input text-black"
-                           {...field}
-                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                         />
-                      </FormControl>
+                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                        <FormControl>
+                           <SelectTrigger className="h-12 bg-input text-black">
+                             <SelectValue placeholder="Selecteer omzetklasse" />
+                           </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="500000">0-1 miljoen</SelectItem>
+                          <SelectItem value="2000000">1-3 miljoen</SelectItem>
+                          <SelectItem value="7000000">4-10 miljoen</SelectItem>
+                          <SelectItem value="18000000">11-25 miljoen</SelectItem>
+                          <SelectItem value="35000000">&gt; 25 miljoen</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -103,17 +108,19 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Welk deel is hiervan jaarlijks terugkerende omzet? (%) *</FormLabel>
-                      <FormControl>
-                         <Input
-                           type="number"
-                           placeholder="80"
-                           min="0"
-                           max="100"
-                           className="h-12 bg-input text-black"
-                           {...field}
-                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                         />
-                      </FormControl>
+                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                        <FormControl>
+                           <SelectTrigger className="h-12 bg-input text-black">
+                             <SelectValue placeholder="Selecteer percentage" />
+                           </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="12">0-25%</SelectItem>
+                          <SelectItem value="38">26-50%</SelectItem>
+                          <SelectItem value="63">51-75%</SelectItem>
+                          <SelectItem value="88">76-100%</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -280,37 +287,44 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) werken er? *</FormLabel>
-                      <FormControl>
-                         <Input
-                           type="number"
-                           placeholder="15"
-                           className="h-12 bg-input text-black"
-                           {...field}
-                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                         />
-                       </FormControl>
-                       <FormMessage />
-                     </FormItem>
-                   )}
-                  />
+                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                        <FormControl>
+                           <SelectTrigger className="h-12 bg-input text-black">
+                             <SelectValue placeholder="Selecteer aantal werknemers" />
+                           </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="6">2-10</SelectItem>
+                          <SelectItem value="18">11-25</SelectItem>
+                          <SelectItem value="38">26-50</SelectItem>
+                          <SelectItem value="75">51-100</SelectItem>
+                          <SelectItem value="150">&gt;100</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                 />
 
                 <FormField
                 control={form.control}
                 name="largestClientDependency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant? (%) *</FormLabel>
-                    <FormControl>
-                       <Input
-                         type="number"
-                         placeholder="25"
-                         min="0"
-                         max="100"
-                         className="h-12 bg-input text-black"
-                         {...field}
-                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                       />
-                    </FormControl>
+                    <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant?</FormLabel>
+                    <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                      <FormControl>
+                         <SelectTrigger className="h-12 bg-input text-black">
+                           <SelectValue placeholder="Selecteer percentage" />
+                         </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="12">0-25%</SelectItem>
+                        <SelectItem value="38">26-50%</SelectItem>
+                        <SelectItem value="63">51-75%</SelectItem>
+                        <SelectItem value="88">76-100%</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
