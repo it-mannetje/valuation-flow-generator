@@ -37,8 +37,8 @@ export default function ValuationResultStep({
       </div>
 
       {/* Main Valuation Card */}
-      <Card className="shadow-lg bg-gradient-card">
-        <CardHeader className="text-center border-b">
+      <Card className="shadow-lg bg-gradient-card rounded-lg">
+        <CardHeader className="text-center border-b rounded-t-lg">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="p-3 bg-primary/10 rounded-lg">
               <TrendingUp className="w-8 h-8 text-primary" />
@@ -107,8 +107,8 @@ export default function ValuationResultStep({
       {/* Company Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Company Information */}
-        <Card className="shadow-card">
-          <CardHeader>
+        <Card className="shadow-card rounded-lg">
+          <CardHeader className="rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <Building2 className="w-5 h-5 text-primary" />
               Bedrijfsinformatie
@@ -140,8 +140,8 @@ export default function ValuationResultStep({
         </Card>
 
         {/* Financial Metrics */}
-        <Card className="shadow-card">
-          <CardHeader>
+        <Card className="shadow-card rounded-lg">
+          <CardHeader className="rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-primary" />
               Financiële Kerncijfers
@@ -179,7 +179,7 @@ export default function ValuationResultStep({
       </div>
 
       {/* Important Notice */}
-      <Card className="bg-accent/10 border-accent">
+      <Card className="bg-accent/10 border-accent rounded-lg">
         <CardContent className="p-6">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-accent/20 rounded-lg flex-shrink-0">

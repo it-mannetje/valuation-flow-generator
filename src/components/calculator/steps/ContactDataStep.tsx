@@ -49,8 +49,8 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Contact Form */}
         <div className="lg:col-span-2">
-          <Card className="shadow-lg">
-            <CardHeader className="bg-gradient-card border-b">
+          <Card className="shadow-lg rounded-lg">
+            <CardHeader className="bg-gradient-card border-b rounded-t-lg">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg">
                   <User className="w-6 h-6 text-primary" />
@@ -68,7 +68,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
                   {/* Name Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-6">
                     <FormField
                       control={form.control}
                       name="firstName"
@@ -78,7 +78,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="Jan"
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -96,7 +96,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="de Vries"
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -104,10 +104,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                         </FormItem>
                       )}
                     />
-                  </div>
 
-                  {/* Contact Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
                       name="email"
@@ -118,7 +115,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                             <Input
                               type="email"
                               placeholder="jan@bedrijf.nl"
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -137,7 +134,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                             <Input
                               type="tel"
                               placeholder="+31 6 12345678"
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -145,10 +142,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                         </FormItem>
                       )}
                     />
-                  </div>
 
-                  {/* Business Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
                       name="companyName"
@@ -158,7 +152,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="Mijn Bedrijf B.V."
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -176,7 +170,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="CEO / Eigenaar"
-                              className="h-12"
+                              className="h-12 bg-white rounded-lg"
                               {...field}
                             />
                           </FormControl>
@@ -222,8 +216,8 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
 
         {/* Valuation Preview */}
         <div className="lg:col-span-1">
-          <Card className="shadow-lg bg-gradient-card sticky top-8">
-            <CardHeader className="border-b">
+          <Card className="shadow-lg bg-gradient-card sticky top-8 rounded-lg">
+            <CardHeader className="border-b rounded-t-lg">
               <CardTitle className="text-xl text-foreground">Waardering Preview</CardTitle>
               <p className="text-sm text-muted-foreground">
                 Gebaseerd op uw bedrijfsgegevens

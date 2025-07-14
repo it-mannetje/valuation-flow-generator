@@ -145,8 +145,8 @@ export default function PDFGenerationStep({
       </div>
 
       {/* PDF Generation Card */}
-      <Card className="shadow-lg">
-        <CardHeader className="bg-gradient-card border-b">
+      <Card className="shadow-lg rounded-lg">
+        <CardHeader className="bg-gradient-card border-b rounded-t-lg">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary/10 rounded-lg">
               <FileText className="w-6 h-6 text-primary" />
@@ -265,8 +265,8 @@ export default function PDFGenerationStep({
       </Card>
 
       {/* Summary Card */}
-      <Card className="bg-gradient-card shadow-card">
-        <CardHeader>
+      <Card className="bg-gradient-card shadow-card rounded-lg">
+        <CardHeader className="rounded-t-lg">
           <CardTitle className="text-center">Waardering Samenvatting</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
