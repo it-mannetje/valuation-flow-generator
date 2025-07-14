@@ -57,9 +57,11 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                 </div>
                 <div>
                   <CardTitle className="text-2xl text-foreground">Contactgegevens</CardTitle>
-                  <p className="text-muted-foreground">
-                    Voer uw gegevens in om uw persoonlijke bedrijfswaardering te ontvangen
-                  </p>
+                  <div className="bg-[#0d1526] text-white p-3 rounded-lg">
+                    <p className="text-sm">
+                      Voer uw gegevens in om uw persoonlijke bedrijfswaardering te ontvangen
+                    </p>
+                  </div>
                 </div>
               </div>
             </CardHeader>
