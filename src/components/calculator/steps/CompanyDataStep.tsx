@@ -31,7 +31,11 @@ const companyDataSchema = z.object({
   sector: z.string().min(1, 'Selecteer een sector'),
   employees: z.number().min(1, 'Aantal werknemers moet minimaal 1 zijn'),
   largestClientDependency: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
-  largestSupplierRisk: z.string().min(1, 'Selecteer een optie')
+  largestSupplierRisk: z.string().min(1, 'Selecteer een optie'),
+  
+  // Display values (optional)
+  employeesDisplay: z.string().optional(),
+  largestClientDependencyDisplay: z.string().optional()
 });
 
 interface CompanyDataStepProps {
@@ -54,7 +58,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
       sector: data.sector || '',
       employees: data.employees || 0,
       largestClientDependency: data.largestClientDependency || 0,
-      largestSupplierRisk: data.largestSupplierRisk || ''
+      largestSupplierRisk: data.largestSupplierRisk || '',
+      employeesDisplay: data.employeesDisplay || '',
+      largestClientDependencyDisplay: data.largestClientDependencyDisplay || ''
     }
   });
 
@@ -287,7 +293,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) werken er? *</FormLabel>
-                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                       <Select onValueChange={(value) => { 
+                         field.onChange(parseInt(value));
+                         // Store display value based on selection
+                         const displayValue = value === "6" ? "2-10" : 
+                                            value === "18" ? "11-25" :
+                                            value === "38" ? "26-50" :
+                                            value === "75" ? "51-100" : ">100";
+                         form.setValue("employeesDisplay", displayValue);
+                       }} value={field.value?.toString()}>
                         <FormControl>
                            <SelectTrigger className="h-12 bg-input text-black">
                              <SelectValue placeholder="Selecteer aantal werknemers" />
@@ -312,7 +326,14 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant?</FormLabel>
-                    <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                     <Select onValueChange={(value) => {
+                       field.onChange(parseInt(value));
+                       // Store display value based on selection
+                       const displayValue = value === "12" ? "0-25%" : 
+                                          value === "38" ? "26-50%" :
+                                          value === "63" ? "51-75%" : "76-100%";
+                       form.setValue("largestClientDependencyDisplay", displayValue);
+                     }} value={field.value?.toString()}>
                       <FormControl>
                          <SelectTrigger className="h-12 bg-input text-black">
                            <SelectValue placeholder="Selecteer percentage" />

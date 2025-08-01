@@ -17,6 +17,10 @@ export interface CompanyData {
   employees: number;
   largestClientDependency: number;
   largestSupplierRisk: string;
+  
+  // Display values for ranges
+  employeesDisplay?: string;
+  largestClientDependencyDisplay?: string;
 }
 
 export interface ContactData {

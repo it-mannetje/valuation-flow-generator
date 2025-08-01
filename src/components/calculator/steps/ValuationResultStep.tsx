@@ -128,7 +128,7 @@ export default function ValuationResultStep({
                 <div className="text-sm text-muted-foreground">Werknemers</div>
                 <div className="font-medium flex items-center gap-1">
                   <Users className="w-4 h-4" />
-                  {companyData.employees}
+                  {companyData.employeesDisplay || companyData.employees}
                 </div>
               </div>
               <div>
@@ -137,7 +137,7 @@ export default function ValuationResultStep({
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Klant Afhankelijkheid</div>
-                <div className="font-medium">{companyData.largestClientDependency}%</div>
+                <div className="font-medium">{companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</div>
               </div>
             </div>
           </CardContent>
