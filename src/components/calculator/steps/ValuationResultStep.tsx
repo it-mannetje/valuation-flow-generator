@@ -43,7 +43,7 @@ export default function ValuationResultStep({
             <div className="p-3 bg-primary/10 rounded-lg">
               <TrendingUp className="w-8 h-8 text-primary" />
             </div>
-            <CardTitle className="text-2xl text-foreground">Geschatte Bedrijfswaardering</CardTitle>
+            <CardTitle className="text-2xl text-foreground">Geschatte Bedrijfswaardering {contactData.companyName}</CardTitle>
           </div>
         </CardHeader>
         
@@ -115,6 +115,10 @@ export default function ValuationResultStep({
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="mb-4">
+              <div className="text-sm text-muted-foreground">Bedrijfsnaam</div>
+              <div className="font-medium">{contactData.companyName}</div>
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">Sector</div>
@@ -124,7 +128,7 @@ export default function ValuationResultStep({
                 <div className="text-sm text-muted-foreground">Werknemers</div>
                 <div className="font-medium flex items-center gap-1">
                   <Users className="w-4 h-4" />
-                  {formatNumber(companyData.employees)} FTE
+                  {companyData.employees}
                 </div>
               </div>
               <div>
