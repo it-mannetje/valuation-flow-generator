@@ -80,7 +80,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="Jan"
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
@@ -98,7 +98,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="de Vries"
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
@@ -117,7 +117,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                             <Input
                               type="email"
                               placeholder="jan@bedrijf.nl"
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
@@ -136,7 +136,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                             <Input
                               type="tel"
                               placeholder="+31 6 12345678"
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
@@ -154,7 +154,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="Mijn Bedrijf B.V."
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
@@ -172,7 +172,7 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
                           <FormControl>
                             <Input
                               placeholder="CEO / Eigenaar"
-                              className="h-12 bg-white rounded-lg"
+                              className="h-12 bg-white rounded-lg text-slate-800"
                               {...field}
                             />
                           </FormControl>
