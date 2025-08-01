@@ -46,9 +46,9 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-4xl mx-auto">
         {/* Contact Form */}
-        <div className="lg:col-span-2">
+        <div>
           <Card className="shadow-lg rounded-lg">
             <CardHeader className="bg-gradient-card border-b rounded-t-lg">
               <div className="flex items-center gap-3">
@@ -216,64 +216,6 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
           </Card>
         </div>
 
-        {/* Valuation Preview */}
-        <div className="lg:col-span-1">
-          <Card className="shadow-lg bg-gradient-card sticky top-8 rounded-lg">
-            <CardHeader className="border-b rounded-t-lg">
-              <CardTitle className="text-xl text-foreground">Waardering Preview</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Gebaseerd op uw bedrijfsgegevens
-              </p>
-            </CardHeader>
-
-            <CardContent className="p-6">
-              {valuationResult ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">
-                      {formatCurrency(valuationResult.baseValuation)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">Geschatte waardering</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 text-center">
-                    <div className="bg-background/50 rounded-lg p-3">
-                      <div className="text-sm font-medium text-foreground">
-                        {formatCurrency(valuationResult.minValuation)}
-                      </div>
-                      <div className="text-xs text-muted-foreground">Minimum</div>
-                    </div>
-                    <div className="bg-background/50 rounded-lg p-3">
-                      <div className="text-sm font-medium text-foreground">
-                        {formatCurrency(valuationResult.maxValuation)}
-                      </div>
-                      <div className="text-xs text-muted-foreground">Maximum</div>
-                    </div>
-                  </div>
-
-                  <div className="bg-accent/20 rounded-lg p-4">
-                    <div className="text-sm font-medium text-foreground mb-1">
-                      Sector: {valuationResult.sector}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      Multiple: {valuationResult.multiple.toFixed(1)}x
-                    </div>
-                  </div>
-
-                  <div className="bg-success/10 border border-success/20 rounded-lg p-4">
-                    <p className="text-sm text-success-foreground">
-                      ✓ Vul uw contactgegevens in om het volledige rapport te ontvangen
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center text-muted-foreground">
-                  <p className="text-sm">Waardering wordt berekend...</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );
