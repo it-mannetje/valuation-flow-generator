@@ -156,18 +156,18 @@ export default function CalculatorWizard() {
             <Progress value={progress} className="mb-6" />
             
             {/* Step Indicators */}
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-3 sm:gap-0">
               {STEPS.map((step, index) => (
                 <div
                   key={step.id}
                   className={cn(
-                    "flex flex-col items-center text-center",
+                    "flex items-center sm:flex-col sm:items-center sm:text-center",
                     "transition-all duration-300"
                   )}
                 >
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium mb-2",
+                      "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium mb-0 sm:mb-2 mr-3 sm:mr-0 flex-shrink-0",
                       "transition-all duration-300",
                       state.currentStep > step.id
                         ? "bg-steps-accent text-white"
@@ -178,14 +178,14 @@ export default function CalculatorWizard() {
                   >
                     {step.id}
                   </div>
-                  <div className="max-w-[120px]">
+                  <div className="flex-1 sm:max-w-[120px]">
                     <p className={cn(
-                      "text-sm font-medium mb-1 font-heading",
+                      "text-xs sm:text-sm font-medium mb-0 sm:mb-1 font-heading",
                       state.currentStep >= step.id ? "text-foreground" : "text-muted-foreground"
                     )}>
                       {step.title}
                     </p>
-                    <p className="text-xs text-muted-foreground hidden sm:block font-sans">
+                    <p className="text-xs text-muted-foreground sm:hidden font-sans">
                       {step.description}
                     </p>
                   </div>
