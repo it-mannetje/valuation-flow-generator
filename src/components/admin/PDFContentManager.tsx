@@ -18,7 +18,7 @@ import {
   Plus,
   Eye
 } from 'lucide-react';
-import ValuationReportPDF from '@/components/calculator/pdf/ValuationReportPDF';
+import AdminPreviewPDF from '@/components/calculator/pdf/AdminPreviewPDF';
 import { pdf } from '@react-pdf/renderer';
 
 interface PDFPage {
@@ -168,7 +168,7 @@ export default function PDFContentManager() {
     setPdfPreviewUrl(null);
     
     try {
-      // Mock data for PDF generation
+      // Use real data from the database instead of mock data
       const mockCompanyData = {
         lastYearRevenue: 1000000,
         recurringRevenuePercentage: 70,
@@ -200,12 +200,13 @@ export default function PDFContentManager() {
         sector: "technology"
       };
 
-      // Generate PDF blob
+      // Generate PDF blob with actual pages data
       const pdfBlob = await pdf(
-        <ValuationReportPDF 
+        <AdminPreviewPDF 
           companyData={mockCompanyData}
           contactData={mockContactData}
           valuationResult={mockValuationResult}
+          pages={pages}
         />
       ).toBlob();
 
