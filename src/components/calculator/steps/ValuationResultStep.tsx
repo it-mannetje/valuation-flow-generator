@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +6,8 @@ import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
 import { formatCurrency, formatNumber } from '@/lib/calculator';
 import { TrendingUp, Building2, Users, DollarSign, FileText, ChevronLeft, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface ValuationResultStepProps {
   companyData: CompanyData;
@@ -22,7 +24,71 @@ export default function ValuationResultStep({
   onNext, 
   onBack 
 }: ValuationResultStepProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
+
+  const saveToDatabase = async () => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase
+        .from('valuation_requests')
+        .insert({
+          // Contact Information
+          contact_name: `${contactData.firstName} ${contactData.lastName}`,
+          contact_email: contactData.email,
+          contact_phone: contactData.phone,
+          contact_company: contactData.companyName,
+          
+          // Financial Data
+          revenue: companyData.lastYearRevenue,
+          profit: companyData.result2024,
+          investment_real_estate: null, // Not in current schema
+          investment_inventory: null, // Not in current schema
+          investment_machinery: null, // Not in current schema
+          investment_other: companyData.averageYearlyInvestment,
+          
+          // Company Details
+          sector: companyData.sector,
+          employees: companyData.employees,
+          employees_display: companyData.employeesDisplay,
+          prospects: companyData.prospects,
+          
+          // Dependencies
+          largest_client_dependency: companyData.largestClientDependency,
+          largest_client_dependency_display: companyData.largestClientDependencyDisplay,
+          largest_supplier_dependency: companyData.largestSupplierRisk,
+          recurring_revenue: companyData.recurringRevenuePercentage,
+          recurring_revenue_display: companyData.recurringRevenuePercentageDisplay,
+          
+          // Valuation Results
+          valuation_amount: valuationResult.baseValuation,
+          valuation_range_min: valuationResult.minValuation,
+          valuation_range_max: valuationResult.maxValuation
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Aanvraag opgeslagen",
+        description: "Uw bedrijfswaardering aanvraag is succesvol opgeslagen.",
+      });
+
+      // Proceed with download/next step
+      onNext();
+    } catch (error) {
+      console.error('Error saving to database:', error);
+      toast({
+        title: "Fout bij opslaan",
+        description: "Er is een fout opgetreden bij het opslaan van uw aanvraag. Probeer het nogmaals.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -281,14 +347,19 @@ export default function ValuationResultStep({
 
         <Button
           size="lg"
-          onClick={onNext}
+          onClick={saveToDatabase}
+          disabled={isLoading}
           className={cn(
             "bg-gradient-primary hover:shadow-primary",
             "transition-all duration-300 flex items-center justify-center gap-2"
           )}
         >
-          <Download className="w-5 h-5" />
-          Download Rapport
+          {isLoading ? (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <Download className="w-5 h-5" />
+          )}
+          {isLoading ? 'Opslaan...' : 'Download Rapport'}
         </Button>
 
         <Button
