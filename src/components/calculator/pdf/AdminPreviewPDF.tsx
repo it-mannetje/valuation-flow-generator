@@ -105,13 +105,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 13,
   },
-  contactInfo: {
-    fontSize: 11,
-    marginTop: 35,
-    padding: 18,
-    backgroundColor: '#F8FAFC',
-    border: '1 solid #E2E8F0',
-  },
   footer: {
     position: 'absolute',
     bottom: 35,
@@ -252,25 +245,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
           {page.content?.content && (
             <View>
               {renderContentSections(page.content.content, page)}
-            </View>
-          )}
-
-          {/* Special handling for page 6 contact info */}
-          {page.page_number === 6 && page.content?.contact_info && (
-            <View style={styles.contactInfo}>
-              <Text style={styles.sectionTitle}>Contact Informatie</Text>
-              {page.content.contact_company && (
-                <Text>Bedrijf: {page.content.contact_company}</Text>
-              )}
-              {page.content.contact_address && (
-                <Text>Adres: {page.content.contact_address}</Text>
-              )}
-              {page.content.contact_phone && (
-                <Text>Telefoon: {page.content.contact_phone}</Text>
-              )}
-              {page.content.contact_website && (
-                <Text>Website: {page.content.contact_website}</Text>
-              )}
             </View>
           )}
 
