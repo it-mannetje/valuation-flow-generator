@@ -28,6 +28,10 @@ interface PDFPage {
   page_name: string;
   background_image_url?: string;
   logo_image_url?: string;
+  top_logo_url?: string;
+  top_logo_position?: 'left' | 'right' | 'center';
+  footer_logo_url?: string;
+  footer_logo_position?: 'left' | 'right' | 'center';
   content: any;
   created_at: string;
   updated_at: string;
@@ -61,9 +65,17 @@ export default function PDFContentManager() {
         .order('page_number');
 
       if (error) throw error;
-      setPages(data || []);
-      if (data && data.length > 0) {
-        setSelectedPage(data[0]);
+      
+      // Cast the data to match our PDFPage interface
+      const typedData: PDFPage[] = (data || []).map(page => ({
+        ...page,
+        top_logo_position: (page.top_logo_position as 'left' | 'right' | 'center') || 'left',
+        footer_logo_position: (page.footer_logo_position as 'left' | 'right' | 'center') || 'left'
+      }));
+      
+      setPages(typedData);
+      if (typedData && typedData.length > 0) {
+        setSelectedPage(typedData[0]);
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
@@ -88,6 +100,10 @@ export default function PDFContentManager() {
           page_name: selectedPage.page_name,
           background_image_url: selectedPage.background_image_url,
           logo_image_url: selectedPage.logo_image_url,
+          top_logo_url: selectedPage.top_logo_url,
+          top_logo_position: selectedPage.top_logo_position,
+          footer_logo_url: selectedPage.footer_logo_url,
+          footer_logo_position: selectedPage.footer_logo_position,
           content: selectedPage.content
         })
         .eq('id', selectedPage.id);
@@ -148,13 +164,17 @@ export default function PDFContentManager() {
     updateContentField('content', content);
   };
 
-  const handleImageUpload = async (type: 'background' | 'logo', file: File) => {
+  const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo', file: File) => {
     // In a real implementation, you would upload to Supabase Storage
     // For now, we'll create a placeholder URL
     const imageUrl = URL.createObjectURL(file);
     
     if (type === 'background') {
       updatePageContent({ background_image_url: imageUrl });
+    } else if (type === 'top_logo') {
+      updatePageContent({ top_logo_url: imageUrl });
+    } else if (type === 'footer_logo') {
+      updatePageContent({ footer_logo_url: imageUrl });
     } else {
       updatePageContent({ logo_image_url: imageUrl });
     }
@@ -440,15 +460,125 @@ export default function PDFContentManager() {
                     </div>
                   </div>
 
-                  {/* Logo Image */}
+                  {/* Top Logo */}
                   <div>
-                    <Label>Logo Afbeelding</Label>
+                    <Label>Top Logo</Label>
+                    <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                      {selectedPage.top_logo_url ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" />
+                            <span className="text-sm">Top logo ingesteld</span>
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="text-sm">Positie:</Label>
+                            <select
+                              value={selectedPage.top_logo_position || 'left'}
+                              onChange={(e) => updatePageContent({ top_logo_position: e.target.value as 'left' | 'right' | 'center' })}
+                              className="w-full px-3 py-2 border rounded-md"
+                            >
+                              <option value="left">Links</option>
+                              <option value="center">Midden</option>
+                              <option value="right">Rechts</option>
+                            </select>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updatePageContent({ top_logo_url: undefined })}
+                          >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Verwijder
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                          <Label htmlFor="top-logo-upload" className="cursor-pointer">
+                            <span className="text-sm text-muted-foreground">
+                              Klik om top logo te uploaden
+                            </span>
+                            <Input
+                              id="top-logo-upload"
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleImageUpload('top_logo', file);
+                              }}
+                            />
+                          </Label>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Footer Logo */}
+                  <div>
+                    <Label>Footer Logo</Label>
+                    <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                      {selectedPage.footer_logo_url ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" />
+                            <span className="text-sm">Footer logo ingesteld</span>
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="text-sm">Positie:</Label>
+                            <select
+                              value={selectedPage.footer_logo_position || 'left'}
+                              onChange={(e) => updatePageContent({ footer_logo_position: e.target.value as 'left' | 'right' | 'center' })}
+                              className="w-full px-3 py-2 border rounded-md"
+                            >
+                              <option value="left">Links</option>
+                              <option value="center">Midden</option>
+                              <option value="right">Rechts</option>
+                            </select>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updatePageContent({ footer_logo_url: undefined })}
+                          >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Verwijder
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                          <Label htmlFor="footer-logo-upload" className="cursor-pointer">
+                            <span className="text-sm text-muted-foreground">
+                              Klik om footer logo te uploaden
+                            </span>
+                            <Input
+                              id="footer-logo-upload"
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleImageUpload('footer_logo', file);
+                              }}
+                            />
+                          </Label>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Legacy Logo (backwards compatibility) */}
+                  <div>
+                    <Label>Legacy Logo (voor compatibiliteit)</Label>
                     <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
                       {selectedPage.logo_image_url ? (
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <ImageIcon className="w-4 h-4" />
-                            <span className="text-sm">Logo ingesteld</span>
+                            <span className="text-sm">Legacy logo ingesteld</span>
                           </div>
                           <Button
                             variant="outline"
@@ -464,7 +594,7 @@ export default function PDFContentManager() {
                           <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                           <Label htmlFor="logo-upload" className="cursor-pointer">
                             <span className="text-sm text-muted-foreground">
-                              Klik om logo afbeelding te uploaden
+                              Klik om legacy logo te uploaden
                             </span>
                             <Input
                               id="logo-upload"
