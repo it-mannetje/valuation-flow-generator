@@ -170,6 +170,16 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
           }
         }
         
+        // Replace general placeholders with actual sector data from database
+        if (companyData.sector && sectors.length > 0) {
+          const sectorConfig = sectors.find(s => s.id === companyData.sector);
+          if (sectorConfig) {
+            sectionText = sectionText.replace(/\{\{sector_text\}\}/g, sectorConfig.text || '');
+            sectionText = sectionText.replace(/\{\{sector_name\}\}/g, sectorConfig.name || '');
+            sectionText = sectionText.replace(/\{\{sector_multiple\}\}/g, sectorConfig.multiple?.toString() || '');
+          }
+        }
+        
         switch (section.type) {
           case 'heading':
             return (

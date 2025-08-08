@@ -192,6 +192,7 @@ export default function PDFContentManager() {
     try {
       console.log('Starting PDF generation...');
       console.log('Pages data:', pages);
+      console.log('Sectors data:', sectors);
       
       // Use real data from the database instead of mock data
       const mockCompanyData = {
