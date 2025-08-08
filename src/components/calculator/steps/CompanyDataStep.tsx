@@ -221,10 +221,10 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium">De vooruitzichten zijn: *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                          <SelectTrigger className="h-12 bg-input text-black">
-                           <SelectValue placeholder="Krimpend" />
+                           <SelectValue placeholder="Selecteer vooruitzichten" />
                          </SelectTrigger>
                       </FormControl>
                       <SelectContent>
