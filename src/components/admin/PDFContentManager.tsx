@@ -18,6 +18,9 @@ import {
   Plus,
   Eye
 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import ValuationReportPDF from '@/components/calculator/pdf/ValuationReportPDF';
+import { pdf } from '@react-pdf/renderer';
 
 interface PDFPage {
   id: string;
@@ -41,6 +44,8 @@ export default function PDFContentManager() {
   const [selectedPage, setSelectedPage] = useState<PDFPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
+  const [generatePreview, setGeneratePreview] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -159,6 +164,71 @@ export default function PDFContentManager() {
     });
   };
 
+  const handleGeneratePreview = async () => {
+    setGeneratePreview(true);
+    setPdfPreviewUrl(null);
+    
+    try {
+      // Mock data for PDF generation
+      const mockCompanyData = {
+        lastYearRevenue: 1000000,
+        recurringRevenuePercentage: 70,
+        result2024: 200000,
+        expectedResult2025: 250000,
+        wasLossmaking: false,
+        prospects: "Growth expected",
+        averageYearlyInvestment: 50000,
+        sector: "technology",
+        employees: 50,
+        largestClientDependency: 15,
+        largestSupplierRisk: "Low"
+      };
+
+      const mockContactData = {
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe@example.com",
+        phone: "123-456-7890",
+        companyName: "Example Company",
+        position: "CEO"
+      };
+
+      const mockValuationResult = {
+        baseValuation: 2000000,
+        minValuation: 1800000,
+        maxValuation: 2200000,
+        multiple: 10,
+        sector: "technology"
+      };
+
+      // Generate PDF blob
+      const pdfBlob = await pdf(
+        <ValuationReportPDF 
+          companyData={mockCompanyData}
+          contactData={mockContactData}
+          valuationResult={mockValuationResult}
+        />
+      ).toBlob();
+
+      const url = URL.createObjectURL(pdfBlob);
+      setPdfPreviewUrl(url);
+      
+      toast({
+        title: "Preview Gegenereerd",
+        description: "PDF preview is succesvol gegenereerd.",
+      });
+    } catch (error) {
+      console.error('Error generating PDF preview:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to generate PDF preview.",
+      });
+    } finally {
+      setGeneratePreview(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
@@ -205,6 +275,35 @@ export default function PDFContentManager() {
                   Pagina {selectedPage.page_number}: {selectedPage.page_name}
                 </CardTitle>
                 <div className="flex gap-2">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" onClick={handleGeneratePreview} disabled={generatePreview}>
+                        <Eye className="w-4 h-4 mr-2" />
+                        {generatePreview ? 'Genereren...' : 'PDF Preview'}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl h-[80vh]">
+                      <DialogHeader>
+                        <DialogTitle>PDF Preview</DialogTitle>
+                      </DialogHeader>
+                      <div className="flex-1 overflow-hidden">
+                        {pdfPreviewUrl ? (
+                          <iframe
+                            src={pdfPreviewUrl}
+                            className="w-full h-full border rounded-md"
+                            title="PDF Preview"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full">
+                            <div className="text-center text-muted-foreground">
+                              <Eye className="w-12 h-12 mx-auto mb-4" />
+                              <p>Klik op "PDF Preview" om een preview te genereren</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                   <Button onClick={handleSavePage} disabled={saving}>
                     <Save className="w-4 h-4 mr-2" />
                     {saving ? 'Opslaan...' : 'Opslaan'}
