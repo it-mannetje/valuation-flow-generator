@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
+import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency, formatNumber } from '@/lib/calculator';
 import { TrendingUp, Building2, Users, DollarSign, FileText, ChevronLeft, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,8 +26,36 @@ export default function ValuationResultStep({
   onBack 
 }: ValuationResultStepProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [pages, setPages] = useState<any[]>([]);
+  const [sectors, setSectors] = useState<SectorConfig[]>([]);
   const { toast } = useToast();
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
+
+  // Fetch PDF pages and sectors for the PDF generation
+  React.useEffect(() => {
+    const fetchPDFData = async () => {
+      try {
+        // Fetch PDF pages
+        const { data: pdfPages } = await supabase
+          .from('pdf_pages')
+          .select('*')
+          .order('page_number');
+        
+        // Fetch sectors
+        const { data: sectorData } = await supabase
+          .from('sector_configs')
+          .select('*')
+          .order('name');
+        
+        setPages(pdfPages || []);
+        setSectors(sectorData || []);
+      } catch (error) {
+        console.error('Error fetching PDF data:', error);
+      }
+    };
+
+    fetchPDFData();
+  }, []);
 
   const saveToDatabase = async () => {
     setIsLoading(true);
@@ -77,8 +105,8 @@ export default function ValuationResultStep({
         description: "Uw bedrijfswaardering aanvraag is succesvol opgeslagen.",
       });
 
-      // Generate and download PDF
-      await generatePDF(companyData, contactData, valuationResult);
+      // Generate and download PDF with database content
+      await generatePDF(companyData, contactData, valuationResult, pages, sectors);
       
       // Proceed to next step
       onNext();

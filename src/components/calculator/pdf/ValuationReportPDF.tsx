@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font, pdf, Image } from '@react-pdf/renderer';
-import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
+import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
 
 // Placeholder for images - replace with actual image URLs when available
@@ -269,12 +269,16 @@ interface ValuationReportPDFProps {
   companyData: CompanyData;
   contactData: ContactData;
   valuationResult: ValuationResult;
+  pages?: any[];
+  sectors?: SectorConfig[];
 }
 
 const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   companyData,
   contactData,
-  valuationResult
+  valuationResult,
+  pages = [],
+  sectors = []
 }) => {
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
   const currentDate = new Date().toLocaleDateString('nl-NL', {
@@ -283,12 +287,87 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     year: 'numeric'
   });
 
+  // Helper function to render content sections from database
+  const renderContentSections = (content: any, pageNumber: number) => {
+    if (!content || !Array.isArray(content)) return null;
+    
+    return content.map((section: any, index: number) => {
+      if (!section || typeof section !== 'object') return null;
+      
+      let sectionText = section.text || '';
+      
+      // Replace sector-specific placeholders
+      if (companyData.sector && sectors.length > 0) {
+        const sectorConfig = sectors.find(s => s.id === companyData.sector);
+        if (sectorConfig) {
+          sectionText = sectionText.replace(/\{\{sector_text\}\}/g, sectorConfig.text || '');
+          sectionText = sectionText.replace(/\{\{sector_name\}\}/g, sectorConfig.name || '');
+          sectionText = sectionText.replace(/\{\{sector_multiple\}\}/g, sectorConfig.multiple?.toString() || '');
+        }
+      }
+      
+      // Replace company data placeholders
+      sectionText = sectionText.replace(/\{\{company_name\}\}/g, contactData.companyName || '');
+      sectionText = sectionText.replace(/\{\{valuation_amount\}\}/g, formatCurrency(valuationResult.baseValuation));
+      sectionText = sectionText.replace(/\{\{ebitda\}\}/g, formatCurrency(estimatedEbitda));
+      
+      switch (section.type) {
+        case 'heading':
+          return (
+            <Text key={index} style={styles.sectionTitle}>{sectionText}</Text>
+          );
+        case 'paragraph':
+          return (
+            <Text key={index} style={styles.text}>{sectionText}</Text>
+          );
+        case 'list':
+          return (
+            <Text key={index} style={[styles.text, { marginLeft: 20 }]}>• {sectionText}</Text>
+          );
+        default:
+          return (
+            <Text key={index} style={styles.text}>{sectionText}</Text>
+          );
+      }
+    }).filter(Boolean);
+  };
+
+  // Get page content from database or fallback to hardcoded content
+  const getPageContent = (pageNumber: number) => {
+    const page = pages.find(p => p.page_number === pageNumber);
+    if (page && page.content && page.content.content) {
+      return renderContentSections(page.content.content, pageNumber);
+    }
+    return null;
+  };
+
+  const getPageImages = (pageNumber: number) => {
+    const page = pages.find(p => p.page_number === pageNumber);
+    return {
+      background: page?.background_image_url || null,
+      topLogo: page?.top_logo_url || null,
+      topLogoPosition: page?.top_logo_position || 'left',
+      footerLogo: page?.footer_logo_url || null,
+      footerLogoPosition: page?.footer_logo_position || 'left'
+    };
+  };
+
   return (
     <Document>
       {/* Cover Page */}
       <Page size="A4" orientation="landscape" style={styles.coverPage}>
-        <Image src={coverBackground} style={styles.coverBackground} />
+        {getPageImages(1).background ? (
+          <Image src={getPageImages(1).background} style={styles.coverBackground} />
+        ) : (
+          <Image src={coverBackground} style={styles.coverBackground} />
+        )}
         <View style={styles.coverOverlay} />
+        
+        {getPageImages(1).topLogo && (
+          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(1).topLogoPosition === 'center' ? 'center' : getPageImages(1).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(1).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
+          </View>
+        )}
         
         <View style={styles.coverHeader}>
           <View style={styles.coverHeaderLeft}>
@@ -303,57 +382,81 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           <Text style={styles.dateCover}>[{currentDate}]</Text>
         </View>
         
-        <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 10 }}>
-          <Image src={fbmLogo} style={styles.fbmLogo} />
-        </View>
+        {getPageImages(1).footerLogo ? (
+          <View style={{ position: 'absolute', bottom: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(1).footerLogoPosition === 'center' ? 'center' : getPageImages(1).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(1).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
+          </View>
+        ) : (
+          <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 10 }}>
+            <Image src={fbmLogo} style={styles.fbmLogo} />
+          </View>
+        )}
       </Page>
 
       {/* Foreword Page */}
       <Page size="A4" orientation="landscape" style={styles.page}>
+        {getPageImages(2).background && (
+          <Image src={getPageImages(2).background} style={styles.coverBackground} />
+        )}
+        
+        {getPageImages(2).topLogo && (
+          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(2).topLogoPosition === 'center' ? 'center' : getPageImages(2).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(2).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
+          </View>
+        )}
+        
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
         
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Voorwoord</Text>
-          
-          <Text style={styles.text}>
-            Ondernemers bezitten een, relatief gesproken, vaak zeer belangrijke bezit onder h
-            hun bedrijf. Corporate Finance begeleidt we al jaren onder andere bij zakelijke bij
-            waardering van het bedrijf tot aan de verkoop van de onderneming. Vanuit onze
-            kennis komen we regelmatig vragen tegen waarbij men meer inzicht wil berekenen
-            waarde van een onderneming. Overigens kan een bedrijfswaarding ook interessant
-            zijn tegen financiering en financiele gebeurtenissen. Dit alles heeft ons gebracht
-            deze interessante belastingskenner.
-          </Text>
-          
-          <Text style={styles.text}>
-            Een afgedreven toebehoren breg en daargemene aspecten hebben van ondergeveren op de
-            waardering van de onderneming. Denk dan aan bedrijf/waardering, marktkoers,
-            financidering, bestuursvoordeling en beste financiele rekeringen. Ons team van experts
-            uitgebreide boekhouding ervaren mensen. Leds heeft met het perspectief van de beurs
-            naar een onderneming in ontwikkeling. Het bereik van de vragen kan daarbij breed
-            zijn of als dit onderneming wordt geëvalueerd.
-            
-            We zijn trots op onze dit een aangewezen positie en opgevogen ristiche adviseur over meer
-            dan 500 ondernemers verschillende voorkomende. Of het nu gaat om bestemseling,
-            bedrijfswatering, fusie of acquisitie, onze klant kan rekenen op de inzet van ons
-            ervaren team. 
-          </Text>
-          
-          <Text style={styles.text}>
-            UNU Corporate Finance is gehouden aan een indicatieve van het bedrijf. Voor een
-            standaardwaarbeheren, niet berekenen gebaseerd deze exacte lijken dan de cijfers.
-            Graag maken we keens en geen als we samen het gebruik van legaliteitsregels en afwolf
-            de complete bedrijfswadering naar een niveau brengen.
-          </Text>
-          
-          <Text style={styles.text}>Hertelijke groet,</Text>
-          <Text style={styles.boldText}>
-            Pieter Waerland{'\n'}
-            Namens het team van FBM Corporate Finance
-          </Text>
+          {getPageContent(2) ? (
+            getPageContent(2)
+          ) : (
+            <>
+              <Text style={styles.sectionTitle}>Voorwoord</Text>
+              <Text style={styles.text}>
+                Ondernemers bezitten een, relatief gesproken, vaak zeer belangrijke bezit onder h
+                hun bedrijf. Corporate Finance begeleidt we al jaren onder andere bij zakelijke bij
+                waardering van het bedrijf tot aan de verkoop van de onderneming. Vanuit onze
+                kennis komen we regelmatig vragen tegen waarbij men meer inzicht wil berekenen
+                waarde van een onderneming. Overigens kan een bedrijfswaarding ook interessant
+                zijn tegen financiering en financiele gebeurtenissen. Dit alles heeft ons gebracht
+                deze interessante belastingskenner.
+              </Text>
+              <Text style={styles.text}>
+                Een afgedreven toebehoren breg en daargemene aspecten hebben van ondergeveren op de
+                waardering van de onderneming. Denk dan aan bedrijf/waardering, marktkoers,
+                financiering, bestuursvoordeling en beste financiele rekeringen. Ons team van experts
+                uitgebreide boekhouding ervaren mensen. Leds heeft met het perspectief van de beurs
+                naar een onderneming in ontwikkeling. Het bereik van de vragen kan daarbij breed
+                zijn of als dit onderneming wordt geëvalueerd.
+                
+                We zijn trots op onze dit een aangewezen positie en opgevogen ristiche adviseur over meer
+                dan 500 ondernemers verschillende voorkomende. Of het nu gaat om bestemseling,
+                bedrijfswatering, fusie of acquisitie, onze klant kan rekenen op de inzet van ons
+                ervaren team. 
+              </Text>
+              <Text style={styles.text}>
+                UNU Corporate Finance is gehouden aan een indicatieve van het bedrijf. Voor een
+                standaardwaarbeheren, niet berekenen gebaseerd deze exacte lijken dan de cijfers.
+                Graag maken we keens en geen als we samen het gebruik van legaliteitsregels en afwolf
+                de complete bedrijfswadering naar een niveau brengen.
+              </Text>
+              <Text style={styles.text}>Hertelijke groet,</Text>
+              <Text style={styles.boldText}>
+                Pieter Waerland{'\n'}
+                Namens het team van FBM Corporate Finance
+              </Text>
+            </>
+          )}
         </View>
+        
+        {getPageImages(2).footerLogo && (
+          <View style={{ position: 'absolute', bottom: 60, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(2).footerLogoPosition === 'center' ? 'center' : getPageImages(2).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(2).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
+          </View>
+        )}
         
         <View style={styles.footer}>
           <Text style={styles.footerText}>2</Text>
@@ -460,43 +563,61 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Sector Information Page */}
       <Page size="A4" orientation="landscape" style={styles.page}>
+        {getPageImages(4).background && (
+          <Image src={getPageImages(4).background} style={styles.coverBackground} />
+        )}
+        
+        {getPageImages(4).topLogo && (
+          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(4).topLogoPosition === 'center' ? 'center' : getPageImages(4).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(4).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
+          </View>
+        )}
+        
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
         
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>4. Overnames in de {valuationResult.sector} Sector</Text>
-          
-          <Text style={styles.boldText}>
-            De overnamesmarkt in de Nederlandse {valuationResult.sector.toLowerCase()}-sector 
-            is in 2025 voorspoedig en volop in beweging...
-          </Text>
-          
-          <Text style={styles.text}>
-            Het aantal transacties blijft toenemen en de waarderingen van succesvolle bedrijven echter
-            overnames. Zowel strategische kopers als private equity-partijen tonen
-            belangstelling, innovatieverhoudingsveld en gestationeerde teams. Vooral bedrijven met
-            terugkerende inkomsten, een duidelijk nichtemarkt en technologische voorsprong
-            blijven succesvol.
-          </Text>
-          
-          <Text style={styles.text}>
-            Hoewel het aantal gegadelde lists is gedaald, blijft de totale dealactiviteit staan bij
-            een significant mogelijk van 2024. De waarderingen zijn over het algemeen hoog,
-            met name voor winstgevende IT-bedrijven in grootfactorgebonden zoals managed
-            services, softwareontwikkeling en data-analyse. De aankomende kopers zijn
-            gehollandeerd naar overname bovenden en algemeen betekenend afbonden voor
-            autonome trend.
-          </Text>
-          
-          <Text style={styles.text}>
-            Consolidatie is zichtbaar in onder andere IT consulting, infrastructuur en security,
-            waar grotere spelers kleinere gespecialiseerde bedrijven integreren. Private equity
-            blijft een belangrijke factor en tech-strategieën, waarmee portfoliobedrijven hun
-            marktaandeel vergroten. De verwachting is dat deze trend zich de rest van het jaar zal
-            voortzetten.
-          </Text>
+          {getPageContent(4) ? (
+            getPageContent(4)
+          ) : (
+            <>
+              <Text style={styles.sectionTitle}>4. Overnames in de {valuationResult.sector} Sector</Text>
+              <Text style={styles.boldText}>
+                De overnamesmarkt in de Nederlandse {valuationResult.sector.toLowerCase()}-sector 
+                is in 2025 voorspoedig en volop in beweging...
+              </Text>
+              <Text style={styles.text}>
+                Het aantal transacties blijft toenemen en de waarderingen van succesvolle bedrijven echter
+                overnames. Zowel strategische kopers als private equity-partijen tonen
+                belangstelling, innovatieverhoudingsveld en gestationeerde teams. Vooral bedrijven met
+                terugkerende inkomsten, een duidelijk nichtemarkt en technologische voorsprong
+                blijven succesvol.
+              </Text>
+              <Text style={styles.text}>
+                Hoewel het aantal gegadelde lists is gedaald, blijft de totale dealactiviteit staan bij
+                een significant mogelijk van 2024. De waarderingen zijn over het algemeen hoog,
+                met name voor winstgevende IT-bedrijven in grootfactorgebonden zoals managed
+                services, softwareontwikkeling en data-analyse. De aankomende kopers zijn
+                gehollandeerd naar overname bovenden en algemeen betekenend afbonden voor
+                autonome trend.
+              </Text>
+              <Text style={styles.text}>
+                Consolidatie is zichtbaar in onder andere IT consulting, infrastructuur en security,
+                waar grotere spelers kleinere gespecialiseerde bedrijven integreren. Private equity
+                blijft een belangrijke factor en tech-strategieën, waarmee portfoliobedrijven hun
+                marktaandeel vergroten. De verwachting is dat deze trend zich de rest van het jaar zal
+                voortzetten.
+              </Text>
+            </>
+          )}
         </View>
+        
+        {getPageImages(4).footerLogo && (
+          <View style={{ position: 'absolute', bottom: 60, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(4).footerLogoPosition === 'center' ? 'center' : getPageImages(4).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
+            <Image src={getPageImages(4).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
+          </View>
+        )}
         
         <View style={styles.footer}>
           <Text style={styles.footerText}>4</Text>
@@ -598,13 +719,17 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 export const generatePDF = async (
   companyData: CompanyData,
   contactData: ContactData,
-  valuationResult: ValuationResult
+  valuationResult: ValuationResult,
+  pages: any[] = [],
+  sectors: SectorConfig[] = []
 ) => {
   const blob = await pdf(
     <ValuationReportPDF 
       companyData={companyData}
       contactData={contactData}
       valuationResult={valuationResult}
+      pages={pages}
+      sectors={sectors}
     />
   ).toBlob();
   
