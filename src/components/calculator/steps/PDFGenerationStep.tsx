@@ -137,184 +137,118 @@ export default function PDFGenerationStep({
       {/* Header */}
       <div className="text-center">
         <h2 className="text-3xl font-bold text-foreground mb-4">
-          PDF Rapport & Opvolging
+          PDF rapport en opvolging
         </h2>
-        <p className="text-lg text-muted-foreground">
-          Download uw persoonlijke bedrijfswaardering rapport en ontvang professioneel advies
+        <p className="text-lg text-muted-foreground mb-4">
+          Dank voor uw aanvraag! Uw bedrijfswaardering is voltooid.
+        </p>
+        <p className="text-base text-muted-foreground">
+          Indien u nu al een persoonlijk advies wilt aanvragen, maak dan nu een afspraak via onderstaande knop.
         </p>
       </div>
 
-      {/* PDF Generation Card */}
+      {/* Main Content Card */}
       <Card className="shadow-lg rounded-lg">
-        <CardHeader className="bg-gradient-card border-b rounded-t-lg">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <FileText className="w-6 h-6 text-primary" />
+        <CardHeader className="bg-gradient-card border-b rounded-t-lg text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="p-3 bg-primary/10 rounded-lg">
+              <FileText className="w-8 h-8 text-primary" />
             </div>
-            <div>
-              <CardTitle className="text-2xl text-foreground">PDF Rapport Generatie</CardTitle>
-              <p className="text-muted-foreground">
-                Uw persoonlijke bedrijfswaardering rapport met alle details
-              </p>
-            </div>
+            <CardTitle className="text-2xl text-foreground">Uw Bedrijfswaardering</CardTitle>
           </div>
         </CardHeader>
 
         <CardContent className="p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* PDF Preview */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground">Rapport Inhoud</h3>
-              <div className="bg-muted/30 rounded-lg p-4 space-y-3">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Executive Summary</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Bedrijfsinformatie: {contactData.companyName}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Financiële Analyse</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Sector Analysis: {valuationResult.sector}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Waardering: {formatCurrency(valuationResult.baseValuation)}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span>Recommendations & Next Steps</span>
-                </div>
-              </div>
+          {/* Valuation Summary */}
+          <div className="text-center mb-8">
+            <div className="text-5xl font-bold text-primary mb-4">
+              {formatCurrency(valuationResult.baseValuation)}
             </div>
-
-            {/* Action Section */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Download Uw Rapport</h3>
-                <Button
-                  onClick={handleGeneratePDF}
-                  disabled={isGeneratingPDF}
-                  size="lg"
-                  className={cn(
-                    "w-full bg-gradient-primary hover:shadow-primary",
-                    "transition-all duration-300",
-                    isPDFGenerated && "bg-success hover:bg-success"
-                  )}
-                >
-                  {isGeneratingPDF ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Genereren...
-                    </div>
-                  ) : isPDFGenerated ? (
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5" />
-                      Rapport Gedownload
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Download className="w-5 h-5" />
-                      Download PDF Rapport
-                    </div>
-                  )}
-                </Button>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Professioneel Advies</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Ontvang persoonlijk advies van onze waarderingsexperts over uw bedrijf en mogelijke exit strategieën.
-                </p>
-                <Button
-                  onClick={handleSubmitToHubSpot}
-                  disabled={isSubmittingToHubSpot}
-                  variant="outline"
-                  size="lg"
-                  className={cn(
-                    "w-full",
-                    isSubmittedToHubSpot && "border-success text-success"
-                  )}
-                >
-                  {isSubmittingToHubSpot ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      Verzenden...
-                    </div>
-                  ) : isSubmittedToHubSpot ? (
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5" />
-                      Gegevens Verzonden
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Send className="w-5 h-5" />
-                      Aanvragen Persoonlijk Advies
-                    </div>
-                  )}
-                </Button>
-              </div>
+            <div className="text-lg text-muted-foreground mb-2">
+              Geschatte waarde van {contactData.companyName}
+            </div>
+            <div className="flex justify-center gap-8 text-sm text-muted-foreground">
+              <span>Min: {formatCurrency(valuationResult.minValuation)}</span>
+              <span>Max: {formatCurrency(valuationResult.maxValuation)}</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Summary Card */}
-      <Card className="bg-gradient-card shadow-card rounded-lg">
-        <CardHeader className="rounded-t-lg">
-          <CardTitle className="text-center">Waardering Samenvatting</CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="text-2xl font-bold text-primary mb-1">
-                {formatCurrency(valuationResult.baseValuation)}
-              </div>
-              <div className="text-sm text-muted-foreground">Geschatte Waardering</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground mb-1">
+          {/* Key Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="text-center bg-muted/30 rounded-lg p-4">
+              <div className="text-xl font-bold text-foreground mb-1">
                 {valuationResult.multiple.toFixed(1)}x
               </div>
               <div className="text-sm text-muted-foreground">Resultaat Multiple</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground mb-1">
+            <div className="text-center bg-muted/30 rounded-lg p-4">
+              <div className="text-xl font-bold text-foreground mb-1">
                 {valuationResult.sector}
               </div>
               <div className="text-sm text-muted-foreground">Sector</div>
             </div>
+            <div className="text-center bg-muted/30 rounded-lg p-4">
+              <div className="text-xl font-bold text-foreground mb-1">
+                {formatCurrency(estimatedEbitda)}
+              </div>
+              <div className="text-sm text-muted-foreground">Gem. Resultaat</div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-4">
+            <Button
+              onClick={handleSubmitToHubSpot}
+              disabled={isSubmittingToHubSpot}
+              size="lg"
+              className={cn(
+                "w-full bg-gradient-primary hover:shadow-primary",
+                "transition-all duration-300",
+                isSubmittedToHubSpot && "bg-success hover:bg-success"
+              )}
+            >
+              {isSubmittingToHubSpot ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Verzenden...
+                </div>
+              ) : isSubmittedToHubSpot ? (
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  Advies Aangevraagd
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Send className="w-5 h-5" />
+                  Aanvragen Persoonlijk Advies
+                </div>
+              )}
+            </Button>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={onBack}
+                className="flex items-center justify-center gap-2"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Vorige Stap
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={onRestart}
+                className="flex items-center justify-center gap-2"
+              >
+                <RotateCcw className="w-5 h-5" />
+                Nieuwe Berekening
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
-
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={onBack}
-          className="flex items-center gap-2"
-        >
-          <ChevronLeft className="w-5 h-5" />
-          Vorige Stap
-        </Button>
-
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={onRestart}
-          className="flex items-center gap-2"
-        >
-          <RotateCcw className="w-5 h-5" />
-          Nieuwe Berekening
-        </Button>
-      </div>
     </div>
   );
 }
