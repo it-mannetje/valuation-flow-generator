@@ -18,7 +18,6 @@ import {
   Plus,
   Eye
 } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import ValuationReportPDF from '@/components/calculator/pdf/ValuationReportPDF';
 import { pdf } from '@react-pdf/renderer';
 
@@ -210,13 +209,25 @@ export default function PDFContentManager() {
         />
       ).toBlob();
 
+      // Open PDF in new window instead of iframe
       const url = URL.createObjectURL(pdfBlob);
-      setPdfPreviewUrl(url);
+      const newWindow = window.open(url, '_blank');
       
-      toast({
-        title: "Preview Gegenereerd",
-        description: "PDF preview is succesvol gegenereerd.",
-      });
+      if (newWindow) {
+        // Clean up the URL after a delay to prevent memory leaks
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        
+        toast({
+          title: "Preview Geopend",
+          description: "PDF preview wordt geopend in een nieuw venster.",
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Pop-up geblokkeerd. Sta pop-ups toe voor deze site.",
+        });
+      }
     } catch (error) {
       console.error('Error generating PDF preview:', error);
       toast({
@@ -275,35 +286,10 @@ export default function PDFContentManager() {
                   Pagina {selectedPage.page_number}: {selectedPage.page_name}
                 </CardTitle>
                 <div className="flex gap-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" onClick={handleGeneratePreview} disabled={generatePreview}>
-                        <Eye className="w-4 h-4 mr-2" />
-                        {generatePreview ? 'Genereren...' : 'PDF Preview'}
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-4xl h-[80vh]">
-                      <DialogHeader>
-                        <DialogTitle>PDF Preview</DialogTitle>
-                      </DialogHeader>
-                      <div className="flex-1 overflow-hidden">
-                        {pdfPreviewUrl ? (
-                          <iframe
-                            src={pdfPreviewUrl}
-                            className="w-full h-full border rounded-md"
-                            title="PDF Preview"
-                          />
-                        ) : (
-                          <div className="flex items-center justify-center h-full">
-                            <div className="text-center text-muted-foreground">
-                              <Eye className="w-12 h-12 mx-auto mb-4" />
-                              <p>Klik op "PDF Preview" om een preview te genereren</p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                  <Button variant="outline" onClick={handleGeneratePreview} disabled={generatePreview}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    {generatePreview ? 'Genereren...' : 'PDF Preview'}
+                  </Button>
                   <Button onClick={handleSavePage} disabled={saving}>
                     <Save className="w-4 h-4 mr-2" />
                     {saving ? 'Opslaan...' : 'Opslaan'}
