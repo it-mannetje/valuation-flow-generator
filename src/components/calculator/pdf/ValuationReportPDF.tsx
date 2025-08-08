@@ -1,152 +1,162 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, pdf, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
-
-// Placeholder for images - replace with actual image URLs when available
-const coverBackground = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5OTk5IiBmb250LXNpemU9IjI0Ij5Db3ZlciBCYWNrZ3JvdW5kPC90ZXh0Pgo8L3N2Zz4K';
-const fbmLogo = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMUU0MEFGIiByeD0iMTAiLz4KPHR5cGUgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iNDAiIHk9IjQ1IiBmaWxsPSIjRkZGRkZGIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+ZmJtPC90ZXh0Pgo8L3N2Zz4K';
-
-// Register a font if needed
-// Font.register({
-//   family: 'Roboto',
-//   src: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxK.woff2'
-// });
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: '#ffffff',
-    padding: 40,
-    fontFamily: 'Helvetica',
-  },
-  coverPage: {
-    flexDirection: 'column',
-    backgroundColor: '#ffffff',
-    position: 'relative',
-    minHeight: '100%',
     padding: 0,
+    fontFamily: 'Helvetica',
+    position: 'relative',
   },
-  coverBackground: {
+  backgroundImage: {
     position: 'absolute',
     width: '100%',
     height: '100%',
     objectFit: 'cover',
+    zIndex: 0,
   },
-  coverOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  content: {
+    position: 'relative',
+    zIndex: 1,
+    padding: 40,
+    minHeight: '100%',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 40,
-    paddingBottom: 20,
-    borderBottom: '2 solid #E5E7EB',
-  },
+  // Page 1 - Cover styles
   coverHeader: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    right: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    zIndex: 10,
+    marginBottom: 20,
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
-  coverHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  reportTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#ffffff',
+  reportBadge: {
     backgroundColor: '#1E40AF',
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
     padding: '8 16',
-    borderRadius: 8,
-    marginRight: 20,
+    borderRadius: 6,
+    marginRight: 10,
   },
-  dateText: {
+  dateSmall: {
     fontSize: 12,
     color: '#DC2626',
     fontWeight: 'bold',
   },
-  confidential: {
-    fontSize: 14,
-    fontWeight: 'bold',
+  confidentialText: {
+    fontSize: 12,
     color: '#1E40AF',
-  },
-  logo: {
-    fontSize: 24,
     fontWeight: 'bold',
-    color: '#1E40AF',
   },
-  fbmLogo: {
+  logoTopRight: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
     width: 80,
     height: 80,
+    objectFit: 'contain',
+    zIndex: 10,
   },
-  coverTitle: {
+  centerTitle: {
     position: 'absolute',
-    bottom: 100,
-    left: 0,
-    right: 0,
+    bottom: 150,
+    left: 40,
+    right: 40,
     alignItems: 'center',
     zIndex: 10,
   },
-  companyNameCover: {
+  companyName: {
     fontSize: 48,
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: '15 30',
+    borderRadius: 8,
     marginBottom: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    padding: '20 40',
-    borderRadius: 10,
   },
-  dateCover: {
-    fontSize: 18,
+  dateCenter: {
+    fontSize: 16,
     color: '#DC2626',
     textAlign: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    padding: '10 20',
-    borderRadius: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: '8 16',
+    borderRadius: 4,
   },
-  section: {
-    marginBottom: 30,
+  // Page 2 - Foreword styles
+  pageHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 40,
+    borderBottom: '1 solid #E5E7EB',
+    paddingBottom: 20,
   },
-  sectionTitle: {
+  fbmLogo: {
     fontSize: 24,
     fontWeight: 'bold',
-    backgroundColor: '#1E40AF',
-    color: '#ffffff',
-    padding: '10 20',
-    borderRadius: 5,
-    marginBottom: 20,
+    color: '#1E40AF',
   },
-  text: {
-    fontSize: 11,
+  sectionTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: '#1E40AF',
+    padding: '12 24',
+    borderRadius: 8,
+    marginBottom: 30,
+  },
+  forewordText: {
+    fontSize: 12,
     lineHeight: 1.6,
     color: '#374151',
-    marginBottom: 10,
+    marginBottom: 15,
     textAlign: 'justify',
   },
-  boldText: {
+  signatureText: {
     fontSize: 12,
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 8,
+    marginTop: 20,
   },
-  row: {
+  pageNumber: {
+    position: 'absolute',
+    bottom: 40,
+    right: 40,
+    fontSize: 14,
+    color: '#6B7280',
+    zIndex: 10,
+  },
+  // Page 3 - Calculation styles
+  calculationGrid: {
+    flexDirection: 'row',
+    gap: 30,
+    marginBottom: 30,
+  },
+  leftColumn: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    padding: 20,
+    borderRadius: 8,
+  },
+  rightColumn: {
+    flex: 1,
+  },
+  columnTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 20,
+  },
+  dataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
-    paddingBottom: 5,
+    marginBottom: 12,
+    paddingBottom: 8,
     borderBottom: '1 solid #E5E7EB',
   },
   label: {
@@ -158,111 +168,154 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: 'bold',
     color: '#111827',
-    flex: 1,
     textAlign: 'right',
+    flex: 1,
   },
   highlightBox: {
     backgroundColor: '#EFF6FF',
-    padding: 20,
-    borderRadius: 8,
-    marginBottom: 20,
     border: '2 solid #3B82F6',
-  },
-  highlightTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1E40AF',
-    marginBottom: 10,
+    borderRadius: 8,
+    padding: 20,
+    marginBottom: 15,
+    alignItems: 'center',
   },
   highlightValue: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
   },
-  rangeText: {
+  highlightLabel: {
     fontSize: 12,
     color: '#6B7280',
     textAlign: 'center',
+    marginBottom: 3,
   },
-  grid: {
+  highlightSubtext: {
+    fontSize: 10,
+    color: '#6B7280',
+    textAlign: 'center',
+  },
+  disclaimerSmall: {
+    fontSize: 10,
+    color: '#6B7280',
+    lineHeight: 1.4,
+    marginTop: 15,
+    fontStyle: 'italic',
+  },
+  bandbreedte: {
+    marginTop: 30,
+  },
+  bandbreedteTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 15,
+  },
+  bandbreedteRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 20,
   },
-  gridItem: {
+  bandbreedteBox: {
     flex: 1,
-    minWidth: '45%',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#F3F4F6',
     padding: 15,
     borderRadius: 8,
+    alignItems: 'center',
   },
-  gridTitle: {
+  bandbreedteValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#DC2626',
+  },
+  // Page 4 - Sector info styles
+  sectorContent: {
+    marginTop: 20,
+  },
+  sectorText: {
+    fontSize: 12,
+    lineHeight: 1.6,
+    color: '#374151',
+    marginBottom: 15,
+    textAlign: 'justify',
+  },
+  placeholderText: {
+    fontSize: 12,
+    color: '#DC2626',
+    fontStyle: 'italic',
+    marginBottom: 15,
+  },
+  // Page 5 - Business valuation styles
+  businessContent: {
+    marginTop: 20,
+  },
+  businessText: {
+    fontSize: 12,
+    lineHeight: 1.6,
+    color: '#374151',
+    marginBottom: 15,
+    textAlign: 'justify',
+  },
+  businessSubtitle: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 10,
+    marginBottom: 15,
   },
-  disclaimer: {
-    backgroundColor: '#FEF3C7',
-    padding: 15,
-    borderRadius: 8,
-    border: '1 solid #F59E0B',
-    marginTop: 30,
+  // Page 6 - Next steps styles
+  nextStepsContent: {
+    backgroundColor: '#1E40AF',
+    borderRadius: 12,
+    padding: 30,
+    marginTop: 40,
+    marginBottom: 40,
   },
-  disclaimerTitle: {
-    fontSize: 12,
+  nextStepsTitle: {
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#92400E',
-    marginBottom: 8,
+    color: 'white',
+    marginBottom: 20,
   },
-  disclaimerText: {
-    fontSize: 10,
-    color: '#92400E',
-    lineHeight: 1.5,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 40,
-    left: 40,
-    right: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 20,
-    borderTop: '1 solid #E5E7EB',
-  },
-  footerText: {
-    fontSize: 10,
-    color: '#6B7280',
+  nextStepsSubtitle: {
+    fontSize: 14,
+    color: '#DC2626',
+    marginBottom: 30,
   },
   contactInfo: {
-    marginTop: 40,
-    padding: 20,
-    backgroundColor: '#1E40AF',
+    backgroundColor: 'white',
     borderRadius: 8,
-  },
-  contactTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 15,
+    padding: 20,
+    marginTop: 20,
   },
   contactText: {
-    fontSize: 11,
-    color: '#ffffff',
-    lineHeight: 1.6,
-    marginBottom: 15,
-  },
-  contactDetails: {
-    marginTop: 15,
-  },
-  contactDetailText: {
-    fontSize: 10,
-    color: '#ffffff',
+    fontSize: 12,
+    color: '#1E40AF',
     marginBottom: 3,
-  }
+  },
+  websiteText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1E40AF',
+    marginTop: 10,
+  },
+  // Image positioning
+  topLogo: {
+    position: 'absolute',
+    top: 20,
+    width: 100,
+    height: 40,
+    objectFit: 'contain',
+    zIndex: 10,
+  },
+  footerLogo: {
+    position: 'absolute',
+    bottom: 60,
+    width: 80,
+    height: 30,
+    objectFit: 'contain',
+    zIndex: 10,
+  },
 });
 
 interface ValuationReportPDFProps {
@@ -287,8 +340,21 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     year: 'numeric'
   });
 
-  // Helper function to render content sections from database
-  const renderContentSections = (content: any, pageNumber: number) => {
+  // Helper function to get page data
+  const getPageData = (pageNumber: number) => {
+    const page = pages.find(p => p.page_number === pageNumber);
+    return {
+      background: page?.background_image_url || null,
+      topLogo: page?.top_logo_url || null,
+      topLogoPosition: page?.top_logo_position || 'left',
+      footerLogo: page?.footer_logo_url || null,
+      footerLogoPosition: page?.footer_logo_position || 'left',
+      content: page?.content?.content || null
+    };
+  };
+
+  // Helper function to render content with placeholders replaced
+  const renderContentSections = (content: any) => {
     if (!content || !Array.isArray(content)) return null;
     
     return content.map((section: any, index: number) => {
@@ -300,417 +366,364 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       if (companyData.sector && sectors.length > 0) {
         const sectorConfig = sectors.find(s => s.id === companyData.sector);
         if (sectorConfig) {
-          sectionText = sectionText.replace(/\{\{sector_text\}\}/g, sectorConfig.text || '');
-          sectionText = sectionText.replace(/\{\{sector_name\}\}/g, sectorConfig.name || '');
-          sectionText = sectionText.replace(/\{\{sector_multiple\}\}/g, sectorConfig.multiple?.toString() || '');
+          sectionText = sectionText.replace(/PLACEHOLDER tekst 1 sector information/g, sectorConfig.text || '');
+          sectionText = sectionText.replace(/PLACEHOLDER tekst 2 sector information/g, sectorConfig.text || '');
+          sectionText = sectionText.replace(/{{sector_text}}/g, sectorConfig.text || '');
+          sectionText = sectionText.replace(/{{sector_name}}/g, sectorConfig.name || '');
         }
       }
       
-      // Replace company data placeholders
-      sectionText = sectionText.replace(/\{\{company_name\}\}/g, contactData.companyName || '');
-      sectionText = sectionText.replace(/\{\{valuation_amount\}\}/g, formatCurrency(valuationResult.baseValuation));
-      sectionText = sectionText.replace(/\{\{ebitda\}\}/g, formatCurrency(estimatedEbitda));
+      // Replace other placeholders
+      sectionText = sectionText.replace(/PLACEHOLDER tekst 1 foreword/g, '');
+      sectionText = sectionText.replace(/PLACEHOLDER tekst 1 business valuation/g, '');
+      sectionText = sectionText.replace(/PLACEHOLDER tekst 2 next steps/g, '');
+      sectionText = sectionText.replace(/{{company_name}}/g, contactData.companyName || '');
       
       switch (section.type) {
         case 'heading':
-          return (
-            <Text key={index} style={styles.sectionTitle}>{sectionText}</Text>
-          );
+          return <Text key={index} style={styles.sectionTitle}>{sectionText}</Text>;
         case 'paragraph':
-          return (
-            <Text key={index} style={styles.text}>{sectionText}</Text>
-          );
-        case 'list':
-          return (
-            <Text key={index} style={[styles.text, { marginLeft: 20 }]}>• {sectionText}</Text>
-          );
+          return <Text key={index} style={styles.forewordText}>{sectionText}</Text>;
         default:
-          return (
-            <Text key={index} style={styles.text}>{sectionText}</Text>
-          );
+          return <Text key={index} style={styles.forewordText}>{sectionText}</Text>;
       }
     }).filter(Boolean);
   };
 
-  // Get page content from database or fallback to hardcoded content
-  const getPageContent = (pageNumber: number) => {
-    const page = pages.find(p => p.page_number === pageNumber);
-    if (page && page.content && page.content.content) {
-      return renderContentSections(page.content.content, pageNumber);
+  // Helper function to get sector text
+  const getSectorText = () => {
+    if (companyData.sector && sectors.length > 0) {
+      const sectorConfig = sectors.find(s => s.id === companyData.sector);
+      return sectorConfig?.text || '';
     }
-    return null;
-  };
-
-  const getPageImages = (pageNumber: number) => {
-    const page = pages.find(p => p.page_number === pageNumber);
-    return {
-      background: page?.background_image_url || null,
-      topLogo: page?.top_logo_url || null,
-      topLogoPosition: page?.top_logo_position || 'left',
-      footerLogo: page?.footer_logo_url || null,
-      footerLogoPosition: page?.footer_logo_position || 'left'
-    };
+    return '';
   };
 
   return (
     <Document>
-      {/* Cover Page */}
-      <Page size="A4" orientation="landscape" style={styles.coverPage}>
-        {getPageImages(1).background ? (
-          <Image src={getPageImages(1).background} style={styles.coverBackground} />
-        ) : (
-          <Image src={coverBackground} style={styles.coverBackground} />
+      {/* Page 1 - Cover */}
+      <Page size="A4" orientation="landscape" style={styles.page}>
+        {getPageData(1).background && (
+          <Image src={getPageData(1).background} style={styles.backgroundImage} />
         )}
-        <View style={styles.coverOverlay} />
         
-        {getPageImages(1).topLogo && (
-          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(1).topLogoPosition === 'center' ? 'center' : getPageImages(1).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(1).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
-          </View>
+        {getPageData(1).topLogo && (
+          <Image 
+            src={getPageData(1).topLogo} 
+            style={[
+              styles.topLogo,
+              { 
+                left: getPageData(1).topLogoPosition === 'center' ? '50%' : 
+                      getPageData(1).topLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(1).topLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(1).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
         )}
         
         <View style={styles.coverHeader}>
-          <View style={styles.coverHeaderLeft}>
-            <Text style={styles.reportTitle}>Rapport waardebepaling</Text>
-            <Text style={styles.dateText}>{currentDate}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.reportBadge}>Rapport waardebepaling</Text>
+            <Text style={styles.dateSmall}>{currentDate}</Text>
           </View>
-          <Text style={styles.confidential}>STRICTLY CONFIDENTIAL</Text>
+          <Text style={styles.confidentialText}>STRICTLY CONFIDENTIAL</Text>
         </View>
         
-        <View style={styles.coverTitle}>
-          <Text style={styles.companyNameCover}>[{contactData.companyName}]</Text>
-          <Text style={styles.dateCover}>[{currentDate}]</Text>
+        <View style={styles.centerTitle}>
+          <Text style={styles.companyName}>{contactData.companyName}</Text>
+          <Text style={styles.dateCenter}>[{currentDate}]</Text>
         </View>
         
-        {getPageImages(1).footerLogo ? (
-          <View style={{ position: 'absolute', bottom: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(1).footerLogoPosition === 'center' ? 'center' : getPageImages(1).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(1).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
-          </View>
-        ) : (
-          <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 10 }}>
-            <Image src={fbmLogo} style={styles.fbmLogo} />
-          </View>
+        {getPageData(1).footerLogo && (
+          <Image 
+            src={getPageData(1).footerLogo} 
+            style={[
+              styles.footerLogo,
+              { 
+                left: getPageData(1).footerLogoPosition === 'center' ? '50%' : 
+                      getPageData(1).footerLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(1).footerLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(1).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
         )}
       </Page>
 
-      {/* Foreword Page */}
+      {/* Page 2 - Foreword */}
       <Page size="A4" orientation="landscape" style={styles.page}>
-        {getPageImages(2).background && (
-          <Image src={getPageImages(2).background} style={styles.coverBackground} />
+        {getPageData(2).background && (
+          <Image src={getPageData(2).background} style={styles.backgroundImage} />
         )}
         
-        {getPageImages(2).topLogo && (
-          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(2).topLogoPosition === 'center' ? 'center' : getPageImages(2).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(2).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
+        {getPageData(2).topLogo && (
+          <Image 
+            src={getPageData(2).topLogo} 
+            style={[
+              styles.topLogo,
+              { 
+                left: getPageData(2).topLogoPosition === 'center' ? '50%' : 
+                      getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(2).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
+        )}
+        
+        <View style={styles.content}>
+          <View style={styles.pageHeader}>
+            <Text style={styles.fbmLogo}>fbm</Text>
           </View>
-        )}
-        
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-        </View>
-        
-        <View style={styles.section}>
-          {getPageContent(2) ? (
-            getPageContent(2)
+          
+          {getPageData(2).content ? (
+            renderContentSections(getPageData(2).content)
           ) : (
             <>
               <Text style={styles.sectionTitle}>Voorwoord</Text>
-              <Text style={styles.text}>
-                Ondernemers bezitten een, relatief gesproken, vaak zeer belangrijke bezit onder h
-                hun bedrijf. Corporate Finance begeleidt we al jaren onder andere bij zakelijke bij
-                waardering van het bedrijf tot aan de verkoop van de onderneming. Vanuit onze
-                kennis komen we regelmatig vragen tegen waarbij men meer inzicht wil berekenen
-                waarde van een onderneming. Overigens kan een bedrijfswaarding ook interessant
-                zijn tegen financiering en financiele gebeurtenissen. Dit alles heeft ons gebracht
-                deze interessante belastingskenner.
-              </Text>
-              <Text style={styles.text}>
-                Een afgedreven toebehoren breg en daargemene aspecten hebben van ondergeveren op de
-                waardering van de onderneming. Denk dan aan bedrijf/waardering, marktkoers,
-                financiering, bestuursvoordeling en beste financiele rekeringen. Ons team van experts
-                uitgebreide boekhouding ervaren mensen. Leds heeft met het perspectief van de beurs
-                naar een onderneming in ontwikkeling. Het bereik van de vragen kan daarbij breed
-                zijn of als dit onderneming wordt geëvalueerd.
-                
-                We zijn trots op onze dit een aangewezen positie en opgevogen ristiche adviseur over meer
-                dan 500 ondernemers verschillende voorkomende. Of het nu gaat om bestemseling,
-                bedrijfswatering, fusie of acquisitie, onze klant kan rekenen op de inzet van ons
-                ervaren team. 
-              </Text>
-              <Text style={styles.text}>
-                UNU Corporate Finance is gehouden aan een indicatieve van het bedrijf. Voor een
-                standaardwaarbeheren, niet berekenen gebaseerd deze exacte lijken dan de cijfers.
-                Graag maken we keens en geen als we samen het gebruik van legaliteitsregels en afwolf
-                de complete bedrijfswadering naar een niveau brengen.
-              </Text>
-              <Text style={styles.text}>Hertelijke groet,</Text>
-              <Text style={styles.boldText}>
-                Pieter Waerland{'\n'}
-                Namens het team van FBM Corporate Finance
-              </Text>
+              <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
             </>
           )}
         </View>
         
-        {getPageImages(2).footerLogo && (
-          <View style={{ position: 'absolute', bottom: 60, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(2).footerLogoPosition === 'center' ? 'center' : getPageImages(2).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(2).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
-          </View>
+        {getPageData(2).footerLogo && (
+          <Image 
+            src={getPageData(2).footerLogo} 
+            style={[
+              styles.footerLogo,
+              { 
+                left: getPageData(2).footerLogoPosition === 'center' ? '50%' : 
+                      getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(2).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
         )}
         
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>2</Text>
-        </View>
+        <Text style={styles.pageNumber}>2</Text>
       </Page>
 
-      {/* Calculation Page */}
+      {/* Page 3 - Calculation */}
       <Page size="A4" orientation="landscape" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-        </View>
-        
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>3. Indicatieve calculatie</Text>
+        <View style={styles.content}>
+          <View style={styles.pageHeader}>
+            <Text style={styles.fbmLogo}>fbm</Text>
+          </View>
           
-          <View style={styles.grid}>
-            <View style={styles.gridItem}>
-              <Text style={styles.gridTitle}>Ingevoerde gegevens</Text>
-              <View style={styles.row}>
+          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
+            3. Indicatieve calculatie
+          </Text>
+          
+          <View style={styles.calculationGrid}>
+            <View style={styles.leftColumn}>
+              <Text style={styles.columnTitle}>Ingevoerde gegevens</Text>
+              
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Omzet in het afgelopen jaar</Text>
-                <Text style={styles.value}>{formatCurrency(companyData.lastYearRevenue)}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.lastYearRevenue)}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
+                <Text style={styles.label}>Aantal partijen terugkerende omzet</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
+              </View>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Resultaat vorig boekjaar</Text>
-                <Text style={styles.value}>{formatCurrency(companyData.result2024)}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.result2024)}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Verwacht resultaat dit boekjaar</Text>
-                <Text style={styles.value}>{formatCurrency(companyData.expectedResult2025)}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.expectedResult2025)}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Verlies in de afgelopen 3 jaar</Text>
-                <Text style={styles.value}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Vooruitzichten</Text>
-                <Text style={[styles.value, { color: companyData.prospects === 'negatief' ? '#DC2626' : companyData.prospects === 'positief' ? '#059669' : '#F59E0B' }]}>
-                  {companyData.prospects}
-                </Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.prospects}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Gemiddelde investering per jaar</Text>
-                <Text style={styles.value}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Sector</Text>
-                <Text style={styles.value}>{valuationResult.sector}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{valuationResult.sector}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Aantal FTE medewerkers</Text>
-                <Text style={styles.value}>{companyData.employeesDisplay || companyData.employees}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.employeesDisplay || companyData.employees}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Omzet via de grootste klant</Text>
-                <Text style={styles.value}>{companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
               </View>
-              <View style={styles.row}>
+              <View style={styles.dataRow}>
                 <Text style={styles.label}>Afhankelijkheid van grootste toeleverancier</Text>
-                <Text style={styles.value}>{companyData.largestSupplierRisk}</Text>
+                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.largestSupplierRisk}</Text>
               </View>
             </View>
             
-            <View style={styles.gridItem}>
-              <Text style={styles.gridTitle}>Belangrijkste uitgangspunten</Text>
+            <View style={styles.rightColumn}>
+              <Text style={styles.columnTitle}>Belangrijkste uitgangspunten</Text>
+              
               <View style={styles.highlightBox}>
-                <Text style={styles.highlightValue}>€ {Math.round(estimatedEbitda / 1000)},500</Text>
-                <Text style={styles.rangeText}>EBITDA (Adjusted)</Text>
-                <Text style={styles.rangeText}>{currentDate}</Text>
-                <Text style={styles.rangeText}>Waarderingsmoment</Text>
+                <Text style={styles.highlightValue}>{formatCurrency(estimatedEbitda)}</Text>
+                <Text style={styles.highlightLabel}>EBITDA (Adjusted)</Text>
+                <Text style={styles.highlightSubtext}>{currentDate}</Text>
+                <Text style={styles.highlightSubtext}>Waarderingsmoment</Text>
               </View>
               
               <View style={styles.highlightBox}>
-                <Text style={styles.highlightValue}>€ {Math.round(valuationResult.baseValuation / 1000)},000</Text>
-                <Text style={styles.rangeText}>Ondernemingswaarde</Text>
-                <Text style={styles.boldText}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
-                <Text style={styles.rangeText}>Multiple en EBITDA</Text>
+                <Text style={styles.highlightValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
+                <Text style={styles.highlightLabel}>Ondernemingswaarde</Text>
+                <Text style={[styles.highlightLabel, { fontWeight: 'bold' }]}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
+                <Text style={styles.highlightSubtext}>Multiple op EBITDA</Text>
               </View>
               
-              <Text style={styles.text}>
+              <Text style={styles.disclaimerSmall}>
                 Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten.
                 Neem contact met ons op de exacte waarde van jouw bedrijf te bepalen.
               </Text>
             </View>
           </View>
           
-          <Text style={styles.boldText}>Indicatieve bandbreedte</Text>
-          <View style={styles.grid}>
-            <View style={styles.gridItem}>
-              <Text style={styles.highlightValue}>€ {Math.round(valuationResult.minValuation / 1000)},750</Text>
-            </View>
-            <View style={styles.gridItem}>
-              <Text style={styles.highlightValue}>€ {Math.round(valuationResult.baseValuation / 1000)},000</Text>
-            </View>
-            <View style={styles.gridItem}>
-              <Text style={styles.highlightValue}>€ {Math.round(valuationResult.maxValuation / 1000)},250</Text>
+          <View style={styles.bandbreedte}>
+            <Text style={styles.bandbreedteTitle}>Indicatieve bandbreedte</Text>
+            <View style={styles.bandbreedteRow}>
+              <View style={styles.bandbreedteBox}>
+                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.minValuation)}</Text>
+              </View>
+              <View style={styles.bandbreedteBox}>
+                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
+              </View>
+              <View style={styles.bandbreedteBox}>
+                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.maxValuation)}</Text>
+              </View>
             </View>
           </View>
         </View>
         
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>3</Text>
-        </View>
+        <Text style={styles.pageNumber}>3</Text>
       </Page>
 
-      {/* Sector Information Page */}
+      {/* Page 4 - Sector Info */}
       <Page size="A4" orientation="landscape" style={styles.page}>
-        {getPageImages(4).background && (
-          <Image src={getPageImages(4).background} style={styles.coverBackground} />
+        {getPageData(4).background && (
+          <Image src={getPageData(4).background} style={styles.backgroundImage} />
         )}
         
-        {getPageImages(4).topLogo && (
-          <View style={{ position: 'absolute', top: 20, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(4).topLogoPosition === 'center' ? 'center' : getPageImages(4).topLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(4).topLogo} style={{ width: 100, height: 40, objectFit: 'contain' }} />
+        <View style={styles.content}>
+          <View style={styles.pageHeader}>
+            <Text style={styles.fbmLogo}>fbm</Text>
           </View>
-        )}
-        
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-        </View>
-        
-        <View style={styles.section}>
-          {getPageContent(4) ? (
-            getPageContent(4)
-          ) : (
-            <>
-              <Text style={styles.sectionTitle}>4. Overnames in de {valuationResult.sector} Sector</Text>
-              <Text style={styles.boldText}>
-                De overnamesmarkt in de Nederlandse {valuationResult.sector.toLowerCase()}-sector 
-                is in 2025 voorspoedig en volop in beweging...
-              </Text>
-              <Text style={styles.text}>
-                Het aantal transacties blijft toenemen en de waarderingen van succesvolle bedrijven echter
-                overnames. Zowel strategische kopers als private equity-partijen tonen
-                belangstelling, innovatieverhoudingsveld en gestationeerde teams. Vooral bedrijven met
-                terugkerende inkomsten, een duidelijk nichtemarkt en technologische voorsprong
-                blijven succesvol.
-              </Text>
-              <Text style={styles.text}>
-                Hoewel het aantal gegadelde lists is gedaald, blijft de totale dealactiviteit staan bij
-                een significant mogelijk van 2024. De waarderingen zijn over het algemeen hoog,
-                met name voor winstgevende IT-bedrijven in grootfactorgebonden zoals managed
-                services, softwareontwikkeling en data-analyse. De aankomende kopers zijn
-                gehollandeerd naar overname bovenden en algemeen betekenend afbonden voor
-                autonome trend.
-              </Text>
-              <Text style={styles.text}>
-                Consolidatie is zichtbaar in onder andere IT consulting, infrastructuur en security,
-                waar grotere spelers kleinere gespecialiseerde bedrijven integreren. Private equity
-                blijft een belangrijke factor en tech-strategieën, waarmee portfoliobedrijven hun
-                marktaandeel vergroten. De verwachting is dat deze trend zich de rest van het jaar zal
-                voortzetten.
-              </Text>
-            </>
-          )}
-        </View>
-        
-        {getPageImages(4).footerLogo && (
-          <View style={{ position: 'absolute', bottom: 60, left: 20, right: 20, zIndex: 10, alignItems: getPageImages(4).footerLogoPosition === 'center' ? 'center' : getPageImages(4).footerLogoPosition === 'right' ? 'flex-end' : 'flex-start' }}>
-            <Image src={getPageImages(4).footerLogo} style={{ width: 80, height: 30, objectFit: 'contain' }} />
+          
+          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
+            4. Overnames in de sector..
+          </Text>
+          
+          <View style={styles.sectorContent}>
+            {getPageData(4).content ? (
+              renderContentSections(getPageData(4).content)
+            ) : (
+              <>
+                <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 sector information</Text>
+                <Text style={styles.placeholderText}>PLACEHOLDER tekst 2 sector information</Text>
+                {getSectorText() && (
+                  <Text style={styles.sectorText}>{getSectorText()}</Text>
+                )}
+              </>
+            )}
           </View>
+        </View>
+        
+        {getPageData(4).footerLogo && (
+          <Image 
+            src={getPageData(4).footerLogo} 
+            style={[
+              styles.footerLogo,
+              { 
+                left: getPageData(4).footerLogoPosition === 'center' ? '50%' : 
+                      getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(4).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
         )}
         
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>4</Text>
-        </View>
+        <Text style={styles.pageNumber}>4</Text>
       </Page>
 
-      {/* Business Valuation Page */}
+      {/* Page 5 - Business Valuation */}
       <Page size="A4" orientation="landscape" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-        </View>
-        
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>5. Bedrijfswaardering</Text>
-          
-          <Text style={styles.boldText}>Essentieel voor elke groeifase en strategische keuze.</Text>
-          
-          <Text style={styles.text}>
-            Veel bedrijf doek in een van de boekjef verkapgen af koop of de koms kan en onder beeff af
-            de tegen. Zeker dan is een bedrijfswaatdering zowelcertus als geeft af nomin in hersteh
-            voeden ten koze.
-          </Text>
-          
-          <Text style={styles.text}>
-            Maar naast bedrijfsverkoof of winmee dag er ook op en andere situaties waarbij een
-            waardering is verkweren, zo als bedrijf een bedrijfs kunnen zijn.
-          </Text>
-          
-          <Text style={styles.text}>
-            Het gaat ja duidelijk inzicht in welke factoren waarden bepalen zijn van namelijke cruciale
-            componenten waarbij we bedrijfsmake belegenhantig hebben oed ondernemers of ook van uit
-            onverbloofd hebben onderneming. U steun verstreven zijn wezenlijk onstructuzed en
-            praktische bakdew ondernemingen.
-          </Text>
-          
-          <Text style={styles.text}>
-            Bedrijfswaerdering is een vak apart. Door en jaren waardexpeculatuegen op allen
-            sterenslaart tussen Valuup aan de KBM Europe of FMA Business School en an de
-            Register Valuators (RV) aangesloten bij de branch/organisatie het Nederlands Instituut voor
-            Register Valuators (NIRV).
-          </Text>
-        </View>
-        
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>5</Text>
-        </View>
-      </Page>
-
-      {/* Next Steps Page */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-        </View>
-        
-        <View style={styles.contactInfo}>
-          <Text style={styles.contactTitle}>The next step</Text>
-          
-          <Text style={styles.contactText}>
-            Bent u op zoek naar een goede adviseur die adviseert, prakach en realisten is en de
-            beste oplossing kan formuleren in het verkoper van uw bedrijf? Of wilt u een
-            professionele waardering laten maken van jouw bedrijf? Uitgenodigd door een
-            madewerken/financiële of financieringsopdrode?
-          </Text>
-          
-          <Text style={styles.contactText}>
-            Neem dan contact met ons op. Wij helpen u graag.
-          </Text>
-          
-          <View style={styles.contactDetails}>
-            <Text style={styles.contactDetailText}>FBM Corporate Finance</Text>
-            <Text style={styles.contactDetailText}>Hoest Suit 62</Text>
-            <Text style={styles.contactDetailText}>3439 MK Nieuwegein</Text>
-            <Text style={styles.contactDetailText}>Telefon: 030 - 605 22 22</Text>
-            <Text style={styles.contactDetailText}>+31 6 1088 4566</Text>
-            <Text style={styles.contactDetailText}>KvK: 30207504</Text>
+        <View style={styles.content}>
+          <View style={styles.pageHeader}>
+            <Text style={styles.fbmLogo}>fbm</Text>
           </View>
           
-          <Text style={styles.contactText}>www.fbm.nl</Text>
-        </View>
-        
-        <View style={styles.disclaimer}>
-          <Text style={styles.disclaimerTitle}>Belangrijke Disclaimer</Text>
-          <Text style={styles.disclaimerText}>
-            Deze waardering is een indicatie gebaseerd op bedrijfsresultaten en sectorgemiddelden. 
-            De werkelijke waarde van uw bedrijf kan afwijken door factoren zoals marktpositie, 
-            groeiperspectieven, activa, schulden en marktontwikkelingen. Voor een definitieve 
-            waardering adviseren wij een professionele due diligence.
+          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
+            5. Bedrijfswaardering
           </Text>
+          
+          <View style={styles.businessContent}>
+            {getPageData(5).content ? (
+              renderContentSections(getPageData(5).content)
+            ) : (
+              <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 business valuation</Text>
+            )}
+          </View>
         </View>
         
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>6</Text>
+        <Text style={styles.pageNumber}>5</Text>
+      </Page>
+
+      {/* Page 6 - Next Steps */}
+      <Page size="A4" orientation="landscape" style={styles.page}>
+        {getPageData(6).background && (
+          <Image src={getPageData(6).background} style={styles.backgroundImage} />
+        )}
+        
+        <View style={styles.content}>
+          <View style={styles.pageHeader}>
+            <Text style={styles.fbmLogo}>fbm</Text>
+          </View>
+          
+          <View style={styles.nextStepsContent}>
+            <Text style={styles.nextStepsTitle}>The next step</Text>
+            <Text style={styles.nextStepsSubtitle}>A real impact begins with a single step</Text>
+            
+            <View style={styles.contactInfo}>
+              {getPageData(6).content ? (
+                renderContentSections(getPageData(6).content)
+              ) : (
+                <>
+                  <Text style={styles.placeholderText}>PLACEHOLDER tekst 2 next steps</Text>
+                  <Text style={styles.websiteText}>➤ www.fbm.nl</Text>
+                </>
+              )}
+            </View>
+          </View>
         </View>
+        
+        {getPageData(6).footerLogo && (
+          <Image 
+            src={getPageData(6).footerLogo} 
+            style={[
+              styles.footerLogo,
+              { 
+                left: getPageData(6).footerLogoPosition === 'center' ? '50%' : 
+                      getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
+                right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto',
+                transform: getPageData(6).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+              }
+            ]} 
+          />
+        )}
+        
+        <Text style={styles.pageNumber}>6</Text>
       </Page>
     </Document>
   );
@@ -723,6 +736,8 @@ export const generatePDF = async (
   pages: any[] = [],
   sectors: SectorConfig[] = []
 ) => {
+  const { pdf } = await import('@react-pdf/renderer');
+  
   const blob = await pdf(
     <ValuationReportPDF 
       companyData={companyData}
