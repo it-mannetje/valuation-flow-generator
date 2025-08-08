@@ -168,6 +168,9 @@ export default function PDFContentManager() {
     setPdfPreviewUrl(null);
     
     try {
+      console.log('Starting PDF generation...');
+      console.log('Pages data:', pages);
+      
       // Use real data from the database instead of mock data
       const mockCompanyData = {
         lastYearRevenue: 1000000,
@@ -200,6 +203,8 @@ export default function PDFContentManager() {
         sector: "technology"
       };
 
+      console.log('Creating PDF component...');
+      
       // Generate PDF blob with actual pages data
       const pdfBlob = await pdf(
         <AdminPreviewPDF 
@@ -209,6 +214,8 @@ export default function PDFContentManager() {
           pages={pages}
         />
       ).toBlob();
+
+      console.log('PDF blob created:', pdfBlob);
 
       // Open PDF in new window instead of iframe
       const url = URL.createObjectURL(pdfBlob);
@@ -234,7 +241,7 @@ export default function PDFContentManager() {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to generate PDF preview.",
+        description: `Failed to generate PDF preview: ${error instanceof Error ? error.message : 'Unknown error'}`,
       });
     } finally {
       setGeneratePreview(false);

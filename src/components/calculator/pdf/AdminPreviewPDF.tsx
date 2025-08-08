@@ -97,36 +97,49 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
 }) => {
   // Helper function to render content sections
   const renderContentSections = (content: any) => {
-    if (!content) return null;
+    if (!content || !Array.isArray(content)) return null;
     
-    return content.map((section: any, index: number) => {
-      switch (section.type) {
-        case 'heading':
-          return (
-            <View key={index} style={styles.section}>
-              <Text style={styles.sectionTitle}>{section.text}</Text>
-            </View>
-          );
-        case 'paragraph':
-          return (
-            <View key={index} style={styles.section}>
-              <Text style={styles.paragraph}>{section.text}</Text>
-            </View>
-          );
-        case 'list':
-          return (
-            <View key={index} style={[styles.section, styles.list]}>
-              <Text style={styles.listItem}>• {section.text}</Text>
-            </View>
-          );
-        default:
-          return (
-            <View key={index} style={styles.section}>
-              <Text style={styles.paragraph}>{section.text}</Text>
-            </View>
-          );
-      }
-    });
+    try {
+      return content.map((section: any, index: number) => {
+        if (!section || typeof section !== 'object') return null;
+        
+        const sectionText = section.text || '';
+        
+        switch (section.type) {
+          case 'heading':
+            return (
+              <View key={index} style={styles.section}>
+                <Text style={styles.sectionTitle}>{sectionText}</Text>
+              </View>
+            );
+          case 'paragraph':
+            return (
+              <View key={index} style={styles.section}>
+                <Text style={styles.paragraph}>{sectionText}</Text>
+              </View>
+            );
+          case 'list':
+            return (
+              <View key={index} style={[styles.section, styles.list]}>
+                <Text style={styles.listItem}>• {sectionText}</Text>
+              </View>
+            );
+          default:
+            return (
+              <View key={index} style={styles.section}>
+                <Text style={styles.paragraph}>{sectionText}</Text>
+              </View>
+            );
+        }
+      }).filter(Boolean);
+    } catch (error) {
+      console.error('Error rendering content sections:', error);
+      return (
+        <View style={styles.section}>
+          <Text style={styles.paragraph}>Error rendering content</Text>
+        </View>
+      );
+    }
   };
 
   return (
