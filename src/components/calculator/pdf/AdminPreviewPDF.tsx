@@ -10,20 +10,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
     fontFamily: 'Helvetica',
-    fontSize: 11,
-    lineHeight: 1.5,
-    padding: 40,
+    fontSize: 12,
+    lineHeight: 1.6,
+    padding: 50,
+    minHeight: '100%',
   },
   header: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 28,
+    marginBottom: 25,
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#1E40AF',
   },
   subtitle: {
-    fontSize: 16,
-    marginBottom: 30,
+    fontSize: 18,
+    marginBottom: 35,
     textAlign: 'center',
     color: '#666666',
   },
@@ -31,38 +32,40 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#1E40AF',
-    marginBottom: 15,
+    marginBottom: 18,
     borderBottom: '2 solid #1E40AF',
-    paddingBottom: 5,
+    paddingBottom: 8,
   },
   paragraph: {
-    marginBottom: 12,
+    marginBottom: 15,
     textAlign: 'justify',
-    lineHeight: 1.6,
+    lineHeight: 1.7,
+    fontSize: 13,
   },
   list: {
     marginLeft: 20,
   },
   listItem: {
-    marginBottom: 8,
+    marginBottom: 10,
+    fontSize: 13,
   },
   contactInfo: {
-    fontSize: 10,
-    marginTop: 30,
-    padding: 15,
+    fontSize: 11,
+    marginTop: 35,
+    padding: 18,
     backgroundColor: '#F8FAFC',
     border: '1 solid #E2E8F0',
   },
   footer: {
     position: 'absolute',
-    bottom: 30,
-    left: 40,
-    right: 40,
+    bottom: 35,
+    left: 50,
+    right: 50,
     textAlign: 'center',
-    fontSize: 8,
+    fontSize: 10,
     color: '#666666',
   },
 });
@@ -155,7 +158,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
   return (
     <Document>
       {pages.map((page) => (
-        <Page key={page.id} size="A4" style={styles.page}>
+        <Page key={page.id} size="A4" orientation="landscape" style={styles.page}>
           {/* Page Title */}
           {page.content?.title && (
             <Text style={styles.header}>
