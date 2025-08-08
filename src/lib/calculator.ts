@@ -1,8 +1,8 @@
-import { CompanyData, ValuationResult, SECTORS } from '@/types/calculator';
+import { CompanyData, ValuationResult, SectorConfig } from '@/types/calculator';
 
-export function calculateValuation(companyData: CompanyData): ValuationResult {
+export function calculateValuation(companyData: CompanyData, sectors: SectorConfig[]): ValuationResult {
   // Find sector configuration
-  const sectorConfig = SECTORS.find(s => s.id === companyData.sector);
+  const sectorConfig = sectors.find(s => s.id === companyData.sector);
   
   if (!sectorConfig) {
     throw new Error('Invalid sector selected');

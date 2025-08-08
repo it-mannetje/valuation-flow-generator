@@ -74,6 +74,36 @@ export type Database = {
         }
         Relationships: []
       }
+      sector_configs: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          multiple: number
+          name: string
+          text: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id: string
+          multiple: number
+          name: string
+          text: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          multiple?: number
+          name?: string
+          text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       valuation_requests: {
         Row: {
           contact_company: string | null

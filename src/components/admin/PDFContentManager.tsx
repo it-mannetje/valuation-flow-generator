@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import AdminPreviewPDF from '@/components/calculator/pdf/AdminPreviewPDF';
 import { pdf } from '@react-pdf/renderer';
+import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 interface PDFPage {
   id: string;
@@ -39,6 +40,7 @@ interface TextSection {
 }
 
 export default function PDFContentManager() {
+  const { sectors } = useSectorConfig();
   const [pages, setPages] = useState<PDFPage[]>([]);
   const [selectedPage, setSelectedPage] = useState<PDFPage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -212,6 +214,7 @@ export default function PDFContentManager() {
           contactData={mockContactData}
           valuationResult={mockValuationResult}
           pages={pages}
+          sectors={sectors}
         />
       ).toBlob();
 

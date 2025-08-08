@@ -10,6 +10,7 @@ import ValuationResultStep from './steps/ValuationResultStep';
 import PDFGenerationStep from './steps/PDFGenerationStep';
 import { calculateValuation } from '@/lib/calculator';
 import { cn } from '@/lib/utils';
+import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 const STEPS = [
   { id: 1, title: 'Bedrijfsgegevens', description: 'Voer uw bedrijfsinformatie in' },
@@ -19,6 +20,7 @@ const STEPS = [
 ];
 
 export default function CalculatorWizard() {
+  const { sectors } = useSectorConfig();
   const [state, setState] = useState<CalculatorState>({
     currentStep: 1,
     companyData: {},
@@ -35,7 +37,7 @@ export default function CalculatorWizard() {
     setIsLoading(true);
     
     try {
-      const valuationResult = calculateValuation(data);
+      const valuationResult = calculateValuation(data, sectors);
       
       setState(prev => ({
         ...prev,

@@ -9,9 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { CompanyData, SECTORS } from '@/types/calculator';
+import { CompanyData } from '@/types/calculator';
 import { Building2, Calculator } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 const companyDataSchema = z.object({
   // Omzet
@@ -46,6 +47,7 @@ interface CompanyDataStepProps {
 }
 
 export default function CompanyDataStep({ data, onSubmit, isLoading = false }: CompanyDataStepProps) {
+  const { sectors } = useSectorConfig();
   const form = useForm<CompanyData>({
     resolver: zodResolver(companyDataSchema),
     defaultValues: {
@@ -280,16 +282,16 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                              <SelectValue placeholder="Selecteer sector" />
                            </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
-                          {SECTORS.map((sector) => (
-                            <SelectItem key={sector.id} value={sector.id}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{sector.name}</span>
-                                <span className="text-sm text-muted-foreground">{sector.description}</span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
+                         <SelectContent>
+                           {sectors.map((sector) => (
+                             <SelectItem key={sector.id} value={sector.id}>
+                               <div className="flex flex-col">
+                                 <span className="font-medium">{sector.name}</span>
+                                 <span className="text-sm text-muted-foreground">{sector.description}</span>
+                               </div>
+                             </SelectItem>
+                           ))}
+                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>

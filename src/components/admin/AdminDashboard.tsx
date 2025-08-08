@@ -8,14 +8,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SECTORS, SectorConfig } from '@/types/calculator';
-import { Settings, Edit, Save, RotateCcw, Upload, Download } from 'lucide-react';
+import { SectorConfig } from '@/types/calculator';
+import { Settings, Edit, Save, RotateCcw, Upload, Download, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import PDFContentManager from './PDFContentManager';
+import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 export default function AdminDashboard() {
-  const [sectors, setSectors] = useState<SectorConfig[]>(SECTORS);
+  const { sectors, isLoading, updateSector } = useSectorConfig();
   const [editingSector, setEditingSector] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<SectorConfig>>({});
   const { toast } = useToast();
@@ -28,19 +29,15 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editingSector && editData) {
-      setSectors(prev => prev.map(sector => 
-        sector.id === editingSector 
-          ? { ...sector, ...editData } as SectorConfig
-          : sector
-      ));
-      setEditingSector(null);
-      setEditData({});
-      toast({
-        title: "Sector Bijgewerkt",
-        description: "De sector instellingen zijn succesvol opgeslagen.",
-      });
+      const updatedSector = { ...sectors.find(s => s.id === editingSector), ...editData } as SectorConfig;
+      const success = await updateSector(updatedSector);
+      
+      if (success) {
+        setEditingSector(null);
+        setEditData({});
+      }
     }
   };
 
@@ -120,18 +117,24 @@ export default function AdminDashboard() {
               </CardHeader>
 
               <CardContent className="p-6">
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Sector</TableHead>
-                        <TableHead>Beschrijving</TableHead>
-                        <TableHead>Multiple</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Acties</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+                    <span className="ml-2">Laden van sector configuraties...</span>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Sector</TableHead>
+                          <TableHead>Beschrijving</TableHead>
+                          <TableHead>Multiple</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Acties</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
                       {sectors.map((sector) => (
                         <TableRow key={sector.id}>
                           <TableCell className="font-medium">{sector.name}</TableCell>
@@ -177,9 +180,10 @@ export default function AdminDashboard() {
                           </TableCell>
                         </TableRow>
                       ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
 
                 {/* Sector Text Editor */}
                 {editingSector && (

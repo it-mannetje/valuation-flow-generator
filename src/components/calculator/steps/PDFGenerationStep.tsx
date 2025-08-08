@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CompanyData, ContactData, ValuationResult, SECTORS } from '@/types/calculator';
+import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
 import { Download, FileText, RotateCcw, ChevronLeft, CheckCircle, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 interface PDFGenerationStepProps {
   companyData: CompanyData;
@@ -22,13 +23,14 @@ export default function PDFGenerationStep({
   onRestart, 
   onBack 
 }: PDFGenerationStepProps) {
+  const { sectors } = useSectorConfig();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [isSubmittingToHubSpot, setIsSubmittingToHubSpot] = useState(false);
   const [isPDFGenerated, setIsPDFGenerated] = useState(false);
   const [isSubmittedToHubSpot, setIsSubmittedToHubSpot] = useState(false);
   const { toast } = useToast();
 
-  const sectorConfig = SECTORS.find(s => s.id === companyData.sector);
+  const sectorConfig = sectors.find(s => s.id === companyData.sector);
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
 
   const handleGeneratePDF = async () => {

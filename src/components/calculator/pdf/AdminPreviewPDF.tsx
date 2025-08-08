@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-import { CompanyData, ContactData, ValuationResult, SECTORS } from '@/types/calculator';
+import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 
 // Use default fonts - no custom font registration needed
 
@@ -86,13 +86,15 @@ interface AdminPreviewPDFProps {
   contactData: ContactData;
   valuationResult: ValuationResult;
   pages: PDFPage[];
+  sectors: SectorConfig[];
 }
 
 const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({ 
   companyData, 
   contactData, 
   valuationResult, 
-  pages 
+  pages,
+  sectors 
 }) => {
   // Helper function to render content sections
   const renderContentSections = (content: any, page: PDFPage) => {
@@ -106,7 +108,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         
         // Replace sector-specific placeholders for sector information page
         if (page.page_number === 4 && companyData.sector) {
-          const sectorConfig = SECTORS.find(s => s.id === companyData.sector);
+          const sectorConfig = sectors.find(s => s.id === companyData.sector);
           if (sectorConfig && sectionText.includes('{{sector_text}}')) {
             sectionText = sectionText.replace('{{sector_text}}', sectorConfig.text);
           }
