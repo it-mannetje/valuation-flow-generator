@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      pdf_pages: {
+        Row: {
+          background_image_url: string | null
+          content: Json
+          created_at: string
+          id: string
+          logo_image_url: string | null
+          page_name: string
+          page_number: number
+          updated_at: string
+        }
+        Insert: {
+          background_image_url?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          logo_image_url?: string | null
+          page_name: string
+          page_number: number
+          updated_at?: string
+        }
+        Update: {
+          background_image_url?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          logo_image_url?: string | null
+          page_name?: string
+          page_number?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       valuation_requests: {
         Row: {
           contact_company: string | null

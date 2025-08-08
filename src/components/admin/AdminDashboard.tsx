@@ -12,6 +12,7 @@ import { SECTORS, SectorConfig } from '@/types/calculator';
 import { Settings, Edit, Save, RotateCcw, Upload, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import PDFContentManager from './PDFContentManager';
 
 export default function AdminDashboard() {
   const [sectors, setSectors] = useState<SectorConfig[]>(SECTORS);
@@ -90,8 +91,9 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="sectors" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="sectors">Sector Management</TabsTrigger>
+            <TabsTrigger value="pdf">PDF Beheer</TabsTrigger>
             <TabsTrigger value="settings">Algemene Instellingen</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
           </TabsList>
@@ -215,6 +217,18 @@ export default function AdminDashboard() {
                     </CardContent>
                   </Card>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="pdf">
+            <Card className="shadow-lg">
+              <CardHeader className="bg-gradient-card border-b">
+                <CardTitle className="text-xl">PDF Inhoud Beheer</CardTitle>
+                <p className="text-muted-foreground">Beheer teksten en afbeeldingen per PDF pagina</p>
+              </CardHeader>
+              <CardContent className="p-6">
+                <PDFContentManager />
               </CardContent>
             </Card>
           </TabsContent>
