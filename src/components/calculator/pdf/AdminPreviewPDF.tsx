@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
+import { CompanyData, ContactData, ValuationResult, SECTORS } from '@/types/calculator';
 
 // Use default fonts - no custom font registration needed
 
@@ -92,14 +92,28 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
   pages 
 }) => {
   // Helper function to render content sections
-  const renderContentSections = (content: any) => {
+  const renderContentSections = (content: any, page: PDFPage) => {
     if (!content || !Array.isArray(content)) return null;
     
     try {
       return content.map((section: any, index: number) => {
         if (!section || typeof section !== 'object') return null;
         
-        const sectionText = section.text || '';
+        let sectionText = section.text || '';
+        
+        // Replace sector-specific placeholders for sector information page
+        if (page.page_number === 4 && companyData.sector) {
+          const sectorConfig = SECTORS.find(s => s.id === companyData.sector);
+          if (sectorConfig && sectionText.includes('{{sector_text}}')) {
+            sectionText = sectionText.replace('{{sector_text}}', sectorConfig.text);
+          }
+          if (sectorConfig && sectionText.includes('{{sector_name}}')) {
+            sectionText = sectionText.replace('{{sector_name}}', sectorConfig.name);
+          }
+          if (sectorConfig && sectionText.includes('{{sector_multiple}}')) {
+            sectionText = sectionText.replace('{{sector_multiple}}', sectorConfig.multiple.toString());
+          }
+        }
         
         switch (section.type) {
           case 'heading':
@@ -159,7 +173,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
           {/* Page Content */}
           {page.content?.content && (
             <View>
-              {renderContentSections(page.content.content)}
+              {renderContentSections(page.content.content, page)}
             </View>
           )}
 
