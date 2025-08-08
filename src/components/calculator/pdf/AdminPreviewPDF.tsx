@@ -2,18 +2,14 @@ import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
 
-// Register fonts
-Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZs.ttf'
-});
+// Use default fonts - no custom font registration needed
 
 // Define styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
-    fontFamily: 'Inter',
+    fontFamily: 'Helvetica',
     fontSize: 11,
     lineHeight: 1.5,
     padding: 40,
