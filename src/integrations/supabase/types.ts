@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      valuation_requests: {
+        Row: {
+          contact_company: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          employees: number | null
+          employees_display: string | null
+          id: string
+          investment_inventory: number | null
+          investment_machinery: number | null
+          investment_other: number | null
+          investment_real_estate: number | null
+          largest_client_dependency: number | null
+          largest_client_dependency_display: string | null
+          largest_supplier_dependency: string | null
+          profit: number | null
+          prospects: string | null
+          recurring_revenue: number | null
+          recurring_revenue_display: string | null
+          revenue: number | null
+          sector: string | null
+          updated_at: string
+          valuation_amount: number | null
+          valuation_range_max: number | null
+          valuation_range_min: number | null
+        }
+        Insert: {
+          contact_company?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          employees?: number | null
+          employees_display?: string | null
+          id?: string
+          investment_inventory?: number | null
+          investment_machinery?: number | null
+          investment_other?: number | null
+          investment_real_estate?: number | null
+          largest_client_dependency?: number | null
+          largest_client_dependency_display?: string | null
+          largest_supplier_dependency?: string | null
+          profit?: number | null
+          prospects?: string | null
+          recurring_revenue?: number | null
+          recurring_revenue_display?: string | null
+          revenue?: number | null
+          sector?: string | null
+          updated_at?: string
+          valuation_amount?: number | null
+          valuation_range_max?: number | null
+          valuation_range_min?: number | null
+        }
+        Update: {
+          contact_company?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          employees?: number | null
+          employees_display?: string | null
+          id?: string
+          investment_inventory?: number | null
+          investment_machinery?: number | null
+          investment_other?: number | null
+          investment_real_estate?: number | null
+          largest_client_dependency?: number | null
+          largest_client_dependency_display?: string | null
+          largest_supplier_dependency?: string | null
+          profit?: number | null
+          prospects?: string | null
+          recurring_revenue?: number | null
+          recurring_revenue_display?: string | null
+          revenue?: number | null
+          sector?: string | null
+          updated_at?: string
+          valuation_amount?: number | null
+          valuation_range_max?: number | null
+          valuation_range_min?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
