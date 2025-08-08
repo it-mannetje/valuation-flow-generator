@@ -1,7 +1,11 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, pdf, Image } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
+
+// Placeholder for images - replace with actual image URLs when available
+const coverBackground = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkZGRkZGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5OTk5IiBmb250LXNpemU9IjI0Ij5Db3ZlciBCYWNrZ3JvdW5kPC90ZXh0Pgo8L3N2Zz4K';
+const fbmLogo = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMUU0MEFGIiByeD0iMTAiLz4KPHR5cGUgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iNDAiIHk9IjQ1IiBmaWxsPSIjRkZGRkZGIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+ZmJtPC90ZXh0Pgo8L3N2Zz4K';
 
 // Register a font if needed
 // Font.register({
@@ -21,6 +25,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     position: 'relative',
     minHeight: '100%',
+    padding: 0,
+  },
+  coverBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  coverOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   header: {
     flexDirection: 'row',
@@ -30,45 +49,73 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottom: '2 solid #E5E7EB',
   },
+  coverHeader: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  coverHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  reportTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    backgroundColor: '#1E40AF',
+    padding: '8 16',
+    borderRadius: 8,
+    marginRight: 20,
+  },
+  dateText: {
+    fontSize: 12,
+    color: '#DC2626',
+    fontWeight: 'bold',
+  },
+  confidential: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1E40AF',
+  },
   logo: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#1E40AF',
   },
-  confidential: {
-    fontSize: 10,
-    backgroundColor: '#1E40AF',
-    color: '#ffffff',
-    padding: '4 8',
-    borderRadius: 4,
+  fbmLogo: {
+    width: 80,
+    height: 80,
   },
   coverTitle: {
     position: 'absolute',
-    bottom: 200,
-    left: 40,
-    right: 40,
+    bottom: 100,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
   },
-  mainTitle: {
+  companyNameCover: {
     fontSize: 48,
     fontWeight: 'bold',
     color: '#DC2626',
+    textAlign: 'center',
     marginBottom: 10,
-    textTransform: 'uppercase',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: '20 40',
+    borderRadius: 10,
   },
-  subtitle: {
+  dateCover: {
     fontSize: 18,
-    color: '#374151',
-    marginBottom: 20,
-  },
-  companyName: {
-    fontSize: 36,
-    fontWeight: 'bold',
     color: '#DC2626',
-    marginBottom: 10,
-  },
-  date: {
-    fontSize: 14,
-    color: '#6B7280',
+    textAlign: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: '10 20',
+    borderRadius: 5,
   },
   section: {
     marginBottom: 30,
@@ -239,26 +286,30 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   return (
     <Document>
       {/* Cover Page */}
-      <Page size="A4" style={styles.coverPage}>
-        <View style={styles.header}>
-          <Text style={styles.logo}>fbm</Text>
-          <Text style={styles.confidential}>STRIKT CONFIDENTIEEL</Text>
+      <Page size="A4" orientation="landscape" style={styles.coverPage}>
+        <Image src={coverBackground} style={styles.coverBackground} />
+        <View style={styles.coverOverlay} />
+        
+        <View style={styles.coverHeader}>
+          <View style={styles.coverHeaderLeft}>
+            <Text style={styles.reportTitle}>Rapport waardebepaling</Text>
+            <Text style={styles.dateText}>{currentDate}</Text>
+          </View>
+          <Text style={styles.confidential}>STRICTLY CONFIDENTIAL</Text>
         </View>
         
         <View style={styles.coverTitle}>
-          <Text style={styles.mainTitle}>Rapport waardering</Text>
-          <Text style={styles.companyName}>[{contactData.companyName}]</Text>
-          <Text style={styles.date}>[{currentDate}]</Text>
+          <Text style={styles.companyNameCover}>[{contactData.companyName}]</Text>
+          <Text style={styles.dateCover}>[{currentDate}]</Text>
         </View>
         
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>FBM Corporate Finance</Text>
-          <Text style={styles.footerText}>www.fbm.nl</Text>
+        <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 10 }}>
+          <Image src={fbmLogo} style={styles.fbmLogo} />
         </View>
       </Page>
 
       {/* Foreword Page */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
@@ -310,7 +361,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Calculation Page */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
@@ -370,7 +421,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={styles.highlightBox}>
                 <Text style={styles.highlightValue}>€ {Math.round(estimatedEbitda / 1000)},500</Text>
                 <Text style={styles.rangeText}>EBITDA (Adjusted)</Text>
-                <Text style={styles.date}>{currentDate}</Text>
+                <Text style={styles.rangeText}>{currentDate}</Text>
                 <Text style={styles.rangeText}>Waarderingsmoment</Text>
               </View>
               
@@ -408,7 +459,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Sector Information Page */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
@@ -453,7 +504,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Business Valuation Page */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
@@ -495,7 +546,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Next Steps Page */}
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.logo}>fbm</Text>
         </View>
