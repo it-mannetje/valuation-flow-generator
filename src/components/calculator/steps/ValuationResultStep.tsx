@@ -202,13 +202,78 @@ export default function ValuationResultStep({
         </CardContent>
       </Card>
 
+      {/* Report Preview */}
+      <Card className="bg-muted/30 border-2 border-dashed border-muted-foreground/20 rounded-lg">
+        <CardHeader className="text-center">
+          <CardTitle className="flex items-center justify-center gap-2 text-xl">
+            <FileText className="w-6 h-6 text-primary" />
+            Rapport Preview
+          </CardTitle>
+          <p className="text-muted-foreground">
+            Hieronder ziet u een voorvertoning van uw bedrijfswaardering rapport
+          </p>
+        </CardHeader>
+        <CardContent className="p-8 bg-background/80 mx-6 mb-6 rounded-lg shadow-sm">
+          {/* Simplified report content */}
+          <div className="space-y-6">
+            <div className="text-center border-b pb-4">
+              <h3 className="text-2xl font-bold text-foreground">Bedrijfswaardering Rapport</h3>
+              <p className="text-muted-foreground">{contactData.companyName}</p>
+              <p className="text-sm text-muted-foreground">Datum: {new Date().toLocaleDateString('nl-NL')}</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">Waardering Samenvatting</h4>
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span>Geschatte waarde:</span>
+                    <span className="font-medium">{formatCurrency(valuationResult.baseValuation)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Range:</span>
+                    <span className="font-medium">{formatCurrency(valuationResult.minValuation)} - {formatCurrency(valuationResult.maxValuation)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Multiple:</span>
+                    <span className="font-medium">{valuationResult.multiple.toFixed(1)}x</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">Bedrijfsgegevens</h4>
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span>Sector:</span>
+                    <span className="font-medium">{valuationResult.sector}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Werknemers:</span>
+                    <span className="font-medium">{companyData.employeesDisplay || companyData.employees}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Jaaromzet:</span>
+                    <span className="font-medium">{formatCurrency(companyData.lastYearRevenue)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center text-muted-foreground text-xs pt-4 border-t">
+              ... volledig rapport bevat uitgebreide analyse, marktdata en aanbevelingen ...
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Button
           variant="outline"
           size="lg"
           onClick={onBack}
-          className="flex items-center gap-2"
+          className="flex items-center justify-center gap-2"
         >
           <ChevronLeft className="w-5 h-5" />
           Vorige Stap
@@ -218,14 +283,38 @@ export default function ValuationResultStep({
           size="lg"
           onClick={onNext}
           className={cn(
-            "flex-1 bg-gradient-primary hover:shadow-primary",
-            "transition-all duration-300 transform hover:scale-105"
+            "bg-gradient-primary hover:shadow-primary",
+            "transition-all duration-300 flex items-center justify-center gap-2"
           )}
         >
-          <div className="flex items-center gap-2">
-            <Download className="w-5 h-5" />
-            Download PDF Rapport
-          </div>
+          <Download className="w-5 h-5" />
+          Download Rapport
+        </Button>
+
+        <Button
+          variant="secondary"
+          size="lg"
+          className="flex items-center justify-center gap-2"
+          onClick={() => {
+            // TODO: Implement personal advice request functionality
+            console.log('Aanvragen persoonlijk advies');
+          }}
+        >
+          <Users className="w-5 h-5" />
+          Persoonlijk Advies
+        </Button>
+
+        <Button
+          variant="outline"
+          size="lg"
+          className="flex items-center justify-center gap-2"
+          onClick={() => {
+            // TODO: Implement restart functionality
+            window.location.reload();
+          }}
+        >
+          <TrendingUp className="w-5 h-5" />
+          Nieuwe Berekening
         </Button>
       </div>
     </div>
