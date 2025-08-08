@@ -8,6 +8,7 @@ import { TrendingUp, Building2, Users, DollarSign, FileText, ChevronLeft, Downlo
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { generatePDF } from '@/components/calculator/pdf/ValuationReportPDF';
 
 interface ValuationResultStepProps {
   companyData: CompanyData;
@@ -76,7 +77,10 @@ export default function ValuationResultStep({
         description: "Uw bedrijfswaardering aanvraag is succesvol opgeslagen.",
       });
 
-      // Proceed with download/next step
+      // Generate and download PDF
+      await generatePDF(companyData, contactData, valuationResult);
+      
+      // Proceed to next step
       onNext();
     } catch (error) {
       console.error('Error saving to database:', error);
