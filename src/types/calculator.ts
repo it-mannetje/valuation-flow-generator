@@ -21,6 +21,7 @@ export interface CompanyData {
   // Display values for ranges
   employeesDisplay?: string;
   largestClientDependencyDisplay?: string;
+  recurringRevenuePercentageDisplay?: string;
 }
 
 export interface ContactData {

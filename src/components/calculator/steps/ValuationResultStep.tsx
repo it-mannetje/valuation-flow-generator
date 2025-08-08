@@ -159,7 +159,7 @@ export default function ValuationResultStep({
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Terugkerend (%)</div>
-                <div className="font-medium">{companyData.recurringRevenuePercentage}%</div>
+                <div className="font-medium">{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</div>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Resultaat 2024</div>

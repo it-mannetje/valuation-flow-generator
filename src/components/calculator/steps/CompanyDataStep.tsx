@@ -35,7 +35,8 @@ const companyDataSchema = z.object({
   
   // Display values (optional)
   employeesDisplay: z.string().optional(),
-  largestClientDependencyDisplay: z.string().optional()
+  largestClientDependencyDisplay: z.string().optional(),
+  recurringRevenuePercentageDisplay: z.string().optional()
 });
 
 interface CompanyDataStepProps {
@@ -60,7 +61,8 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
       largestClientDependency: data.largestClientDependency || 0,
       largestSupplierRisk: data.largestSupplierRisk || '',
       employeesDisplay: data.employeesDisplay || '',
-      largestClientDependencyDisplay: data.largestClientDependencyDisplay || ''
+      largestClientDependencyDisplay: data.largestClientDependencyDisplay || '',
+      recurringRevenuePercentageDisplay: data.recurringRevenuePercentageDisplay || ''
     }
   });
 
@@ -114,7 +116,14 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Welk deel is hiervan jaarlijks terugkerende omzet? (%) *</FormLabel>
-                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                      <Select onValueChange={(value) => {
+                        field.onChange(parseInt(value));
+                        // Store display value based on selection
+                        const displayValue = value === "12" ? "0-25%" : 
+                                           value === "38" ? "26-50%" :
+                                           value === "63" ? "51-75%" : "76-100%";
+                        form.setValue("recurringRevenuePercentageDisplay", displayValue);
+                      }} value={field.value?.toString()}>
                         <FormControl>
                            <SelectTrigger className="h-12 bg-input text-black">
                              <SelectValue placeholder="Selecteer percentage" />
