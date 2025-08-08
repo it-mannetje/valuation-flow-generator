@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 
 // Use default fonts - no custom font registration needed
@@ -14,6 +14,15 @@ const styles = StyleSheet.create({
     lineHeight: 1.6,
     padding: 50,
     minHeight: '100%',
+    position: 'relative',
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
   },
   header: {
     fontSize: 28,
@@ -27,6 +36,50 @@ const styles = StyleSheet.create({
     marginBottom: 35,
     textAlign: 'center',
     color: '#666666',
+  },
+  topLogoContainer: {
+    position: 'absolute',
+    top: 20,
+    left: 50,
+    right: 50,
+    height: 60,
+    zIndex: 10,
+  },
+  topLogoLeft: {
+    alignItems: 'flex-start',
+  },
+  topLogoCenter: {
+    alignItems: 'center',
+  },
+  topLogoRight: {
+    alignItems: 'flex-end',
+  },
+  topLogo: {
+    width: 100,
+    height: 40,
+    objectFit: 'contain',
+  },
+  footerLogoContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 50,
+    right: 50,
+    height: 40,
+    zIndex: 10,
+  },
+  footerLogoLeft: {
+    alignItems: 'flex-start',
+  },
+  footerLogoCenter: {
+    alignItems: 'center',
+  },
+  footerLogoRight: {
+    alignItems: 'flex-end',
+  },
+  footerLogo: {
+    width: 80,
+    height: 30,
+    objectFit: 'contain',
   },
   section: {
     marginBottom: 20,
@@ -76,6 +129,10 @@ interface PDFPage {
   page_name: string;
   background_image_url?: string;
   logo_image_url?: string;
+  top_logo_url?: string;
+  top_logo_position?: string;
+  footer_logo_url?: string;
+  footer_logo_position?: string;
   content: any;
   created_at: string;
   updated_at: string;
@@ -161,6 +218,22 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
     <Document>
       {pages.map((page) => (
         <Page key={page.id} size="A4" orientation="landscape" style={styles.page}>
+          {/* Background Image */}
+          {page.background_image_url && (
+            <Image src={page.background_image_url} style={styles.backgroundImage} />
+          )}
+
+          {/* Top Logo */}
+          {page.top_logo_url && (
+            <View style={[
+              styles.topLogoContainer,
+              page.top_logo_position === 'center' ? styles.topLogoCenter :
+              page.top_logo_position === 'right' ? styles.topLogoRight : styles.topLogoLeft
+            ]}>
+              <Image src={page.top_logo_url} style={styles.topLogo} />
+            </View>
+          )}
+
           {/* Page Title */}
           {page.content?.title && (
             <Text style={styles.header}>
@@ -198,6 +271,17 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               {page.content.contact_website && (
                 <Text>Website: {page.content.contact_website}</Text>
               )}
+            </View>
+          )}
+
+          {/* Footer Logo */}
+          {page.footer_logo_url && (
+            <View style={[
+              styles.footerLogoContainer,
+              page.footer_logo_position === 'center' ? styles.footerLogoCenter :
+              page.footer_logo_position === 'right' ? styles.footerLogoRight : styles.footerLogoLeft
+            ]}>
+              <Image src={page.footer_logo_url} style={styles.footerLogo} />
             </View>
           )}
 
