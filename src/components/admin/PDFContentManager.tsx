@@ -165,24 +165,42 @@ export default function PDFContentManager() {
   };
 
   const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo', file: File) => {
-    // In a real implementation, you would upload to Supabase Storage
-    // For now, we'll create a placeholder URL
-    const imageUrl = URL.createObjectURL(file);
-    
-    if (type === 'background') {
-      updatePageContent({ background_image_url: imageUrl });
-    } else if (type === 'top_logo') {
-      updatePageContent({ top_logo_url: imageUrl });
-    } else if (type === 'footer_logo') {
-      updatePageContent({ footer_logo_url: imageUrl });
-    } else {
-      updatePageContent({ logo_image_url: imageUrl });
-    }
+    try {
+      // Convert file to base64
+      const base64String = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result as string;
+          resolve(result);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
 
-    toast({
-      title: "Afbeelding Geüpload",
-      description: `${type === 'background' ? 'Achtergrond' : 'Logo'} afbeelding is geüpload.`,
-    });
+      console.log(`Converting ${type} image to base64:`, base64String.substring(0, 50) + '...');
+      
+      if (type === 'background') {
+        updatePageContent({ background_image_url: base64String });
+      } else if (type === 'top_logo') {
+        updatePageContent({ top_logo_url: base64String });
+      } else if (type === 'footer_logo') {
+        updatePageContent({ footer_logo_url: base64String });
+      } else {
+        updatePageContent({ logo_image_url: base64String });
+      }
+
+      toast({
+        title: "Afbeelding Geüpload",
+        description: `${type === 'background' ? 'Achtergrond' : 'Logo'} afbeelding is geconverteerd naar base64 en geüpload.`,
+      });
+    } catch (error) {
+      console.error('Error converting image to base64:', error);
+      toast({
+        variant: "destructive",
+        title: "Upload Error",
+        description: "Failed to convert image to base64.",
+      });
+    }
   };
 
   const handleGeneratePreview = async () => {

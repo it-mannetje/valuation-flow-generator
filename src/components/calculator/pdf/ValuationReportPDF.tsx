@@ -356,7 +356,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   const renderBackgroundImage = (imageUrl: string | null) => {
     if (!imageUrl) return null;
     
-    // Skip blob URLs since they can't be loaded in PDF context
+    // Support both base64 and regular URLs
     if (imageUrl.startsWith('blob:')) {
       console.warn('Background image skipped - blob URLs not supported in PDF:', imageUrl);
       return null;
@@ -373,7 +373,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
     if (!logoUrl) return null;
     
-    // Skip blob URLs since they can't be loaded in PDF context
+    // Support both base64 and regular URLs
     if (logoUrl.startsWith('blob:')) {
       console.warn('Logo skipped - blob URLs not supported in PDF:', logoUrl);
       return null;
