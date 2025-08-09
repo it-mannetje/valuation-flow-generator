@@ -27,12 +27,13 @@ const styles = StyleSheet.create({
   },
   // Page 1 - Cover styles
   coverHeader: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    right: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
-    paddingTop: 20,
-    paddingHorizontal: 20,
   },
   reportBadge: {
     backgroundColor: '#1E40AF',
@@ -41,12 +42,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: '8 16',
     borderRadius: 6,
-    marginRight: 10,
   },
   dateSmall: {
     fontSize: 12,
     color: '#DC2626',
     fontWeight: 'bold',
+    marginLeft: 10,
   },
   confidentialText: {
     fontSize: 12,
@@ -62,28 +63,31 @@ const styles = StyleSheet.create({
   },
   centerTitle: {
     position: 'absolute',
-    bottom: 150,
-    left: 40,
-    right: 40,
+    bottom: 100,
+    left: '50%',
+    width: 400,
+    marginLeft: -200,
     alignItems: 'center',
   },
   companyName: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    padding: '15 30',
+    padding: '20 40',
     borderRadius: 8,
     marginBottom: 10,
+    width: '100%',
   },
   dateCenter: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#DC2626',
     textAlign: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    padding: '8 16',
+    padding: '10 20',
     borderRadius: 4,
+    width: '100%',
   },
   // Page 2 - Foreword styles
   pageHeader: {
@@ -418,15 +422,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       {/* Page 1 - Cover */}
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(1).background)}
-        
-        {renderLogo(getPageData(1).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(1).topLogoPosition === 'center' ? '45%' : 
-                  getPageData(1).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(1).topLogoPosition === 'right' ? 20 : 'auto'
-          }
-        ])}
         
         {renderLogo(getPageData(1).topLogo, styles.logoTopRight)}
         
