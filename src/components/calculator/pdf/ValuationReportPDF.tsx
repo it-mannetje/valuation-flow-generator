@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
   },
   logoTopRight: {
     position: 'absolute',
-    top: 20,
-    right: 20,
-    width: 80,
+    top: 30,
+    right: 30,
+    width: 120,
     height: 80,
     objectFit: 'contain',
     zIndex: 10,
