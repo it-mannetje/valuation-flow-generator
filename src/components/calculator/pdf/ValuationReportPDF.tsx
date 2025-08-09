@@ -19,11 +19,9 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    zIndex: 0,
   },
   content: {
     position: 'relative',
-    zIndex: 1,
     padding: 40,
     minHeight: '100%',
   },
@@ -61,8 +59,6 @@ const styles = StyleSheet.create({
     right: 30,
     width: 120,
     height: 80,
-    objectFit: 'contain',
-    zIndex: 10,
   },
   centerTitle: {
     position: 'absolute',
@@ -70,7 +66,6 @@ const styles = StyleSheet.create({
     left: 40,
     right: 40,
     alignItems: 'center',
-    zIndex: 10,
   },
   companyName: {
     fontSize: 48,
@@ -132,7 +127,6 @@ const styles = StyleSheet.create({
     right: 40,
     fontSize: 14,
     color: '#6B7280',
-    zIndex: 10,
   },
   // Page 3 - Calculation styles
   calculationGrid: {
@@ -308,16 +302,12 @@ const styles = StyleSheet.create({
     top: 20,
     width: 100,
     height: 40,
-    objectFit: 'contain',
-    zIndex: 10,
   },
   footerLogo: {
     position: 'absolute',
     bottom: 60,
     width: 80,
     height: 30,
-    objectFit: 'contain',
-    zIndex: 10,
   },
 });
 
@@ -432,12 +422,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderLogo(getPageData(1).topLogo, [
           styles.topLogo,
           { 
-            left: getPageData(1).topLogoPosition === 'center' ? '50%' : 
+            left: getPageData(1).topLogoPosition === 'center' ? '45%' : 
                   getPageData(1).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(1).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(1).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+            right: getPageData(1).topLogoPosition === 'right' ? 20 : 'auto'
           }
         ])}
+        
+        {renderLogo(getPageData(1).topLogo, styles.logoTopRight)}
         
         <View style={styles.coverHeader}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -455,10 +446,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderLogo(getPageData(1).footerLogo, [
           styles.footerLogo,
           { 
-            left: getPageData(1).footerLogoPosition === 'center' ? '50%' : 
+            left: getPageData(1).footerLogoPosition === 'center' ? '45%' : 
                   getPageData(1).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(1).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(1).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
+            right: getPageData(1).footerLogoPosition === 'right' ? 20 : 'auto'
           }
         ])}
       </Page>
@@ -467,15 +457,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(2).background)}
         
-        {renderLogo(getPageData(2).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(2).topLogoPosition === 'center' ? '50%' : 
-                  getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(2).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(2).topLogo, [
+           styles.topLogo,
+           { 
+             left: getPageData(2).topLogoPosition === 'center' ? '45%' : 
+                   getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <View style={styles.content}>
           <View style={styles.pageHeader}>
@@ -492,15 +481,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           )}
         </View>
         
-        {renderLogo(getPageData(2).footerLogo, [
-          styles.footerLogo,
-          { 
-            left: getPageData(2).footerLogoPosition === 'center' ? '50%' : 
-                  getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(2).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(2).footerLogo, [
+           styles.footerLogo,
+           { 
+             left: getPageData(2).footerLogoPosition === 'center' ? '45%' : 
+                   getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <Text style={styles.pageNumber}>2</Text>
       </Page>
@@ -509,15 +497,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
-        {renderLogo(getPageData(3).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(3).topLogoPosition === 'center' ? '50%' : 
-                  getPageData(3).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(3).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(3).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(3).topLogo, [
+           styles.topLogo,
+           { 
+             left: getPageData(3).topLogoPosition === 'center' ? '45%' : 
+                   getPageData(3).topLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(3).topLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <View style={styles.content}>
           <View style={styles.pageHeader}>
@@ -618,15 +605,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {renderLogo(getPageData(3).footerLogo, [
-          styles.footerLogo,
-          { 
-            left: getPageData(3).footerLogoPosition === 'center' ? '50%' : 
-                  getPageData(3).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(3).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(3).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(3).footerLogo, [
+           styles.footerLogo,
+           { 
+             left: getPageData(3).footerLogoPosition === 'center' ? '45%' : 
+                   getPageData(3).footerLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(3).footerLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <Text style={styles.pageNumber}>3</Text>
       </Page>
@@ -635,15 +621,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(4).background)}
         
-        {renderLogo(getPageData(4).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(4).topLogoPosition === 'center' ? '50%' : 
-                  getPageData(4).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(4).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(4).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(4).topLogo, [
+           styles.topLogo,
+           { 
+             left: getPageData(4).topLogoPosition === 'center' ? '45%' : 
+                   getPageData(4).topLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(4).topLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <View style={styles.content}>
           <View style={styles.pageHeader}>
@@ -669,15 +654,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {renderLogo(getPageData(4).footerLogo, [
-          styles.footerLogo,
-          { 
-            left: getPageData(4).footerLogoPosition === 'center' ? '50%' : 
-                  getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(4).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(4).footerLogo, [
+           styles.footerLogo,
+           { 
+             left: getPageData(4).footerLogoPosition === 'center' ? '45%' : 
+                   getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <Text style={styles.pageNumber}>4</Text>
       </Page>
@@ -686,15 +670,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(5).background)}
         
-        {renderLogo(getPageData(5).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(5).topLogoPosition === 'center' ? '50%' : 
-                  getPageData(5).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(5).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(5).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(5).topLogo, [
+           styles.topLogo,
+           { 
+             left: getPageData(5).topLogoPosition === 'center' ? '45%' : 
+                   getPageData(5).topLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(5).topLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <View style={styles.content}>
           <View style={styles.pageHeader}>
@@ -714,15 +697,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {renderLogo(getPageData(5).footerLogo, [
-          styles.footerLogo,
-          { 
-            left: getPageData(5).footerLogoPosition === 'center' ? '50%' : 
-                  getPageData(5).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(5).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(5).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(5).footerLogo, [
+           styles.footerLogo,
+           { 
+             left: getPageData(5).footerLogoPosition === 'center' ? '45%' : 
+                   getPageData(5).footerLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(5).footerLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <Text style={styles.pageNumber}>5</Text>
       </Page>
@@ -731,15 +713,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(6).background)}
         
-        {renderLogo(getPageData(6).topLogo, [
-          styles.topLogo,
-          { 
-            left: getPageData(6).topLogoPosition === 'center' ? '50%' : 
-                  getPageData(6).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(6).topLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(6).topLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(6).topLogo, [
+           styles.topLogo,
+           { 
+             left: getPageData(6).topLogoPosition === 'center' ? '45%' : 
+                   getPageData(6).topLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(6).topLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <View style={styles.content}>
           <View style={styles.pageHeader}>
@@ -763,15 +744,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {renderLogo(getPageData(6).footerLogo, [
-          styles.footerLogo,
-          { 
-            left: getPageData(6).footerLogoPosition === 'center' ? '50%' : 
-                  getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto',
-            transform: getPageData(6).footerLogoPosition === 'center' ? 'translateX(-50%)' : 'none'
-          }
-        ])}
+         {renderLogo(getPageData(6).footerLogo, [
+           styles.footerLogo,
+           { 
+             left: getPageData(6).footerLogoPosition === 'center' ? '45%' : 
+                   getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
+             right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto'
+           }
+         ])}
         
         <Text style={styles.pageNumber}>6</Text>
       </Page>
