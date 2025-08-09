@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   content: {
     position: 'relative',
-    padding: 40,
+    padding: 0,
     minHeight: '100%',
   },
   // Page 1 - Cover styles
