@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
+    maxWidth: '100%',
+    maxHeight: '100%',
   },
   content: {
     position: 'relative',
@@ -352,7 +354,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
-    if (!imageUrl) return null;
+    if (!imageUrl || imageUrl.startsWith('blob:')) {
+      console.warn('Background image skipped - blob URLs not supported in PDF:', imageUrl);
+      return null;
+    }
     try {
       return <Image src={imageUrl} style={styles.backgroundImage} />;
     } catch (error) {
@@ -362,7 +367,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   };
 
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
-    if (!logoUrl) return null;
+    if (!logoUrl || logoUrl.startsWith('blob:')) {
+      console.warn('Logo skipped - blob URLs not supported in PDF:', logoUrl);
+      return null;
+    }
     try {
       return <Image src={logoUrl} style={logoStyle} />;
     } catch (error) {
