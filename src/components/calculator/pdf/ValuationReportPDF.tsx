@@ -354,10 +354,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
-    if (!imageUrl || imageUrl.startsWith('blob:')) {
+    if (!imageUrl) return null;
+    
+    // Skip blob URLs since they can't be loaded in PDF context
+    if (imageUrl.startsWith('blob:')) {
       console.warn('Background image skipped - blob URLs not supported in PDF:', imageUrl);
       return null;
     }
+    
     try {
       return <Image src={imageUrl} style={styles.backgroundImage} />;
     } catch (error) {
@@ -367,10 +371,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   };
 
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
-    if (!logoUrl || logoUrl.startsWith('blob:')) {
+    if (!logoUrl) return null;
+    
+    // Skip blob URLs since they can't be loaded in PDF context
+    if (logoUrl.startsWith('blob:')) {
       console.warn('Logo skipped - blob URLs not supported in PDF:', logoUrl);
       return null;
     }
+    
     try {
       return <Image src={logoUrl} style={logoStyle} />;
     } catch (error) {
