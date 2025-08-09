@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1,
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
   },
   header: {
     fontSize: 28,
@@ -146,6 +146,27 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
   pages,
   sectors 
 }) => {
+  // Helper function to render images safely
+  const renderBackgroundImage = (imageUrl: string | null) => {
+    if (!imageUrl) return null;
+    try {
+      return <Image src={imageUrl} style={styles.backgroundImage} />;
+    } catch (error) {
+      console.warn('Failed to load background image:', imageUrl, error);
+      return null;
+    }
+  };
+
+  const renderLogo = (logoUrl: string | null, logoStyle: any) => {
+    if (!logoUrl) return null;
+    try {
+      return <Image src={logoUrl} style={logoStyle} />;
+    } catch (error) {
+      console.warn('Failed to load logo:', logoUrl, error);
+      return null;
+    }
+  };
+
   // Helper function to render content sections
   const renderContentSections = (content: any, page: PDFPage) => {
     if (!content || !Array.isArray(content)) return null;
@@ -222,9 +243,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
       {pages.map((page) => (
         <Page key={page.id} size="A4" orientation="landscape" style={styles.page}>
           {/* Background Image */}
-          {page.background_image_url && (
-            <Image src={page.background_image_url} style={styles.backgroundImage} />
-          )}
+          {renderBackgroundImage(page.background_image_url)}
 
           {/* Top Logo */}
           {page.top_logo_url && (
@@ -233,7 +252,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               page.top_logo_position === 'center' ? styles.topLogoCenter :
               page.top_logo_position === 'right' ? styles.topLogoRight : styles.topLogoLeft
             ]}>
-              <Image src={page.top_logo_url} style={styles.topLogo} />
+              {renderLogo(page.top_logo_url, styles.topLogo)}
             </View>
           )}
 
@@ -265,7 +284,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               page.footer_logo_position === 'center' ? styles.footerLogoCenter :
               page.footer_logo_position === 'right' ? styles.footerLogoRight : styles.footerLogoLeft
             ]}>
-              <Image src={page.footer_logo_url} style={styles.footerLogo} />
+              {renderLogo(page.footer_logo_url, styles.footerLogo)}
             </View>
           )}
 
