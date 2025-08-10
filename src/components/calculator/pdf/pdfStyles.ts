@@ -51,12 +51,12 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: '#1e3a8a',
-    height: 100,
+    height: 80,
     zIndex: 3,
     padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   
   // Left side header content
@@ -67,40 +67,39 @@ export const pdfStyles = StyleSheet.create({
   // Main title in header
   headerTitle: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 2,
+    marginBottom: 3,
   },
   
   // Confidential text in header
   headerConfidential: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 10,
     marginBottom: 5,
   },
   
   // Date in header (small red)
   headerDate: {
-    fontSize: 10,
+    fontSize: 9,
     color: '#dc2626',
     fontWeight: 'bold',
   },
   
   // Logo in header (top right)
   headerLogo: {
-    width: 60,
-    height: 40,
+    width: 50,
+    height: 50,
   },
   
   // Main content area below header
   coverMainContent: {
     position: 'absolute',
-    top: 100,
-    left: 20,
-    right: 20,
-    bottom: 20,
+    top: 80,
+    left: 0,
+    right: 0,
+    bottom: 0,
     flexDirection: 'row',
-    gap: 20,
     zIndex: 2,
   },
   
@@ -108,6 +107,7 @@ export const pdfStyles = StyleSheet.create({
   coverImageSection: {
     width: '60%',
     height: '100%',
+    padding: 20,
   },
   
   // Main cover image
@@ -115,15 +115,15 @@ export const pdfStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    borderRadius: 8,
   },
   
   // Right section with company info (40% width)
   coverCompanySection: {
     width: '40%',
     backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 30,
+    margin: 20,
+    marginLeft: 0,
+    padding: 40,
     justifyContent: 'center',
     position: 'relative',
     shadowColor: '#000',
