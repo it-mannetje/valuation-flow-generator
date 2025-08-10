@@ -15,13 +15,23 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: 'absolute',
-    top: '30%', // Start at 30% from top, leaving space for header content
+    top: 0,
     left: 0,
     width: '100%',
-    height: '70%', // Take remaining 70% of the page
+    height: '100%', // Cover entire page
     maxWidth: '100%',
     objectFit: 'cover',
-    zIndex: -1, // Ensure background stays behind content
+    zIndex: 0,
+  },
+  // White bottom section overlay
+  bottomSection: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '25%',
+    backgroundColor: 'white',
+    zIndex: 1,
   },
   content: {
     position: 'relative',
@@ -66,30 +76,27 @@ const styles = StyleSheet.create({
   },
   centerTitle: {
     position: 'absolute',
-    bottom: 100,
-    left: '50%',
-    width: 400,
-    marginLeft: -200,
-    alignItems: 'center',
+    bottom: '20%', // Position in bottom white area
+    left: 30,
+    right: 30,
+    alignItems: 'flex-start',
   },
   companyName: {
     fontSize: 36,
     fontWeight: 'bold',
     color: '#DC2626',
-    textAlign: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    padding: '20 40',
-    borderRadius: 8,
+    textAlign: 'left',
+    backgroundColor: 'white',
+    padding: 0,
     marginBottom: 10,
     width: '100%',
   },
   dateCenter: {
     fontSize: 14,
-    color: '#DC2626',
-    textAlign: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    padding: '10 20',
-    borderRadius: 4,
+    color: '#374151',
+    textAlign: 'left',
+    backgroundColor: 'white',
+    padding: 0,
     width: '100%',
   },
   // Page 2 - Foreword styles
@@ -452,6 +459,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       {/* Page 1 - Cover */}
       <Page size="A4" orientation="landscape" style={styles.page}>
         {renderBackgroundImage(getPageData(1).background)}
+        
+        {/* White bottom section overlay */}
+        <View style={styles.bottomSection} />
         
         {renderLogo(getPageData(1).topLogo, styles.logoTopRight)}
         
