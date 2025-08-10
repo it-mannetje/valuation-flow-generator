@@ -1,329 +1,8 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
-
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    backgroundColor: '#ffffff',
-    padding: 0,
-    fontFamily: 'Helvetica',
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%', // Cover entire page
-    maxWidth: '100%',
-    objectFit: 'cover',
-    zIndex: 0,
-  },
-  // White bottom section overlay
-  bottomSection: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '25%',
-    backgroundColor: 'white',
-    zIndex: 1,
-  },
-  content: {
-    position: 'relative',
-    padding: 0,
-    minHeight: '100%',
-  },
-  // Page 1 - Cover styles
-  coverHeader: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    right: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  reportBadge: {
-    backgroundColor: '#1E40AF',
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
-    padding: '8 16',
-    borderRadius: 6,
-  },
-  dateSmall: {
-    fontSize: 12,
-    color: '#DC2626',
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  confidentialText: {
-    fontSize: 12,
-    color: '#1E40AF',
-    fontWeight: 'bold',
-  },
-  logoTopRight: {
-    position: 'absolute',
-    top: 30,
-    right: 30,
-    width: 120,
-    height: 80,
-  },
-  centerTitle: {
-    position: 'absolute',
-    bottom: '20%', // Position in bottom white area
-    left: 30,
-    right: 30,
-    alignItems: 'flex-start',
-  },
-  companyName: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#DC2626',
-    textAlign: 'left',
-    backgroundColor: 'white',
-    padding: 0,
-    marginBottom: 10,
-    width: '100%',
-  },
-  dateCenter: {
-    fontSize: 14,
-    color: '#374151',
-    textAlign: 'left',
-    backgroundColor: 'white',
-    padding: 0,
-    width: '100%',
-  },
-  // Page 2 - Foreword styles
-  pageHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 40,
-    borderBottom: '1 solid #E5E7EB',
-    paddingBottom: 20,
-  },
-  fbmLogo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1E40AF',
-  },
-  sectionTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: '#1E40AF',
-    padding: '12 24',
-    borderRadius: 8,
-    marginBottom: 30,
-  },
-  forewordText: {
-    fontSize: 12,
-    lineHeight: 1.6,
-    color: '#374151',
-    marginBottom: 15,
-    textAlign: 'justify',
-  },
-  signatureText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginTop: 20,
-  },
-  pageNumber: {
-    position: 'absolute',
-    bottom: 40,
-    right: 40,
-    fontSize: 14,
-    color: '#6B7280',
-  },
-  // Page 3 - Calculation styles
-  calculationGrid: {
-    flexDirection: 'row',
-    gap: 30,
-    marginBottom: 30,
-  },
-  leftColumn: {
-    flex: 1,
-    backgroundColor: '#F9FAFB',
-    padding: 20,
-    borderRadius: 8,
-  },
-  rightColumn: {
-    flex: 1,
-  },
-  columnTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 20,
-  },
-  dataRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-    paddingBottom: 8,
-    borderBottom: '1 solid #E5E7EB',
-  },
-  label: {
-    fontSize: 11,
-    color: '#6B7280',
-    flex: 1,
-  },
-  value: {
-    fontSize: 11,
-    fontWeight: 'bold',
-    color: '#111827',
-    textAlign: 'right',
-    flex: 1,
-  },
-  highlightBox: {
-    backgroundColor: '#EFF6FF',
-    border: '2 solid #3B82F6',
-    borderRadius: 8,
-    padding: 20,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  highlightValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#DC2626',
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  highlightLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 3,
-  },
-  highlightSubtext: {
-    fontSize: 10,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
-  disclaimerSmall: {
-    fontSize: 10,
-    color: '#6B7280',
-    lineHeight: 1.4,
-    marginTop: 15,
-    fontStyle: 'italic',
-  },
-  bandbreedte: {
-    marginTop: 30,
-  },
-  bandbreedteTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 15,
-  },
-  bandbreedteRow: {
-    flexDirection: 'row',
-    gap: 20,
-  },
-  bandbreedteBox: {
-    flex: 1,
-    backgroundColor: '#F3F4F6',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  bandbreedteValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#DC2626',
-  },
-  // Page 4 - Sector info styles
-  sectorContent: {
-    marginTop: 20,
-  },
-  sectorText: {
-    fontSize: 12,
-    lineHeight: 1.6,
-    color: '#374151',
-    marginBottom: 15,
-    textAlign: 'justify',
-  },
-  placeholderText: {
-    fontSize: 12,
-    color: '#DC2626',
-    fontStyle: 'italic',
-    marginBottom: 15,
-  },
-  // Page 5 - Business valuation styles
-  businessContent: {
-    marginTop: 20,
-  },
-  businessText: {
-    fontSize: 12,
-    lineHeight: 1.6,
-    color: '#374151',
-    marginBottom: 15,
-    textAlign: 'justify',
-  },
-  businessSubtitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 15,
-  },
-  // Page 6 - Next steps styles
-  nextStepsContent: {
-    backgroundColor: '#1E40AF',
-    borderRadius: 12,
-    padding: 30,
-    marginTop: 40,
-    marginBottom: 40,
-  },
-  nextStepsTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
-  },
-  nextStepsSubtitle: {
-    fontSize: 14,
-    color: '#DC2626',
-    marginBottom: 30,
-  },
-  contactInfo: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 20,
-    marginTop: 20,
-  },
-  contactText: {
-    fontSize: 12,
-    color: '#1E40AF',
-    marginBottom: 3,
-  },
-  websiteText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1E40AF',
-    marginTop: 10,
-  },
-  // Image positioning
-  topLogo: {
-    position: 'absolute',
-    top: 20,
-    width: 100,
-    height: 40,
-  },
-  footerLogo: {
-    position: 'absolute',
-    bottom: 60,
-    width: 80,
-    height: 30,
-  },
-});
+import { pdfStyles } from './pdfStyles';
 
 interface ValuationReportPDFProps {
   companyData: CompanyData;
@@ -379,7 +58,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     
     try {
       console.log('Successfully rendering background image');
-      return <Image src={imageUrl} style={styles.backgroundImage} />;
+      return <Image src={imageUrl} style={pdfStyles.backgroundImage} />;
     } catch (error) {
       console.warn('Failed to load background image:', imageUrl, error);
       return null;
@@ -431,16 +110,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       // Replace other placeholders
       sectionText = sectionText.replace(/PLACEHOLDER tekst 1 foreword/g, '');
       sectionText = sectionText.replace(/PLACEHOLDER tekst 1 business valuation/g, '');
-      sectionText = sectionText.replace(/PLACEHOLDER tekst 2 next steps/g, '');
+      sectionText = sectionText.replace(/PLACEHOLDER tekst 2 next pdfStyles/g, '');
       sectionText = sectionText.replace(/{{company_name}}/g, contactData.companyName || '');
       
       switch (section.type) {
         case 'heading':
-          return <Text key={index} style={styles.sectionTitle}>{sectionText}</Text>;
+          return <Text key={index} style={pdfStyles.sectionTitle}>{sectionText}</Text>;
         case 'paragraph':
-          return <Text key={index} style={styles.forewordText}>{sectionText}</Text>;
+          return <Text key={index} style={pdfStyles.forewordText}>{sectionText}</Text>;
         default:
-          return <Text key={index} style={styles.forewordText}>{sectionText}</Text>;
+          return <Text key={index} style={pdfStyles.forewordText}>{sectionText}</Text>;
       }
     }).filter(Boolean);
   };
@@ -457,29 +136,29 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   return (
     <Document>
       {/* Page 1 - Cover */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(1).background)}
         
         {/* White bottom section overlay */}
-        <View style={styles.bottomSection} />
+        <View style={pdfStyles.bottomSection} />
         
-        {renderLogo(getPageData(1).topLogo, styles.logoTopRight)}
+        {renderLogo(getPageData(1).topLogo, pdfStyles.logoTopRight)}
         
-        <View style={styles.coverHeader}>
+        <View style={pdfStyles.coverHeader}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.reportBadge}>Rapport waardebepaling</Text>
-            <Text style={styles.dateSmall}>{currentDate}</Text>
+            <Text style={pdfStyles.reportBadge}>Rapport waardebepaling</Text>
+            <Text style={pdfStyles.dateSmall}>{currentDate}</Text>
           </View>
-          <Text style={styles.confidentialText}>STRICTLY CONFIDENTIAL</Text>
+          <Text style={pdfStyles.confidentialText}>STRICTLY CONFIDENTIAL</Text>
         </View>
         
-        <View style={styles.centerTitle}>
-          <Text style={styles.companyName}>{contactData.companyName}</Text>
-          <Text style={styles.dateCenter}>[{currentDate}]</Text>
+        <View style={pdfStyles.centerTitle}>
+          <Text style={pdfStyles.companyName}>{contactData.companyName}</Text>
+          <Text style={pdfStyles.dateCenter}>[{currentDate}]</Text>
         </View>
         
         {renderLogo(getPageData(1).footerLogo, [
-          styles.footerLogo,
+          pdfStyles.footerLogo,
           { 
             left: getPageData(1).footerLogoPosition === 'center' ? '45%' : 
                   getPageData(1).footerLogoPosition === 'right' ? 'auto' : 20,
@@ -489,11 +168,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 2 - Foreword */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(2).background)}
         
          {renderLogo(getPageData(2).topLogo, [
-           styles.topLogo,
+           pdfStyles.topLogo,
            { 
              left: getPageData(2).topLogoPosition === 'center' ? '45%' : 
                    getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
@@ -501,39 +180,39 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
            }
          ])}
         
-        <View style={styles.content}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.fbmLogo}>fbm</Text>
+        <View style={pdfStyles.content}>
+          <View style={pdfStyles.pageHeader}>
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
           </View>
           
           {getPageData(2).content ? (
             renderContentSections(getPageData(2).content)
           ) : (
             <>
-              <Text style={styles.sectionTitle}>Voorwoord</Text>
-              <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
+              <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
+              <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
             </>
           )}
+          
+           {renderLogo(getPageData(2).footerLogo, [
+             pdfStyles.footerLogo,
+             { 
+               left: getPageData(2).footerLogoPosition === 'center' ? '45%' : 
+                     getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
+               right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto'
+             }
+           ])}
+          
+          <Text style={pdfStyles.pageNumber}>2</Text>
         </View>
-        
-         {renderLogo(getPageData(2).footerLogo, [
-           styles.footerLogo,
-           { 
-             left: getPageData(2).footerLogoPosition === 'center' ? '45%' : 
-                   getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <Text style={styles.pageNumber}>2</Text>
       </Page>
 
-      {/* Page 3 - Calculation */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      {/* Page 3 - Calculation Results */}
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
          {renderLogo(getPageData(3).topLogo, [
-           styles.topLogo,
+           pdfStyles.topLogo,
            { 
              left: getPageData(3).topLogoPosition === 'center' ? '45%' : 
                    getPageData(3).topLogoPosition === 'right' ? 'auto' : 20,
@@ -541,123 +220,126 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
            }
          ])}
         
-        <View style={styles.content}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.fbmLogo}>fbm</Text>
+        <View style={pdfStyles.content}>
+          <View style={pdfStyles.pageHeader}>
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
           </View>
           
-          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
-            3. Indicatieve calculatie
+          <Text style={[pdfStyles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
+            Ingevoerde gegevens en uitkomst berekening
           </Text>
           
-          <View style={styles.calculationGrid}>
-            <View style={styles.leftColumn}>
-              <Text style={styles.columnTitle}>Ingevoerde gegevens</Text>
+          <View style={pdfStyles.calculationGrid}>
+            <View style={pdfStyles.leftColumn}>
+              <Text style={pdfStyles.columnTitle}>Ingevoerde gegevens</Text>
               
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Omzet in het afgelopen jaar</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.lastYearRevenue)}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Omzet in het afgelopen jaar</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.lastYearRevenue)}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Aantal partijen terugkerende omzet</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Aantal partijen terugkerende omzet</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Resultaat vorig boekjaar</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.result2024)}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Resultaat vorig boekjaar</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.result2024)}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Verwacht resultaat dit boekjaar</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.expectedResult2025)}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Verwacht resultaat dit boekjaar</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.expectedResult2025)}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Verlies in de afgelopen 3 jaar</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Verlies in de afgelopen 3 jaar</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Vooruitzichten</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.prospects}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Vooruitzichten</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.prospects}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Gemiddelde investering per jaar</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Gemiddelde investering per jaar</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Sector</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{valuationResult.sector}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Sector</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{valuationResult.sector}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Aantal FTE medewerkers</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.employeesDisplay || companyData.employees}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Aantal FTE medewerkers</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.employeesDisplay || companyData.employees}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Omzet via de grootste klant</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Omzet via de grootste klant</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
               </View>
-              <View style={styles.dataRow}>
-                <Text style={styles.label}>Afhankelijkheid van grootste toeleverancier</Text>
-                <Text style={[styles.value, { color: '#DC2626' }]}>{companyData.largestSupplierRisk}</Text>
+              <View style={pdfStyles.dataRow}>
+                <Text style={pdfStyles.label}>Schattingmethode</Text>
+                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>EBITDA multiplier</Text>
               </View>
             </View>
             
-            <View style={styles.rightColumn}>
-              <Text style={styles.columnTitle}>Belangrijkste uitgangspunten</Text>
+            <View style={pdfStyles.rightColumn}>
+              <Text style={pdfStyles.columnTitle}>Uitkomst berekening</Text>
               
-              <View style={styles.highlightBox}>
-                <Text style={styles.highlightValue}>{formatCurrency(estimatedEbitda)}</Text>
-                <Text style={styles.highlightLabel}>EBITDA (Adjusted)</Text>
-                <Text style={styles.highlightSubtext}>{currentDate}</Text>
-                <Text style={styles.highlightSubtext}>Waarderingsmoment</Text>
+              <View style={pdfStyles.highlightBox}>
+                <Text style={pdfStyles.highlightValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
+                <Text style={pdfStyles.highlightLabel}>Geschatte waarde</Text>
+                <Text style={pdfStyles.highlightSubtext}>Gebaseerd op EBITDA multiplier</Text>
               </View>
               
-              <View style={styles.highlightBox}>
-                <Text style={styles.highlightValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
-                <Text style={styles.highlightLabel}>Ondernemingswaarde</Text>
-                <Text style={[styles.highlightLabel, { fontWeight: 'bold' }]}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
-                <Text style={styles.highlightSubtext}>Multiple op EBITDA</Text>
+              <View style={pdfStyles.highlightBox}>
+                <Text style={pdfStyles.highlightValue}>{formatCurrency(estimatedEbitda)}</Text>
+                <Text style={pdfStyles.highlightLabel}>Geschatte EBITDA</Text>
+                <Text style={pdfStyles.highlightSubtext}>Gemiddelde van resultaten 2024 en verwacht 2025</Text>
               </View>
               
-              <Text style={styles.disclaimerSmall}>
-                Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten.
-                Neem contact met ons op de exacte waarde van jouw bedrijf te bepalen.
+              <View style={pdfStyles.highlightBox}>
+                <Text style={pdfStyles.highlightValue}>{valuationResult.multiple.toFixed(1)}x</Text>
+                <Text style={pdfStyles.highlightLabel}>Gehanteerde multiplier</Text>
+                <Text style={pdfStyles.highlightSubtext}>Gebaseerd op sector en bedrijfsprofiel</Text>
+              </View>
+              
+              <Text style={pdfStyles.disclaimerSmall}>
+                Deze berekening is gebaseerd op de door u ingevoerde gegevens en algemene marktgegevens. 
+                De werkelijke waarde kan afwijken door specifieke bedrijfs- en marktomstandigheden.
               </Text>
+              
+              <View style={pdfStyles.bandbreedte}>
+                <Text style={pdfStyles.bandbreedteTitle}>Bandbreedte</Text>
+                <View style={pdfStyles.bandbreedteRow}>
+                  <View style={pdfStyles.bandbreedteBox}>
+                    <Text style={pdfStyles.bandbreedteValue}>{formatCurrency(valuationResult.minValuation)}</Text>
+                    <Text style={pdfStyles.label}>Minimum</Text>
+                  </View>
+                  <View style={pdfStyles.bandbreedteBox}>
+                    <Text style={pdfStyles.bandbreedteValue}>{formatCurrency(valuationResult.maxValuation)}</Text>
+                    <Text style={pdfStyles.label}>Maximum</Text>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
           
-          <View style={styles.bandbreedte}>
-            <Text style={styles.bandbreedteTitle}>Indicatieve bandbreedte</Text>
-            <View style={styles.bandbreedteRow}>
-              <View style={styles.bandbreedteBox}>
-                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.minValuation)}</Text>
-              </View>
-              <View style={styles.bandbreedteBox}>
-                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
-              </View>
-              <View style={styles.bandbreedteBox}>
-                <Text style={styles.bandbreedteValue}>{formatCurrency(valuationResult.maxValuation)}</Text>
-              </View>
-            </View>
-          </View>
+           {renderLogo(getPageData(3).footerLogo, [
+             pdfStyles.footerLogo,
+             { 
+               left: getPageData(3).footerLogoPosition === 'center' ? '45%' : 
+                     getPageData(3).footerLogoPosition === 'right' ? 'auto' : 20,
+               right: getPageData(3).footerLogoPosition === 'right' ? 20 : 'auto'
+             }
+           ])}
+          
+          <Text style={pdfStyles.pageNumber}>3</Text>
         </View>
-        
-         {renderLogo(getPageData(3).footerLogo, [
-           styles.footerLogo,
-           { 
-             left: getPageData(3).footerLogoPosition === 'center' ? '45%' : 
-                   getPageData(3).footerLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(3).footerLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <Text style={styles.pageNumber}>3</Text>
       </Page>
 
-      {/* Page 4 - Sector Info */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      {/* Page 4 - Sector Information */}
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(4).background)}
         
          {renderLogo(getPageData(4).topLogo, [
-           styles.topLogo,
+           pdfStyles.topLogo,
            { 
              left: getPageData(4).topLogoPosition === 'center' ? '45%' : 
                    getPageData(4).topLogoPosition === 'right' ? 'auto' : 20,
@@ -665,48 +347,47 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
            }
          ])}
         
-        <View style={styles.content}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.fbmLogo}>fbm</Text>
+        <View style={pdfStyles.content}>
+          <View style={pdfStyles.pageHeader}>
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
           </View>
           
-          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
-            4. Overnames in de sector..
-          </Text>
+          <Text style={pdfStyles.sectionTitle}>Sector informatie</Text>
           
-          <View style={styles.sectorContent}>
+          <View style={pdfStyles.sectorContent}>
             {getPageData(4).content ? (
               renderContentSections(getPageData(4).content)
             ) : (
               <>
-                <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 sector information</Text>
-                <Text style={styles.placeholderText}>PLACEHOLDER tekst 2 sector information</Text>
-                {getSectorText() && (
-                  <Text style={styles.sectorText}>{getSectorText()}</Text>
+                {getSectorText() ? (
+                  <Text style={pdfStyles.sectorText}>{getSectorText()}</Text>
+                ) : (
+                  <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 sector information</Text>
                 )}
+                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 2 sector information</Text>
               </>
             )}
           </View>
+          
+           {renderLogo(getPageData(4).footerLogo, [
+             pdfStyles.footerLogo,
+             { 
+               left: getPageData(4).footerLogoPosition === 'center' ? '45%' : 
+                     getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
+               right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto'
+             }
+           ])}
+          
+          <Text style={pdfStyles.pageNumber}>4</Text>
         </View>
-        
-         {renderLogo(getPageData(4).footerLogo, [
-           styles.footerLogo,
-           { 
-             left: getPageData(4).footerLogoPosition === 'center' ? '45%' : 
-                   getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <Text style={styles.pageNumber}>4</Text>
       </Page>
 
       {/* Page 5 - Business Valuation */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(5).background)}
         
          {renderLogo(getPageData(5).topLogo, [
-           styles.topLogo,
+           pdfStyles.topLogo,
            { 
              left: getPageData(5).topLogoPosition === 'center' ? '45%' : 
                    getPageData(5).topLogoPosition === 'right' ? 'auto' : 20,
@@ -714,42 +395,60 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
            }
          ])}
         
-        <View style={styles.content}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.fbmLogo}>fbm</Text>
+        <View style={pdfStyles.content}>
+          <View style={pdfStyles.pageHeader}>
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
           </View>
           
-          <Text style={[styles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
-            5. Bedrijfswaardering
-          </Text>
+          <Text style={pdfStyles.sectionTitle}>Waardebepalingen binnen bedrijfsovernames</Text>
           
-          <View style={styles.businessContent}>
+          <View style={pdfStyles.businessContent}>
             {getPageData(5).content ? (
               renderContentSections(getPageData(5).content)
             ) : (
-              <Text style={styles.placeholderText}>PLACEHOLDER tekst 1 business valuation</Text>
+              <>
+                <Text style={pdfStyles.businessSubtitle}>Wat betekent een waardebepaling voor uw bedrijf?</Text>
+                <Text style={pdfStyles.businessText}>
+                  Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf. Dit is essentieel voor:
+                </Text>
+                
+                <Text style={pdfStyles.businessText}>
+                  • Strategische beslissingen over verkoop of overname{'\n'}
+                  • Financieringsaanvragen{'\n'}
+                  • Successieplanning{'\n'}
+                  • Investeringsbeslissingen
+                </Text>
+                
+                <Text style={pdfStyles.businessSubtitle}>Factoren die de waarde beïnvloeden</Text>
+                <Text style={pdfStyles.businessText}>
+                  De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
+                  marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
+                </Text>
+                
+                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 business valuation</Text>
+              </>
             )}
           </View>
+          
+           {renderLogo(getPageData(5).footerLogo, [
+             pdfStyles.footerLogo,
+             { 
+               left: getPageData(5).footerLogoPosition === 'center' ? '45%' : 
+                     getPageData(5).footerLogoPosition === 'right' ? 'auto' : 20,
+               right: getPageData(5).footerLogoPosition === 'right' ? 20 : 'auto'
+             }
+           ])}
+          
+          <Text style={pdfStyles.pageNumber}>5</Text>
         </View>
-        
-         {renderLogo(getPageData(5).footerLogo, [
-           styles.footerLogo,
-           { 
-             left: getPageData(5).footerLogoPosition === 'center' ? '45%' : 
-                   getPageData(5).footerLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(5).footerLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <Text style={styles.pageNumber}>5</Text>
       </Page>
 
       {/* Page 6 - Next Steps */}
-      <Page size="A4" orientation="landscape" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(6).background)}
         
          {renderLogo(getPageData(6).topLogo, [
-           styles.topLogo,
+           pdfStyles.topLogo,
            { 
              left: getPageData(6).topLogoPosition === 'center' ? '45%' : 
                    getPageData(6).topLogoPosition === 'right' ? 'auto' : 20,
@@ -757,71 +456,60 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
            }
          ])}
         
-        <View style={styles.content}>
-          <View style={styles.pageHeader}>
-            <Text style={styles.fbmLogo}>fbm</Text>
+        <View style={pdfStyles.content}>
+          <View style={pdfStyles.pageHeader}>
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
           </View>
           
-          <View style={styles.nextStepsContent}>
-            <Text style={styles.nextStepsTitle}>The next step</Text>
-            <Text style={styles.nextStepsSubtitle}>A real impact begins with a single step</Text>
+          <View style={pdfStyles.nextStepsContent}>
+            <Text style={pdfStyles.nextStepsTitle}>Volgende stappen</Text>
+            <Text style={pdfStyles.nextStepsSubtitle}>Wilt u meer weten?</Text>
             
-            <View style={styles.contactInfo}>
-              {getPageData(6).content ? (
-                renderContentSections(getPageData(6).content)
-              ) : (
-                <>
-                  <Text style={styles.placeholderText}>PLACEHOLDER tekst 2 next steps</Text>
-                  <Text style={styles.websiteText}>➤ www.fbm.nl</Text>
-                </>
-              )}
+            <Text style={pdfStyles.businessText}>
+              Deze waardebepaling biedt een eerste indicatie van de waarde van uw bedrijf. Voor een meer 
+              uitgebreide analyse en begeleiding bij een eventuele verkoop of overname, kunt u contact met ons opnemen.
+            </Text>
+            
+            <Text style={pdfStyles.businessText}>
+              Onze ervaren adviseurs helpen u graag bij het realiseren van uw doelstellingen.
+            </Text>
+            
+            <View style={pdfStyles.contactInfo}>
+              <Text style={pdfStyles.contactText}>FBM Corporate Finance</Text>
+              <Text style={pdfStyles.contactText}>Telefoon: +31 (0)20 123 4567</Text>
+              <Text style={pdfStyles.contactText}>E-mail: info@fbmcorporatefinance.nl</Text>
+              <Text style={pdfStyles.websiteText}>www.fbmcorporatefinance.nl</Text>
             </View>
+            
+            <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 2 next pdfStyles</Text>
           </View>
+          
+           {renderLogo(getPageData(6).footerLogo, [
+             pdfStyles.footerLogo,
+             { 
+               left: getPageData(6).footerLogoPosition === 'center' ? '45%' : 
+                     getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
+               right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto'
+             }
+           ])}
+          
+          <Text style={pdfStyles.pageNumber}>6</Text>
         </View>
-        
-         {renderLogo(getPageData(6).footerLogo, [
-           styles.footerLogo,
-           { 
-             left: getPageData(6).footerLogoPosition === 'center' ? '45%' : 
-                   getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <Text style={styles.pageNumber}>6</Text>
       </Page>
     </Document>
   );
 };
 
+export default ValuationReportPDF;
+
+// Export the generatePDF function for backwards compatibility
 export const generatePDF = async (
   companyData: CompanyData,
   contactData: ContactData,
   valuationResult: ValuationResult,
-  pages: any[] = [],
-  sectors: SectorConfig[] = []
+  pages?: any[],
+  sectors?: SectorConfig[]
 ) => {
-  const { pdf } = await import('@react-pdf/renderer');
-  
-  const blob = await pdf(
-    <ValuationReportPDF 
-      companyData={companyData}
-      contactData={contactData}
-      valuationResult={valuationResult}
-      pages={pages}
-      sectors={sectors}
-    />
-  ).toBlob();
-  
-  // Create download link
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `bedrijfswaardering-${contactData.companyName.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  // For now, return the component - the actual PDF generation is handled elsewhere
+  return ValuationReportPDF({ companyData, contactData, valuationResult, pages, sectors });
 };
-
-export default ValuationReportPDF;

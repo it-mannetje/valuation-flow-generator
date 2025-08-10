@@ -16,6 +16,8 @@ export interface CompanyData {
   sector: string;
   employees: number;
   largestClientDependency: number;
+  largestCustomerPercentage?: number;
+  largestCustomerPercentageDisplay?: string;
   largestSupplierRisk: string;
   
   // Display values for ranges
@@ -39,6 +41,11 @@ export interface ValuationResult {
   maxValuation: number;
   multiple: number;
   sector: string;
+  // Additional properties for PDF
+  value?: number;
+  method?: string;
+  rangeMin?: number;
+  rangeMax?: number;
 }
 
 export interface SectorConfig {
