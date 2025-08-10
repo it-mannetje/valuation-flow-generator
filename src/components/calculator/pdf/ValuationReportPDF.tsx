@@ -15,12 +15,13 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: 'absolute',
-    top: '120px', // Leave space for header content
+    top: 0,
     left: 0,
     width: '100%',
-    height: 'calc(100% - 120px)', // Reduce height to account for top offset
+    height: '100%',
     maxWidth: '100%',
     objectFit: 'cover',
+    zIndex: -1, // Ensure background stays behind content
   },
   content: {
     position: 'relative',
