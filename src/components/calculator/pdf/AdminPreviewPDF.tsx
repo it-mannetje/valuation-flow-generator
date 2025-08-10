@@ -1,120 +1,7 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
-
-// Use default fonts - no custom font registration needed
-
-// Define styles
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
-    fontFamily: 'Helvetica',
-    fontSize: 12,
-    lineHeight: 1.6,
-    padding: 50,
-    minHeight: '100%',
-    position: 'relative',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: 0,
-  },
-  header: {
-    fontSize: 28,
-    marginBottom: 25,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#1E40AF',
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 35,
-    textAlign: 'center',
-    color: '#666666',
-  },
-  topLogoContainer: {
-    position: 'absolute',
-    top: 20,
-    left: 50,
-    right: 50,
-    height: 60,
-    zIndex: 10,
-  },
-  topLogoLeft: {
-    alignItems: 'flex-start',
-  },
-  topLogoCenter: {
-    alignItems: 'center',
-  },
-  topLogoRight: {
-    alignItems: 'flex-end',
-  },
-  topLogo: {
-    width: 100,
-    height: 40,
-    objectFit: 'contain',
-  },
-  footerLogoContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 50,
-    right: 50,
-    height: 40,
-    zIndex: 10,
-  },
-  footerLogoLeft: {
-    alignItems: 'flex-start',
-  },
-  footerLogoCenter: {
-    alignItems: 'center',
-  },
-  footerLogoRight: {
-    alignItems: 'flex-end',
-  },
-  footerLogo: {
-    width: 80,
-    height: 30,
-    objectFit: 'contain',
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1E40AF',
-    marginBottom: 18,
-    borderBottom: '2 solid #1E40AF',
-    paddingBottom: 8,
-  },
-  paragraph: {
-    marginBottom: 15,
-    textAlign: 'justify',
-    lineHeight: 1.7,
-    fontSize: 13,
-  },
-  list: {
-    marginLeft: 20,
-  },
-  listItem: {
-    marginBottom: 10,
-    fontSize: 13,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 35,
-    left: 50,
-    right: 50,
-    textAlign: 'center',
-    fontSize: 10,
-    color: '#666666',
-  },
-});
+import { pdfStyles } from './pdfStyles';
 
 interface PDFPage {
   id: string;
@@ -146,11 +33,17 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
   pages,
   sectors 
 }) => {
+  const currentDate = new Date().toLocaleDateString('nl-NL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
     if (!imageUrl) return null;
     try {
-      return <Image src={imageUrl} style={styles.backgroundImage} />;
+      return <Image src={imageUrl} style={pdfStyles.backgroundImage} />;
     } catch (error) {
       console.warn('Failed to load background image:', imageUrl, error);
       return null;
@@ -203,97 +96,106 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         
         switch (section.type) {
           case 'heading':
-            return (
-              <View key={index} style={styles.section}>
-                <Text style={styles.sectionTitle}>{sectionText}</Text>
-              </View>
-            );
+            return <Text key={index} style={pdfStyles.sectionTitle}>{sectionText}</Text>;
           case 'paragraph':
-            return (
-              <View key={index} style={styles.section}>
-                <Text style={styles.paragraph}>{sectionText}</Text>
-              </View>
-            );
+            return <Text key={index} style={pdfStyles.forewordText}>{sectionText}</Text>;
           case 'list':
-            return (
-              <View key={index} style={[styles.section, styles.list]}>
-                <Text style={styles.listItem}>• {sectionText}</Text>
-              </View>
-            );
+            return <Text key={index} style={pdfStyles.forewordText}>• {sectionText}</Text>;
           default:
-            return (
-              <View key={index} style={styles.section}>
-                <Text style={styles.paragraph}>{sectionText}</Text>
-              </View>
-            );
+            return <Text key={index} style={pdfStyles.forewordText}>{sectionText}</Text>;
         }
       }).filter(Boolean);
     } catch (error) {
       console.error('Error rendering content sections:', error);
       return (
-        <View style={styles.section}>
-          <Text style={styles.paragraph}>Error rendering content</Text>
-        </View>
+        <Text style={pdfStyles.forewordText}>Error rendering content</Text>
       );
     }
   };
 
   return (
     <Document>
-      {pages.map((page) => (
-        <Page key={page.id} size="A4" orientation="landscape" style={styles.page}>
-          {/* Background Image */}
-          {renderBackgroundImage(page.background_image_url)}
+      {pages.map((page) => {
+        // Cover page gets special layout
+        if (page.page_number === 1) {
+          return (
+            <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+              {/* Blue header section */}
+              <View style={pdfStyles.coverHeaderSection}>
+                <View style={pdfStyles.headerLeftContent}>
+                  <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
+                  <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
+                  <Text style={pdfStyles.headerDate}>{currentDate}</Text>
+                </View>
+                {/* Logo in header */}
+                {page.top_logo_url && renderLogo(page.top_logo_url, pdfStyles.headerLogo)}
+              </View>
+              
+              {/* Main content area with image and company info */}
+              <View style={pdfStyles.coverMainContent}>
+                {/* Left section - Main image (60% width) */}
+                <View style={pdfStyles.coverImageSection}>
+                  {page.background_image_url && (
+                    <Image 
+                      style={pdfStyles.coverMainImage} 
+                      src={page.background_image_url} 
+                    />
+                  )}
+                </View>
+                
+                {/* Right section - Company info (40% width) */}
+                <View style={pdfStyles.coverCompanySection}>
+                  {/* Decorative dotted line */}
+                  <View style={pdfStyles.companyDecorativeLine} />
+                  
+                  {/* Company name and date */}
+                  <Text style={pdfStyles.companyNameLarge}>{contactData.companyName}</Text>
+                  <Text style={pdfStyles.companyDate}>[{currentDate}]</Text>
+                </View>
+              </View>
+            </Page>
+          );
+        }
 
-          {/* Top Logo */}
-          {page.top_logo_url && (
-            <View style={[
-              styles.topLogoContainer,
-              page.top_logo_position === 'center' ? styles.topLogoCenter :
-              page.top_logo_position === 'right' ? styles.topLogoRight : styles.topLogoLeft
-            ]}>
-              {renderLogo(page.top_logo_url, styles.topLogo)}
+        // Regular pages
+        return (
+          <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+            {/* Background Image */}
+            {renderBackgroundImage(page.background_image_url)}
+
+            {/* Top Logo */}
+            {page.top_logo_url && renderLogo(page.top_logo_url, [
+              pdfStyles.topLogo,
+              { 
+                left: page.top_logo_position === 'center' ? '45%' : 
+                      page.top_logo_position === 'right' ? 'auto' : 20,
+                right: page.top_logo_position === 'right' ? 20 : 'auto'
+              }
+            ])}
+
+            <View style={pdfStyles.content}>
+              <View style={pdfStyles.pageHeader}>
+                <Text style={pdfStyles.fbmLogo}>fbm</Text>
+              </View>
+
+              {/* Page Content */}
+              {page.content?.content && renderContentSections(page.content.content, page)}
+
+              {/* Footer Logo */}
+              {page.footer_logo_url && renderLogo(page.footer_logo_url, [
+                pdfStyles.footerLogo,
+                { 
+                  left: page.footer_logo_position === 'center' ? '45%' : 
+                        page.footer_logo_position === 'right' ? 'auto' : 20,
+                  right: page.footer_logo_position === 'right' ? 20 : 'auto'
+                }
+              ])}
+
+              <Text style={pdfStyles.pageNumber}>{page.page_number}</Text>
             </View>
-          )}
-
-          {/* Page Title */}
-          {page.content?.title && (
-            <Text style={styles.header}>
-              {page.content.title}
-            </Text>
-          )}
-
-          {/* Subtitle for cover page */}
-          {page.page_number === 1 && page.content?.subtitle && (
-            <Text style={styles.subtitle}>
-              {page.content.subtitle}
-            </Text>
-          )}
-
-          {/* Page Content */}
-          {page.content?.content && (
-            <View>
-              {renderContentSections(page.content.content, page)}
-            </View>
-          )}
-
-          {/* Footer Logo */}
-          {page.footer_logo_url && (
-            <View style={[
-              styles.footerLogoContainer,
-              page.footer_logo_position === 'center' ? styles.footerLogoCenter :
-              page.footer_logo_position === 'right' ? styles.footerLogoRight : styles.footerLogoLeft
-            ]}>
-              {renderLogo(page.footer_logo_url, styles.footerLogo)}
-            </View>
-          )}
-
-          {/* Footer */}
-          <Text style={styles.footer}>
-            Pagina {page.page_number} - {page.page_name}
-          </Text>
-        </Page>
-      ))}
+          </Page>
+        );
+      })}
     </Document>
   );
 };
