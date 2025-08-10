@@ -44,76 +44,124 @@ export const pdfStyles = StyleSheet.create({
   
   // ========== COVER PAGE STYLES ==========
   
-  // Header with report badge and confidential text
-  coverHeader: {
+  // Header blue section covering full width at top
+  coverHeaderSection: {
     position: 'absolute',
-    top: 20,
-    left: 20,
-    right: 20,
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#1e3a8a',
+    height: 100,
+    zIndex: 3,
+    padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    zIndex: 3,
+    alignItems: 'flex-start',
   },
   
-  // Blue report badge
-  reportBadge: {
-    backgroundColor: '#1E40AF',
+  // Left side header content
+  headerLeftContent: {
+    flexDirection: 'column',
+  },
+  
+  // Main title in header
+  headerTitle: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
-    padding: '8 16',
-    borderRadius: 6,
+    marginBottom: 2,
   },
   
-  // Small red date next to badge
-  dateSmall: {
+  // Confidential text in header
+  headerConfidential: {
+    color: 'white',
     fontSize: 12,
-    color: '#DC2626',
-    fontWeight: 'bold',
-    marginLeft: 10,
+    marginBottom: 5,
   },
   
-  // Confidential text on right
-  confidentialText: {
-    fontSize: 12,
-    color: '#1E40AF',
+  // Date in header (small red)
+  headerDate: {
+    fontSize: 10,
+    color: '#dc2626',
     fontWeight: 'bold',
   },
   
-  // Logo in top right corner
-  logoTopRight: {
+  // Logo in header (top right)
+  headerLogo: {
+    width: 60,
+    height: 40,
+  },
+  
+  // Main content area below header
+  coverMainContent: {
     position: 'absolute',
+    top: 100,
+    left: 20,
+    right: 20,
+    bottom: 20,
+    flexDirection: 'row',
+    gap: 20,
+    zIndex: 2,
+  },
+  
+  // Left section with main image (60% width)
+  coverImageSection: {
+    width: '60%',
+    height: '100%',
+  },
+  
+  // Main cover image
+  coverMainImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: 8,
+  },
+  
+  // Right section with company info (40% width)
+  coverCompanySection: {
+    width: '40%',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 30,
+    justifyContent: 'center',
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },
+  
+  // Decorative dotted line on left side of company section
+  companyDecorativeLine: {
+    position: 'absolute',
+    left: 0,
     top: 30,
-    right: 30,
-    width: 120,
-    height: 80,
-    zIndex: 3,
-  },
-  
-  // Company name and date in white bottom area
-  centerTitle: {
-    position: 'absolute',
-    bottom: '5%', // In the white bottom section
-    left: 30,
-    right: 30,
-    zIndex: 3,
+    bottom: 30,
+    width: 2,
+    backgroundColor: '#dc2626',
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: '#dc2626',
   },
   
   // Large red company name
-  companyName: {
-    fontSize: 48,
+  companyNameLarge: {
+    fontSize: 36,
     fontWeight: 'bold',
-    color: '#DC2626',
+    color: '#dc2626',
     textAlign: 'left',
-    marginBottom: 10,
+    marginBottom: 15,
     lineHeight: 1.2,
   },
   
-  // Gray date below company name
-  dateCenter: {
-    fontSize: 16,
-    color: '#374151',
+  // Red date below company name
+  companyDate: {
+    fontSize: 14,
+    color: '#dc2626',
     textAlign: 'left',
     fontWeight: 'normal',
   },

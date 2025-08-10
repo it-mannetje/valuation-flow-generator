@@ -137,34 +137,39 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     <Document>
       {/* Page 1 - Cover */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(1).background)}
-        
-        {/* White bottom section overlay */}
-        <View style={pdfStyles.bottomSection} />
-        
-        {renderLogo(getPageData(1).topLogo, pdfStyles.logoTopRight)}
-        
-        <View style={pdfStyles.coverHeader}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={pdfStyles.reportBadge}>Rapport waardebepaling</Text>
-            <Text style={pdfStyles.dateSmall}>{currentDate}</Text>
+        {/* Blue header section */}
+        <View style={pdfStyles.coverHeaderSection}>
+          <View style={pdfStyles.headerLeftContent}>
+            <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
+            <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
+            <Text style={pdfStyles.headerDate}>{currentDate}</Text>
           </View>
-          <Text style={pdfStyles.confidentialText}>STRICTLY CONFIDENTIAL</Text>
+          {/* Logo in header */}
+          {renderLogo(getPageData(1).topLogo, pdfStyles.headerLogo)}
         </View>
         
-        <View style={pdfStyles.centerTitle}>
-          <Text style={pdfStyles.companyName}>{contactData.companyName}</Text>
-          <Text style={pdfStyles.dateCenter}>[{currentDate}]</Text>
+        {/* Main content area with image and company info */}
+        <View style={pdfStyles.coverMainContent}>
+          {/* Left section - Main image (60% width) */}
+          <View style={pdfStyles.coverImageSection}>
+            {getPageData(1).background && (
+              <Image 
+                style={pdfStyles.coverMainImage} 
+                src={getPageData(1).background} 
+              />
+            )}
+          </View>
+          
+          {/* Right section - Company info (40% width) */}
+          <View style={pdfStyles.coverCompanySection}>
+            {/* Decorative dotted line */}
+            <View style={pdfStyles.companyDecorativeLine} />
+            
+            {/* Company name and date */}
+            <Text style={pdfStyles.companyNameLarge}>{contactData.companyName}</Text>
+            <Text style={pdfStyles.companyDate}>[{currentDate}]</Text>
+          </View>
         </View>
-        
-        {renderLogo(getPageData(1).footerLogo, [
-          pdfStyles.footerLogo,
-          { 
-            left: getPageData(1).footerLogoPosition === 'center' ? '45%' : 
-                  getPageData(1).footerLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(1).footerLogoPosition === 'right' ? 20 : 'auto'
-          }
-        ])}
       </Page>
 
       {/* Page 2 - Foreword */}
