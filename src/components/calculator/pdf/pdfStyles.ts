@@ -107,7 +107,7 @@ export const pdfStyles = StyleSheet.create({
   coverImageSection: {
     width: '60%',
     height: '100%',
-    padding: 20,
+    padding: 0,
   },
   
   // Main cover image
@@ -121,31 +121,20 @@ export const pdfStyles = StyleSheet.create({
   coverCompanySection: {
     width: '40%',
     backgroundColor: 'white',
-    margin: 20,
-    marginLeft: 0,
     padding: 40,
     justifyContent: 'center',
     position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    height: '100%',
   },
   
   // Decorative dotted line on left side of company section
   companyDecorativeLine: {
     position: 'absolute',
     left: 0,
-    top: 30,
-    bottom: 30,
-    width: 2,
+    top: 40,
+    bottom: 40,
+    width: 3,
     backgroundColor: '#dc2626',
-    borderStyle: 'dashed',
-    borderWidth: 1,
-    borderColor: '#dc2626',
   },
   
   // Large red company name
