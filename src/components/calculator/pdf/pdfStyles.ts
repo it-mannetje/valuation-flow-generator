@@ -12,13 +12,13 @@ export const pdfStyles = StyleSheet.create({
     height: '100%',
   },
   
-  // Background image covering full page
+  // Background image covering bottom part of page
   backgroundImage: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
     width: '100%',
-    height: '100%',
+    height: '75%', // Cover bottom 75% of page
     objectFit: 'cover',
     zIndex: 0,
   },
