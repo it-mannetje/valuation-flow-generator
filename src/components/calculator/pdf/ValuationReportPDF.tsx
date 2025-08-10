@@ -343,7 +343,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   // Helper function to get page data
   const getPageData = (pageNumber: number) => {
     const page = pages.find(p => p.page_number === pageNumber);
-    return {
+    console.log(`Getting page data for page ${pageNumber}:`, page);
+    const pageData = {
       background: page?.background_image_url || null,
       topLogo: page?.top_logo_url || null,
       topLogoPosition: page?.top_logo_position || 'left',
@@ -351,11 +352,17 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       footerLogoPosition: page?.footer_logo_position || 'left',
       content: page?.content?.content || null
     };
+    console.log(`Page ${pageNumber} data:`, pageData);
+    return pageData;
   };
 
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
-    if (!imageUrl) return null;
+    console.log('Rendering background image:', imageUrl);
+    if (!imageUrl) {
+      console.log('No background image URL provided');
+      return null;
+    }
     
     // Support both base64 and regular URLs
     if (imageUrl.startsWith('blob:')) {
@@ -364,6 +371,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     }
     
     try {
+      console.log('Successfully rendering background image');
       return <Image src={imageUrl} style={styles.backgroundImage} />;
     } catch (error) {
       console.warn('Failed to load background image:', imageUrl, error);
@@ -372,7 +380,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   };
 
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
-    if (!logoUrl) return null;
+    console.log('Rendering logo:', logoUrl);
+    if (!logoUrl) {
+      console.log('No logo URL provided');
+      return null;
+    }
     
     // Support both base64 and regular URLs
     if (logoUrl.startsWith('blob:')) {
@@ -381,6 +393,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     }
     
     try {
+      console.log('Successfully rendering logo');
       return <Image src={logoUrl} style={logoStyle} />;
     } catch (error) {
       console.warn('Failed to load logo:', logoUrl, error);
