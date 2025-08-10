@@ -44,13 +44,13 @@ export const pdfStyles = StyleSheet.create({
   
   // ========== COVER PAGE STYLES ==========
   
-  // Header blue section covering full width at top
+  // Header white section covering full width at top
   coverHeaderSection: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#1e3a8a',
+    backgroundColor: 'white',
     height: 80,
     zIndex: 3,
     padding: 20,
@@ -66,7 +66,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Main title in header
   headerTitle: {
-    color: 'white',
+    color: '#1e3a8a',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 3,
@@ -74,7 +74,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Confidential text in header
   headerConfidential: {
-    color: 'white',
+    color: '#1e3a8a',
     fontSize: 10,
     marginBottom: 5,
   },
