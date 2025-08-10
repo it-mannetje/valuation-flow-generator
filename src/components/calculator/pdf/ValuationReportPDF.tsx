@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: 'absolute',
-    bottom: 0, // Fix to bottom
+    top: '30%', // Start at 30% from top, leaving space for header content
     left: 0,
     width: '100%',
-    height: '70%', // Take up 70% of page height, leaving top 30% for content
+    height: '70%', // Take remaining 70% of the page
     maxWidth: '100%',
     objectFit: 'cover',
     zIndex: -1, // Ensure background stays behind content
