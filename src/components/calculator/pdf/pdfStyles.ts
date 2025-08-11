@@ -99,32 +99,33 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    flexDirection: 'row',
     zIndex: 2,
   },
   
-  // Left section with main image (60% width)
+  // Full width image section
   coverImageSection: {
-    width: '60%',
+    width: '100%',
     height: '100%',
     padding: 0,
+    position: 'relative',
   },
   
-  // Main cover image
+  // Main cover image (full width)
   coverMainImage: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
   
-  // Right section with company info (40% width)
+  // Company info positioned in white area of background image
   coverCompanySection: {
-    width: '40%',
-    backgroundColor: 'white',
-    padding: 40,
+    position: 'absolute',
+    right: 60,
+    bottom: 100,
+    width: 300,
+    backgroundColor: 'transparent',
+    padding: 30,
     justifyContent: 'center',
-    position: 'relative',
-    height: '100%',
   },
   
   // Decorative dotted line on left side of company section
