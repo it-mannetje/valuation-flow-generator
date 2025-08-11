@@ -47,6 +47,18 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
       break;
   }
 
+  // Adjust multiplier based on largest customer dependency
+  if (companyData.largestClientDependency <= 25) {
+    multiple += 0.20;
+  } else if (companyData.largestClientDependency <= 50) {
+    multiple += 0.10;
+  } else if (companyData.largestClientDependency <= 75) {
+    // No adjustment - stays the same
+  } else {
+    // 76-100%
+    multiple -= 0.20;
+  }
+
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
   
