@@ -347,35 +347,41 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={pdfStyles.page3RightColumn}>
               <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
               
-              {/* Key metrics boxes - 4 boxes as per design */}
+              {/* Key metrics boxes - 2x2 grid layout */}
               <View style={pdfStyles.page3MetricsContainer}>
-                <View style={pdfStyles.page3MetricBox}>
-                  <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
-                  <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
-                  <Text style={pdfStyles.page3MetricDate}>03-06-2025</Text>
-                  <Text style={pdfStyles.page3MetricSubtext}>Waarderingsmoment</Text>
-                </View>
-                
-                <View style={pdfStyles.page3MetricBox}>
-                  <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple.toFixed(1)} x</Text>
-                  <Text style={pdfStyles.page3MetricLabel}>Multiple</Text>
-                  <Text style={pdfStyles.page3MetricSubtext}>Gehanteerde multiple</Text>
-                </View>
-                
-                <View style={pdfStyles.page3MetricBox}>
-                  <Text style={pdfStyles.page3MetricValue}>{companyData.sector}</Text>
-                  <Text style={pdfStyles.page3MetricLabel}>Sector</Text>
-                  <Text style={pdfStyles.page3MetricSubtext}>Vergelijkbare bedrijven</Text>
-                </View>
-                
-                <View style={pdfStyles.page3MetricBoxLarge}>
-                  <Text style={pdfStyles.page3MetricValueLarge}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
-                  <Text style={pdfStyles.page3MetricLabelLarge}>Ondernemingswaarde</Text>
-                  <View style={pdfStyles.page3MultiplierContainer}>
-                    <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)} </Text>
-                    <Text style={pdfStyles.page3MultiplierText}>x EBITDA</Text>
+                {/* First row of 2 boxes */}
+                <View style={pdfStyles.page3MetricsGrid}>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
+                    <Text style={pdfStyles.page3MetricDate}>03-06-2025</Text>
+                    <Text style={pdfStyles.page3MetricSubtext}>Waarderingsmoment</Text>
                   </View>
-                  <Text style={pdfStyles.page3MetricSubtext}>Multiple op EBITDA</Text>
+                  
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple.toFixed(1)} x</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Multiple</Text>
+                    <Text style={pdfStyles.page3MetricSubtext}>Gehanteerde multiple</Text>
+                  </View>
+                </View>
+                
+                {/* Second row of 2 boxes */}
+                <View style={pdfStyles.page3MetricsGrid}>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>{companyData.sector}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Sector</Text>
+                    <Text style={pdfStyles.page3MetricSubtext}>Vergelijkbare bedrijven</Text>
+                  </View>
+                  
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
+                    <View style={pdfStyles.page3MultiplierContainer}>
+                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)} </Text>
+                      <Text style={pdfStyles.page3MultiplierText}>x EBITDA</Text>
+                    </View>
+                    <Text style={pdfStyles.page3MetricSubtext}>Multiple op EBITDA</Text>
+                  </View>
                 </View>
               </View>
               
