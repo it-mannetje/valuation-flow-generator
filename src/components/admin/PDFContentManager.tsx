@@ -263,26 +263,37 @@ export default function PDFContentManager() {
 
       console.log('PDF blob created:', pdfBlob);
 
-      // Open PDF in new window instead of iframe
+      // Create download link instead of pop-up to avoid blocker
       const url = URL.createObjectURL(pdfBlob);
+      
+      // Try to open in new window first
       const newWindow = window.open(url, '_blank');
       
-      if (newWindow) {
-        // Clean up the URL after a delay to prevent memory leaks
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      if (!newWindow) {
+        // If pop-up blocked, create download link
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'pdf-preview.pdf';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         
         toast({
-          title: "Preview Geopend",
-          description: "PDF preview wordt geopend in een nieuw venster.",
+          title: "Preview Gedownload",
+          description: "PDF preview is gedownload omdat pop-ups geblokkeerd zijn.",
         });
       } else {
         toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Pop-up geblokkeerd. Sta pop-ups toe voor deze site.",
+          title: "Preview Geopend", 
+          description: "PDF preview wordt geopend in een nieuw venster.",
         });
       }
-    } catch (error) {
+      
+      // Clean up the URL after a delay
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      
+    } catch (error: any) {
       console.error('Error generating PDF preview:', error);
       toast({
         variant: "destructive",
