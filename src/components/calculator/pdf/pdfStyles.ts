@@ -174,18 +174,18 @@ export const pdfStyles = StyleSheet.create({
   // Two column layout for page 2
   page2Layout: {
     flexDirection: 'row',
-    height: '100%',
+    height: '75%', // Leave space for footer
     position: 'relative',
-  },
-  
-  // Left column with main image
-  page2LeftColumn: {
-    width: '45%',
     padding: 20,
-    paddingBottom: 120, // Space for footer
+    gap: 20,
   },
   
-  // Main image in left column
+  // Left column with main image (60% width)
+  page2LeftColumn: {
+    width: '60%',
+  },
+  
+  // Main image in left column (full height)
   page2MainImage: {
     width: '100%',
     height: '100%',
@@ -193,27 +193,26 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 8,
   },
   
-  // Middle section with smaller image
-  page2MiddleColumn: {
-    width: '10%',
-    padding: '20 10',
-    paddingBottom: 120,
-    justifyContent: 'center',
+  // Right column with text content (40% width)
+  page2RightColumn: {
+    width: '40%',
+    paddingLeft: 20,
+    flexDirection: 'column',
   },
   
-  // Small image between columns
-  page2MiddleImage: {
-    width: '100%',
-    height: 200,
+  // Text content area in right column
+  page2TextContent: {
+    flex: 1,
+  },
+  
+  // Portrait image at bottom of right column
+  page2PortraitImage: {
+    width: 120,
+    height: 140,
     objectFit: 'cover',
     borderRadius: 8,
-  },
-  
-  // Right column with text content
-  page2RightColumn: {
-    width: '45%',
-    padding: 20,
-    paddingBottom: 120, // Space for footer
+    marginTop: 20,
+    alignSelf: 'flex-start',
   },
   
   // White footer section for page 2
@@ -222,7 +221,7 @@ export const pdfStyles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 100,
+    height: 80,
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -233,20 +232,20 @@ export const pdfStyles = StyleSheet.create({
   
   // Footer logo in page 2
   page2FooterLogo: {
-    width: 80,
-    height: 30,
+    width: 120,
+    height: 40,
   },
   
   // Page number box in page 2
   page2PageNumberBox: {
     backgroundColor: '#F3F4F6',
-    padding: '10 15',
-    borderRadius: 6,
+    padding: '8 12',
+    borderRadius: 4,
   },
   
   // Page number text in page 2
   page2PageNumberText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6B7280',
     fontWeight: 'bold',
   },

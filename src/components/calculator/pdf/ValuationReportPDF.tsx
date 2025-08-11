@@ -192,7 +192,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         
         {/* Main content area with two columns */}
         <View style={pdfStyles.page2Layout}>
-          {/* Left column - Main image */}
+          {/* Left column - Main image (60%) */}
           <View style={pdfStyles.page2LeftColumn}>
             {getPageData(2).background && (
               <Image 
@@ -202,25 +202,25 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             )}
           </View>
           
-          {/* Middle column - Small image */}
-          <View style={pdfStyles.page2MiddleColumn}>
+          {/* Right column - Text content and portrait (40%) */}
+          <View style={pdfStyles.page2RightColumn}>
+            <View style={pdfStyles.page2TextContent}>
+              {getPageData(2).content ? (
+                renderContentSections(getPageData(2).content)
+              ) : (
+                <>
+                  <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
+                  <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
+                </>
+              )}
+            </View>
+            
+            {/* Portrait image at bottom right */}
             {getPageData(2).middle_image_url && (
               <Image 
-                style={pdfStyles.page2MiddleImage} 
+                style={pdfStyles.page2PortraitImage} 
                 src={getPageData(2).middle_image_url} 
               />
-            )}
-          </View>
-          
-          {/* Right column - Text content */}
-          <View style={pdfStyles.page2RightColumn}>
-            {getPageData(2).content ? (
-              renderContentSections(getPageData(2).content)
-            ) : (
-              <>
-                <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
-                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
-              </>
             )}
           </View>
         </View>

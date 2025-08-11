@@ -591,16 +591,16 @@ export default function PDFContentManager() {
                     </div>
                   </div>
 
-                  {/* Middle Image (for page 2) */}
+                  {/* Middle Image (for page 2) - Portrait image */}
                   {selectedPage.page_number === 2 && (
                     <div>
-                      <Label>Midden Afbeelding (tussen kolommen)</Label>
+                      <Label>Portret Afbeelding (rechts onder)</Label>
                       <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
                         {selectedPage.middle_image_url ? (
                           <div className="space-y-2">
                             <div className="flex items-center gap-2">
                               <ImageIcon className="w-4 h-4" />
-                              <span className="text-sm">Midden afbeelding ingesteld</span>
+                              <span className="text-sm">Portret afbeelding ingesteld</span>
                             </div>
                             <Button
                               variant="outline"
@@ -616,7 +616,7 @@ export default function PDFContentManager() {
                             <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                             <Label htmlFor="middle-image-upload" className="cursor-pointer">
                               <span className="text-sm text-muted-foreground">
-                                Klik om midden afbeelding te uploaden
+                                Klik om portret afbeelding te uploaden
                               </span>
                               <Input
                                 id="middle-image-upload"
@@ -634,8 +634,7 @@ export default function PDFContentManager() {
                       </div>
                     </div>
                   )}
-
-                  <Separator />
+                   <Separator />
 
                   {/* Legacy Logo (backwards compatibility) */}
                   <div>
