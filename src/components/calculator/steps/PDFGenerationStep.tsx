@@ -37,38 +37,37 @@ export default function PDFGenerationStep({
     setIsGeneratingPDF(true);
     
     try {
-      // Simulate PDF generation (replace with actual PDF generation)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Import ValuationReportPDF and pdf libraries
+      const { pdf } = await import('@react-pdf/renderer');
+      const { default: ValuationReportPDF } = await import('@/components/calculator/pdf/ValuationReportPDF');
+      const { supabase } = await import('@/integrations/supabase/client');
       
-      // Create PDF data (mock implementation)
-      const pdfData = {
-        contactName: `${contactData.firstName} ${contactData.lastName}`,
-        companyName: contactData.companyName,
-        valuation: valuationResult.baseValuation,
-        minValuation: valuationResult.minValuation,
-        maxValuation: valuationResult.maxValuation,
-        sector: valuationResult.sector,
-        multiple: valuationResult.multiple,
-        estimatedEbitda: estimatedEbitda,
-        lastYearRevenue: companyData.lastYearRevenue,
-        recurringRevenuePercentage: companyData.recurringRevenuePercentage,
-        result2024: companyData.result2024,
-        expectedResult2025: companyData.expectedResult2025,
-        employees: companyData.employees,
-        wasLossmaking: companyData.wasLossmaking,
-        prospects: companyData.prospects,
-        averageYearlyInvestment: companyData.averageYearlyInvestment,
-        largestClientDependency: companyData.largestClientDependency,
-        largestSupplierRisk: companyData.largestSupplierRisk,
-        sectorText: sectorConfig?.text || 'Sectorspecifieke informatie niet beschikbaar.'
-      };
+      // Fetch PDF pages from database
+      const { data: pages } = await supabase
+        .from('pdf_pages')
+        .select('*')
+        .order('page_number');
+      
+      console.log('Creating PDF component...');
+      
+      // Generate actual PDF using ValuationReportPDF component
+      const pdfBlob = await pdf(
+        <ValuationReportPDF
+          companyData={companyData}
+          contactData={contactData}
+          valuationResult={valuationResult}
+          pages={pages || []}
+          sectors={sectors}
+        />
+      ).toBlob();
 
-      // Create a downloadable file (mock)
-      const blob = new Blob([JSON.stringify(pdfData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
+      console.log('PDF blob created:', pdfBlob);
+
+      // Create downloadable file
+      const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Bedrijfswaardering_${contactData.companyName.replace(/\s+/g, '_')}.json`;
+      a.download = `Bedrijfswaardering_${contactData.companyName.replace(/\s+/g, '_')}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -200,18 +199,47 @@ export default function PDFGenerationStep({
           {/* Action Buttons */}
           <div className="flex flex-col gap-4">
             <Button
-              onClick={handleSubmitToHubSpot}
-              disabled={isSubmittingToHubSpot}
+              onClick={handleGeneratePDF}
+              disabled={isGeneratingPDF}
               size="lg"
               className={cn(
                 "w-full bg-gradient-primary hover:shadow-primary",
                 "transition-all duration-300",
-                isSubmittedToHubSpot && "bg-success hover:bg-success"
+                isPDFGenerated && "bg-success hover:bg-success"
+              )}
+            >
+              {isGeneratingPDF ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  PDF Genereren...
+                </div>
+              ) : isPDFGenerated ? (
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  PDF Gedownload
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Download className="w-5 h-5" />
+                  Download PDF Rapport
+                </div>
+              )}
+            </Button>
+            
+            <Button
+              onClick={handleSubmitToHubSpot}
+              disabled={isSubmittingToHubSpot}
+              size="lg"
+              variant="outline"
+              className={cn(
+                "w-full",
+                "transition-all duration-300",
+                isSubmittedToHubSpot && "bg-success hover:bg-success text-white"
               )}
             >
               {isSubmittingToHubSpot ? (
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                   Verzenden...
                 </div>
               ) : isSubmittedToHubSpot ? (

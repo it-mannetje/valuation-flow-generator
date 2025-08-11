@@ -216,46 +216,96 @@ export default function PDFContentManager() {
       console.log('Pages data:', pages);
       console.log('Sectors data:', sectors);
       
-      // Use real data from the database instead of mock data
-      const mockCompanyData = {
-        lastYearRevenue: 1000000,
-        recurringRevenuePercentage: 70,
-        result2024: 200000,
-        expectedResult2025: 250000,
-        wasLossmaking: false,
-        prospects: "Growth expected",
-        averageYearlyInvestment: 50000,
-        sector: "technology",
-        employees: 50,
-        largestClientDependency: 15,
-        largestSupplierRisk: "Low"
-      };
+      // Fetch the latest valuation request from the database
+      const { data: latestRequest } = await supabase
+        .from('valuation_requests')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
 
-      const mockContactData = {
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@example.com",
-        phone: "123-456-7890",
-        companyName: "Example Company",
-        position: "CEO"
-      };
+      let companyData, contactData, valuationResult;
 
-      const mockValuationResult = {
-        baseValuation: 2000000,
-        minValuation: 1800000,
-        maxValuation: 2200000,
-        multiple: 10,
-        sector: "technology"
-      };
+      if (latestRequest) {
+        // Use real data from latest valuation request
+        companyData = {
+          lastYearRevenue: latestRequest.revenue || 1000000,
+          recurringRevenuePercentage: latestRequest.recurring_revenue || 70,
+          recurringRevenuePercentageDisplay: latestRequest.recurring_revenue_display,
+          result2024: latestRequest.profit || 200000,
+          expectedResult2025: latestRequest.profit || 250000,
+          wasLossmaking: false,
+          prospects: latestRequest.prospects || "Growth expected",
+          averageYearlyInvestment: 50000,
+          sector: latestRequest.sector || "technology",
+          employees: latestRequest.employees || 50,
+          employeesDisplay: latestRequest.employees_display,
+          largestClientDependency: latestRequest.largest_client_dependency || 15,
+          largestClientDependencyDisplay: latestRequest.largest_client_dependency_display,
+          largestSupplierRisk: latestRequest.largest_supplier_dependency || "Low"
+        };
+
+        contactData = {
+          firstName: latestRequest.contact_name?.split(' ')[0] || "John",
+          lastName: latestRequest.contact_name?.split(' ').slice(1).join(' ') || "Doe",
+          email: latestRequest.contact_email || "john.doe@example.com",
+          phone: latestRequest.contact_phone || "123-456-7890",
+          companyName: latestRequest.contact_company || "Example Company",
+          position: "CEO"
+        };
+
+        valuationResult = {
+          baseValuation: latestRequest.valuation_amount || 2000000,
+          minValuation: latestRequest.valuation_range_min || 1800000,
+          maxValuation: latestRequest.valuation_range_max || 2200000,
+          multiple: 10,
+          sector: latestRequest.sector || "technology"
+        };
+      } else {
+        // Fallback to mock data if no requests found
+        companyData = {
+          lastYearRevenue: 1000000,
+          recurringRevenuePercentage: 70,
+          result2024: 200000,
+          expectedResult2025: 250000,
+          wasLossmaking: false,
+          prospects: "Growth expected",
+          averageYearlyInvestment: 50000,
+          sector: "technology",
+          employees: 50,
+          largestClientDependency: 15,
+          largestSupplierRisk: "Low"
+        };
+
+        contactData = {
+          firstName: "John",
+          lastName: "Doe",
+          email: "john.doe@example.com",
+          phone: "123-456-7890",
+          companyName: "Example Company",
+          position: "CEO"
+        };
+
+        valuationResult = {
+          baseValuation: 2000000,
+          minValuation: 1800000,
+          maxValuation: 2200000,
+          multiple: 10,
+          sector: "technology"
+        };
+      }
 
       console.log('Creating PDF component...');
       
-      // Generate PDF blob with actual pages data
+      // Import ValuationReportPDF instead of AdminPreviewPDF to use the same code
+      const { default: ValuationReportPDF } = await import('@/components/calculator/pdf/ValuationReportPDF');
+      
+      // Generate PDF blob with actual pages data using the same component
       const pdfBlob = await pdf(
-        <AdminPreviewPDF 
-          companyData={mockCompanyData}
-          contactData={mockContactData}
-          valuationResult={mockValuationResult}
+        <ValuationReportPDF 
+          companyData={companyData}
+          contactData={contactData}
+          valuationResult={valuationResult}
           pages={pages}
           sectors={sectors}
         />
