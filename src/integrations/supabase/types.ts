@@ -22,6 +22,8 @@ export type Database = {
           footer_logo_position: string | null
           footer_logo_url: string | null
           id: string
+          image1_url: string | null
+          image2_url: string | null
           logo_image_url: string | null
           middle_image_url: string | null
           page_name: string
@@ -37,6 +39,8 @@ export type Database = {
           footer_logo_position?: string | null
           footer_logo_url?: string | null
           id?: string
+          image1_url?: string | null
+          image2_url?: string | null
           logo_image_url?: string | null
           middle_image_url?: string | null
           page_name: string
@@ -52,6 +56,8 @@ export type Database = {
           footer_logo_position?: string | null
           footer_logo_url?: string | null
           id?: string
+          image1_url?: string | null
+          image2_url?: string | null
           logo_image_url?: string | null
           middle_image_url?: string | null
           page_name?: string
