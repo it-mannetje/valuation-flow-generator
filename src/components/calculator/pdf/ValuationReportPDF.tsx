@@ -36,6 +36,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       topLogoPosition: page?.top_logo_position || 'left',
       footerLogo: page?.footer_logo_url || null,
       footerLogoPosition: page?.footer_logo_position || 'left',
+      middle_image_url: page?.middle_image_url || null,
       content: page?.content?.content || null
     };
     console.log(`Page ${pageNumber} data:`, pageData);
@@ -174,41 +175,65 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 2 - Foreword */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(2).background)}
+        {/* Top logo */}
+        {renderLogo(getPageData(2).topLogo, [
+          pdfStyles.topLogo,
+          { 
+            left: getPageData(2).topLogoPosition === 'center' ? '45%' : 
+                  getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
+            right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto'
+          }
+        ])}
         
-         {renderLogo(getPageData(2).topLogo, [
-           pdfStyles.topLogo,
-           { 
-             left: getPageData(2).topLogoPosition === 'center' ? '45%' : 
-                   getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
+        {/* Header */}
+        <View style={[pdfStyles.pageHeader, { margin: 20, marginBottom: 0 }]}>
+          <Text style={pdfStyles.fbmLogo}>fbm</Text>
+        </View>
         
-        <View style={pdfStyles.content}>
-          <View style={pdfStyles.pageHeader}>
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+        {/* Main content area with two columns */}
+        <View style={pdfStyles.page2Layout}>
+          {/* Left column - Main image */}
+          <View style={pdfStyles.page2LeftColumn}>
+            {getPageData(2).background && (
+              <Image 
+                style={pdfStyles.page2MainImage} 
+                src={getPageData(2).background} 
+              />
+            )}
           </View>
           
-          {getPageData(2).content ? (
-            renderContentSections(getPageData(2).content)
-          ) : (
-            <>
-              <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
-              <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
-            </>
-          )}
+          {/* Middle column - Small image */}
+          <View style={pdfStyles.page2MiddleColumn}>
+            {getPageData(2).middle_image_url && (
+              <Image 
+                style={pdfStyles.page2MiddleImage} 
+                src={getPageData(2).middle_image_url} 
+              />
+            )}
+          </View>
           
-           {renderLogo(getPageData(2).footerLogo, [
-             pdfStyles.footerLogo,
-             { 
-               left: getPageData(2).footerLogoPosition === 'center' ? '45%' : 
-                     getPageData(2).footerLogoPosition === 'right' ? 'auto' : 20,
-               right: getPageData(2).footerLogoPosition === 'right' ? 20 : 'auto'
-             }
-           ])}
+          {/* Right column - Text content */}
+          <View style={pdfStyles.page2RightColumn}>
+            {getPageData(2).content ? (
+              renderContentSections(getPageData(2).content)
+            ) : (
+              <>
+                <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
+                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
+              </>
+            )}
+          </View>
+        </View>
+        
+        {/* White footer */}
+        <View style={pdfStyles.page2Footer}>
+          {/* Footer logo on left */}
+          {renderLogo(getPageData(2).footerLogo, pdfStyles.page2FooterLogo)}
           
-          <Text style={pdfStyles.pageNumber}>2</Text>
+          {/* Page number box on right */}
+          <View style={pdfStyles.page2PageNumberBox}>
+            <Text style={pdfStyles.page2PageNumberText}>2</Text>
+          </View>
         </View>
       </Page>
 

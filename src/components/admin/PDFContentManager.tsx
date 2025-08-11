@@ -32,6 +32,7 @@ interface PDFPage {
   top_logo_position?: 'left' | 'right' | 'center';
   footer_logo_url?: string;
   footer_logo_position?: 'left' | 'right' | 'center';
+  middle_image_url?: string;
   content: any;
   created_at: string;
   updated_at: string;
@@ -104,6 +105,7 @@ export default function PDFContentManager() {
           top_logo_position: selectedPage.top_logo_position,
           footer_logo_url: selectedPage.footer_logo_url,
           footer_logo_position: selectedPage.footer_logo_position,
+          middle_image_url: selectedPage.middle_image_url,
           content: selectedPage.content
         })
         .eq('id', selectedPage.id);
@@ -164,7 +166,7 @@ export default function PDFContentManager() {
     updateContentField('content', content);
   };
 
-  const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo', file: File) => {
+  const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo' | 'middle_image', file: File) => {
     try {
       // Convert file to base64
       const base64String = await new Promise<string>((resolve, reject) => {
@@ -185,6 +187,8 @@ export default function PDFContentManager() {
         updatePageContent({ top_logo_url: base64String });
       } else if (type === 'footer_logo') {
         updatePageContent({ footer_logo_url: base64String });
+      } else if (type === 'middle_image') {
+        updatePageContent({ middle_image_url: base64String });
       } else {
         updatePageContent({ logo_image_url: base64String });
       }
@@ -586,6 +590,50 @@ export default function PDFContentManager() {
                       )}
                     </div>
                   </div>
+
+                  {/* Middle Image (for page 2) */}
+                  {selectedPage.page_number === 2 && (
+                    <div>
+                      <Label>Midden Afbeelding (tussen kolommen)</Label>
+                      <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                        {selectedPage.middle_image_url ? (
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <ImageIcon className="w-4 h-4" />
+                              <span className="text-sm">Midden afbeelding ingesteld</span>
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => updatePageContent({ middle_image_url: undefined })}
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Verwijder
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="text-center">
+                            <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                            <Label htmlFor="middle-image-upload" className="cursor-pointer">
+                              <span className="text-sm text-muted-foreground">
+                                Klik om midden afbeelding te uploaden
+                              </span>
+                              <Input
+                                id="middle-image-upload"
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) handleImageUpload('middle_image', file);
+                                }}
+                              />
+                            </Label>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   <Separator />
 

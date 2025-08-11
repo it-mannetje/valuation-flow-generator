@@ -168,6 +168,88 @@ export const pdfStyles = StyleSheet.create({
     borderBottom: '1 solid #E5E7EB',
     paddingBottom: 20,
   },
+
+  // ========== PAGE 2 SPECIFIC STYLES ==========
+  
+  // Two column layout for page 2
+  page2Layout: {
+    flexDirection: 'row',
+    height: '100%',
+    position: 'relative',
+  },
+  
+  // Left column with main image
+  page2LeftColumn: {
+    width: '45%',
+    padding: 20,
+    paddingBottom: 120, // Space for footer
+  },
+  
+  // Main image in left column
+  page2MainImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: 8,
+  },
+  
+  // Middle section with smaller image
+  page2MiddleColumn: {
+    width: '10%',
+    padding: '20 10',
+    paddingBottom: 120,
+    justifyContent: 'center',
+  },
+  
+  // Small image between columns
+  page2MiddleImage: {
+    width: '100%',
+    height: 200,
+    objectFit: 'cover',
+    borderRadius: 8,
+  },
+  
+  // Right column with text content
+  page2RightColumn: {
+    width: '45%',
+    padding: 20,
+    paddingBottom: 120, // Space for footer
+  },
+  
+  // White footer section for page 2
+  page2Footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  // Footer logo in page 2
+  page2FooterLogo: {
+    width: 80,
+    height: 30,
+  },
+  
+  // Page number box in page 2
+  page2PageNumberBox: {
+    backgroundColor: '#F3F4F6',
+    padding: '10 15',
+    borderRadius: 6,
+  },
+  
+  // Page number text in page 2
+  page2PageNumberText: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
   
   // FBM logo text
   fbmLogo: {
