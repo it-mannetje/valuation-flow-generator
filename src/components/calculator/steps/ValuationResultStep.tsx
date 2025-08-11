@@ -30,6 +30,18 @@ export default function ValuationResultStep({
   const [sectors, setSectors] = useState<SectorConfig[]>([]);
   const { toast } = useToast();
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
+  
+  // Helper function to get revenue display text
+  const getRevenueDisplayText = (revenue: number) => {
+    switch (revenue) {
+      case 500000: return "€0-1 miljoen";
+      case 2000000: return "€1-3 miljoen";
+      case 7000000: return "€4-10 miljoen";
+      case 18000000: return "€11-25 miljoen";
+      case 35000000: return "€>25 miljoen";
+      default: return formatCurrency(revenue);
+    }
+  };
 
   // Fetch PDF pages and sectors for the PDF generation
   React.useEffect(() => {
@@ -253,7 +265,7 @@ export default function ValuationResultStep({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">Jaaromzet</div>
-                <div className="font-medium">{formatCurrency(companyData.lastYearRevenue)}</div>
+                <div className="font-medium">{getRevenueDisplayText(companyData.lastYearRevenue)}</div>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Terugkerend (%)</div>
@@ -352,7 +364,7 @@ export default function ValuationResultStep({
                   </div>
                   <div className="flex justify-between">
                     <span>Jaaromzet:</span>
-                    <span className="font-medium">{formatCurrency(companyData.lastYearRevenue)}</span>
+                    <span className="font-medium">{getRevenueDisplayText(companyData.lastYearRevenue)}</span>
                   </div>
                 </div>
               </div>
