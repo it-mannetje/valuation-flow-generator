@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, pdf } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
 import { pdfStyles } from './pdfStyles';
@@ -515,6 +515,35 @@ export const generatePDF = async (
   pages?: any[],
   sectors?: SectorConfig[]
 ) => {
-  // For now, return the component - the actual PDF generation is handled elsewhere
-  return ValuationReportPDF({ companyData, contactData, valuationResult, pages, sectors });
+  try {
+    // Create the PDF document
+    const MyDocument = (
+      <ValuationReportPDF 
+        companyData={companyData} 
+        contactData={contactData} 
+        valuationResult={valuationResult} 
+        pages={pages} 
+        sectors={sectors} 
+      />
+    );
+    
+    // Generate the PDF as a blob
+    const pdfBlob = await pdf(MyDocument).toBlob();
+    
+    // Create a download link and trigger the download
+    const fileName = `Bedrijfswaardering_${contactData.companyName.replace(/\s+/g, '_')}_${new Date().getFullYear()}.pdf`;
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    console.log('PDF generated and download triggered successfully');
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    throw error;
+  }
 };
