@@ -31,6 +31,22 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
     multiple -= 1.5;
   }
 
+  // Adjust multiplier based on prospects
+  switch (companyData.prospects) {
+    case 'Krimpend':
+      multiple -= 1.00;
+      break;
+    case 'Wisselend':
+      multiple -= 0.50;
+      break;
+    case 'Gelijkblijvend':
+      // No adjustment
+      break;
+    case 'Stijgend':
+      multiple += 0.50;
+      break;
+  }
+
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
   
