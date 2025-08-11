@@ -33,6 +33,8 @@ interface PDFPage {
   footer_logo_url?: string;
   footer_logo_position?: 'left' | 'right' | 'center';
   middle_image_url?: string;
+  image1_url?: string;
+  image2_url?: string;
   content: any;
   created_at: string;
   updated_at: string;
@@ -106,6 +108,8 @@ export default function PDFContentManager() {
           footer_logo_url: selectedPage.footer_logo_url,
           footer_logo_position: selectedPage.footer_logo_position,
           middle_image_url: selectedPage.middle_image_url,
+          image1_url: selectedPage.image1_url,
+          image2_url: selectedPage.image2_url,
           content: selectedPage.content
         })
         .eq('id', selectedPage.id);
@@ -166,7 +170,7 @@ export default function PDFContentManager() {
     updateContentField('content', content);
   };
 
-  const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo' | 'middle_image', file: File) => {
+  const handleImageUpload = async (type: 'background' | 'top_logo' | 'footer_logo' | 'logo' | 'middle_image' | 'image1' | 'image2', file: File) => {
     try {
       // Convert file to base64
       const base64String = await new Promise<string>((resolve, reject) => {
@@ -189,6 +193,10 @@ export default function PDFContentManager() {
         updatePageContent({ footer_logo_url: base64String });
       } else if (type === 'middle_image') {
         updatePageContent({ middle_image_url: base64String });
+      } else if (type === 'image1') {
+        updatePageContent({ image1_url: base64String });
+      } else if (type === 'image2') {
+        updatePageContent({ image2_url: base64String });
       } else {
         updatePageContent({ logo_image_url: base64String });
       }
@@ -695,6 +703,95 @@ export default function PDFContentManager() {
                       </div>
                     </div>
                   )}
+
+                  {/* Page 3 Business Images */}
+                  {selectedPage.page_number === 3 && (
+                    <>
+                      <Separator />
+                      <div>
+                        <Label>Bedrijfs Afbeelding 1 (linksboven)</Label>
+                        <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                          {selectedPage.image1_url ? (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <ImageIcon className="w-4 h-4" />
+                                <span className="text-sm">Bedrijfs afbeelding 1 ingesteld</span>
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => updatePageContent({ image1_url: undefined })}
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Verwijder
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="text-center">
+                              <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                              <Label htmlFor="image1-upload" className="cursor-pointer">
+                                <span className="text-sm text-muted-foreground">
+                                  Klik om bedrijfs afbeelding 1 te uploaden
+                                </span>
+                                <Input
+                                  id="image1-upload"
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) handleImageUpload('image1', file);
+                                  }}
+                                />
+                              </Label>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label>Bedrijfs Afbeelding 2 (rechtsonder)</Label>
+                        <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                          {selectedPage.image2_url ? (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <ImageIcon className="w-4 h-4" />
+                                <span className="text-sm">Bedrijfs afbeelding 2 ingesteld</span>
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => updatePageContent({ image2_url: undefined })}
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Verwijder
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="text-center">
+                              <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                              <Label htmlFor="image2-upload" className="cursor-pointer">
+                                <span className="text-sm text-muted-foreground">
+                                  Klik om bedrijfs afbeelding 2 te uploaden
+                                </span>
+                                <Input
+                                  id="image2-upload"
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) handleImageUpload('image2', file);
+                                  }}
+                                />
+                              </Label>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
                    <Separator />
 
                   {/* Legacy Logo (backwards compatibility) */}

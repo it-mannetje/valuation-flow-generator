@@ -37,6 +37,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       footerLogo: page?.footer_logo_url || null,
       footerLogoPosition: page?.footer_logo_position || 'left',
       middle_image_url: page?.middle_image_url || null,
+      image1_url: page?.image1_url || null,
+      image2_url: page?.image2_url || null,
       content: page?.content?.content || null
     };
     console.log(`Page ${pageNumber} data:`, pageData);
@@ -329,11 +331,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={pdfStyles.page3Images}>
                 <Image 
                   style={pdfStyles.page3Image} 
-                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=400&h=250"
+                  src={getPageData(3).image1_url || "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=400&h=250"}
                 />
                 <Image 
                   style={pdfStyles.page3Image} 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=250"
+                  src={getPageData(3).image2_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=250"}
                 />
               </View>
             </View>
@@ -345,7 +347,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={pdfStyles.page3RightColumn}>
               <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
               
-              {/* Key metrics boxes */}
+              {/* Key metrics boxes - 4 boxes as per design */}
               <View style={pdfStyles.page3MetricsContainer}>
                 <View style={pdfStyles.page3MetricBox}>
                   <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
@@ -354,13 +356,25 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   <Text style={pdfStyles.page3MetricSubtext}>Waarderingsmoment</Text>
                 </View>
                 
+                <View style={pdfStyles.page3MetricBox}>
+                  <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple.toFixed(1)} x</Text>
+                  <Text style={pdfStyles.page3MetricLabel}>Multiple</Text>
+                  <Text style={pdfStyles.page3MetricSubtext}>Gehanteerde multiple</Text>
+                </View>
+                
+                <View style={pdfStyles.page3MetricBox}>
+                  <Text style={pdfStyles.page3MetricValue}>{companyData.sector}</Text>
+                  <Text style={pdfStyles.page3MetricLabel}>Sector</Text>
+                  <Text style={pdfStyles.page3MetricSubtext}>Vergelijkbare bedrijven</Text>
+                </View>
+                
                 <View style={pdfStyles.page3MetricBoxLarge}>
                   <Text style={pdfStyles.page3MetricValueLarge}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
                   <Text style={pdfStyles.page3MetricLabelLarge}>Ondernemingswaarde</Text>
-                  <Text style={pdfStyles.page3MultiplierContainer}>
+                  <View style={pdfStyles.page3MultiplierContainer}>
                     <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)} </Text>
                     <Text style={pdfStyles.page3MultiplierText}>x EBITDA</Text>
-                  </Text>
+                  </View>
                   <Text style={pdfStyles.page3MetricSubtext}>Multiple op EBITDA</Text>
                 </View>
               </View>
