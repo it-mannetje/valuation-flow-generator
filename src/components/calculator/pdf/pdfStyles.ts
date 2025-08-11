@@ -250,19 +250,32 @@ export const pdfStyles = StyleSheet.create({
     height: 120,
     objectFit: 'cover',
     left: '50%',
-    bottom: 20,
+    bottom: 80, // Moved up to account for footer
     marginLeft: -50, // Half of width to center
     zIndex: 10,
+    borderRadius: 4,
   },
   
-  // Footer section with logo
+  // White footer bar spanning full width
   page2Footer: {
     position: 'absolute',
-    bottom: 20,
-    left: 20,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 60,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    zIndex: 5,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  // Footer left section with logo
+  page2FooterLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    zIndex: 5,
   },
   
   // FBM logo
@@ -270,13 +283,18 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1E40AF',
-    marginRight: 5,
+    marginRight: 8,
   },
   
   // Corporate Finance text
   page2FooterText: {
     fontSize: 14,
     color: '#1E40AF',
+  },
+  
+  // Footer right section with page number
+  page2FooterRight: {
+    alignItems: 'center',
   },
   
   // Page number with dotted line

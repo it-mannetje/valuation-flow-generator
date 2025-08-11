@@ -175,11 +175,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 2 - Foreword */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Page number with dotted line */}
-        <View style={pdfStyles.page2PageNumber}>
-          <View style={pdfStyles.page2DottedLine} />
-          <Text style={pdfStyles.page2PageNumberText}>2</Text>
-        </View>
         
         {/* Main content area with two columns */}
         <View style={pdfStyles.page2Layout}>
@@ -241,10 +236,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           />
         )}
         
-        {/* Footer with FBM logo */}
+        {/* White footer bar with logo and page number */}
         <View style={pdfStyles.page2Footer}>
-          <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-          <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+          <View style={pdfStyles.page2FooterLeft}>
+            <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
+            <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+          </View>
+          <View style={pdfStyles.page2FooterRight}>
+            <View style={pdfStyles.page2DottedLine} />
+            <Text style={pdfStyles.page2PageNumberText}>2</Text>
+          </View>
         </View>
       </Page>
 
