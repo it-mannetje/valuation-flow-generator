@@ -153,10 +153,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.coverMainContent}>
           {/* Left section - Main image (60% width) */}
           <View style={pdfStyles.coverImageSection}>
-            {getPageData(1).background && (
+            {getPageData(1).background ? (
               <Image 
                 style={pdfStyles.coverMainImage} 
                 src={getPageData(1).background} 
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.coverMainImage} 
+                src="https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&q=80&w=800&h=600" 
               />
             )}
           </View>
@@ -180,10 +185,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page2Layout}>
           {/* Left column - Main image (50%) */}
           <View style={pdfStyles.page2LeftColumn}>
-            {getPageData(2).background && (
+            {getPageData(2).background ? (
               <Image 
                 style={pdfStyles.page2MainImage} 
                 src={getPageData(2).background} 
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page2MainImage} 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=1000" 
               />
             )}
           </View>
@@ -229,12 +239,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         </View>
         
         {/* Portrait image centered over both columns */}
-        {getPageData(2).middle_image_url && (
-          <Image 
-            style={pdfStyles.page2PortraitImage} 
-            src={getPageData(2).middle_image_url} 
-          />
-        )}
+        <Image 
+          style={pdfStyles.page2PortraitImage} 
+          src={getPageData(2).middle_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
+        />
         
         {/* White footer bar with logo and page number */}
         <View style={pdfStyles.page2Footer}>
