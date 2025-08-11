@@ -120,9 +120,9 @@ export const pdfStyles = StyleSheet.create({
   // Company info positioned in white area of background image
   coverCompanySection: {
     position: 'absolute',
-    right: 60,
-    bottom: 100,
-    width: 300,
+    right: 40,
+    bottom: 60,
+    width: 400,
     backgroundColor: 'transparent',
     padding: 30,
     justifyContent: 'center',
@@ -134,8 +134,9 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     top: 40,
     bottom: 40,
-    width: 3,
-    backgroundColor: '#dc2626',
+    width: 2,
+    borderLeft: '2 dotted #3b82f6',
+    backgroundColor: 'transparent',
   },
   
   // Large red company name
