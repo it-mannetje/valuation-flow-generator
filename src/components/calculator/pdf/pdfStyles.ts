@@ -171,84 +171,131 @@ export const pdfStyles = StyleSheet.create({
 
   // ========== PAGE 2 SPECIFIC STYLES ==========
   
-  // Two column layout for page 2
+  // Full page layout for page 2 (no padding, full width/height)
   page2Layout: {
     flexDirection: 'row',
-    height: '100%', // Full height, no header space needed
+    height: '100%',
     position: 'relative',
-    padding: 20,
-    gap: 20,
+    padding: 0,
+    backgroundColor: 'white',
   },
   
   // Left column with main image (50% width)
   page2LeftColumn: {
     width: '50%',
+    position: 'relative',
+    height: '100%',
   },
   
-  // Main image in left column (full height minus space for footer)
+  // Main image in left column (full height)
   page2MainImage: {
     width: '100%',
-    height: 'calc(100% - 100px)', // Leave space for footer
+    height: '100%',
     objectFit: 'cover',
-    borderRadius: 8,
   },
   
   // Right column with text content (50% width)
   page2RightColumn: {
     width: '50%',
-    paddingLeft: 20,
+    padding: '60px 40px 100px 40px',
     flexDirection: 'column',
+    height: '100%',
+    backgroundColor: 'white',
   },
   
-  // Text content area in right column
-  page2TextContent: {
-    height: 'calc(100% - 100px)', // Leave space for footer
-    overflow: 'hidden',
+  // Voorwoord title styling
+  page2Title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+    marginBottom: 30,
+    textAlign: 'left',
   },
   
-  // Portrait image centered over both columns
+  // Text content paragraphs
+  page2Paragraph: {
+    fontSize: 11,
+    lineHeight: 1.6,
+    color: '#374151',
+    marginBottom: 16,
+    textAlign: 'justify',
+  },
+  
+  // Greeting text
+  page2Greeting: {
+    fontSize: 11,
+    color: '#374151',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  
+  // Signature name
+  page2SignatureName: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 5,
+  },
+  
+  // Signature title
+  page2SignatureTitle: {
+    fontSize: 11,
+    color: '#6B7280',
+  },
+  
+  // Portrait image positioned at bottom center over both columns
   page2PortraitImage: {
     position: 'absolute',
-    width: 120,
-    height: 140,
+    width: 100,
+    height: 120,
     objectFit: 'cover',
-    borderRadius: 8,
     left: '50%',
-    bottom: 120, // Above footer
-    marginLeft: -60, // Half of width to center
+    bottom: 20,
+    marginLeft: -50, // Half of width to center
     zIndex: 10,
   },
   
-  // White footer section for page 2
+  // Footer section with logo
   page2Footer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    backgroundColor: 'white',
+    bottom: 20,
+    left: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 40,
-    borderTop: '1 solid #E5E7EB',
+    zIndex: 5,
   },
   
-  // Footer logo in page 2 (maintain aspect ratio)
+  // FBM logo
   page2FooterLogo: {
-    width: 120,
-    height: 40,
-    objectFit: 'contain',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1E40AF',
+    marginRight: 5,
   },
   
-  // Page number box in page 2
-  page2PageNumberBox: {
-    backgroundColor: '#F3F4F6',
-    padding: '8 12',
-    borderRadius: 4,
+  // Corporate Finance text
+  page2FooterText: {
+    fontSize: 14,
+    color: '#1E40AF',
   },
   
-  // Page number text in page 2
+  // Page number with dotted line
+  page2PageNumber: {
+    position: 'absolute',
+    top: 30,
+    right: 40,
+    alignItems: 'center',
+  },
+  
+  // Dotted line above page number
+  page2DottedLine: {
+    width: 50,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 10,
+  },
+  
+  // Page number text
   page2PageNumberText: {
     fontSize: 16,
     color: '#6B7280',

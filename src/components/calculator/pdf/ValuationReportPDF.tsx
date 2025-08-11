@@ -175,24 +175,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 2 - Foreword */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Top logo */}
-        {renderLogo(getPageData(2).topLogo, [
-          pdfStyles.topLogo,
-          { 
-            left: getPageData(2).topLogoPosition === 'center' ? '45%' : 
-                  getPageData(2).topLogoPosition === 'right' ? 'auto' : 20,
-            right: getPageData(2).topLogoPosition === 'right' ? 20 : 'auto'
-          }
-        ])}
-        
-        {/* Header */}
-        <View style={[pdfStyles.pageHeader, { margin: 20, marginBottom: 0 }]}>
-          <Text style={pdfStyles.fbmLogo}>fbm</Text>
+        {/* Page number with dotted line */}
+        <View style={pdfStyles.page2PageNumber}>
+          <View style={pdfStyles.page2DottedLine} />
+          <Text style={pdfStyles.page2PageNumberText}>2</Text>
         </View>
         
         {/* Main content area with two columns */}
         <View style={pdfStyles.page2Layout}>
-          {/* Left column - Main image (60%) */}
+          {/* Left column - Main image (50%) */}
           <View style={pdfStyles.page2LeftColumn}>
             {getPageData(2).background && (
               <Image 
@@ -202,38 +193,58 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             )}
           </View>
           
-          {/* Right column - Text content and portrait (40%) */}
+          {/* Right column - Text content (50%) */}
           <View style={pdfStyles.page2RightColumn}>
-            <View style={pdfStyles.page2TextContent}>
-              {getPageData(2).content ? (
-                renderContentSections(getPageData(2).content)
-              ) : (
-                <>
-                  <Text style={pdfStyles.sectionTitle}>Voorwoord</Text>
-                  <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 foreword</Text>
-                </>
-              )}
-            </View>
+            <Text style={pdfStyles.page2Title}>Voorwoord</Text>
             
-            {/* Portrait image at bottom right */}
-            {getPageData(2).middle_image_url && (
-              <Image 
-                style={pdfStyles.page2PortraitImage} 
-                src={getPageData(2).middle_image_url} 
-              />
+            {getPageData(2).content ? (
+              renderContentSections(getPageData(2).content)
+            ) : (
+              <>
+                <Text style={pdfStyles.page2Paragraph}>
+                  Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
+                  FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
+                  Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
+                  een open houding en bovenal: advies met karakter.
+                </Text>
+                <Text style={pdfStyles.page2Paragraph}>
+                  Met een persoonlijke benadering en diepgaande expertise helpen we middelgrote en 
+                  grote bedrijven bij complexe vraagstukken op het gebied van fusies en overnames, 
+                  financieringen, herstructureringen en bedrijfswaarderingen. Ons team van ervaren 
+                  professionals, zelf vaak ook ondernemer, kijkt altijd met het perspectief van de klant. 
+                  Niet vanuit modellen of theorie, maar met gevoel voor de praktijk, creativiteit en lef. 
+                  We zijn trots op onze rol als sparringpartner en oplossingsgerichte adviseur voor meer 
+                  dan 500 ondernemingen in uiteenlopende sectoren. Of het nu gaat om software, 
+                  industrie, vastgoed of automotive: onze focus ligt op het realiseren van waarde en het 
+                  benutten van kansen.
+                </Text>
+                <Text style={pdfStyles.page2Paragraph}>
+                  FBM Corporate Finance is gebouwd op mensen met karakter. Geen 
+                  standaardadviseurs, maar betrokken professionals die verder kijken dan de cijfers. 
+                  Graag maken we kennis en gaan we samen het gesprek aan, laagdrempelig en altijd 
+                  met een goed kop koffie.
+                </Text>
+                
+                <Text style={pdfStyles.page2Greeting}>Hartelijke groet,</Text>
+                <Text style={pdfStyles.page2SignatureName}>Pieter Westland</Text>
+                <Text style={pdfStyles.page2SignatureTitle}>Namens het team van FBM Corporate Finance</Text>
+              </>
             )}
           </View>
         </View>
         
-        {/* White footer */}
+        {/* Portrait image centered over both columns */}
+        {getPageData(2).middle_image_url && (
+          <Image 
+            style={pdfStyles.page2PortraitImage} 
+            src={getPageData(2).middle_image_url} 
+          />
+        )}
+        
+        {/* Footer with FBM logo */}
         <View style={pdfStyles.page2Footer}>
-          {/* Footer logo on left */}
-          {renderLogo(getPageData(2).footerLogo, pdfStyles.page2FooterLogo)}
-          
-          {/* Page number box on right */}
-          <View style={pdfStyles.page2PageNumberBox}>
-            <Text style={pdfStyles.page2PageNumberText}>2</Text>
-          </View>
+          <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
+          <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
         </View>
       </Page>
 
