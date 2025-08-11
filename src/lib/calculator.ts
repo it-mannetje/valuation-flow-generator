@@ -8,10 +8,23 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
     throw new Error('Invalid sector selected');
   }
 
-  const multiple = sectorConfig.multiple;
+  let multiple = sectorConfig.multiple;
   
   // Use the average of result2024 and expectedResult2025 as EBITDA proxy + yearly investment
   const adjustedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2 + companyData.averageYearlyInvestment;
+
+  // Adjust multiplier based on EBITDA ranges
+  if (adjustedEbitda < 200000) {
+    multiple -= 0.90;
+  } else if (adjustedEbitda < 500000) {
+    multiple -= 0.40;
+  } else if (adjustedEbitda < 1000000) {
+    // No adjustment - multiplier stays the same
+  } else if (adjustedEbitda < 2000000) {
+    multiple += 0.50;
+  } else if (adjustedEbitda < 5000000) {
+    multiple += 1.00;
+  }
 
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
