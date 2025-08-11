@@ -624,9 +624,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#2563EB',
     paddingHorizontal: 20,
     paddingVertical: 8,
-    borderRadius: 0,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 8,
     flex: 1,
   },
   
