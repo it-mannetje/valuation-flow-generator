@@ -594,4 +594,342 @@ export const pdfStyles = StyleSheet.create({
     width: 80,
     height: 30,
   },
+  
+  // ========== PAGE 3 STYLES ==========
+  
+  // Page 3 header
+  page3Header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  
+  page3HeaderNumber: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#2563EB',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+  
+  page3Number: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  page3HeaderTitle: {
+    backgroundColor: '#2563EB',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 0,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    flex: 1,
+  },
+  
+  page3Title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  // Main content layout
+  page3MainContent: {
+    flexDirection: 'row',
+    flex: 1,
+    marginBottom: 60,
+  },
+  
+  page3LeftColumn: {
+    width: '45%',
+    paddingRight: 20,
+  },
+  
+  page3RightColumn: {
+    width: '45%',
+    paddingLeft: 20,
+  },
+  
+  page3Separator: {
+    width: 2,
+    backgroundColor: '#E5E7EB',
+    marginHorizontal: 10,
+    borderStyle: 'dotted',
+    borderWidth: 1,
+    borderColor: '#9CA3AF',
+  },
+  
+  page3ColumnTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginBottom: 15,
+    textDecoration: 'underline',
+  },
+  
+  // Data list styles
+  page3DataList: {
+    marginBottom: 20,
+  },
+  
+  page3DataRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 3,
+    borderBottom: '0.5 solid #F3F4F6',
+  },
+  
+  page3Label: {
+    fontSize: 10,
+    color: '#374151',
+    flex: 1,
+  },
+  
+  page3Value: {
+    fontSize: 10,
+    color: '#DC2626',
+    fontWeight: 'bold',
+    textAlign: 'right',
+    marginLeft: 10,
+  },
+  
+  // Images section
+  page3Images: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
+  },
+  
+  page3Image: {
+    width: 120,
+    height: 80,
+    borderRadius: 6,
+    objectFit: 'cover',
+  },
+  
+  // Metrics section
+  page3MetricsContainer: {
+    marginBottom: 15,
+  },
+  
+  page3MetricBox: {
+    backgroundColor: '#F8FAFC',
+    padding: 12,
+    borderRadius: 6,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  
+  page3MetricBoxLarge: {
+    backgroundColor: '#F8FAFC',
+    padding: 15,
+    borderRadius: 6,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  
+  page3MetricValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginBottom: 4,
+  },
+  
+  page3MetricValueLarge: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#DC2626',
+    marginBottom: 4,
+  },
+  
+  page3MetricLabel: {
+    fontSize: 12,
+    color: '#374151',
+    marginBottom: 2,
+  },
+  
+  page3MetricLabelLarge: {
+    fontSize: 14,
+    color: '#374151',
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  
+  page3MetricDate: {
+    fontSize: 14,
+    color: '#DC2626',
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  
+  page3MetricSubtext: {
+    fontSize: 10,
+    color: '#6B7280',
+  },
+  
+  page3MultiplierContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: 4,
+  },
+  
+  page3MultiplierValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#DC2626',
+  },
+  
+  page3MultiplierText: {
+    fontSize: 14,
+    color: '#2563EB',
+  },
+  
+  // Disclaimer
+  page3Disclaimer: {
+    fontSize: 9,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 15,
+    lineHeight: 1.3,
+    fontStyle: 'italic',
+  },
+  
+  // Chart section
+  page3ChartContainer: {
+    backgroundColor: '#F8FAFC',
+    padding: 15,
+    borderRadius: 8,
+  },
+  
+  page3ChartTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  
+  page3Chart: {
+    height: 120,
+    position: 'relative',
+  },
+  
+  page3ChartBars: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    height: 100,
+    paddingHorizontal: 10,
+  },
+  
+  page3ChartBar1: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  
+  page3ChartBar2: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  
+  page3ChartBar3: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  
+  page3Bar1: {
+    width: 30,
+    height: 50,
+    backgroundColor: '#3B82F6',
+    marginBottom: 8,
+    borderRadius: 2,
+  },
+  
+  page3Bar2: {
+    width: 30,
+    height: 70,
+    backgroundColor: '#60A5FA',
+    marginBottom: 8,
+    borderRadius: 2,
+  },
+  
+  page3Bar3: {
+    width: 30,
+    height: 90,
+    backgroundColor: '#2563EB',
+    marginBottom: 8,
+    borderRadius: 2,
+  },
+  
+  page3BarValue: {
+    fontSize: 9,
+    color: '#DC2626',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  
+  page3ChartBaseline: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    height: 1,
+    backgroundColor: '#9CA3AF',
+  },
+  
+  // Footer
+  page3Footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  page3FooterLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+  page3FooterLogo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginRight: 8,
+  },
+  
+  page3FooterText: {
+    fontSize: 12,
+    color: '#2563EB',
+  },
+  
+  page3FooterRight: {
+    alignItems: 'center',
+  },
+  
+  page3FooterDots: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page3FooterPageNumber: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
 });

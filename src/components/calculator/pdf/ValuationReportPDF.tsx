@@ -261,126 +261,155 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
-         {renderLogo(getPageData(3).topLogo, [
-           pdfStyles.topLogo,
-           { 
-             left: getPageData(3).topLogoPosition === 'center' ? '45%' : 
-                   getPageData(3).topLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(3).topLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
         <View style={pdfStyles.content}>
-          <View style={pdfStyles.pageHeader}>
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+          {/* Header with page number and title */}
+          <View style={pdfStyles.page3Header}>
+            <View style={pdfStyles.page3HeaderNumber}>
+              <Text style={pdfStyles.page3Number}>3</Text>
+            </View>
+            <View style={pdfStyles.page3HeaderTitle}>
+              <Text style={pdfStyles.page3Title}>Indicatieve calculatie</Text>
+            </View>
           </View>
           
-          <Text style={[pdfStyles.sectionTitle, { backgroundColor: '#1E40AF', color: 'white', padding: '10 20', borderRadius: 6 }]}>
-            Ingevoerde gegevens en uitkomst berekening
-          </Text>
-          
-          <View style={pdfStyles.calculationGrid}>
-            <View style={pdfStyles.leftColumn}>
-              <Text style={pdfStyles.columnTitle}>Ingevoerde gegevens</Text>
+          {/* Main content area with two columns */}
+          <View style={pdfStyles.page3MainContent}>
+            {/* Left column - Input data */}
+            <View style={pdfStyles.page3LeftColumn}>
+              <Text style={pdfStyles.page3ColumnTitle}>Ingevoerde gegevens</Text>
               
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Omzet in het afgelopen jaar</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.lastYearRevenue)}</Text>
+              <View style={pdfStyles.page3DataList}>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.lastYearRevenue)}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Resultaat vorig boekjaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.result2024)}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Verwacht resultaat dit boekjaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.expectedResult2025)}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Verlies in de afgelopen 3 jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Vooruitzichten</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.prospects}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Sector</Text>
+                  <Text style={pdfStyles.page3Value}>{valuationResult.sector}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Aantal (FTE) medewerkers</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.employeesDisplay || companyData.employees}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Omzet via de grootste klant</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
+                </View>
+                <View style={pdfStyles.page3DataRow}>
+                  <Text style={pdfStyles.page3Label}>Afhankelijkheid van grootste toeleverancier</Text>
+                  <Text style={pdfStyles.page3Value}>Geen enkel probleem</Text>
+                </View>
               </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Aantal partijen terugkerende omzet</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Resultaat vorig boekjaar</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.result2024)}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Verwacht resultaat dit boekjaar</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.expectedResult2025)}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Verlies in de afgelopen 3 jaar</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Vooruitzichten</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.prospects}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Gemiddelde investering per jaar</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Sector</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{valuationResult.sector}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Aantal FTE medewerkers</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.employeesDisplay || companyData.employees}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Omzet via de grootste klant</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
-              </View>
-              <View style={pdfStyles.dataRow}>
-                <Text style={pdfStyles.label}>Schattingmethode</Text>
-                <Text style={[pdfStyles.value, { color: '#DC2626' }]}>EBITDA multiplier</Text>
+              
+              {/* Business images */}
+              <View style={pdfStyles.page3Images}>
+                <Image 
+                  style={pdfStyles.page3Image} 
+                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=400&h=250"
+                />
+                <Image 
+                  style={pdfStyles.page3Image} 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=250"
+                />
               </View>
             </View>
             
-            <View style={pdfStyles.rightColumn}>
-              <Text style={pdfStyles.columnTitle}>Uitkomst berekening</Text>
+            {/* Dotted separator line */}
+            <View style={pdfStyles.page3Separator} />
+            
+            {/* Right column - Key assumptions and results */}
+            <View style={pdfStyles.page3RightColumn}>
+              <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
               
-              <View style={pdfStyles.highlightBox}>
-                <Text style={pdfStyles.highlightValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
-                <Text style={pdfStyles.highlightLabel}>Geschatte waarde</Text>
-                <Text style={pdfStyles.highlightSubtext}>Gebaseerd op EBITDA multiplier</Text>
+              {/* Key metrics boxes */}
+              <View style={pdfStyles.page3MetricsContainer}>
+                <View style={pdfStyles.page3MetricBox}>
+                  <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
+                  <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
+                  <Text style={pdfStyles.page3MetricDate}>03-06-2025</Text>
+                  <Text style={pdfStyles.page3MetricSubtext}>Waarderingsmoment</Text>
+                </View>
+                
+                <View style={pdfStyles.page3MetricBoxLarge}>
+                  <Text style={pdfStyles.page3MetricValueLarge}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                  <Text style={pdfStyles.page3MetricLabelLarge}>Ondernemingswaarde</Text>
+                  <Text style={pdfStyles.page3MultiplierContainer}>
+                    <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)} </Text>
+                    <Text style={pdfStyles.page3MultiplierText}>x EBITDA</Text>
+                  </Text>
+                  <Text style={pdfStyles.page3MetricSubtext}>Multiple op EBITDA</Text>
+                </View>
               </View>
               
-              <View style={pdfStyles.highlightBox}>
-                <Text style={pdfStyles.highlightValue}>{formatCurrency(estimatedEbitda)}</Text>
-                <Text style={pdfStyles.highlightLabel}>Geschatte EBITDA</Text>
-                <Text style={pdfStyles.highlightSubtext}>Gemiddelde van resultaten 2024 en verwacht 2025</Text>
-              </View>
-              
-              <View style={pdfStyles.highlightBox}>
-                <Text style={pdfStyles.highlightValue}>{valuationResult.multiple.toFixed(1)}x</Text>
-                <Text style={pdfStyles.highlightLabel}>Gehanteerde multiplier</Text>
-                <Text style={pdfStyles.highlightSubtext}>Gebaseerd op sector en bedrijfsprofiel</Text>
-              </View>
-              
-              <Text style={pdfStyles.disclaimerSmall}>
-                Deze berekening is gebaseerd op de door u ingevoerde gegevens en algemene marktgegevens. 
-                De werkelijke waarde kan afwijken door specifieke bedrijfs- en marktomstandigheden.
+              {/* Disclaimer text */}
+              <Text style={pdfStyles.page3Disclaimer}>
+                Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten.{'\n'}
+                Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
               </Text>
               
-              <View style={pdfStyles.bandbreedte}>
-                <Text style={pdfStyles.bandbreedteTitle}>Bandbreedte</Text>
-                <View style={pdfStyles.bandbreedteRow}>
-                  <View style={pdfStyles.bandbreedteBox}>
-                    <Text style={pdfStyles.bandbreedteValue}>{formatCurrency(valuationResult.minValuation)}</Text>
-                    <Text style={pdfStyles.label}>Minimum</Text>
+              {/* Bandwidth chart */}
+              <View style={pdfStyles.page3ChartContainer}>
+                <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
+                
+                <View style={pdfStyles.page3Chart}>
+                  {/* Chart bars */}
+                  <View style={pdfStyles.page3ChartBars}>
+                    <View style={pdfStyles.page3ChartBar1}>
+                      <View style={pdfStyles.page3Bar1} />
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation / 1000).toLocaleString()}</Text>
+                    </View>
+                    <View style={pdfStyles.page3ChartBar2}>
+                      <View style={pdfStyles.page3Bar2} />
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                    </View>
+                    <View style={pdfStyles.page3ChartBar3}>
+                      <View style={pdfStyles.page3Bar3} />
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation / 1000).toLocaleString()}</Text>
+                    </View>
                   </View>
-                  <View style={pdfStyles.bandbreedteBox}>
-                    <Text style={pdfStyles.bandbreedteValue}>{formatCurrency(valuationResult.maxValuation)}</Text>
-                    <Text style={pdfStyles.label}>Maximum</Text>
-                  </View>
+                  
+                  {/* Chart baseline */}
+                  <View style={pdfStyles.page3ChartBaseline} />
                 </View>
               </View>
             </View>
           </View>
           
-           {renderLogo(getPageData(3).footerLogo, [
-             pdfStyles.footerLogo,
-             { 
-               left: getPageData(3).footerLogoPosition === 'center' ? '45%' : 
-                     getPageData(3).footerLogoPosition === 'right' ? 'auto' : 20,
-               right: getPageData(3).footerLogoPosition === 'right' ? 20 : 'auto'
-             }
-           ])}
-          
-          <Text style={pdfStyles.pageNumber}>3</Text>
+          {/* Footer */}
+          <View style={pdfStyles.page3Footer}>
+            <View style={pdfStyles.page3FooterLeft}>
+              <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
+              <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
+            </View>
+            <View style={pdfStyles.page3FooterRight}>
+              <View style={pdfStyles.page3FooterDots} />
+              <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
+            </View>
+          </View>
         </View>
       </Page>
 
