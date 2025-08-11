@@ -174,45 +174,49 @@ export const pdfStyles = StyleSheet.create({
   // Two column layout for page 2
   page2Layout: {
     flexDirection: 'row',
-    height: '75%', // Leave space for footer
+    height: '100%', // Full height, no header space needed
     position: 'relative',
     padding: 20,
     gap: 20,
   },
   
-  // Left column with main image (60% width)
+  // Left column with main image (50% width)
   page2LeftColumn: {
-    width: '60%',
+    width: '50%',
   },
   
-  // Main image in left column (full height)
+  // Main image in left column (full height minus space for footer)
   page2MainImage: {
     width: '100%',
-    height: '100%',
+    height: 'calc(100% - 100px)', // Leave space for footer
     objectFit: 'cover',
     borderRadius: 8,
   },
   
-  // Right column with text content (40% width)
+  // Right column with text content (50% width)
   page2RightColumn: {
-    width: '40%',
+    width: '50%',
     paddingLeft: 20,
     flexDirection: 'column',
   },
   
   // Text content area in right column
   page2TextContent: {
-    flex: 1,
+    height: 'calc(100% - 100px)', // Leave space for footer
+    overflow: 'hidden',
   },
   
-  // Portrait image at bottom of right column
+  // Portrait image centered over both columns
   page2PortraitImage: {
+    position: 'absolute',
     width: 120,
     height: 140,
     objectFit: 'cover',
     borderRadius: 8,
-    marginTop: 20,
-    alignSelf: 'flex-start',
+    left: '50%',
+    bottom: 120, // Above footer
+    marginLeft: -60, // Half of width to center
+    zIndex: 10,
   },
   
   // White footer section for page 2
@@ -230,10 +234,11 @@ export const pdfStyles = StyleSheet.create({
     borderTop: '1 solid #E5E7EB',
   },
   
-  // Footer logo in page 2
+  // Footer logo in page 2 (maintain aspect ratio)
   page2FooterLogo: {
     width: 120,
     height: 40,
+    objectFit: 'contain',
   },
   
   // Page number box in page 2
