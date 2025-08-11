@@ -120,8 +120,8 @@ export const pdfStyles = StyleSheet.create({
   // Company info positioned in white area of background image
   coverCompanySection: {
     position: 'absolute',
-    right: 40,
-    bottom: 60,
+    right: 120,
+    bottom: 30,
     width: 400,
     backgroundColor: 'transparent',
     padding: 30,
