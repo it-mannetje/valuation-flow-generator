@@ -53,11 +53,11 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
     defaultValues: {
       lastYearRevenue: data.lastYearRevenue || 0,
       recurringRevenuePercentage: data.recurringRevenuePercentage || 0,
-      result2024: data.result2024 || 0,
-      expectedResult2025: data.expectedResult2025 || 0,
+      result2024: data.result2024 || undefined,
+      expectedResult2025: data.expectedResult2025 || undefined,
       wasLossmaking: data.wasLossmaking || false,
       prospects: data.prospects || '',
-      averageYearlyInvestment: data.averageYearlyInvestment || 0,
+      averageYearlyInvestment: data.averageYearlyInvestment || undefined,
       sector: data.sector || '',
       employees: data.employees || 0,
       largestClientDependency: data.largestClientDependency || 0,
@@ -67,6 +67,17 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
       recurringRevenuePercentageDisplay: data.recurringRevenuePercentageDisplay || ''
     }
   });
+
+  // Helper function to format number with thousand separators
+  const formatNumberWithSeparators = (value: string) => {
+    const num = value.replace(/\./g, ''); // Remove existing dots
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  // Helper function to parse formatted number back to number
+  const parseFormattedNumber = (value: string) => {
+    return parseInt(value.replace(/\./g, '')) || 0;
+  };
 
   const handleSubmit = (formData: CompanyData) => {
     onSubmit(formData);
@@ -157,11 +168,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                       <FormLabel className="text-base font-medium">Wat was het resultaat in 2024? (€) *</FormLabel>
                       <FormControl>
                          <Input
-                           type="number"
-                           placeholder="75000"
+                           type="text"
+                           placeholder="75.000"
                            className="h-12 bg-input text-black"
-                           {...field}
-                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                           value={field.value ? formatNumberWithSeparators(field.value.toString()) : ''}
+                           onChange={(e) => {
+                             const formattedValue = formatNumberWithSeparators(e.target.value);
+                             e.target.value = formattedValue;
+                             field.onChange(parseFormattedNumber(formattedValue));
+                           }}
                          />
                       </FormControl>
                       <FormMessage />
@@ -177,11 +192,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                       <FormLabel className="text-base font-medium">Welk resultaat verwacht u voor 2025? (€) *</FormLabel>
                       <FormControl>
                          <Input
-                           type="number"
-                           placeholder="85000"
+                           type="text"
+                           placeholder="85.000"
                            className="h-12 bg-input text-black"
-                           {...field}
-                           onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                           value={field.value ? formatNumberWithSeparators(field.value.toString()) : ''}
+                           onChange={(e) => {
+                             const formattedValue = formatNumberWithSeparators(e.target.value);
+                             e.target.value = formattedValue;
+                             field.onChange(parseFormattedNumber(formattedValue));
+                           }}
                          />
                       </FormControl>
                       <FormMessage />
@@ -253,11 +272,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                     <FormLabel className="text-base font-medium">Wat investeert u gemiddeld per jaar? (€) *</FormLabel>
                     <FormControl>
                        <Input
-                         type="number"
-                         placeholder="25000"
+                         type="text"
+                         placeholder="25.000"
                          className="h-12 bg-input text-black"
-                         {...field}
-                         onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                         value={field.value ? formatNumberWithSeparators(field.value.toString()) : ''}
+                         onChange={(e) => {
+                           const formattedValue = formatNumberWithSeparators(e.target.value);
+                           e.target.value = formattedValue;
+                           field.onChange(parseFormattedNumber(formattedValue));
+                         }}
                        />
                     </FormControl>
                     <FormMessage />
