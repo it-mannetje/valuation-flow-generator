@@ -23,6 +23,7 @@ export type Database = {
           footer_logo_url: string | null
           id: string
           logo_image_url: string | null
+          middle_image_url: string | null
           page_name: string
           page_number: number
           top_logo_position: string | null
@@ -37,6 +38,7 @@ export type Database = {
           footer_logo_url?: string | null
           id?: string
           logo_image_url?: string | null
+          middle_image_url?: string | null
           page_name: string
           page_number: number
           top_logo_position?: string | null
@@ -51,6 +53,7 @@ export type Database = {
           footer_logo_url?: string | null
           id?: string
           logo_image_url?: string | null
+          middle_image_url?: string | null
           page_name?: string
           page_number?: number
           top_logo_position?: string | null
