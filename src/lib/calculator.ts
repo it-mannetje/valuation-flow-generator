@@ -26,6 +26,11 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
     multiple += 1.00;
   }
 
+  // Adjust multiplier for loss-making history
+  if (companyData.wasLossmaking) {
+    multiple -= 1.5;
+  }
+
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
   
