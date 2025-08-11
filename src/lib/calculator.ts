@@ -59,6 +59,22 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
     multiple -= 0.20;
   }
 
+  // Adjust multiplier based on largest supplier dependency
+  switch (companyData.largestSupplierRisk) {
+    case 'Geen enkel probleem':
+      multiple += 0.10;
+      break;
+    case 'Genoeg alternatieven':
+      // No adjustment
+      break;
+    case 'Dat wordt een uitdaging':
+      multiple -= 0.20;
+      break;
+    case 'Dat is een groot probleem':
+      multiple -= 0.50;
+      break;
+  }
+
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
   
