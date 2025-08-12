@@ -134,6 +134,7 @@ export type Database = {
           created_at: string
           employees: number | null
           employees_display: string | null
+          expected_result_2025: number | null
           id: string
           investment_inventory: number | null
           investment_machinery: number | null
@@ -152,6 +153,7 @@ export type Database = {
           valuation_amount: number | null
           valuation_range_max: number | null
           valuation_range_min: number | null
+          was_lossmaking: boolean | null
         }
         Insert: {
           contact_company?: string | null
@@ -161,6 +163,7 @@ export type Database = {
           created_at?: string
           employees?: number | null
           employees_display?: string | null
+          expected_result_2025?: number | null
           id?: string
           investment_inventory?: number | null
           investment_machinery?: number | null
@@ -179,6 +182,7 @@ export type Database = {
           valuation_amount?: number | null
           valuation_range_max?: number | null
           valuation_range_min?: number | null
+          was_lossmaking?: boolean | null
         }
         Update: {
           contact_company?: string | null
@@ -188,6 +192,7 @@ export type Database = {
           created_at?: string
           employees?: number | null
           employees_display?: string | null
+          expected_result_2025?: number | null
           id?: string
           investment_inventory?: number | null
           investment_machinery?: number | null
@@ -206,6 +211,7 @@ export type Database = {
           valuation_amount?: number | null
           valuation_range_max?: number | null
           valuation_range_min?: number | null
+          was_lossmaking?: boolean | null
         }
         Relationships: []
       }

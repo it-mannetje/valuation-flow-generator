@@ -84,6 +84,8 @@ export default function ValuationResultStep({
           // Financial Data
           revenue: companyData.lastYearRevenue,
           profit: companyData.result2024,
+          expected_result_2025: companyData.expectedResult2025,
+          was_lossmaking: companyData.wasLossmaking,
           investment_real_estate: null, // Not in current schema
           investment_inventory: null, // Not in current schema
           investment_machinery: null, // Not in current schema
