@@ -81,7 +81,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Date in header (small red)
   headerDate: {
-    fontSize: 9,
+    fontSize: 0,
     color: '#dc2626',
     fontWeight: 'bold',
   },
