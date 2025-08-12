@@ -214,32 +214,32 @@ export const pdfStyles = StyleSheet.create({
   
   // Text content paragraphs
   page2Paragraph: {
-    fontSize: 8,
-    lineHeight: 1.4,
+    fontSize: 7,
+    lineHeight: 1.3,
     color: '#374151',
-    marginBottom: 10,
+    marginBottom: 8,
     textAlign: 'justify',
   },
   
   // Greeting text
   page2Greeting: {
-    fontSize: 8,
+    fontSize: 7,
     color: '#374151',
-    marginTop: 15,
-    marginBottom: 8,
+    marginTop: 12,
+    marginBottom: 6,
   },
   
   // Signature name
   page2SignatureName: {
-    fontSize: 8,
+    fontSize: 7,
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   
   // Signature title
   page2SignatureTitle: {
-    fontSize: 8,
+    fontSize: 7,
     color: '#6B7280',
   },
   
