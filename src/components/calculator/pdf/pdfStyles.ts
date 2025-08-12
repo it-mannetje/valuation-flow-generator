@@ -893,6 +893,55 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#9CA3AF',
   },
   
+  // Results grid for 2x2 layout
+  page3ResultsGrid: {
+    flexDirection: 'column',
+    marginTop: 20,
+  },
+  
+  page3GridRow: {
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  
+  page3GridBlock: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    padding: 20,
+    marginHorizontal: 5,
+    borderRadius: 8,
+    borderLeft: '3 solid #3B82F6',
+    alignItems: 'center',
+  },
+  
+  page3GridLabel: {
+    fontSize: 10,
+    color: '#6B7280',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  
+  page3GridValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    textAlign: 'center',
+  },
+  
+  // Page 3 footer dotted line
+  page3DottedLine: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page3PageNumberText: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
+  
   // Footer
   page3Footer: {
     position: 'absolute',
