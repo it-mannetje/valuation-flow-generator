@@ -716,9 +716,9 @@ export const pdfStyles = StyleSheet.create({
   
   page3MetricsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginBottom: 10,
+    gap: 16,
+    marginBottom: 16,
+    justifyContent: 'space-between',
   },
   
   page3MetricBox: {

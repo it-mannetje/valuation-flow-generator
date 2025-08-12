@@ -349,38 +349,29 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               
               {/* Key metrics boxes - 2x2 grid layout */}
               <View style={pdfStyles.page3MetricsContainer}>
-                {/* First row of 2 boxes */}
+                {/* First row */}
                 <View style={pdfStyles.page3MetricsGrid}>
                   <View style={pdfStyles.page3MetricBox}>
                     <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>EBITDA</Text>
+                  </View>
+                  
+                  <View style={pdfStyles.page3MetricBox}>
                     <Text style={pdfStyles.page3MetricDate}>03-06-2025</Text>
-                    <Text style={pdfStyles.page3MetricSubtext}>Waarderingsmoment</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Datum rapport</Text>
+                  </View>
+                </View>
+                
+                {/* Second row */}
+                <View style={pdfStyles.page3MetricsGrid}>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
                   </View>
                   
                   <View style={pdfStyles.page3MetricBox}>
                     <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple.toFixed(1)} x</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Multiple</Text>
-                    <Text style={pdfStyles.page3MetricSubtext}>Gehanteerde multiple</Text>
-                  </View>
-                </View>
-                
-                {/* Second row of 2 boxes */}
-                <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>{companyData.sector}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Sector</Text>
-                    <Text style={pdfStyles.page3MetricSubtext}>Vergelijkbare bedrijven</Text>
-                  </View>
-                  
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
-                    <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)} </Text>
-                      <Text style={pdfStyles.page3MultiplierText}>x EBITDA</Text>
-                    </View>
-                    <Text style={pdfStyles.page3MetricSubtext}>Multiple op EBITDA</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Multiplier</Text>
                   </View>
                 </View>
               </View>
