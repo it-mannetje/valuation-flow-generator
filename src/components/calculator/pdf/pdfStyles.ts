@@ -187,10 +187,10 @@ export const pdfStyles = StyleSheet.create({
     height: '100%',
   },
   
-  // Main image in left column (full height)
+  // Main image in left column (adjusted height to leave space for footer)
   page2MainImage: {
     width: '100%',
-    height: '100%',
+    height: 'calc(100% - 60px)', // Leave 60px for footer
     objectFit: 'cover',
   },
   
