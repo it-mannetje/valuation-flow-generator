@@ -135,7 +135,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                 <View style={pdfStyles.headerLeftContent}>
                   <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
                   <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
-                  <Text style={pdfStyles.headerDate}>{currentDate}</Text>
+                  
                 </View>
                 {/* Logo in header */}
                 {page.top_logo_url && renderLogo(page.top_logo_url, pdfStyles.headerLogo)}

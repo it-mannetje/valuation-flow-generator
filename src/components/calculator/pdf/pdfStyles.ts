@@ -59,9 +59,11 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
   
-  // Left side header content
+  // Left side header content (now horizontal layout)
   headerLeftContent: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
   },
   
   // Main title in header
@@ -69,21 +71,12 @@ export const pdfStyles = StyleSheet.create({
     color: '#1e3a8a',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 3,
   },
   
-  // Confidential text in header
+  // Confidential text in header (next to title)
   headerConfidential: {
     color: '#1e3a8a',
     fontSize: 10,
-    marginBottom: 5,
-  },
-  
-  // Date in header (small red)
-  headerDate: {
-    fontSize: 0,
-    color: '#dc2626',
-    fontWeight: 'bold',
   },
   
   // Logo in header (top right)
@@ -117,12 +110,12 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'cover',
   },
   
-  // Company info positioned in white area of background image
+  // Company info positioned in white area of background image (moved left)
   coverCompanySection: {
     position: 'absolute',
-    right: 120,
+    right: 80,
     bottom: 30,
-    width: 400,
+    width: 440,
     backgroundColor: 'transparent',
     padding: 30,
     justifyContent: 'center',
@@ -139,14 +132,15 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   
-  // Large red company name
+  // Large red company name (ensures single line)
   companyNameLarge: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#dc2626',
     textAlign: 'left',
     marginBottom: 15,
-    lineHeight: 1.2,
+    lineHeight: 1,
+    overflow: 'hidden',
   },
   
   // Red date below company name

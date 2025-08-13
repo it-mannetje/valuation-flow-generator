@@ -145,7 +145,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           <View style={pdfStyles.headerLeftContent}>
             <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
             <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
-            <Text style={pdfStyles.headerDate}>{currentDate}</Text>
           </View>
           {/* Logo in header */}
           {renderLogo(getPageData(1).topLogo, pdfStyles.headerLogo)}
