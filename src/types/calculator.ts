@@ -1,6 +1,7 @@
 export interface CompanyData {
   // Omzet
   lastYearRevenue: number;
+  lastYearRevenueDisplay?: string;
   recurringRevenuePercentage: number;
   
   // Bedrijfsresultaat

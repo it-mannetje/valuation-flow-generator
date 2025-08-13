@@ -37,6 +37,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       footerLogo: page?.footer_logo_url || null,
       footerLogoPosition: page?.footer_logo_position || 'left',
       middle_image_url: page?.middle_image_url || null,
+      logo_image_url: page?.logo_image_url || null,
       image1_url: page?.image1_url || null,
       image2_url: page?.image2_url || null,
       content: page?.content?.content || null
@@ -242,14 +243,18 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Portrait image centered over both columns */}
         <Image 
           style={pdfStyles.page2PortraitImage} 
-          src={getPageData(2).middle_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
+          src={getPageData(2).middle_image_url || getPageData(2).logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
         />
         
         {/* White footer bar with logo and page number */}
         <View style={pdfStyles.page2Footer}>
           <View style={pdfStyles.page2FooterLeft}>
-            <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-            <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+            {renderLogo(getPageData(2).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }]) || (
+              <> 
+                <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
+                <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+              </>
+            )}
           </View>
           <View style={pdfStyles.page2FooterRight}>
             <View style={pdfStyles.page2DottedLine} />
@@ -282,7 +287,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={pdfStyles.page3DataList}>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.lastYearRevenue)}</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.lastYearRevenueDisplay || formatCurrency(companyData.lastYearRevenue)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
@@ -351,26 +356,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* First row */}
                 <View style={pdfStyles.page3MetricsGrid}>
                   <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda / 1000).toLocaleString()}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>EBITDA</Text>
+                    <Text style={pdfStyles.page3MetricValue}>{formatCurrency(estimatedEbitda)}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
                   </View>
-                  
                   <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricDate}>03-06-2025</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Datum rapport</Text>
+                    <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Waarderingsmoment</Text>
                   </View>
                 </View>
-                
                 {/* Second row */}
                 <View style={pdfStyles.page3MetricsGrid}>
                   <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                    <Text style={pdfStyles.page3MetricValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
                     <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
                   </View>
-                  
                   <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple.toFixed(1)} x</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Multiplier</Text>
+                    <View style={pdfStyles.page3MultiplierContainer}>
+                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)}</Text>
+                      <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
+                    </View>
+                    <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
                   </View>
                 </View>
               </View>

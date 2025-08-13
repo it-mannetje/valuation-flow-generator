@@ -17,6 +17,7 @@ import { useSectorConfig } from '@/hooks/useSectorConfig';
 const companyDataSchema = z.object({
   // Omzet
   lastYearRevenue: z.number().min(1000, 'Omzet moet minimaal €1.000 zijn'),
+  lastYearRevenueDisplay: z.string().optional(),
   recurringRevenuePercentage: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
   
   // Bedrijfsresultaat
@@ -34,7 +35,7 @@ const companyDataSchema = z.object({
   largestClientDependency: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
   largestSupplierRisk: z.string().min(1, 'Selecteer een optie'),
   
-  // Display values (optional)
+  // Display values (optioneel)
   employeesDisplay: z.string().optional(),
   largestClientDependencyDisplay: z.string().optional(),
   recurringRevenuePercentageDisplay: z.string().optional()
@@ -50,8 +51,9 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
   const { sectors } = useSectorConfig();
   const form = useForm<CompanyData>({
     resolver: zodResolver(companyDataSchema),
-    defaultValues: {
+  defaultValues: {
       lastYearRevenue: data.lastYearRevenue || 0,
+      lastYearRevenueDisplay: data.lastYearRevenueDisplay || '',
       recurringRevenuePercentage: data.recurringRevenuePercentage || 0,
       result2024: data.result2024 || undefined,
       expectedResult2025: data.expectedResult2025 || undefined,
@@ -104,7 +106,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Wat was uw omzet het afgelopen jaar? (€) *</FormLabel>
-                      <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                      <Select onValueChange={(value) => {
+                        field.onChange(parseInt(value));
+                        const display = value === '500000' ? '0-1 mln'
+                          : value === '2000000' ? '1-3 mln'
+                          : value === '7000000' ? '4-10 mln'
+                          : value === '18000000' ? '11-25 mln'
+                          : '> 25 mln';
+                        form.setValue('lastYearRevenueDisplay', display);
+                      }} value={field.value?.toString()}>
                         <FormControl>
                            <SelectTrigger className="h-12 bg-input text-black">
                              <SelectValue placeholder="Selecteer omzetklasse" />
