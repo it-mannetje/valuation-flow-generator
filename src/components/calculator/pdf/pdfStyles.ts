@@ -73,7 +73,7 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     padding: '8 16',
-    borderRadius: 0,
+    borderRadius: 8,
   },
   
   // Confidential text in header (next to title) - light blue and bold
@@ -251,7 +251,7 @@ export const pdfStyles = StyleSheet.create({
     bottom: 80, // Above footer in middle between sections
     marginLeft: -60, // Half of width to center
     zIndex: 10,
-    borderRadius: 0,
+    borderRadius: 4,
   },
   
   // White footer bar spanning full width
@@ -332,7 +332,7 @@ export const pdfStyles = StyleSheet.create({
     color: 'white',
     backgroundColor: '#1E40AF',
     padding: '12 24',
-    borderRadius: 0,
+    borderRadius: 8,
     marginBottom: 30,
   },
   
@@ -376,7 +376,7 @@ export const pdfStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9FAFB',
     padding: 20,
-    borderRadius: 0,
+    borderRadius: 8,
   },
   
   // Right column
@@ -421,7 +421,7 @@ export const pdfStyles = StyleSheet.create({
   highlightBox: {
     backgroundColor: '#EFF6FF',
     border: '2 solid #3B82F6',
-    borderRadius: 0,
+    borderRadius: 8,
     padding: 20,
     marginBottom: 15,
     alignItems: 'center',
@@ -482,7 +482,7 @@ export const pdfStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F4F6',
     padding: 15,
-    borderRadius: 0,
+    borderRadius: 8,
     alignItems: 'center',
   },
   
@@ -538,7 +538,7 @@ export const pdfStyles = StyleSheet.create({
   
   nextStepsContent: {
     backgroundColor: '#1E40AF',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 30,
     marginTop: 40,
     marginBottom: 40,
@@ -559,7 +559,7 @@ export const pdfStyles = StyleSheet.create({
   
   contactInfo: {
     backgroundColor: 'white',
-    borderRadius: 0,
+    borderRadius: 8,
     padding: 20,
     marginTop: 20,
   },
@@ -603,14 +603,13 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3HeaderNumber: {
     width: 34.02, // 12mm diameter
     height: 34.02,
     backgroundColor: '#87CEEB', // Light blue circle
-    borderRadius: 17,
+    borderRadius: 17.01,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
@@ -627,7 +626,6 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#003F7F', // Dark blue background as specified
     paddingHorizontal: 15,
     paddingVertical: 8,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Title: {
@@ -642,26 +640,22 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     marginBottom: 100,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3LeftColumn: {
     width: '50%', // Exact 50% width
     paddingRight: 10,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3RightColumn: {
     width: '50%', // Exact 50% width
     paddingLeft: 10,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Separator: {
     width: 1,
     backgroundColor: '#E6E6E6', // Light grey line as specified
     marginHorizontal: 0,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ColumnTitle: {
@@ -675,7 +669,6 @@ export const pdfStyles = StyleSheet.create({
   // Data list styles - exact table format
   page3DataList: {
     marginBottom: 20,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3DataRow: {
@@ -684,7 +677,6 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 4,
     borderBottom: '0.5 solid #E6E6E6', // Light grey line
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Label: {
@@ -714,13 +706,11 @@ export const pdfStyles = StyleSheet.create({
     width: 198.43, // 70mm converted to points
     height: 198.43, // 70mm square
     objectFit: 'cover',
-    borderRadius: 0, // Explicit border radius to avoid undefined
   },
   
   // Metrics section - four blocks vertically stacked
   page3MetricsContainer: {
     marginBottom: 20,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3MetricBlock: {
@@ -728,13 +718,12 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 8,
     alignItems: 'flex-start',
     marginBottom: 15,
-    borderRadius: 0, // Explicit border radius
   },
   
   page3MetricBoxLarge: {
     backgroundColor: '#F8FAFC',
     padding: 10, // Reduced padding
-    borderRadius: 0,
+    borderRadius: 6,
     alignItems: 'center',
     width: '100%', // Full width for large box
     marginTop: 8,
@@ -814,7 +803,6 @@ export const pdfStyles = StyleSheet.create({
   page3ChartContainer: {
     backgroundColor: 'transparent',
     marginTop: 20,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartTitle: {
@@ -829,7 +817,6 @@ export const pdfStyles = StyleSheet.create({
   page3Chart: {
     height: 120, // Larger height
     position: 'relative',
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBars: {
@@ -838,28 +825,24 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 80, // Reduced height
     paddingHorizontal: 10,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar1: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar2: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar3: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Bar1: {
@@ -901,20 +884,17 @@ export const pdfStyles = StyleSheet.create({
     right: 0,
     height: 1,
     backgroundColor: '#9CA3AF',
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   // Results grid for 2x2 layout
   page3ResultsGrid: {
     flexDirection: 'column',
     marginTop: 20,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3GridRow: {
     flexDirection: 'row',
     marginBottom: 15,
-    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3GridBlock: {
@@ -922,7 +902,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
     padding: 20,
     marginHorizontal: 5,
-    borderRadius: 0,
+    borderRadius: 8,
     borderLeft: '3 solid #3B82F6',
     alignItems: 'center',
   },
@@ -1019,7 +999,7 @@ export const pdfStyles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#2563EB',
-    borderRadius: 0,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
@@ -1035,7 +1015,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 0,
+    borderRadius: 12,
     maxWidth: '50%', // Maximum width to middle of page
   },
   
@@ -1082,7 +1062,7 @@ export const pdfStyles = StyleSheet.create({
   page4MainImage: {
     width: 350, // Larger image
     height: 300, // Larger image
-    borderRadius: 0,
+    borderRadius: 12,
     objectFit: 'cover',
   },
   
@@ -1163,7 +1143,7 @@ export const pdfStyles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#2563EB',
-    borderRadius: 0,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
@@ -1179,7 +1159,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 0,
+    borderRadius: 12,
     maxWidth: '50%', // Maximum width to middle of page
   },
   
@@ -1236,7 +1216,7 @@ export const pdfStyles = StyleSheet.create({
   
   page5LogoCard: {
     backgroundColor: 'white',
-    borderRadius: 0,
+    borderRadius: 8,
     padding: 15,
     alignItems: 'center',
     width: '30%',
@@ -1244,7 +1224,7 @@ export const pdfStyles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 0,
+    shadowRadius: 4,
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
@@ -1277,8 +1257,8 @@ export const pdfStyles = StyleSheet.create({
     bottom: 0,
     width: 4,
     backgroundColor: '#2563EB',
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
   
   // Footer
