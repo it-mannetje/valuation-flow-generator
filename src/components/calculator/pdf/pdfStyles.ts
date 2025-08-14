@@ -823,6 +823,7 @@ export const pdfStyles = StyleSheet.create({
   page3Chart: {
     height: 120, // Larger height
     position: 'relative',
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBars: {
@@ -831,24 +832,28 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 80, // Reduced height
     paddingHorizontal: 10,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar1: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar2: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartBar3: {
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 5,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Bar1: {
@@ -890,6 +895,7 @@ export const pdfStyles = StyleSheet.create({
     right: 0,
     height: 1,
     backgroundColor: '#9CA3AF',
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   // Results grid for 2x2 layout
