@@ -66,17 +66,21 @@ export const pdfStyles = StyleSheet.create({
     gap: 20,
   },
   
-  // Main title in header
+  // Main title in header - white text with dark blue background
   headerTitle: {
-    color: '#1e3a8a',
+    color: 'white',
+    backgroundColor: '#1e3a8a',
     fontSize: 18,
     fontWeight: 'bold',
+    padding: '8 16',
+    borderRadius: 8,
   },
   
-  // Confidential text in header (next to title)
+  // Confidential text in header (next to title) - light blue and bold
   headerConfidential: {
-    color: '#1e3a8a',
+    color: '#60a5fa',
     fontSize: 10,
+    fontWeight: 'bold',
   },
   
   // Logo in header (top right)
@@ -181,10 +185,10 @@ export const pdfStyles = StyleSheet.create({
     height: '100%',
   },
   
-  // Main image in left column (adjusted height to leave space for footer)
+  // Main image in left column (90% height to leave space for footer and portrait)
   page2MainImage: {
     width: '100%',
-    height: 'calc(100% - 60px)', // Leave 60px for footer
+    height: '90%',
     objectFit: 'cover',
   },
   
@@ -206,12 +210,12 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'left',
   },
   
-  // Text content paragraphs
+  // Text content paragraphs - smaller font to fit better
   page2Paragraph: {
-    fontSize: 7,
-    lineHeight: 1.3,
+    fontSize: 6,
+    lineHeight: 1.2,
     color: '#374151',
-    marginBottom: 8,
+    marginBottom: 6,
     textAlign: 'justify',
   },
   
@@ -244,7 +248,7 @@ export const pdfStyles = StyleSheet.create({
     height: 120,
     objectFit: 'cover',
     left: '50%',
-    bottom: 80, // Moved up to account for footer
+    bottom: 80, // Above footer in middle between sections
     marginLeft: -50, // Half of width to center
     zIndex: 10,
     borderRadius: 4,
@@ -615,11 +619,11 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3HeaderTitle: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 8,
-    flex: 1,
+    maxWidth: '50%', // Maximum width to middle of page
   },
   
   page3Title: {
@@ -697,8 +701,8 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Image: {
-    width: 100, // Reduced size
-    height: 65, // Reduced size
+    width: 120, // Larger size
+    height: 80, // Larger size
     borderRadius: 6,
     objectFit: 'cover',
   },
@@ -734,10 +738,10 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3MetricValue: {
-    fontSize: 16, // Reduced font size
+    fontSize: 20, // Larger font size
     fontWeight: 'bold',
-    color: '#2563EB',
-    marginBottom: 3, // Reduced margin
+    color: '#dc2626', // Red color
+    marginBottom: 3,
   },
   
   page3MetricValueLarge: {
@@ -817,7 +821,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Chart: {
-    height: 100, // Reduced height
+    height: 120, // Larger height
     position: 'relative',
   },
   
@@ -848,25 +852,25 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Bar1: {
-    width: 25, // Reduced width
-    height: 40, // Reduced height
-    backgroundColor: '#3B82F6',
+    width: 30,
+    height: 50,
+    backgroundColor: '#dc2626', // Red color matching design
     marginBottom: 8,
     borderRadius: 2,
   },
-  
+
   page3Bar2: {
-    width: 25, // Reduced width
-    height: 55, // Reduced height
-    backgroundColor: '#60A5FA',
+    width: 30,
+    height: 65,
+    backgroundColor: '#ef4444', // Lighter red
     marginBottom: 8,
     borderRadius: 2,
   },
-  
+
   page3Bar3: {
-    width: 25, // Reduced width
-    height: 70, // Reduced height
-    backgroundColor: '#2563EB',
+    width: 30,
+    height: 80,
+    backgroundColor: '#b91c1c', // Darker red
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -1013,11 +1017,11 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4HeaderTitle: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 12,
-    flex: 1,
+    maxWidth: '50%', // Maximum width to middle of page
   },
   
   page4Title: {
@@ -1061,8 +1065,8 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4MainImage: {
-    width: 300,
-    height: 250,
+    width: 350, // Larger image
+    height: 300, // Larger image
     borderRadius: 12,
     objectFit: 'cover',
   },
@@ -1157,11 +1161,11 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5HeaderTitle: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 12,
-    flex: 1,
+    maxWidth: '50%', // Maximum width to middle of page
   },
   
   page5Title: {
@@ -1179,12 +1183,12 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5LeftColumn: {
-    width: '35%',
+    width: '50%', // 50% width as requested
     paddingRight: 30,
   },
   
   page5RightColumn: {
-    width: '65%',
+    width: '50%', // Adjust to match left column
     paddingLeft: 30,
   },
   
@@ -1196,10 +1200,10 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5ContentText: {
-    fontSize: 14,
-    lineHeight: 1.6,
+    fontSize: 12, // Smaller font to fit all text
+    lineHeight: 1.4, // Tighter line height
     color: '#374151',
-    marginBottom: 15,
+    marginBottom: 12,
     textAlign: 'justify',
   },
   
@@ -1397,16 +1401,17 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 30,
   },
   
-  // Contact box
+  // Contact box - shifted 15% to the right
   page6ContactBox: {
     position: 'absolute',
     bottom: 40,
-    left: 40,
+    left: 120, // Shifted 15% to the right (was 40)
     backgroundColor: 'white',
     borderRadius: 8,
     padding: 20,
     zIndex: 3,
     borderLeft: '4 solid #2563EB',
+    width: 250,
   },
   
   page6ContactTitle: {
@@ -1420,5 +1425,36 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#2563EB',
+  },
+
+  // Page 6 header styles
+  page6Header: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 10,
+  },
+
+  page6HeaderLogo: {
+    alignItems: 'flex-end',
+  },
+
+  // Page 6 content text style
+  page6ContentText: {
+    fontSize: 14,
+    color: 'white',
+    lineHeight: 1.6,
+    marginTop: 10,
+  },
+
+  // Page 6 footer logo container
+  page6FooterLogoContainer: {
+    marginTop: 15,
+    alignItems: 'center',
+  },
+
+  page6FooterLogo: {
+    width: 60,
+    height: 30,
   },
 });
