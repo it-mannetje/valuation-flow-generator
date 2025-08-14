@@ -212,10 +212,10 @@ export const pdfStyles = StyleSheet.create({
   
   // Text content paragraphs - smaller font to fit better
   page2Paragraph: {
-    fontSize: 6,
-    lineHeight: 1.2,
+    fontSize: 9,
+    lineHeight: 1.4,
     color: '#374151',
-    marginBottom: 6,
+    marginBottom: 8,
     textAlign: 'justify',
   },
   
@@ -244,12 +244,12 @@ export const pdfStyles = StyleSheet.create({
   // Portrait image positioned at bottom center over both columns
   page2PortraitImage: {
     position: 'absolute',
-    width: 100,
-    height: 120,
+    width: 120,
+    height: 140,
     objectFit: 'cover',
     left: '50%',
     bottom: 80, // Above footer in middle between sections
-    marginLeft: -50, // Half of width to center
+    marginLeft: -60, // Half of width to center
     zIndex: 10,
     borderRadius: 4,
   },
@@ -278,7 +278,7 @@ export const pdfStyles = StyleSheet.create({
   
   // FBM logo
   page2FooterLogo: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#1E40AF',
     marginRight: 8,
@@ -313,8 +313,8 @@ export const pdfStyles = StyleSheet.create({
   
   // Page number text
   page2PageNumberText: {
-    fontSize: 16,
-    color: '#6B7280',
+    fontSize: 18,
+    color: '#1E40AF',
     fontWeight: 'bold',
   },
   
@@ -627,7 +627,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -701,8 +701,8 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Image: {
-    width: 120, // Larger size
-    height: 80, // Larger size
+    width: '100%', // Full width of left section
+    height: 100, // Larger size
     borderRadius: 6,
     objectFit: 'cover',
   },
@@ -854,7 +854,7 @@ export const pdfStyles = StyleSheet.create({
   page3Bar1: {
     width: 30,
     height: 50,
-    backgroundColor: '#dc2626', // Red color matching design
+    backgroundColor: '#2563EB', // Blue color matching design
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -862,7 +862,7 @@ export const pdfStyles = StyleSheet.create({
   page3Bar2: {
     width: 30,
     height: 65,
-    backgroundColor: '#ef4444', // Lighter red
+    backgroundColor: '#3B82F6', // Lighter blue
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -870,7 +870,7 @@ export const pdfStyles = StyleSheet.create({
   page3Bar3: {
     width: 30,
     height: 80,
-    backgroundColor: '#b91c1c', // Darker red
+    backgroundColor: '#1E40AF', // Darker blue
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -1025,7 +1025,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4Title: {
-    fontSize: 32,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -1057,10 +1057,10 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4ContentText: {
-    fontSize: 14,
-    lineHeight: 1.6,
+    fontSize: 11,
+    lineHeight: 1.5,
     color: '#374151',
-    marginBottom: 15,
+    marginBottom: 12,
     textAlign: 'justify',
   },
   
@@ -1100,8 +1100,8 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4FooterLogo: {
-    width: 80,
-    height: 30,
+    width: 100,
+    height: 40,
   },
   
   page4FooterLogoText: {
@@ -1169,7 +1169,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5Title: {
-    fontSize: 32,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -1287,8 +1287,8 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5FooterLogo: {
-    width: 80,
-    height: 30,
+    width: 100,
+    height: 40,
   },
   
   page5FooterLogoText: {

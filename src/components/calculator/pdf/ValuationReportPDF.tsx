@@ -40,7 +40,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       logo_image_url: page?.logo_image_url || null,
       image1_url: page?.image1_url || null,
       image2_url: page?.image2_url || null,
-      content: page?.content?.content || null
+      content: page?.content || null,
+      page_name: page?.page_name || null
     };
     console.log(`Page ${pageNumber} data:`, pageData);
     return pageData;
@@ -335,14 +336,18 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               
               {/* Business images */}
               <View style={pdfStyles.page3Images}>
-                <Image 
-                  style={pdfStyles.page3Image} 
-                  src={getPageData(3).image1_url || "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=400&h=250"}
-                />
-                <Image 
-                  style={pdfStyles.page3Image} 
-                  src={getPageData(3).image2_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=250"}
-                />
+                {getPageData(3).image1_url && (
+                  <Image 
+                    style={pdfStyles.page3Image} 
+                    src={getPageData(3).image1_url}
+                  />
+                )}
+                {getPageData(3).image2_url && (
+                  <Image 
+                    style={pdfStyles.page3Image} 
+                    src={getPageData(3).image2_url}
+                  />
+                )}
               </View>
             </View>
             
@@ -444,7 +449,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.page4Number}>4.</Text>
           </View>
           <View style={pdfStyles.page4HeaderTitle}>
-            <Text style={pdfStyles.page4Title}>{getPageData(4).content?.title || "Marktontwikkelingen"}</Text>
+            <Text style={pdfStyles.page4Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
           </View>
         </View>
         
@@ -452,29 +457,31 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page4MainContent}>
           {/* Left column - Text content */}
           <View style={pdfStyles.page4LeftColumn}>
-            <Text style={pdfStyles.page4ContentTitle}>{getPageData(4).content?.title || "Headline vanuit pdf beheer"}</Text>
-            
-            <Text style={pdfStyles.page4ContentText}>{getSectorText() || 'Tekst op maat voor de sector'}</Text>
-            
-            {getPageData(4).content?.section1 && (
-              <Text style={pdfStyles.page4ContentText}>{getPageData(4).content.section1}</Text>
+            {getPageData(4).content ? (
+              renderContentSections(getPageData(4).content)
+            ) : (
+              <>
+                <Text style={pdfStyles.page4ContentText}>
+                  {getSectorText() || `Voor bedrijven in de sector "${valuationResult.sector}" hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
+                </Text>
+                <Text style={pdfStyles.page4ContentText}>
+                  De waardering van {formatCurrency(valuationResult.baseValuation)} is gebaseerd op een EBITDA van {formatCurrency(estimatedEbitda)} vermenigvuldigd met een sectorspecifieke multiple van {valuationResult.multiple.toFixed(1)}x.
+                </Text>
+                <Text style={pdfStyles.page4ContentText}>
+                  Deze waardering geeft een indicatie van de ondernemingswaarde op basis van de huidige prestaties en verwachtingen voor de komende periode.
+                </Text>
+              </>
             )}
           </View>
           
           {/* Right column - Image */}
           <View style={pdfStyles.page4RightColumn}>
-            {getPageData(4).image1_url ? (
+            {(getPageData(4).image1_url || getPageData(4).image2_url || getPageData(4).background) && (
               <Image 
                 style={pdfStyles.page4MainImage} 
-                src={getPageData(4).image1_url} 
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.page4MainImage} 
-                src="https://images.unsplash.com/photo-1559526324-593bc73d752a?auto=format&fit=crop&q=80&w=800&h=600" 
+                src={getPageData(4).image1_url || getPageData(4).image2_url || getPageData(4).background || "https://images.unsplash.com/photo-1559526324-593bc73d752a?auto=format&fit=crop&q=80&w=800&h=600"}
               />
             )}
-            <Text style={pdfStyles.page4ImageCaption}>{getPageData(4).content?.section1 || "Tekst onder afbeelding vanuit pdf beheer"}</Text>
           </View>
         </View>
         
@@ -503,7 +510,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.page5Number}>5.</Text>
           </View>
           <View style={pdfStyles.page5HeaderTitle}>
-            <Text style={pdfStyles.page5Title}>Bedrijfswaardering</Text>
+            <Text style={pdfStyles.page5Title}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
           </View>
         </View>
         
@@ -536,10 +543,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           
           {/* Right column - Image from PDF management */}
           <View style={pdfStyles.page5RightColumn}>
-            {getPageData(5).image1_url ? (
+            {(getPageData(5).image1_url || getPageData(5).image2_url) ? (
               <Image 
                 style={pdfStyles.page4MainImage} 
-                src={getPageData(5).image1_url} 
+                src={getPageData(5).image1_url || getPageData(5).image2_url} 
               />
             ) : (
               <View style={pdfStyles.page5LogosGrid}>
