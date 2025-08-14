@@ -593,290 +593,257 @@ export const pdfStyles = StyleSheet.create({
     height: 30,
   },
   
-  // ========== PAGE 3 STYLES ==========
+  // ========== PAGE 3 STYLES - EXACT LAYOUT ==========
   
-  // Page 3 header
-  page3Header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
+  // Page 3 content wrapper with exact margins: top 20mm, bottom 15mm, left/right 15mm
+  page3Content: {
+    paddingTop: '56.69', // 20mm converted to points
+    paddingBottom: '42.52', // 15mm converted to points
+    paddingLeft: '42.52', // 15mm converted to points
+    paddingRight: '42.52', // 15mm converted to points
+    flex: 1,
+    borderRadius: 0,
   },
   
+  // Header bar - full width, height 25mm, white background with blue section
+  page3Header: {
+    backgroundColor: '#ffffff',
+    height: '70.87', // 25mm converted to points
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 20,
+    marginTop: '-56.69', // Compensate for content padding
+    marginLeft: '-42.52',
+    marginRight: '-42.52',
+    borderRadius: 0,
+  },
+  
+  // Section badge "3." - 28x28px circle, borderRadius 14px
   page3HeaderNumber: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#2563EB',
-    borderRadius: 8,
+    width: 28,
+    height: 28,
+    backgroundColor: '#009FE3',
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 15,
+    marginRight: 12,
   },
   
   page3Number: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: 'white',
   },
   
   page3HeaderTitle: {
-    backgroundColor: '#1e3a8a', // Dark blue background
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 8,
-    maxWidth: '50%', // Maximum width to middle of page
+    backgroundColor: 'transparent',
+    borderRadius: 0,
   },
   
   page3Title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#009FE3',
   },
   
-  // Main content layout
+  // Two columns layout - each 50% width
   page3MainContent: {
     flexDirection: 'row',
-    flex: 1,
-    marginBottom: 80, // Increased margin to ensure footer visibility
+    marginTop: 30,
+    marginBottom: 40,
+    borderRadius: 0,
   },
   
   page3LeftColumn: {
-    width: '45%',
-    paddingRight: 15, // Reduced padding
+    width: '50%',
+    paddingRight: 20,
+    borderRadius: 0,
   },
   
   page3RightColumn: {
-    width: '45%',
-    paddingLeft: 15, // Reduced padding
+    width: '50%',
+    paddingLeft: 20,
+    borderRadius: 0,
   },
   
-  page3Separator: {
-    width: 2,
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 8, // Reduced margin
-    borderStyle: 'dotted',
-    borderWidth: 1,
-    borderColor: '#9CA3AF',
-  },
-  
+  // Column titles - blue bold 14pt
   page3ColumnTitle: {
-    fontSize: 14, // Reduced font size
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#2563EB',
-    marginBottom: 12, // Reduced margin
-    textDecoration: 'underline',
+    color: '#009FE3',
+    marginBottom: 15,
+    borderRadius: 0,
   },
   
-  // Data list styles
+  // Data list - 10 rows in table form
   page3DataList: {
-    marginBottom: 15, // Reduced margin
+    marginBottom: 20,
+    borderRadius: 0,
   },
   
   page3DataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 3,
-    borderBottom: '0.5 solid #F3F4F6',
+    paddingVertical: 4,
+    borderRadius: 0,
   },
   
   page3Label: {
-    fontSize: 9, // Reduced font size
-    color: '#374151',
+    fontSize: 10,
+    color: '#333333',
     flex: 1,
   },
   
   page3Value: {
-    fontSize: 9, // Reduced font size
+    fontSize: 10,
     color: '#DC2626',
     fontWeight: 'bold',
     textAlign: 'right',
     marginLeft: 10,
   },
   
-  // Images section
-  page3Images: {
-    flexDirection: 'row',
-    gap: 8, // Reduced gap
-    marginTop: 8, // Reduced margin
-  },
-  
-  page3Image: {
-    width: '100%', // Full width of left section
-    height: 100, // Larger size
-    borderRadius: 6,
-    objectFit: 'cover',
-  },
-  
-  // Metrics section - 2x2 grid layout
+  // Four metrics blocks in 2x2 grid
   page3MetricsContainer: {
-    marginBottom: 12,
+    marginBottom: 15,
+    borderRadius: 0,
   },
   
   page3MetricsGrid: {
     flexDirection: 'row',
-    gap: 16,
-    marginBottom: 16,
+    gap: 12,
+    marginBottom: 12,
     justifyContent: 'space-between',
   },
   
   page3MetricBox: {
-    backgroundColor: '#F8FAFC',
-    padding: 8, // Reduced padding
-    borderRadius: 6,
+    backgroundColor: 'transparent',
     alignItems: 'center',
-    width: '48%', // Two boxes per row
-    minHeight: 60, // Consistent height
-  },
-  
-  page3MetricBoxLarge: {
-    backgroundColor: '#F8FAFC',
-    padding: 10, // Reduced padding
-    borderRadius: 6,
-    alignItems: 'center',
-    width: '100%', // Full width for large box
-    marginTop: 8,
+    width: '48%',
+    minHeight: 50,
+    borderRadius: 12,
   },
   
   page3MetricValue: {
-    fontSize: 20, // Larger font size
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#dc2626', // Red color
-    marginBottom: 3,
+    color: '#009FE3',
+    marginBottom: 2,
   },
   
-  page3MetricValueLarge: {
-    fontSize: 22, // Reduced font size
+  page3MetricValueRed: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#DC2626',
-    marginBottom: 3, // Reduced margin
+    marginBottom: 2,
   },
   
   page3MetricLabel: {
-    fontSize: 10, // Reduced font size
-    color: '#374151',
-    marginBottom: 2,
-    textAlign: 'center',
-  },
-  
-  page3MetricLabelLarge: {
-    fontSize: 12, // Reduced font size
-    color: '#374151',
-    fontWeight: 'bold',
-    marginBottom: 3, // Reduced margin
-  },
-  
-  page3MetricDate: {
-    fontSize: 10, // Reduced font size
-    color: '#DC2626',
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  
-  page3MetricSubtext: {
-    fontSize: 8, // Reduced font size
-    color: '#6B7280',
+    fontSize: 10,
+    color: '#333333',
     textAlign: 'center',
   },
   
   page3MultiplierContainer: {
     flexDirection: 'row',
     alignItems: 'baseline',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   
   page3MultiplierValue: {
-    fontSize: 16, // Reduced font size
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#DC2626',
   },
   
   page3MultiplierText: {
-    fontSize: 12, // Reduced font size
-    color: '#2563EB',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#DC2626',
   },
   
-  // Disclaimer
+  // Disclaimer text - dark grey 9pt
   page3Disclaimer: {
-    fontSize: 8, // Reduced font size
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 10, // Reduced margin
-    lineHeight: 1.2, // Reduced line height
-    fontStyle: 'italic',
+    fontSize: 9,
+    color: '#333333',
+    marginBottom: 15,
+    lineHeight: 1.3,
+    borderRadius: 0,
   },
   
   // Chart section
   page3ChartContainer: {
-    backgroundColor: '#F8FAFC',
-    padding: 12, // Reduced padding
-    borderRadius: 8,
+    marginTop: 10,
+    borderRadius: 0,
   },
   
   page3ChartTitle: {
-    fontSize: 12, // Reduced font size
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#2563EB',
-    marginBottom: 10, // Reduced margin
-    textAlign: 'center',
+    color: '#009FE3',
+    marginBottom: 15,
+    borderRadius: 0,
   },
   
   page3Chart: {
-    height: 120, // Larger height
+    height: 100,
     position: 'relative',
+    borderRadius: 0,
   },
   
   page3ChartBars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    height: 80, // Reduced height
-    paddingHorizontal: 10,
+    justifyContent: 'space-around',
+    height: 80,
+    borderRadius: 0,
   },
   
   page3ChartBar1: {
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 5,
+    borderRadius: 0,
   },
   
   page3ChartBar2: {
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 5,
+    borderRadius: 0,
   },
   
   page3ChartBar3: {
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 5,
+    borderRadius: 0,
   },
   
   page3Bar1: {
     width: 30,
-    height: 50,
-    backgroundColor: '#2563EB', // Blue color matching design
+    height: 40,
+    backgroundColor: '#009FE3',
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 4,
   },
 
   page3Bar2: {
     width: 30,
-    height: 65,
-    backgroundColor: '#3B82F6', // Lighter blue
+    height: 55,
+    backgroundColor: '#009FE3',
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 4,
   },
 
   page3Bar3: {
     width: 30,
-    height: 80,
-    backgroundColor: '#1E40AF', // Darker blue
+    height: 70,
+    backgroundColor: '#009FE3',
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 4,
   },
   
   page3BarValue: {
-    fontSize: 8, // Reduced font size
+    fontSize: 10,
     color: '#DC2626',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -888,59 +855,26 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: '#9CA3AF',
+    backgroundColor: '#E6E6E6',
+    borderRadius: 0,
   },
   
-  // Results grid for 2x2 layout
-  page3ResultsGrid: {
-    flexDirection: 'column',
-    marginTop: 20,
-  },
-  
-  page3GridRow: {
+  // Two square images (70x70mm each) under left column
+  page3Images: {
     flexDirection: 'row',
-    marginBottom: 15,
+    gap: 10,
+    marginTop: 15,
+    borderRadius: 0,
   },
   
-  page3GridBlock: {
-    flex: 1,
-    backgroundColor: '#F9FAFB',
-    padding: 20,
-    marginHorizontal: 5,
+  page3Image: {
+    width: '198.43', // 70mm converted to points
+    height: '198.43', // 70mm converted to points  
     borderRadius: 8,
-    borderLeft: '3 solid #3B82F6',
-    alignItems: 'center',
+    objectFit: 'cover',
   },
   
-  page3GridLabel: {
-    fontSize: 10,
-    color: '#6B7280',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  
-  page3GridValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1F2937',
-    textAlign: 'center',
-  },
-  
-  // Page 3 footer dotted line
-  page3DottedLine: {
-    width: 40,
-    height: 1,
-    borderTop: '1 dotted #6B7280',
-    marginBottom: 8,
-  },
-  
-  page3PageNumberText: {
-    fontSize: 14,
-    color: '#6B7280',
-    fontWeight: 'bold',
-  },
-  
-  // Footer
+  // Footer - spans full width
   page3Footer: {
     position: 'absolute',
     bottom: 0,
@@ -952,41 +886,52 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 40,
-    borderTop: '1 solid #E5E7EB',
+    borderTop: '1 solid #E6E6E6',
+    borderRadius: 0,
   },
   
   page3FooterLeft: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderRadius: 0,
   },
   
   page3FooterLogo: {
+    width: '70.87', // 25mm converted to points
+    height: 'auto',
+    borderRadius: 0,
+  },
+  
+  page3FooterLogoText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#009FE3',
     marginRight: 8,
+    borderRadius: 0,
   },
   
   page3FooterText: {
     fontSize: 12,
-    color: '#2563EB',
+    color: '#009FE3',
   },
   
   page3FooterRight: {
     alignItems: 'center',
+    borderRadius: 0,
   },
   
   page3FooterDots: {
     width: 40,
     height: 1,
-    borderTop: '1 dotted #6B7280',
+    borderTop: '1 dotted #333333',
     marginBottom: 8,
+    borderRadius: 0,
   },
   
   page3FooterPageNumber: {
-    fontSize: 14,
-    color: '#6B7280',
-    fontWeight: 'bold',
+    fontSize: 8,
+    color: '#333333',
+    fontWeight: 'normal',
   },
 
   // ========== PAGE 4 STYLES ==========
