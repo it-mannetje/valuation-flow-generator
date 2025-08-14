@@ -290,7 +290,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={pdfStyles.page3DataList}>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.lastYearRevenueDisplay || formatCurrency(companyData.lastYearRevenue)}</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
@@ -314,7 +314,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Sector</Text>
@@ -379,7 +379,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   </View>
                   <View style={pdfStyles.page3MetricBox}>
                     <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)}</Text>
+                      <Text style={pdfStyles.page3MultiplierValue}>{(valuationResult.multiple || 0).toFixed(1)}</Text>
                       <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
                     </View>
                     <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
