@@ -706,6 +706,7 @@ export const pdfStyles = StyleSheet.create({
     width: 198.43, // 70mm converted to points
     height: 198.43, // 70mm square
     objectFit: 'cover',
+    borderRadius: 0, // Explicit border radius to avoid undefined
   },
   
   // Metrics section - four blocks vertically stacked
@@ -718,6 +719,7 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 8,
     alignItems: 'flex-start',
     marginBottom: 15,
+    borderRadius: 0, // Explicit border radius
   },
   
   page3MetricBoxLarge: {
