@@ -593,257 +593,290 @@ export const pdfStyles = StyleSheet.create({
     height: 30,
   },
   
-  // ========== PAGE 3 STYLES - EXACT LAYOUT ==========
+  // ========== PAGE 3 STYLES ==========
   
-  // Page 3 content wrapper with exact margins: top 20mm, bottom 15mm, left/right 15mm
-  page3Content: {
-    paddingTop: '56.69', // 20mm converted to points
-    paddingBottom: '42.52', // 15mm converted to points
-    paddingLeft: '42.52', // 15mm converted to points
-    paddingRight: '42.52', // 15mm converted to points
-    flex: 1,
-    borderRadius: 0,
-  },
-  
-  // Header bar - full width, height 25mm, white background with blue section
+  // Page 3 header
   page3Header: {
-    backgroundColor: '#ffffff',
-    height: '70.87', // 25mm converted to points
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 20,
-    marginTop: '-56.69', // Compensate for content padding
-    marginLeft: '-42.52',
-    marginRight: '-42.52',
-    borderRadius: 0,
+    marginBottom: 20,
   },
   
-  // Section badge "3." - 28x28px circle, borderRadius 14px
   page3HeaderNumber: {
-    width: 28,
-    height: 28,
-    backgroundColor: '#009FE3',
-    borderRadius: 14,
+    width: 40,
+    height: 40,
+    backgroundColor: '#2563EB',
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: 15,
   },
   
   page3Number: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
   },
   
   page3HeaderTitle: {
-    backgroundColor: 'transparent',
-    borderRadius: 0,
+    backgroundColor: '#1e3a8a', // Dark blue background
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 8,
+    maxWidth: '50%', // Maximum width to middle of page
   },
   
   page3Title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#009FE3',
+    color: 'white',
   },
   
-  // Two columns layout - each 50% width
+  // Main content layout
   page3MainContent: {
     flexDirection: 'row',
-    marginTop: 30,
-    marginBottom: 40,
-    borderRadius: 0,
+    flex: 1,
+    marginBottom: 80, // Increased margin to ensure footer visibility
   },
   
   page3LeftColumn: {
-    width: '50%',
-    paddingRight: 20,
-    borderRadius: 0,
+    width: '45%',
+    paddingRight: 15, // Reduced padding
   },
   
   page3RightColumn: {
-    width: '50%',
-    paddingLeft: 20,
-    borderRadius: 0,
+    width: '45%',
+    paddingLeft: 15, // Reduced padding
   },
   
-  // Column titles - blue bold 14pt
+  page3Separator: {
+    width: 2,
+    backgroundColor: '#E5E7EB',
+    marginHorizontal: 8, // Reduced margin
+    borderStyle: 'dotted',
+    borderWidth: 1,
+    borderColor: '#9CA3AF',
+  },
+  
   page3ColumnTitle: {
-    fontSize: 14,
+    fontSize: 14, // Reduced font size
     fontWeight: 'bold',
-    color: '#009FE3',
-    marginBottom: 15,
-    borderRadius: 0,
+    color: '#2563EB',
+    marginBottom: 12, // Reduced margin
+    textDecoration: 'underline',
   },
   
-  // Data list - 10 rows in table form
+  // Data list styles
   page3DataList: {
-    marginBottom: 20,
-    borderRadius: 0,
+    marginBottom: 15, // Reduced margin
   },
   
   page3DataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 4,
-    borderRadius: 0,
+    paddingVertical: 3,
+    borderBottom: '0.5 solid #F3F4F6',
   },
   
   page3Label: {
-    fontSize: 10,
-    color: '#333333',
+    fontSize: 9, // Reduced font size
+    color: '#374151',
     flex: 1,
   },
   
   page3Value: {
-    fontSize: 10,
+    fontSize: 9, // Reduced font size
     color: '#DC2626',
     fontWeight: 'bold',
     textAlign: 'right',
     marginLeft: 10,
   },
   
-  // Four metrics blocks in 2x2 grid
+  // Images section
+  page3Images: {
+    flexDirection: 'row',
+    gap: 8, // Reduced gap
+    marginTop: 8, // Reduced margin
+  },
+  
+  page3Image: {
+    width: '100%', // Full width of left section
+    height: 100, // Larger size
+    borderRadius: 6,
+    objectFit: 'cover',
+  },
+  
+  // Metrics section - 2x2 grid layout
   page3MetricsContainer: {
-    marginBottom: 15,
-    borderRadius: 0,
+    marginBottom: 12,
   },
   
   page3MetricsGrid: {
     flexDirection: 'row',
-    gap: 12,
-    marginBottom: 12,
+    gap: 16,
+    marginBottom: 16,
     justifyContent: 'space-between',
   },
   
   page3MetricBox: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#F8FAFC',
+    padding: 8, // Reduced padding
+    borderRadius: 6,
     alignItems: 'center',
-    width: '48%',
-    minHeight: 50,
-    borderRadius: 12,
+    width: '48%', // Two boxes per row
+    minHeight: 60, // Consistent height
+  },
+  
+  page3MetricBoxLarge: {
+    backgroundColor: '#F8FAFC',
+    padding: 10, // Reduced padding
+    borderRadius: 6,
+    alignItems: 'center',
+    width: '100%', // Full width for large box
+    marginTop: 8,
   },
   
   page3MetricValue: {
-    fontSize: 20,
+    fontSize: 20, // Larger font size
     fontWeight: 'bold',
-    color: '#009FE3',
-    marginBottom: 2,
+    color: '#dc2626', // Red color
+    marginBottom: 3,
   },
   
-  page3MetricValueRed: {
-    fontSize: 20,
+  page3MetricValueLarge: {
+    fontSize: 22, // Reduced font size
     fontWeight: 'bold',
     color: '#DC2626',
-    marginBottom: 2,
+    marginBottom: 3, // Reduced margin
   },
   
   page3MetricLabel: {
-    fontSize: 10,
-    color: '#333333',
+    fontSize: 10, // Reduced font size
+    color: '#374151',
+    marginBottom: 2,
+    textAlign: 'center',
+  },
+  
+  page3MetricLabelLarge: {
+    fontSize: 12, // Reduced font size
+    color: '#374151',
+    fontWeight: 'bold',
+    marginBottom: 3, // Reduced margin
+  },
+  
+  page3MetricDate: {
+    fontSize: 10, // Reduced font size
+    color: '#DC2626',
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  
+  page3MetricSubtext: {
+    fontSize: 8, // Reduced font size
+    color: '#6B7280',
     textAlign: 'center',
   },
   
   page3MultiplierContainer: {
     flexDirection: 'row',
     alignItems: 'baseline',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   
   page3MultiplierValue: {
-    fontSize: 20,
+    fontSize: 16, // Reduced font size
     fontWeight: 'bold',
     color: '#DC2626',
   },
   
   page3MultiplierText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#DC2626',
+    fontSize: 12, // Reduced font size
+    color: '#2563EB',
   },
   
-  // Disclaimer text - dark grey 9pt
+  // Disclaimer
   page3Disclaimer: {
-    fontSize: 9,
-    color: '#333333',
-    marginBottom: 15,
-    lineHeight: 1.3,
-    borderRadius: 0,
+    fontSize: 8, // Reduced font size
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 10, // Reduced margin
+    lineHeight: 1.2, // Reduced line height
+    fontStyle: 'italic',
   },
   
   // Chart section
   page3ChartContainer: {
-    marginTop: 10,
-    borderRadius: 0,
+    backgroundColor: '#F8FAFC',
+    padding: 12, // Reduced padding
+    borderRadius: 8,
   },
   
   page3ChartTitle: {
-    fontSize: 14,
+    fontSize: 12, // Reduced font size
     fontWeight: 'bold',
-    color: '#009FE3',
-    marginBottom: 15,
-    borderRadius: 0,
+    color: '#2563EB',
+    marginBottom: 10, // Reduced margin
+    textAlign: 'center',
   },
   
   page3Chart: {
-    height: 100,
+    height: 120, // Larger height
     position: 'relative',
-    borderRadius: 0,
   },
   
   page3ChartBars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'space-around',
-    height: 80,
-    borderRadius: 0,
+    justifyContent: 'space-between',
+    height: 80, // Reduced height
+    paddingHorizontal: 10,
   },
   
   page3ChartBar1: {
     alignItems: 'center',
     flex: 1,
-    borderRadius: 0,
+    marginHorizontal: 5,
   },
   
   page3ChartBar2: {
     alignItems: 'center',
     flex: 1,
-    borderRadius: 0,
+    marginHorizontal: 5,
   },
   
   page3ChartBar3: {
     alignItems: 'center',
     flex: 1,
-    borderRadius: 0,
+    marginHorizontal: 5,
   },
   
   page3Bar1: {
     width: 30,
-    height: 40,
-    backgroundColor: '#009FE3',
+    height: 50,
+    backgroundColor: '#2563EB', // Blue color matching design
     marginBottom: 8,
-    borderRadius: 4,
+    borderRadius: 2,
   },
 
   page3Bar2: {
     width: 30,
-    height: 55,
-    backgroundColor: '#009FE3',
+    height: 65,
+    backgroundColor: '#3B82F6', // Lighter blue
     marginBottom: 8,
-    borderRadius: 4,
+    borderRadius: 2,
   },
 
   page3Bar3: {
     width: 30,
-    height: 70,
-    backgroundColor: '#009FE3',
+    height: 80,
+    backgroundColor: '#1E40AF', // Darker blue
     marginBottom: 8,
-    borderRadius: 4,
+    borderRadius: 2,
   },
   
   page3BarValue: {
-    fontSize: 10,
+    fontSize: 8, // Reduced font size
     color: '#DC2626',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -855,26 +888,59 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: '#E6E6E6',
-    borderRadius: 0,
+    backgroundColor: '#9CA3AF',
   },
   
-  // Two square images (70x70mm each) under left column
-  page3Images: {
+  // Results grid for 2x2 layout
+  page3ResultsGrid: {
+    flexDirection: 'column',
+    marginTop: 20,
+  },
+  
+  page3GridRow: {
     flexDirection: 'row',
-    gap: 10,
-    marginTop: 15,
-    borderRadius: 0,
+    marginBottom: 15,
   },
   
-  page3Image: {
-    width: '198.43', // 70mm converted to points
-    height: '198.43', // 70mm converted to points  
+  page3GridBlock: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    padding: 20,
+    marginHorizontal: 5,
     borderRadius: 8,
-    objectFit: 'cover',
+    borderLeft: '3 solid #3B82F6',
+    alignItems: 'center',
   },
   
-  // Footer - spans full width
+  page3GridLabel: {
+    fontSize: 10,
+    color: '#6B7280',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  
+  page3GridValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    textAlign: 'center',
+  },
+  
+  // Page 3 footer dotted line
+  page3DottedLine: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page3PageNumberText: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
+  
+  // Footer
   page3Footer: {
     position: 'absolute',
     bottom: 0,
@@ -886,52 +952,41 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 40,
-    borderTop: '1 solid #E6E6E6',
-    borderRadius: 0,
+    borderTop: '1 solid #E5E7EB',
   },
   
   page3FooterLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 0,
   },
   
   page3FooterLogo: {
-    width: '70.87', // 25mm converted to points
-    height: 'auto',
-    borderRadius: 0,
-  },
-  
-  page3FooterLogoText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#009FE3',
+    color: '#2563EB',
     marginRight: 8,
-    borderRadius: 0,
   },
   
   page3FooterText: {
     fontSize: 12,
-    color: '#009FE3',
+    color: '#2563EB',
   },
   
   page3FooterRight: {
     alignItems: 'center',
-    borderRadius: 0,
   },
   
   page3FooterDots: {
     width: 40,
     height: 1,
-    borderTop: '1 dotted #333333',
+    borderTop: '1 dotted #6B7280',
     marginBottom: 8,
-    borderRadius: 0,
   },
   
   page3FooterPageNumber: {
-    fontSize: 8,
-    color: '#333333',
-    fontWeight: 'normal',
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
   },
 
   // ========== PAGE 4 STYLES ==========

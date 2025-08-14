@@ -317,34 +317,34 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                     <Text style={pdfStyles.page3ColumnTitle}>Resultaat</Text>
                     
                     {/* 2x2 Grid layout */}
-                    <View style={pdfStyles.page3MetricsContainer}>
+                    <View style={pdfStyles.page3ResultsGrid}>
                       {/* Row 1 */}
-                      <View style={pdfStyles.page3MetricsGrid}>
+                      <View style={pdfStyles.page3GridRow}>
                         {/* EBITDA block */}
-                        <View style={pdfStyles.page3MetricBox}>
-                          <Text style={pdfStyles.page3MetricLabel}>Geschatte EBITDA</Text>
-                          <Text style={pdfStyles.page3MetricValue}>{formatCurrency(estimatedEBITDA)}</Text>
+                        <View style={pdfStyles.page3GridBlock}>
+                          <Text style={pdfStyles.page3GridLabel}>Geschatte EBITDA</Text>
+                          <Text style={pdfStyles.page3GridValue}>{formatCurrency(estimatedEBITDA)}</Text>
                         </View>
                         
                         {/* Date block */}
-                        <View style={pdfStyles.page3MetricBox}>
-                          <Text style={pdfStyles.page3MetricLabel}>Datum berekening</Text>
-                          <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
+                        <View style={pdfStyles.page3GridBlock}>
+                          <Text style={pdfStyles.page3GridLabel}>Datum berekening</Text>
+                          <Text style={pdfStyles.page3GridValue}>{currentDate}</Text>
                         </View>
                       </View>
                       
                       {/* Row 2 */}
-                      <View style={pdfStyles.page3MetricsGrid}>
+                      <View style={pdfStyles.page3GridRow}>
                         {/* Enterprise Value block */}
-                        <View style={pdfStyles.page3MetricBox}>
-                          <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
-                          <Text style={pdfStyles.page3MetricValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
+                        <View style={pdfStyles.page3GridBlock}>
+                          <Text style={pdfStyles.page3GridLabel}>Ondernemingswaarde</Text>
+                          <Text style={pdfStyles.page3GridValue}>{formatCurrency(valuationResult.baseValuation)}</Text>
                         </View>
                         
                         {/* Multiplier block */}
-                        <View style={pdfStyles.page3MetricBox}>
-                          <Text style={pdfStyles.page3MetricLabel}>Multiplier</Text>
-                          <Text style={pdfStyles.page3MetricValue}>{valuationResult.multiple}x</Text>
+                        <View style={pdfStyles.page3GridBlock}>
+                          <Text style={pdfStyles.page3GridLabel}>Multiplier</Text>
+                          <Text style={pdfStyles.page3GridValue}>{valuationResult.multiple}x</Text>
                         </View>
                       </View>
                     </View>
@@ -359,8 +359,8 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                   <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
                 </View>
                 <View style={pdfStyles.page3FooterRight}>
-                  <View style={pdfStyles.page3FooterDots} />
-                  <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
+                  <View style={pdfStyles.page3DottedLine} />
+                  <Text style={pdfStyles.page3PageNumberText}>3</Text>
                 </View>
               </View>
             </Page>
