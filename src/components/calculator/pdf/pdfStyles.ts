@@ -656,6 +656,7 @@ export const pdfStyles = StyleSheet.create({
     width: 1,
     backgroundColor: '#E6E6E6', // Light grey line as specified
     marginHorizontal: 0,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ColumnTitle: {
@@ -669,6 +670,7 @@ export const pdfStyles = StyleSheet.create({
   // Data list styles - exact table format
   page3DataList: {
     marginBottom: 20,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3DataRow: {
@@ -677,6 +679,7 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 4,
     borderBottom: '0.5 solid #E6E6E6', // Light grey line
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Label: {
@@ -712,6 +715,7 @@ export const pdfStyles = StyleSheet.create({
   // Metrics section - four blocks vertically stacked
   page3MetricsContainer: {
     marginBottom: 20,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3MetricBlock: {

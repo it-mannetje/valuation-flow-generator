@@ -361,19 +361,19 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {/* Four key metrics blocks */}
               <View style={pdfStyles.page3MetricsContainer}>
                 <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#009FE3'}]}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
+                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#009FE3', borderRadius: 0}]}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
                   <Text style={pdfStyles.page3MetricLabelLarge}>EBITDA (Adjusted)</Text>
                 </View>
                 <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>{currentDate}</Text>
+                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626', borderRadius: 0}]}>{currentDate}</Text>
                   <Text style={pdfStyles.page3MetricLabelLarge}>Waarderingsmoment</Text>
                 </View>
                 <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
+                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626', borderRadius: 0}]}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
                   <Text style={pdfStyles.page3MetricLabelLarge}>Ondernemingswaarde</Text>
                 </View>
                 <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
+                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626', borderRadius: 0}]}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
                   <Text style={pdfStyles.page3MetricLabelLarge}>Multiple op EBITDA</Text>
                 </View>
               </View>
