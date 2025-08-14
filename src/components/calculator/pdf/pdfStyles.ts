@@ -603,6 +603,7 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3HeaderNumber: {
@@ -626,6 +627,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#003F7F', // Dark blue background as specified
     paddingHorizontal: 15,
     paddingVertical: 8,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Title: {
@@ -640,16 +642,19 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     marginBottom: 100,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3LeftColumn: {
     width: '50%', // Exact 50% width
     paddingRight: 10,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3RightColumn: {
     width: '50%', // Exact 50% width
     paddingLeft: 10,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3Separator: {
@@ -809,6 +814,7 @@ export const pdfStyles = StyleSheet.create({
   page3ChartContainer: {
     backgroundColor: 'transparent',
     marginTop: 20,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3ChartTitle: {
@@ -902,11 +908,13 @@ export const pdfStyles = StyleSheet.create({
   page3ResultsGrid: {
     flexDirection: 'column',
     marginTop: 20,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3GridRow: {
     flexDirection: 'row',
     marginBottom: 15,
+    borderRadius: 0, // Add explicit borderRadius
   },
   
   page3GridBlock: {
