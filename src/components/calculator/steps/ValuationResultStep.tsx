@@ -72,43 +72,54 @@ export default function ValuationResultStep({
   const saveToDatabase = async () => {
     setIsLoading(true);
     try {
+      console.log('Attempting to save valuation data:', {
+        companyData,
+        contactData,
+        valuationResult
+      });
+
+      const insertData = {
+        // Contact Information
+        contact_name: `${contactData.firstName} ${contactData.lastName}`,
+        contact_email: contactData.email,
+        contact_phone: contactData.phone,
+        contact_company: contactData.companyName,
+        
+        // Financial Data
+        revenue: companyData.lastYearRevenue,
+        revenue_range_display: companyData.lastYearRevenueDisplay,
+        result_previous_year: companyData.result2024,
+        result_current_year: companyData.expectedResult2025,
+        was_lossmaking: companyData.wasLossmaking,
+        
+        // Company Details
+        sector: companyData.sector,
+        employees: companyData.employees,
+        employees_display: companyData.employeesDisplay,
+        prospects: companyData.prospects,
+        
+        // Dependencies
+        largest_client_dependency: companyData.largestClientDependency,
+        largest_client_dependency_display: companyData.largestClientDependencyDisplay,
+        largest_supplier_dependency: companyData.largestSupplierRisk,
+        recurring_revenue: companyData.recurringRevenuePercentage,
+        recurring_revenue_display: companyData.recurringRevenuePercentageDisplay,
+        
+        // Valuation Results
+        valuation_amount: valuationResult.baseValuation,
+        valuation_range_min: valuationResult.minValuation,
+        valuation_range_max: valuationResult.maxValuation,
+        multiplier: valuationResult.multiple
+      };
+
+      console.log('Insert data:', insertData);
+
       const { error } = await supabase
         .from('valuation_requests')
-        .insert({
-          // Contact Information
-          contact_name: `${contactData.firstName} ${contactData.lastName}`,
-          contact_email: contactData.email,
-          contact_phone: contactData.phone,
-          contact_company: contactData.companyName,
-          
-          // Financial Data
-          revenue: companyData.lastYearRevenue,
-          revenue_range_display: companyData.lastYearRevenueDisplay,
-          result_previous_year: companyData.result2024,
-          result_current_year: companyData.expectedResult2025,
-          was_lossmaking: companyData.wasLossmaking,
-          
-          // Company Details
-          sector: companyData.sector,
-          employees: companyData.employees,
-          employees_display: companyData.employeesDisplay,
-          prospects: companyData.prospects,
-          
-          // Dependencies
-          largest_client_dependency: companyData.largestClientDependency,
-          largest_client_dependency_display: companyData.largestClientDependencyDisplay,
-          largest_supplier_dependency: companyData.largestSupplierRisk,
-          recurring_revenue: companyData.recurringRevenuePercentage,
-          recurring_revenue_display: companyData.recurringRevenuePercentageDisplay,
-          
-          // Valuation Results
-          valuation_amount: valuationResult.baseValuation,
-          valuation_range_min: valuationResult.minValuation,
-          valuation_range_max: valuationResult.maxValuation,
-          multiplier: valuationResult.multiple
-        });
+        .insert(insertData);
 
       if (error) {
+        console.error('Database error:', error);
         throw error;
       }
 
@@ -126,7 +137,7 @@ export default function ValuationResultStep({
       console.error('Error saving to database:', error);
       toast({
         title: "Fout bij opslaan",
-        description: "Er is een fout opgetreden bij het opslaan van uw aanvraag. Probeer het nogmaals.",
+        description: `Er is een fout opgetreden bij het opslaan van uw aanvraag: ${error.message || 'Onbekende fout'}. Probeer het nogmaals.`,
         variant: "destructive",
       });
     } finally {
