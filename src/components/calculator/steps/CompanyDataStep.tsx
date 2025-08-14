@@ -106,21 +106,15 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base font-medium">Wat was uw omzet het afgelopen jaar? (€) *</FormLabel>
-                       <Select onValueChange={(value) => {
-                         field.onChange(parseInt(value));
-                         // Set revenue range values for database
-                         const ranges: { [key: string]: { year1: number; year2: number; display: string } } = {
-                           '500000': { year1: 0, year2: 1000000, display: '0-1 mln' },
-                           '2000000': { year1: 1000000, year2: 3000000, display: '1-3 mln' },
-                           '7000000': { year1: 4000000, year2: 10000000, display: '4-10 mln' },
-                           '18000000': { year1: 11000000, year2: 25000000, display: '11-25 mln' },
-                           '35000000': { year1: 25000000, year2: 50000000, display: '> 25 mln' }
-                         };
-                         const range = ranges[value];
-                         if (range) {
-                           form.setValue('lastYearRevenueDisplay', range.display);
-                         }
-                       }} value={field.value?.toString()}>
+                      <Select onValueChange={(value) => {
+                        field.onChange(parseInt(value));
+                        const display = value === '500000' ? '0-1 mln'
+                          : value === '2000000' ? '1-3 mln'
+                          : value === '7000000' ? '4-10 mln'
+                          : value === '18000000' ? '11-25 mln'
+                          : '> 25 mln';
+                        form.setValue('lastYearRevenueDisplay', display);
+                      }} value={field.value?.toString()}>
                         <FormControl>
                            <SelectTrigger className="h-12 bg-input text-black">
                              <SelectValue placeholder="Selecteer omzetklasse" />

@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
+  // Allows to automatically instanciate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -137,13 +137,9 @@ export type Database = {
           expected_result_2025: number | null
           id: string
           investment_inventory: number | null
-          investment_inventory_stored: number | null
           investment_machinery: number | null
-          investment_machinery_stored: number | null
           investment_other: number | null
-          investment_other_stored: number | null
           investment_real_estate: number | null
-          investment_real_estate_stored: number | null
           largest_client_dependency: number | null
           largest_client_dependency_display: string | null
           largest_supplier_dependency: string | null
@@ -152,8 +148,6 @@ export type Database = {
           recurring_revenue: number | null
           recurring_revenue_display: string | null
           revenue: number | null
-          revenue_year_1: number | null
-          revenue_year_2: number | null
           sector: string | null
           updated_at: string
           valuation_amount: number | null
@@ -172,13 +166,9 @@ export type Database = {
           expected_result_2025?: number | null
           id?: string
           investment_inventory?: number | null
-          investment_inventory_stored?: number | null
           investment_machinery?: number | null
-          investment_machinery_stored?: number | null
           investment_other?: number | null
-          investment_other_stored?: number | null
           investment_real_estate?: number | null
-          investment_real_estate_stored?: number | null
           largest_client_dependency?: number | null
           largest_client_dependency_display?: string | null
           largest_supplier_dependency?: string | null
@@ -187,8 +177,6 @@ export type Database = {
           recurring_revenue?: number | null
           recurring_revenue_display?: string | null
           revenue?: number | null
-          revenue_year_1?: number | null
-          revenue_year_2?: number | null
           sector?: string | null
           updated_at?: string
           valuation_amount?: number | null
@@ -207,13 +195,9 @@ export type Database = {
           expected_result_2025?: number | null
           id?: string
           investment_inventory?: number | null
-          investment_inventory_stored?: number | null
           investment_machinery?: number | null
-          investment_machinery_stored?: number | null
           investment_other?: number | null
-          investment_other_stored?: number | null
           investment_real_estate?: number | null
-          investment_real_estate_stored?: number | null
           largest_client_dependency?: number | null
           largest_client_dependency_display?: string | null
           largest_supplier_dependency?: string | null
@@ -222,8 +206,6 @@ export type Database = {
           recurring_revenue?: number | null
           recurring_revenue_display?: string | null
           revenue?: number | null
-          revenue_year_1?: number | null
-          revenue_year_2?: number | null
           sector?: string | null
           updated_at?: string
           valuation_amount?: number | null
