@@ -358,23 +358,32 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={pdfStyles.page3RightColumn}>
               <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
               
-              {/* Four key metrics blocks */}
+              {/* Key metrics boxes - 2x2 grid layout */}
               <View style={pdfStyles.page3MetricsContainer}>
-                <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#009FE3'}]}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
-                  <Text style={pdfStyles.page3MetricLabelLarge}>EBITDA (Adjusted)</Text>
+                {/* First row */}
+                <View style={pdfStyles.page3MetricsGrid}>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
+                  </View>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Waarderingsmoment</Text>
+                  </View>
                 </View>
-                <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>{currentDate}</Text>
-                  <Text style={pdfStyles.page3MetricLabelLarge}>Waarderingsmoment</Text>
-                </View>
-                <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
-                  <Text style={pdfStyles.page3MetricLabelLarge}>Ondernemingswaarde</Text>
-                </View>
-                <View style={pdfStyles.page3MetricBlock}>
-                  <Text style={[pdfStyles.page3MetricValueLarge, {color: '#DC2626'}]}>{valuationResult.multiple.toFixed(1)} x EBITDA</Text>
-                  <Text style={pdfStyles.page3MetricLabelLarge}>Multiple op EBITDA</Text>
+                {/* Second row */}
+                <View style={pdfStyles.page3MetricsGrid}>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
+                  </View>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <View style={pdfStyles.page3MultiplierContainer}>
+                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)}</Text>
+                      <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
+                    </View>
+                    <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
+                  </View>
                 </View>
               </View>
               
