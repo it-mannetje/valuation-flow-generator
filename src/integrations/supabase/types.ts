@@ -127,6 +127,7 @@ export type Database = {
       }
       valuation_requests: {
         Row: {
+          average_yearly_investment: number | null
           contact_company: string | null
           contact_email: string | null
           contact_name: string | null
@@ -155,6 +156,7 @@ export type Database = {
           was_lossmaking: boolean | null
         }
         Insert: {
+          average_yearly_investment?: number | null
           contact_company?: string | null
           contact_email?: string | null
           contact_name?: string | null
@@ -183,6 +185,7 @@ export type Database = {
           was_lossmaking?: boolean | null
         }
         Update: {
+          average_yearly_investment?: number | null
           contact_company?: string | null
           contact_email?: string | null
           contact_name?: string | null

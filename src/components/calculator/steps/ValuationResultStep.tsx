@@ -86,7 +86,9 @@ export default function ValuationResultStep({
           revenue_range_display: companyData.lastYearRevenueDisplay,
           result_previous_year: companyData.result2024,
           result_current_year: companyData.expectedResult2025,
+          expected_result_2025: companyData.expectedResult2025,
           was_lossmaking: companyData.wasLossmaking,
+          average_yearly_investment: companyData.averageYearlyInvestment,
           
           // Company Details
           sector: companyData.sector,
