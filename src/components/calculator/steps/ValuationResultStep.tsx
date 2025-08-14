@@ -81,23 +81,15 @@ export default function ValuationResultStep({
           contact_phone: contactData.phone,
           contact_company: contactData.companyName,
           
-          // Financial Data with new revenue columns
+          // Financial Data
           revenue: companyData.lastYearRevenue,
-          revenue_year_1: companyData.lastYearRevenue * 0.8, // Estimate based on range
-          revenue_year_2: companyData.lastYearRevenue * 1.2, // Estimate based on range
           profit: companyData.result2024,
           expected_result_2025: companyData.expectedResult2025,
           was_lossmaking: companyData.wasLossmaking,
-          
-          // Investment data with new stored columns
-          investment_real_estate: null,
-          investment_inventory: null, 
-          investment_machinery: null,
+          investment_real_estate: null, // Not in current schema
+          investment_inventory: null, // Not in current schema
+          investment_machinery: null, // Not in current schema
           investment_other: companyData.averageYearlyInvestment,
-          investment_real_estate_stored: null,
-          investment_inventory_stored: null,
-          investment_machinery_stored: null,
-          investment_other_stored: companyData.averageYearlyInvestment,
           
           // Company Details
           sector: companyData.sector,
@@ -128,7 +120,7 @@ export default function ValuationResultStep({
       });
 
       // Generate and download PDF with database content
-      await generatePDF({ companyData, contactData, valuationResult, pages, sectors });
+      await generatePDF(companyData, contactData, valuationResult, pages, sectors);
       
       // Proceed to next step
       onNext();
