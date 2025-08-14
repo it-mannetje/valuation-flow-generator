@@ -428,166 +428,245 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         </View>
       </Page>
 
-      {/* Page 4 - Sector Information */}
+      {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(4).background)}
-        
-         {renderLogo(getPageData(4).topLogo, [
-           pdfStyles.topLogo,
-           { 
-             left: getPageData(4).topLogoPosition === 'center' ? '45%' : 
-                   getPageData(4).topLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(4).topLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <View style={pdfStyles.content}>
-          <View style={pdfStyles.pageHeader}>
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+        {/* Header with page number and title */}
+        <View style={pdfStyles.page4Header}>
+          <View style={pdfStyles.page4HeaderNumber}>
+            <Text style={pdfStyles.page4Number}>4.</Text>
           </View>
-          
-          <Text style={pdfStyles.sectionTitle}>Sector informatie</Text>
-          
-          <View style={pdfStyles.sectorContent}>
+          <View style={pdfStyles.page4HeaderTitle}>
+            <Text style={pdfStyles.page4Title}>Marktontwikkelingen</Text>
+          </View>
+        </View>
+        
+        {/* Main content area with two columns */}
+        <View style={pdfStyles.page4MainContent}>
+          {/* Left column - Text content */}
+          <View style={pdfStyles.page4LeftColumn}>
+            <Text style={pdfStyles.page4ContentTitle}>[Headline vanuit pdf beheer]</Text>
+            
+            <Text style={pdfStyles.page4ContentText}>[Tekst op maat voor de sector]</Text>
+            
             {getPageData(4).content ? (
               renderContentSections(getPageData(4).content)
             ) : (
               <>
                 {getSectorText() ? (
-                  <Text style={pdfStyles.sectorText}>{getSectorText()}</Text>
-                ) : (
-                  <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 sector information</Text>
-                )}
-                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 2 sector information</Text>
+                  <Text style={pdfStyles.page4ContentText}>{getSectorText()}</Text>
+                ) : null}
               </>
             )}
           </View>
           
-           {renderLogo(getPageData(4).footerLogo, [
-             pdfStyles.footerLogo,
-             { 
-               left: getPageData(4).footerLogoPosition === 'center' ? '45%' : 
-                     getPageData(4).footerLogoPosition === 'right' ? 'auto' : 20,
-               right: getPageData(4).footerLogoPosition === 'right' ? 20 : 'auto'
-             }
-           ])}
-          
-          <Text style={pdfStyles.pageNumber}>4</Text>
+          {/* Right column - Blue puzzle image */}
+          <View style={pdfStyles.page4RightColumn}>
+            {getPageData(4).background ? (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src={getPageData(4).background} 
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src="https://images.unsplash.com/photo-1559526324-593bc73d752a?auto=format&fit=crop&q=80&w=800&h=600" 
+              />
+            )}
+            <Text style={pdfStyles.page4ImageCaption}>[Tekst onder afbeelding vanuit pdf beheer]</Text>
+          </View>
+        </View>
+        
+        {/* Footer */}
+        <View style={pdfStyles.page4Footer}>
+          <View style={pdfStyles.page4FooterLeft}>
+            {renderLogo(getPageData(4).footerLogo, [pdfStyles.page4FooterLogo]) || (
+              <>
+                <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
+                <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
+              </>
+            )}
+          </View>
+          <View style={pdfStyles.page4FooterRight}>
+            <View style={pdfStyles.page4FooterDots} />
+            <Text style={pdfStyles.page4FooterPageNumber}>4</Text>
+          </View>
         </View>
       </Page>
 
-      {/* Page 5 - Business Valuation */}
+      {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(5).background)}
-        
-         {renderLogo(getPageData(5).topLogo, [
-           pdfStyles.topLogo,
-           { 
-             left: getPageData(5).topLogoPosition === 'center' ? '45%' : 
-                   getPageData(5).topLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(5).topLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
-        
-        <View style={pdfStyles.content}>
-          <View style={pdfStyles.pageHeader}>
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+        {/* Header with page number and title */}
+        <View style={pdfStyles.page5Header}>
+          <View style={pdfStyles.page5HeaderNumber}>
+            <Text style={pdfStyles.page5Number}>5.</Text>
           </View>
-          
-          <Text style={pdfStyles.sectionTitle}>Waardebepalingen binnen bedrijfsovernames</Text>
-          
-          <View style={pdfStyles.businessContent}>
+          <View style={pdfStyles.page5HeaderTitle}>
+            <Text style={pdfStyles.page5Title}>Bedrijfswaardering</Text>
+          </View>
+        </View>
+        
+        {/* Main content area with two columns */}
+        <View style={pdfStyles.page5MainContent}>
+          {/* Left column - Text content */}
+          <View style={pdfStyles.page5LeftColumn}>
+            <Text style={pdfStyles.page5ContentTitle}>[Headline vanuit pdf beheer]</Text>
+            
+            <Text style={pdfStyles.page5ContentText}>[Tekst vanuit pdf beheer]</Text>
+            
             {getPageData(5).content ? (
               renderContentSections(getPageData(5).content)
             ) : (
               <>
-                <Text style={pdfStyles.businessSubtitle}>Wat betekent een waardebepaling voor uw bedrijf?</Text>
-                <Text style={pdfStyles.businessText}>
+                <Text style={pdfStyles.page5ContentText}>
                   Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf. Dit is essentieel voor:
                 </Text>
                 
-                <Text style={pdfStyles.businessText}>
+                <Text style={pdfStyles.page5ContentText}>
                   • Strategische beslissingen over verkoop of overname{'\n'}
                   • Financieringsaanvragen{'\n'}
                   • Successieplanning{'\n'}
                   • Investeringsbeslissingen
                 </Text>
                 
-                <Text style={pdfStyles.businessSubtitle}>Factoren die de waarde beïnvloeden</Text>
-                <Text style={pdfStyles.businessText}>
+                <Text style={pdfStyles.page5ContentText}>
                   De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
                   marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
                 </Text>
-                
-                <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 1 business valuation</Text>
               </>
             )}
           </View>
           
-           {renderLogo(getPageData(5).footerLogo, [
-             pdfStyles.footerLogo,
-             { 
-               left: getPageData(5).footerLogoPosition === 'center' ? '45%' : 
-                     getPageData(5).footerLogoPosition === 'right' ? 'auto' : 20,
-               right: getPageData(5).footerLogoPosition === 'right' ? 20 : 'auto'
-             }
-           ])}
-          
-          <Text style={pdfStyles.pageNumber}>5</Text>
+          {/* Right column - Company logos grid */}
+          <View style={pdfStyles.page5RightColumn}>
+            <View style={pdfStyles.page5LogosGrid}>
+              {/* Top row */}
+              <View style={pdfStyles.page5LogoRow}>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo1" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo2" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo3" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+              </View>
+              
+              {/* Middle row */}
+              <View style={pdfStyles.page5LogoRow}>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo4" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo5" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>BUY SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo6" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+              </View>
+              
+              {/* Bottom row */}
+              <View style={pdfStyles.page5LogoRow}>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo7" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo8" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+                <View style={pdfStyles.page5LogoCard}>
+                  <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
+                  <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo9" />
+                  <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
+                  <View style={pdfStyles.page5LogoBlueSide} />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        
+        {/* Footer */}
+        <View style={pdfStyles.page5Footer}>
+          <View style={pdfStyles.page5FooterLeft}>
+            {renderLogo(getPageData(5).footerLogo, [pdfStyles.page5FooterLogo]) || (
+              <>
+                <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
+                <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
+              </>
+            )}
+          </View>
+          <View style={pdfStyles.page5FooterRight}>
+            <View style={pdfStyles.page5FooterDots} />
+            <Text style={pdfStyles.page5FooterPageNumber}>5</Text>
+          </View>
         </View>
       </Page>
 
-      {/* Page 6 - Next Steps */}
+      {/* Page 6 - Final Cover Page */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(6).background)}
+        {/* Background image with blue overlay */}
+        <View style={pdfStyles.page6Background}>
+          {getPageData(6).background ? (
+            <Image 
+              style={pdfStyles.page6BackgroundImage} 
+              src={getPageData(6).background} 
+            />
+          ) : (
+            <Image 
+              style={pdfStyles.page6BackgroundImage} 
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200&h=800" 
+            />
+          )}
+          <View style={pdfStyles.page6BlueOverlay} />
+        </View>
         
-         {renderLogo(getPageData(6).topLogo, [
-           pdfStyles.topLogo,
-           { 
-             left: getPageData(6).topLogoPosition === 'center' ? '45%' : 
-                   getPageData(6).topLogoPosition === 'right' ? 'auto' : 20,
-             right: getPageData(6).topLogoPosition === 'right' ? 20 : 'auto'
-           }
-         ])}
+        {/* FBM Logo positioned in top left */}
+        <View style={pdfStyles.page6LogoContainer}>
+          {renderLogo(getPageData(6).topLogo, [pdfStyles.page6Logo]) || (
+            <>
+              <Text style={pdfStyles.page6LogoText}>fbm</Text>
+              <Text style={pdfStyles.page6LogoSubtext}>Corporate Finance</Text>
+            </>
+          )}
+        </View>
         
-        <View style={pdfStyles.content}>
-          <View style={pdfStyles.pageHeader}>
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
-          </View>
+        {/* Main content in center-left */}
+        <View style={pdfStyles.page6MainContent}>
+          <Text style={pdfStyles.page6Title}>Titel vanuit pdf beheer</Text>
+          <Text style={pdfStyles.page6Subtitle}>Tekst vanuit pdf beheer</Text>
           
-          <View style={pdfStyles.nextStepsContent}>
-            <Text style={pdfStyles.nextStepsTitle}>Volgende stappen</Text>
-            <Text style={pdfStyles.nextStepsSubtitle}>Wilt u meer weten?</Text>
-            
-            <Text style={pdfStyles.businessText}>
-              Deze waardebepaling biedt een eerste indicatie van de waarde van uw bedrijf. Voor een meer 
-              uitgebreide analyse en begeleiding bij een eventuele verkoop of overname, kunt u contact met ons opnemen.
-            </Text>
-            
-            <Text style={pdfStyles.businessText}>
-              Onze ervaren adviseurs helpen u graag bij het realiseren van uw doelstellingen.
-            </Text>
-            
-            <View style={pdfStyles.contactInfo}>
-              <Text style={pdfStyles.contactText}>FBM Corporate Finance</Text>
-              <Text style={pdfStyles.contactText}>Telefoon: +31 (0)20 123 4567</Text>
-              <Text style={pdfStyles.contactText}>E-mail: info@fbmcorporatefinance.nl</Text>
-              <Text style={pdfStyles.websiteText}>www.fbmcorporatefinance.nl</Text>
-            </View>
-            
-            <Text style={pdfStyles.placeholderText}>PLACEHOLDER tekst 2 next pdfStyles</Text>
-          </View>
-          
-           {renderLogo(getPageData(6).footerLogo, [
-             pdfStyles.footerLogo,
-             { 
-               left: getPageData(6).footerLogoPosition === 'center' ? '45%' : 
-                     getPageData(6).footerLogoPosition === 'right' ? 'auto' : 20,
-               right: getPageData(6).footerLogoPosition === 'right' ? 20 : 'auto'
-             }
-           ])}
-          
-          <Text style={pdfStyles.pageNumber}>6</Text>
+          {getPageData(6).content ? (
+            renderContentSections(getPageData(6).content)
+          ) : null}
+        </View>
+        
+        {/* Contact info box */}
+        <View style={pdfStyles.page6ContactBox}>
+          <Text style={pdfStyles.page6ContactTitle}>Contact gegevens vanuit pdf beheer</Text>
+          <Text style={pdfStyles.page6ContactWebsite}>www.fbm.nl</Text>
         </View>
       </Page>
     </Document>

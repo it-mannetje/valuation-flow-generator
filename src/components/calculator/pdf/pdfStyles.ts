@@ -984,4 +984,441 @@ export const pdfStyles = StyleSheet.create({
     color: '#6B7280',
     fontWeight: 'bold',
   },
+
+  // ========== PAGE 4 STYLES ==========
+  
+  // Page 4 header
+  page4Header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 40,
+    paddingTop: 20,
+  },
+  
+  page4HeaderNumber: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#2563EB',
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 20,
+  },
+  
+  page4Number: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  page4HeaderTitle: {
+    backgroundColor: '#2563EB',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 12,
+    flex: 1,
+  },
+  
+  page4Title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  // Main content layout
+  page4MainContent: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingHorizontal: 40,
+    marginBottom: 80,
+  },
+  
+  page4LeftColumn: {
+    width: '50%',
+    paddingRight: 30,
+  },
+  
+  page4RightColumn: {
+    width: '50%',
+    paddingLeft: 30,
+    alignItems: 'center',
+  },
+  
+  page4ContentTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginBottom: 20,
+  },
+  
+  page4ContentText: {
+    fontSize: 14,
+    lineHeight: 1.6,
+    color: '#374151',
+    marginBottom: 15,
+    textAlign: 'justify',
+  },
+  
+  page4MainImage: {
+    width: 300,
+    height: 250,
+    borderRadius: 12,
+    objectFit: 'cover',
+  },
+  
+  page4ImageCaption: {
+    fontSize: 12,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginTop: 10,
+    fontStyle: 'italic',
+  },
+  
+  // Footer
+  page4Footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 60,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  page4FooterLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+  page4FooterLogo: {
+    width: 80,
+    height: 30,
+  },
+  
+  page4FooterLogoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginRight: 8,
+  },
+  
+  page4FooterText: {
+    fontSize: 14,
+    color: '#2563EB',
+  },
+  
+  page4FooterRight: {
+    alignItems: 'center',
+  },
+  
+  page4FooterDots: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page4FooterPageNumber: {
+    fontSize: 16,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
+
+  // ========== PAGE 5 STYLES ==========
+  
+  // Page 5 header
+  page5Header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 40,
+    paddingTop: 20,
+  },
+  
+  page5HeaderNumber: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#2563EB',
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 20,
+  },
+  
+  page5Number: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  page5HeaderTitle: {
+    backgroundColor: '#2563EB',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 12,
+    flex: 1,
+  },
+  
+  page5Title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
+  // Main content layout
+  page5MainContent: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingHorizontal: 40,
+    marginBottom: 80,
+  },
+  
+  page5LeftColumn: {
+    width: '35%',
+    paddingRight: 30,
+  },
+  
+  page5RightColumn: {
+    width: '65%',
+    paddingLeft: 30,
+  },
+  
+  page5ContentTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginBottom: 20,
+  },
+  
+  page5ContentText: {
+    fontSize: 14,
+    lineHeight: 1.6,
+    color: '#374151',
+    marginBottom: 15,
+    textAlign: 'justify',
+  },
+  
+  // Company logos grid
+  page5LogosGrid: {
+    flexDirection: 'column',
+    gap: 20,
+  },
+  
+  page5LogoRow: {
+    flexDirection: 'row',
+    gap: 15,
+    justifyContent: 'space-between',
+  },
+  
+  page5LogoCard: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 15,
+    alignItems: 'center',
+    width: '30%',
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  
+  page5LogoLabel: {
+    fontSize: 8,
+    color: '#6B7280',
+    marginBottom: 8,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+  
+  page5LogoImage: {
+    width: 80,
+    height: 40,
+    objectFit: 'contain',
+    marginBottom: 8,
+  },
+  
+  page5LogoSubtext: {
+    fontSize: 10,
+    color: '#374151',
+    textAlign: 'center',
+  },
+  
+  page5LogoBlueSide: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
+    backgroundColor: '#2563EB',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  
+  // Footer
+  page5Footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 60,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  page5FooterLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+  page5FooterLogo: {
+    width: 80,
+    height: 30,
+  },
+  
+  page5FooterLogoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginRight: 8,
+  },
+  
+  page5FooterText: {
+    fontSize: 14,
+    color: '#2563EB',
+  },
+  
+  page5FooterRight: {
+    alignItems: 'center',
+  },
+  
+  page5FooterDots: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page5FooterPageNumber: {
+    fontSize: 16,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
+
+  // ========== PAGE 6 STYLES ==========
+  
+  // Background and overlay
+  page6Background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
+  },
+  
+  page6BackgroundImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  
+  page6BlueOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(37, 99, 235, 0.85)', // Blue overlay with transparency
+    zIndex: 1,
+  },
+  
+  // Logo container
+  page6LogoContainer: {
+    position: 'absolute',
+    top: 40,
+    left: 40,
+    zIndex: 3,
+    backgroundColor: '#1e3a8a',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  page6Logo: {
+    width: 100,
+    height: 50,
+  },
+  
+  page6LogoText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 4,
+  },
+  
+  page6LogoSubtext: {
+    fontSize: 12,
+    color: 'white',
+  },
+  
+  // Main content
+  page6MainContent: {
+    position: 'absolute',
+    left: 40,
+    top: '40%',
+    zIndex: 3,
+    width: '50%',
+  },
+  
+  page6Title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 20,
+  },
+  
+  page6Subtitle: {
+    fontSize: 16,
+    color: 'white',
+    lineHeight: 1.6,
+    marginBottom: 30,
+  },
+  
+  // Contact box
+  page6ContactBox: {
+    position: 'absolute',
+    bottom: 40,
+    left: 40,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 20,
+    zIndex: 3,
+    borderLeft: '4 solid #2563EB',
+  },
+  
+  page6ContactTitle: {
+    fontSize: 12,
+    color: '#2563EB',
+    marginBottom: 8,
+    textDecoration: 'underline',
+  },
+  
+  page6ContactWebsite: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2563EB',
+  },
 });
