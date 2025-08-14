@@ -73,7 +73,7 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     padding: '8 16',
-    borderRadius: 8,
+    borderRadius: 0,
   },
   
   // Confidential text in header (next to title) - light blue and bold
@@ -251,7 +251,7 @@ export const pdfStyles = StyleSheet.create({
     bottom: 80, // Above footer in middle between sections
     marginLeft: -60, // Half of width to center
     zIndex: 10,
-    borderRadius: 4,
+    borderRadius: 0,
   },
   
   // White footer bar spanning full width
@@ -332,7 +332,7 @@ export const pdfStyles = StyleSheet.create({
     color: 'white',
     backgroundColor: '#1E40AF',
     padding: '12 24',
-    borderRadius: 8,
+    borderRadius: 0,
     marginBottom: 30,
   },
   
@@ -376,7 +376,7 @@ export const pdfStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9FAFB',
     padding: 20,
-    borderRadius: 8,
+    borderRadius: 0,
   },
   
   // Right column
@@ -421,7 +421,7 @@ export const pdfStyles = StyleSheet.create({
   highlightBox: {
     backgroundColor: '#EFF6FF',
     border: '2 solid #3B82F6',
-    borderRadius: 8,
+    borderRadius: 0,
     padding: 20,
     marginBottom: 15,
     alignItems: 'center',
@@ -482,7 +482,7 @@ export const pdfStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F4F6',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 0,
     alignItems: 'center',
   },
   
@@ -538,7 +538,7 @@ export const pdfStyles = StyleSheet.create({
   
   nextStepsContent: {
     backgroundColor: '#1E40AF',
-    borderRadius: 12,
+    borderRadius: 0,
     padding: 30,
     marginTop: 40,
     marginBottom: 40,
@@ -559,7 +559,7 @@ export const pdfStyles = StyleSheet.create({
   
   contactInfo: {
     backgroundColor: 'white',
-    borderRadius: 8,
+    borderRadius: 0,
     padding: 20,
     marginTop: 20,
   },
@@ -610,7 +610,7 @@ export const pdfStyles = StyleSheet.create({
     width: 34.02, // 12mm diameter
     height: 34.02,
     backgroundColor: '#87CEEB', // Light blue circle
-    borderRadius: 17.01,
+    borderRadius: 17,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
@@ -734,7 +734,7 @@ export const pdfStyles = StyleSheet.create({
   page3MetricBoxLarge: {
     backgroundColor: '#F8FAFC',
     padding: 10, // Reduced padding
-    borderRadius: 6,
+    borderRadius: 0,
     alignItems: 'center',
     width: '100%', // Full width for large box
     marginTop: 8,
@@ -922,7 +922,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
     padding: 20,
     marginHorizontal: 5,
-    borderRadius: 8,
+    borderRadius: 0,
     borderLeft: '3 solid #3B82F6',
     alignItems: 'center',
   },
@@ -1019,7 +1019,7 @@ export const pdfStyles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#2563EB',
-    borderRadius: 12,
+    borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
@@ -1035,7 +1035,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 12,
+    borderRadius: 0,
     maxWidth: '50%', // Maximum width to middle of page
   },
   
@@ -1082,7 +1082,7 @@ export const pdfStyles = StyleSheet.create({
   page4MainImage: {
     width: 350, // Larger image
     height: 300, // Larger image
-    borderRadius: 12,
+    borderRadius: 0,
     objectFit: 'cover',
   },
   
@@ -1163,7 +1163,7 @@ export const pdfStyles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#2563EB',
-    borderRadius: 12,
+    borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
@@ -1179,7 +1179,7 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
-    borderRadius: 12,
+    borderRadius: 0,
     maxWidth: '50%', // Maximum width to middle of page
   },
   
@@ -1236,7 +1236,7 @@ export const pdfStyles = StyleSheet.create({
   
   page5LogoCard: {
     backgroundColor: 'white',
-    borderRadius: 8,
+    borderRadius: 0,
     padding: 15,
     alignItems: 'center',
     width: '30%',
@@ -1244,7 +1244,7 @@ export const pdfStyles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 0,
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
@@ -1277,8 +1277,8 @@ export const pdfStyles = StyleSheet.create({
     bottom: 0,
     width: 4,
     backgroundColor: '#2563EB',
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
   
   // Footer
