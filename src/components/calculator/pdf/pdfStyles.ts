@@ -593,139 +593,131 @@ export const pdfStyles = StyleSheet.create({
     height: 30,
   },
   
-  // ========== PAGE 3 STYLES ==========
+  // ========== PAGE 3 STYLES - EXACT SPECIFICATIONS ==========
   
-  // Page 3 header
+  // Page 3 header - exact specification
   page3Header: {
+    backgroundColor: '#ffffff',
+    height: 70.87, // 25mm
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
   },
   
   page3HeaderNumber: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#2563EB',
-    borderRadius: 8,
+    width: 34.02, // 12mm diameter
+    height: 34.02,
+    backgroundColor: '#87CEEB', // Light blue circle
+    borderRadius: 17.01,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
   },
   
   page3Number: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'Poppins',
   },
   
   page3HeaderTitle: {
-    backgroundColor: '#1e3a8a', // Dark blue background
-    paddingHorizontal: 20,
+    backgroundColor: '#003F7F', // Dark blue background as specified
+    paddingHorizontal: 15,
     paddingVertical: 8,
-    borderRadius: 8,
-    maxWidth: '50%', // Maximum width to middle of page
   },
   
   page3Title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'Poppins',
   },
   
-  // Main content layout
+  // Main content layout - exact two column specification
   page3MainContent: {
     flexDirection: 'row',
     flex: 1,
-    marginBottom: 80, // Increased margin to ensure footer visibility
+    marginBottom: 100,
   },
   
   page3LeftColumn: {
-    width: '45%',
-    paddingRight: 15, // Reduced padding
+    width: '50%', // Exact 50% width
+    paddingRight: 10,
   },
   
   page3RightColumn: {
-    width: '45%',
-    paddingLeft: 15, // Reduced padding
+    width: '50%', // Exact 50% width
+    paddingLeft: 10,
   },
   
   page3Separator: {
-    width: 2,
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 8, // Reduced margin
-    borderStyle: 'dotted',
-    borderWidth: 1,
-    borderColor: '#9CA3AF',
+    width: 1,
+    backgroundColor: '#E6E6E6', // Light grey line as specified
+    marginHorizontal: 0,
   },
   
   page3ColumnTitle: {
-    fontSize: 14, // Reduced font size
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#2563EB',
-    marginBottom: 12, // Reduced margin
-    textDecoration: 'underline',
+    color: '#009FE3', // Primary blue as specified
+    marginBottom: 15,
+    fontFamily: 'Poppins',
   },
   
-  // Data list styles
+  // Data list styles - exact table format
   page3DataList: {
-    marginBottom: 15, // Reduced margin
+    marginBottom: 20,
   },
   
   page3DataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 3,
-    borderBottom: '0.5 solid #F3F4F6',
+    paddingVertical: 4,
+    borderBottom: '0.5 solid #E6E6E6', // Light grey line
   },
   
   page3Label: {
-    fontSize: 9, // Reduced font size
-    color: '#374151',
+    fontSize: 10,
+    color: '#333333', // Dark grey text as specified
     flex: 1,
+    fontFamily: 'Poppins',
   },
   
   page3Value: {
-    fontSize: 9, // Reduced font size
-    color: '#DC2626',
+    fontSize: 10,
+    color: '#DC2626', // Bold red as specified
     fontWeight: 'bold',
     textAlign: 'right',
     marginLeft: 10,
+    fontFamily: 'Poppins',
   },
   
-  // Images section
+  // Images section - two square 70x70mm images
   page3Images: {
     flexDirection: 'row',
-    gap: 8, // Reduced gap
-    marginTop: 8, // Reduced margin
+    gap: 10,
+    marginTop: 20,
   },
   
   page3Image: {
-    width: '100%', // Full width of left section
-    height: 100, // Larger size
-    borderRadius: 6,
+    width: 198.43, // 70mm converted to points
+    height: 198.43, // 70mm square
     objectFit: 'cover',
   },
   
-  // Metrics section - 2x2 grid layout
+  // Metrics section - four blocks vertically stacked
   page3MetricsContainer: {
-    marginBottom: 12,
+    marginBottom: 20,
   },
   
-  page3MetricsGrid: {
-    flexDirection: 'row',
-    gap: 16,
-    marginBottom: 16,
-    justifyContent: 'space-between',
-  },
-  
-  page3MetricBox: {
-    backgroundColor: '#F8FAFC',
-    padding: 8, // Reduced padding
-    borderRadius: 6,
-    alignItems: 'center',
-    width: '48%', // Two boxes per row
-    minHeight: 60, // Consistent height
+  page3MetricBlock: {
+    backgroundColor: 'transparent',
+    paddingVertical: 8,
+    alignItems: 'flex-start',
+    marginBottom: 15,
   },
   
   page3MetricBoxLarge: {
@@ -745,24 +737,26 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3MetricValueLarge: {
-    fontSize: 22, // Reduced font size
+    fontSize: 20, // Large amount as specified
     fontWeight: 'bold',
-    color: '#DC2626',
-    marginBottom: 3, // Reduced margin
+    color: '#DC2626', // Red for amounts and dates as specified  
+    marginBottom: 3,
+    fontFamily: 'Poppins',
   },
   
   page3MetricLabel: {
-    fontSize: 10, // Reduced font size
+    fontSize: 10,
     color: '#374151',
     marginBottom: 2,
     textAlign: 'center',
+    fontFamily: 'Poppins',
   },
   
   page3MetricLabelLarge: {
-    fontSize: 12, // Reduced font size
-    color: '#374151',
-    fontWeight: 'bold',
-    marginBottom: 3, // Reduced margin
+    fontSize: 12,
+    color: '#333333', // Dark grey text as specified
+    marginBottom: 3,
+    fontFamily: 'Poppins',
   },
   
   page3MetricDate: {
@@ -795,29 +789,29 @@ export const pdfStyles = StyleSheet.create({
     color: '#2563EB',
   },
   
-  // Disclaimer
+  // Disclaimer - exact specification
   page3Disclaimer: {
-    fontSize: 8, // Reduced font size
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 10, // Reduced margin
-    lineHeight: 1.2, // Reduced line height
-    fontStyle: 'italic',
+    fontSize: 9, // Dark grey text as specified
+    color: '#333333',
+    textAlign: 'left',
+    marginBottom: 15,
+    lineHeight: 1.3,
+    fontFamily: 'Poppins',
   },
   
-  // Chart section
+  // Chart section - exact specification
   page3ChartContainer: {
-    backgroundColor: '#F8FAFC',
-    padding: 12, // Reduced padding
-    borderRadius: 8,
+    backgroundColor: 'transparent',
+    marginTop: 20,
   },
   
   page3ChartTitle: {
-    fontSize: 12, // Reduced font size
-    fontWeight: 'bold',
-    color: '#2563EB',
-    marginBottom: 10, // Reduced margin
-    textAlign: 'center',
+    fontSize: 14, // Blue bold as specified
+    fontWeight: 'bold', 
+    color: '#009FE3', // Primary blue
+    marginBottom: 15,
+    textAlign: 'left',
+    fontFamily: 'Poppins',
   },
   
   page3Chart: {
@@ -852,34 +846,35 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Bar1: {
-    width: 30,
-    height: 50,
-    backgroundColor: '#2563EB', // Blue color matching design
+    width: 40,
+    height: 60,
+    backgroundColor: '#009FE3', // Primary blue as specified
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 0,
   },
 
   page3Bar2: {
-    width: 30,
-    height: 65,
-    backgroundColor: '#3B82F6', // Lighter blue
+    width: 40,
+    height: 80,
+    backgroundColor: '#009FE3', // Primary blue as specified
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 0,
   },
 
   page3Bar3: {
-    width: 30,
-    height: 80,
-    backgroundColor: '#1E40AF', // Darker blue
+    width: 40,
+    height: 100,
+    backgroundColor: '#009FE3', // Primary blue as specified
     marginBottom: 8,
-    borderRadius: 2,
+    borderRadius: 0,
   },
   
   page3BarValue: {
-    fontSize: 8, // Reduced font size
+    fontSize: 10, // Red bold as specified
     color: '#DC2626',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Poppins',
   },
   
   page3ChartBaseline: {
@@ -940,19 +935,17 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   
-  // Footer
+  // Footer - exact specification with fbm logo 25mm width
   page3Footer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 50,
-    backgroundColor: 'white',
+    bottom: 15, // 15mm bottom margin as specified
+    left: 42.52, // 15mm left margin
+    right: 42.52, // 15mm right margin  
+    height: 30,
+    backgroundColor: 'transparent',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 40,
-    borderTop: '1 solid #E5E7EB',
   },
   
   page3FooterLeft: {
@@ -963,13 +956,15 @@ export const pdfStyles = StyleSheet.create({
   page3FooterLogo: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#333333', // Dark grey as specified
     marginRight: 8,
+    fontFamily: 'Poppins',
   },
   
   page3FooterText: {
     fontSize: 12,
-    color: '#2563EB',
+    color: '#333333', // Dark grey as specified
+    fontFamily: 'Poppins',
   },
   
   page3FooterRight: {
@@ -984,9 +979,9 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3FooterPageNumber: {
-    fontSize: 14,
-    color: '#6B7280',
-    fontWeight: 'bold',
+    fontSize: 8, // Dark grey 8pt as specified
+    color: '#333333',
+    fontFamily: 'Poppins',
   },
 
   // ========== PAGE 4 STYLES ==========
