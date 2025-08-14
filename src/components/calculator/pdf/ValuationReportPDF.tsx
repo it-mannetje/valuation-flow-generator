@@ -29,8 +29,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   // Helper function to get page data
   const getPageData = (pageNumber: number) => {
     const page = pages.find(p => p.page_number === pageNumber);
-    console.log(`Getting page data for page ${pageNumber}:`, page);
-    const pageData = {
+    return {
       background: page?.background_image_url || null,
       topLogo: page?.top_logo_url || null,
       topLogoPosition: page?.top_logo_position || 'left',
@@ -40,28 +39,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       logo_image_url: page?.logo_image_url || null,
       image1_url: page?.image1_url || null,
       image2_url: page?.image2_url || null,
-      content: page?.content?.content || null
+      content: page?.content || null,
+      page_name: page?.page_name || null
     };
-    console.log(`Page ${pageNumber} data:`, pageData);
-    return pageData;
   };
 
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
-    console.log('Rendering background image:', imageUrl);
-    if (!imageUrl) {
-      console.log('No background image URL provided');
-      return null;
-    }
-    
-    // Support both base64 and regular URLs
-    if (imageUrl.startsWith('blob:')) {
-      console.warn('Background image skipped - blob URLs not supported in PDF:', imageUrl);
-      return null;
-    }
+    if (!imageUrl || imageUrl.startsWith('blob:')) return null;
     
     try {
-      console.log('Successfully rendering background image');
       return <Image src={imageUrl} style={pdfStyles.backgroundImage} />;
     } catch (error) {
       console.warn('Failed to load background image:', imageUrl, error);
@@ -70,20 +57,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   };
 
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
-    console.log('Rendering logo:', logoUrl);
-    if (!logoUrl) {
-      console.log('No logo URL provided');
-      return null;
-    }
-    
-    // Support both base64 and regular URLs
-    if (logoUrl.startsWith('blob:')) {
-      console.warn('Logo skipped - blob URLs not supported in PDF:', logoUrl);
-      return null;
-    }
+    if (!logoUrl || logoUrl.startsWith('blob:')) return null;
     
     try {
-      console.log('Successfully rendering logo');
       return <Image src={logoUrl} style={logoStyle} />;
     } catch (error) {
       console.warn('Failed to load logo:', logoUrl, error);
@@ -137,6 +113,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     return '';
   };
 
+  // Helper to get revenue display from display value
+  const getRevenueDisplay = () => {
+    return companyData.lastYearRevenueDisplay || formatCurrency(companyData.lastYearRevenue);
+  };
+
   return (
     <Document>
       {/* Page 1 - Cover */}
@@ -144,8 +125,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Blue header section */}
         <View style={pdfStyles.coverHeaderSection}>
           <View style={pdfStyles.headerLeftContent}>
-            <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
-            <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
+            <View style={{
+              backgroundColor: '#1e3a8a',
+              padding: '8 16',
+              borderRadius: 8,
+              marginRight: 20
+            }}>
+              <Text style={[pdfStyles.headerTitle, { backgroundColor: 'transparent' }]}>Rapport waardebepaling</Text>
+            </View>
+            <Text style={[pdfStyles.headerConfidential, { color: '#60a5fa', fontWeight: 'bold' }]}>STRICTLY CONFIDENTIAL</Text>
           </View>
           {/* Logo in header */}
           {renderLogo(getPageData(1).topLogo, pdfStyles.headerLogo)}
@@ -189,12 +177,12 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           <View style={pdfStyles.page2LeftColumn}>
             {getPageData(2).background ? (
               <Image 
-                style={pdfStyles.page2MainImage} 
+                style={[pdfStyles.page2MainImage, { height: '90%' }]} 
                 src={getPageData(2).background} 
               />
             ) : (
               <Image 
-                style={pdfStyles.page2MainImage} 
+                style={[pdfStyles.page2MainImage, { height: '90%' }]} 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=1000" 
               />
             )}
@@ -208,13 +196,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               renderContentSections(getPageData(2).content)
             ) : (
               <>
-                <Text style={pdfStyles.page2Paragraph}>
+                <Text style={[pdfStyles.page2Paragraph, { fontSize: 10 }]}>
                   Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
                   FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
                   Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
                   een open houding en bovenal: advies met karakter.
                 </Text>
-                <Text style={pdfStyles.page2Paragraph}>
+                <Text style={[pdfStyles.page2Paragraph, { fontSize: 10 }]}>
                   Met een persoonlijke benadering en diepgaande expertise helpen we middelgrote en 
                   grote bedrijven bij complexe vraagstukken op het gebied van fusies en overnames, 
                   financieringen, herstructureringen en bedrijfswaarderingen. Ons team van ervaren 
@@ -225,7 +213,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   industrie, vastgoed of automotive: onze focus ligt op het realiseren van waarde en het 
                   benutten van kansen.
                 </Text>
-                <Text style={pdfStyles.page2Paragraph}>
+                <Text style={[pdfStyles.page2Paragraph, { fontSize: 10 }]}>
                   FBM Corporate Finance is gebouwd op mensen met karakter. Geen 
                   standaardadviseurs, maar betrokken professionals die verder kijken dan de cijfers. 
                   Graag maken we kennis en gaan we samen het gesprek aan, laagdrempelig en altijd 
@@ -241,16 +229,18 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         </View>
         
         {/* Portrait image centered over both columns */}
-        <Image 
-          style={pdfStyles.page2PortraitImage} 
-          src={getPageData(2).middle_image_url || getPageData(2).logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
-        />
+        {getPageData(2).middle_image_url && (
+          <Image 
+            style={pdfStyles.page2PortraitImage} 
+            src={getPageData(2).middle_image_url} 
+          />
+        )}
         
         {/* White footer bar with logo and page number */}
         <View style={pdfStyles.page2Footer}>
           <View style={pdfStyles.page2FooterLeft}>
             {getPageData(2).footerLogo ? (
-              renderLogo(getPageData(2).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
+              renderLogo(getPageData(2).footerLogo, { width: 80, height: 30, objectFit: 'contain' })
             ) : (
               <> 
                 <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
@@ -270,414 +260,365 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderBackgroundImage(getPageData(3).background)}
         
         <View style={pdfStyles.content}>
-          {/* Header with page number and title */}
-          <View style={pdfStyles.page3Header}>
-            <View style={pdfStyles.page3HeaderNumber}>
-              <Text style={pdfStyles.page3Number}>3</Text>
-            </View>
-            <View style={pdfStyles.page3HeaderTitle}>
-              <Text style={pdfStyles.page3Title}>Indicatieve calculatie</Text>
+          {/* Page title with blue background */}
+          <View style={{ marginBottom: 30 }}>
+            <View style={{
+              backgroundColor: '#1e3a8a',
+              padding: '12 16',
+              borderRadius: 8,
+              width: '50%',
+              alignItems: 'center'
+            }}>
+              <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: '#FFFFFF'
+              }}>Indicatieve calculatie</Text>
             </View>
           </View>
           
-          {/* Main content area with two columns */}
-          <View style={pdfStyles.page3MainContent}>
+          {/* Main content grid */}
+          <View style={{ flexDirection: 'row', gap: 30 }}>
             {/* Left column - Input data */}
-            <View style={pdfStyles.page3LeftColumn}>
-              <Text style={pdfStyles.page3ColumnTitle}>Ingevoerde gegevens</Text>
+            <View style={{ flex: 1, backgroundColor: '#F9FAFB', padding: 20, borderRadius: 8 }}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#111827', marginBottom: 20 }}>Ingevoerde gegevens</Text>
               
-              <View style={pdfStyles.page3DataList}>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.lastYearRevenueDisplay || formatCurrency(companyData.lastYearRevenue)}</Text>
+              <View style={{ marginBottom: 20 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Omzet in het afgelopen jaar:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{getRevenueDisplay()}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Aandeel jaarlijks terugkerende omzet:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Resultaat vorig boekjaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.result2024)}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Resultaat vorig boekjaar:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{formatCurrency(companyData.result2024)}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Verwacht resultaat dit boekjaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.expectedResult2025)}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Verwacht resultaat dit boekjaar:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{formatCurrency(companyData.expectedResult2025)}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Verlies in de afgelopen 3 jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Investeringen:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Vooruitzichten</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.prospects}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Sector:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.averageYearlyInvestment)}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Aantal (FTE) medewerkers:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{companyData.employeesDisplay || companyData.employees}</Text>
                 </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Sector</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Aantal (FTE) medewerkers</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.employeesDisplay || companyData.employees}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Omzet via de grootste klant</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Afhankelijkheid van grootste toeleverancier</Text>
-                  <Text style={pdfStyles.page3Value}>Geen enkel probleem</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1 solid #E5E7EB' }}>
+                  <Text style={{ fontSize: 11, color: '#6B7280', fontWeight: 'bold' }}>Omzet via de grootste klant:</Text>
+                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#111827' }}>{companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
                 </View>
               </View>
               
-              {/* Business images */}
-              <View style={pdfStyles.page3Images}>
-                <Image 
-                  style={pdfStyles.page3Image} 
-                  src={getPageData(3).image1_url || "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=400&h=250"}
-                />
-                <Image 
-                  style={pdfStyles.page3Image} 
-                  src={getPageData(3).image2_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=250"}
-                />
+              {/* Business images - larger size to use full column width */}
+              <View style={{ flexDirection: 'row', gap: 10, marginTop: 20 }}>
+                {getPageData(3).image1_url && (
+                  <Image 
+                    style={{ width: '48%', height: 80, objectFit: 'cover' }} 
+                    src={getPageData(3).image1_url}
+                  />
+                )}
+                {getPageData(3).image2_url && (
+                  <Image 
+                    style={{ width: '48%', height: 80, objectFit: 'cover' }} 
+                    src={getPageData(3).image2_url}
+                  />
+                )}
               </View>
             </View>
-            
-            {/* Dotted separator line */}
-            <View style={pdfStyles.page3Separator} />
             
             {/* Right column - Key assumptions and results */}
-            <View style={pdfStyles.page3RightColumn}>
-              <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#111827', marginBottom: 20 }}>Belangrijkste uitgangspunten</Text>
               
-              {/* Key metrics boxes - 2x2 grid layout */}
-              <View style={pdfStyles.page3MetricsContainer}>
-                {/* First row */}
-                <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
-                  </View>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Waarderingsmoment</Text>
-                  </View>
-                </View>
-                {/* Second row */}
-                <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
-                  </View>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValue}>{valuationResult.multiple.toFixed(1)}</Text>
-                      <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
-                    </View>
-                    <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
-                  </View>
-                </View>
+              {/* Key metrics with red color and larger font */}
+              <View style={{ marginBottom: 20 }}>
+                <Text style={{ fontSize: 15, marginBottom: 8, color: '#dc2626', fontWeight: 'bold' }}>
+                  • Omzet: {formatCurrency(companyData.lastYearRevenue)}
+                </Text>
+                <Text style={{ fontSize: 15, marginBottom: 8, color: '#dc2626', fontWeight: 'bold' }}>
+                  • EBITDA: {formatCurrency(companyData.result2024)} ({((((companyData.result2024 || 0) / (companyData.lastYearRevenue || 1)) * 100)).toFixed(1)}%)
+                </Text>
+                <Text style={{ fontSize: 15, marginBottom: 8, color: '#dc2626', fontWeight: 'bold' }}>
+                  • Sector multiple: {valuationResult.multiple.toFixed(1)}x
+                </Text>
+                <Text style={{ fontSize: 15, marginBottom: 8, color: '#dc2626', fontWeight: 'bold' }}>
+                  • Verwacht resultaat 2025: {formatCurrency(companyData.expectedResult2025)}
+                </Text>
               </View>
-              
-              {/* Disclaimer text */}
-              <Text style={pdfStyles.page3Disclaimer}>
-                Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten.{'\n'}
-                Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
-              </Text>
-              
-              {/* Bandwidth chart */}
-              <View style={pdfStyles.page3ChartContainer}>
-                <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
+
+              {/* Valuation Range Chart with blue colors */}
+              <View style={{ marginTop: 30, alignItems: 'center' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>Indicatieve waardebandbreedte</Text>
                 
-                <View style={pdfStyles.page3Chart}>
-                  {/* Chart bars */}
-                  <View style={pdfStyles.page3ChartBars}>
-                    <View style={pdfStyles.page3ChartBar1}>
-                      <View style={pdfStyles.page3Bar1} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation / 1000).toLocaleString()}</Text>
-                    </View>
-                    <View style={pdfStyles.page3ChartBar2}>
-                      <View style={pdfStyles.page3Bar2} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
-                    </View>
-                    <View style={pdfStyles.page3ChartBar3}>
-                      <View style={pdfStyles.page3Bar3} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation / 1000).toLocaleString()}</Text>
-                    </View>
+                <View style={{ 
+                  width: 350, 
+                  height: 60, 
+                  backgroundColor: '#f3f4f6', 
+                  borderRadius: 30,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  position: 'relative'
+                }}>
+                  {/* Min value */}
+                  <View style={{ 
+                    position: 'absolute', 
+                    left: 15, 
+                    top: -30 
+                  }}>
+                    <Text style={{ fontSize: 12, textAlign: 'center', color: '#1e3a8a', fontWeight: 'bold' }}>
+                      €{Math.round((valuationResult.minValuation || 0) / 1000000 * 10) / 10}M
+                    </Text>
                   </View>
                   
-                  {/* Chart baseline */}
-                  <View style={pdfStyles.page3ChartBaseline} />
+                  {/* Max value */}
+                  <View style={{ 
+                    position: 'absolute', 
+                    right: 15, 
+                    top: -30 
+                  }}>
+                    <Text style={{ fontSize: 12, textAlign: 'center', color: '#1e3a8a', fontWeight: 'bold' }}>
+                      €{Math.round((valuationResult.maxValuation || 0) / 1000000 * 10) / 10}M
+                    </Text>
+                  </View>
+                  
+                  {/* Current value indicator */}
+                  <View style={{ 
+                    position: 'absolute', 
+                    left: '50%', 
+                    top: 20, 
+                    width: 20, 
+                    height: 20, 
+                    backgroundColor: '#1e3a8a', 
+                    borderRadius: 10,
+                    transform: 'translateX(-50%)'
+                  }} />
+                  
+                  {/* Current value text */}
+                  <View style={{ 
+                    position: 'absolute', 
+                    left: '50%', 
+                    top: -30, 
+                    transform: 'translateX(-50%)'
+                  }}>
+                    <Text style={{ fontSize: 12, textAlign: 'center', fontWeight: 'bold', color: '#1e3a8a' }}>
+                      €{Math.round((valuationResult.baseValuation || 0) / 1000000 * 10) / 10}M
+                    </Text>
+                  </View>
+                  
+                  {/* Gradient bar */}
+                  <View style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 30,
+                    opacity: 0.8
+                  }} />
                 </View>
               </View>
             </View>
           </View>
-          
+
           {/* Footer */}
-          <View style={pdfStyles.page3Footer}>
-            <View style={pdfStyles.page3FooterLeft}>
-              {getPageData(3).footerLogo ? (
-                renderLogo(getPageData(3).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
-              ) : (
-                <>
-                  <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
-                </>
+          <View style={{ position: 'absolute', bottom: 20, left: 20, right: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            {getPageData(3).footerLogo && (
+              <Image
+                src={getPageData(3).footerLogo}
+                style={{ width: 50, height: 25, objectFit: 'contain' }}
+              />
+            )}
+            <Text style={{ fontSize: 10, color: '#666' }}>3</Text>
+          </View>
+        </View>
+      </Page>
+
+      {/* Page 4 - Market Developments */}
+      <Page size="A4" style={pdfStyles.page}>
+        <View style={pdfStyles.content}>
+          {/* Page title */}
+          <View style={{ marginBottom: 30 }}>
+            <View style={{
+              backgroundColor: '#1e3a8a',
+              padding: '12 16',
+              borderRadius: 8,
+              width: '50%',
+              alignItems: 'center'
+            }}>
+              <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: '#FFFFFF'
+              }}>{getPageData(3).page_name || 'Marktontwikkelingen'}</Text>
+            </View>
+          </View>
+
+          {/* Two column layout */}
+          <View style={{ flexDirection: 'row', gap: 30 }}>
+            <View style={{ width: '60%', paddingRight: 30 }}>
+              <Text style={{ fontSize: 12, lineHeight: 1.5, textAlign: 'justify', marginBottom: 20 }}>
+                Tekst op maat voor {companyData.sector || 'uw sector'}
+              </Text>
+              <Text style={{ fontSize: 12, lineHeight: 1.5, textAlign: 'justify' }}>
+                {getPageData(3).content?.section1 || 'Content from PDF management section 1'}
+              </Text>
+            </View>
+
+            <View style={{ width: '40%', alignItems: 'center' }}>
+              {getPageData(3).image1_url && (
+                <Image
+                  src={getPageData(3).image1_url}
+                  style={{ width: '100%', height: 250, objectFit: 'cover', marginBottom: 15 }}
+                />
               )}
             </View>
-            <View style={pdfStyles.page3FooterRight}>
-              <View style={pdfStyles.page3FooterDots} />
-              <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
+          </View>
+
+          {/* Footer */}
+          <View style={{ position: 'absolute', bottom: 20, left: 20, right: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            {getPageData(3).footerLogo && (
+              <Image
+                src={getPageData(3).footerLogo}
+                style={{ width: 50, height: 25, objectFit: 'contain' }}
+              />
+            )}
+            <Text style={{ fontSize: 10, color: '#666' }}>4</Text>
+          </View>
+        </View>
+      </Page>
+
+      {/* Page 5 - Business Valuation */}
+      <Page size="A4" style={pdfStyles.page}>
+        <View style={pdfStyles.content}>
+          {/* Page title */}
+          <View style={{ marginBottom: 30 }}>
+            <View style={{
+              backgroundColor: '#1e3a8a',
+              padding: '12 16',
+              borderRadius: 8,
+              width: '50%',
+              alignItems: 'center'
+            }}>
+              <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: '#FFFFFF'
+              }}>{getPageData(4).page_name || 'Bedrijfswaardering'}</Text>
             </View>
           </View>
-        </View>
-      </Page>
 
-      {/* Page 4 - Marktontwikkelingen */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with page number and title */}
-        <View style={pdfStyles.page4Header}>
-          <View style={pdfStyles.page4HeaderNumber}>
-            <Text style={pdfStyles.page4Number}>4.</Text>
+          {/* Two column layout */}
+          <View style={{ flexDirection: 'row', gap: 30 }}>
+            <View style={{ width: '50%', paddingRight: 30 }}>
+              <Text style={{ fontSize: 11, lineHeight: 1.5, textAlign: 'justify' }}>
+                {getPageData(4).content?.text || 'Content will be loaded from admin panel for page 5'}
+              </Text>
+            </View>
+
+            <View style={{ width: '50%', alignItems: 'center' }}>
+              {getPageData(4).image1_url && (
+                <Image
+                  src={getPageData(4).image1_url}
+                  style={{ width: '100%', height: 300, objectFit: 'cover' }}
+                />
+              )}
+            </View>
           </View>
-          <View style={pdfStyles.page4HeaderTitle}>
-            <Text style={pdfStyles.page4Title}>{getPageData(4).content?.title || "Marktontwikkelingen"}</Text>
-          </View>
-        </View>
-        
-        {/* Main content area with two columns */}
-        <View style={pdfStyles.page4MainContent}>
-          {/* Left column - Text content */}
-          <View style={pdfStyles.page4LeftColumn}>
-            <Text style={pdfStyles.page4ContentTitle}>{getPageData(4).content?.title || "Headline vanuit pdf beheer"}</Text>
-            
-            <Text style={pdfStyles.page4ContentText}>{getSectorText() || 'Tekst op maat voor de sector'}</Text>
-            
-            {getPageData(4).content?.section1 && (
-              <Text style={pdfStyles.page4ContentText}>{getPageData(4).content.section1}</Text>
-            )}
-          </View>
-          
-          {/* Right column - Image */}
-          <View style={pdfStyles.page4RightColumn}>
-            {getPageData(4).image1_url ? (
-              <Image 
-                style={pdfStyles.page4MainImage} 
-                src={getPageData(4).image1_url} 
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.page4MainImage} 
-                src="https://images.unsplash.com/photo-1559526324-593bc73d752a?auto=format&fit=crop&q=80&w=800&h=600" 
+
+          {/* Footer */}
+          <View style={{ position: 'absolute', bottom: 20, left: 20, right: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            {getPageData(4).footerLogo && (
+              <Image
+                src={getPageData(4).footerLogo}
+                style={{ width: 50, height: 25, objectFit: 'contain' }}
               />
             )}
-            <Text style={pdfStyles.page4ImageCaption}>{getPageData(4).content?.section1 || "Tekst onder afbeelding vanuit pdf beheer"}</Text>
-          </View>
-        </View>
-        
-        {/* Footer */}
-        <View style={pdfStyles.page4Footer}>
-          <View style={pdfStyles.page4FooterLeft}>
-            {renderLogo(getPageData(4).footerLogo, [pdfStyles.page4FooterLogo]) || (
-              <>
-                <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
-              </>
-            )}
-          </View>
-          <View style={pdfStyles.page4FooterRight}>
-            <View style={pdfStyles.page4FooterDots} />
-            <Text style={pdfStyles.page4FooterPageNumber}>4</Text>
+            <Text style={{ fontSize: 10, color: '#666' }}>5</Text>
           </View>
         </View>
       </Page>
 
-      {/* Page 5 - Bedrijfswaardering */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with page number and title */}
-        <View style={pdfStyles.page5Header}>
-          <View style={pdfStyles.page5HeaderNumber}>
-            <Text style={pdfStyles.page5Number}>5.</Text>
-          </View>
-          <View style={pdfStyles.page5HeaderTitle}>
-            <Text style={pdfStyles.page5Title}>Bedrijfswaardering</Text>
-          </View>
-        </View>
-        
-        {/* Main content area with two columns */}
-        <View style={pdfStyles.page5MainContent}>
-          {/* Left column - Text content */}
-          <View style={pdfStyles.page5LeftColumn}>
-            {getPageData(5).content ? (
-              renderContentSections(getPageData(5).content)
-            ) : (
-              <>
-                <Text style={pdfStyles.page5ContentText}>
-                  Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf. Dit is essentieel voor:
-                </Text>
-                
-                <Text style={pdfStyles.page5ContentText}>
-                  • Strategische beslissingen over verkoop of overname{'\n'}
-                  • Financieringsaanvragen{'\n'}
-                  • Successieplanning{'\n'}
-                  • Investeringsbeslissingen
-                </Text>
-                
-                <Text style={pdfStyles.page5ContentText}>
-                  De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
-                  marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
-                </Text>
-              </>
-            )}
-          </View>
-          
-          {/* Right column - Image from PDF management */}
-          <View style={pdfStyles.page5RightColumn}>
-            {getPageData(5).image1_url ? (
-              <Image 
-                style={pdfStyles.page4MainImage} 
-                src={getPageData(5).image1_url} 
-              />
-            ) : (
-              <View style={pdfStyles.page5LogosGrid}>
-                {/* Top row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo1" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo2" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo3" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-                
-                {/* Middle row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo4" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo5" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>BUY SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo6" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-                
-                {/* Bottom row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo7" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo8" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo9" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-              </View>
-            )}
-          </View>
-        </View>
-        
-        {/* Footer */}
-        <View style={pdfStyles.page5Footer}>
-          <View style={pdfStyles.page5FooterLeft}>
-            {renderLogo(getPageData(5).footerLogo, [pdfStyles.page5FooterLogo]) || (
-              <>
-                <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
-              </>
-            )}
-          </View>
-          <View style={pdfStyles.page5FooterRight}>
-            <View style={pdfStyles.page5FooterDots} />
-            <Text style={pdfStyles.page5FooterPageNumber}>5</Text>
-          </View>
-        </View>
-      </Page>
-
-      {/* Page 6 - Final Cover Page */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Background image with blue overlay */}
-        <View style={pdfStyles.page6Background}>
-          {getPageData(6).background ? (
-            <Image 
-              style={pdfStyles.page6BackgroundImage} 
-              src={getPageData(6).background} 
-            />
-          ) : (
-            <Image 
-              style={pdfStyles.page6BackgroundImage} 
-              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200&h=800" 
+      {/* Page 6 - The Next Step */}
+      <Page size="A4" style={pdfStyles.page}>
+        {/* Header with logo */}
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 20 }}>
+          {getPageData(5).topLogo && (
+            <Image
+              src={getPageData(5).topLogo}
+              style={{ width: 60, height: 30 }}
             />
           )}
-          <View style={pdfStyles.page6BlueOverlay} />
         </View>
-        
-        {/* Header with logo on the right */}
-        <View style={pdfStyles.page6Header}>
-          <View style={pdfStyles.page6HeaderLogo}>
-            {renderLogo(getPageData(6).topLogo, [pdfStyles.page6Logo]) || (
-              <>
-                <Text style={pdfStyles.page6LogoText}>fbm</Text>
-                <Text style={pdfStyles.page6LogoSubtext}>Corporate Finance</Text>
-              </>
-            )}
-          </View>
-        </View>
-        
-        {/* Main content overlaid on the image */}
-        <View style={pdfStyles.page6MainContent}>
-          <Text style={pdfStyles.page6Title}>{getPageData(6).content?.title || "Titel vanuit pdf beheer"}</Text>
-          <Text style={pdfStyles.page6Subtitle}>{getPageData(6).content?.subtitle || "Tekst vanuit pdf beheer"}</Text>
+
+        {/* Background Image */}
+        {getPageData(5).background && (
+          <Image
+            src={getPageData(5).background}
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%', 
+              zIndex: -1 
+            }}
+          />
+        )}
+
+        {/* Content overlay */}
+        <View style={{ 
+          position: 'absolute', 
+          top: 150, 
+          left: 40, 
+          right: 40, 
+          zIndex: 1 
+        }}>
+          <Text style={{ 
+            fontSize: 32, 
+            fontWeight: 'bold', 
+            color: '#FFFFFF', 
+            marginBottom: 15
+          }}>
+            {getPageData(5).page_name || 'The next step'}
+          </Text>
           
-          {getPageData(6).content?.section1 && (
-            <Text style={pdfStyles.page6ContentText}>{getPageData(6).content.section1}</Text>
-          )}
+          <Text style={{ 
+            fontSize: 16, 
+            color: '#FFFFFF', 
+            lineHeight: 1.6,
+            maxWidth: '70%'
+          }}>
+            {getPageData(5).content?.text || 'Content will be loaded from admin panel'}
+          </Text>
         </View>
-        
-        {/* White block shifted 15% to the right with text and footer logo */}
-        <View style={pdfStyles.page6ContactBox}>
-          <Text style={pdfStyles.page6ContactTitle}>{getPageData(6).content?.section2 || "Contact gegevens vanuit pdf beheer"}</Text>
-          <Text style={pdfStyles.page6ContactWebsite}>www.fbm.nl</Text>
+
+        {/* Bottom contact box - shifted 15% to the right */}
+        <View style={{ 
+          position: 'absolute', 
+          bottom: 60, 
+          left: '25%',
+          backgroundColor: '#FFFFFF', 
+          borderRadius: 12, 
+          padding: 20,
+          minWidth: 300
+        }}>
+          <Text style={{ fontSize: 12, lineHeight: 1.5, color: '#333333' }}>
+            {getPageData(5).content?.section2 || 'Contact information will be loaded from admin panel'}
+          </Text>
           
-          {getPageData(6).footerLogo && (
-            <View style={pdfStyles.page6FooterLogoContainer}>
-              {renderLogo(getPageData(6).footerLogo, [pdfStyles.page6FooterLogo])}
+          {getPageData(5).footerLogo && (
+            <View style={{ marginTop: 10, alignItems: 'flex-start' }}>
+              <Image
+                src={getPageData(5).footerLogo}
+                style={{ width: 80, height: 30, objectFit: 'contain' }}
+              />
             </View>
           )}
         </View>
@@ -686,45 +627,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   );
 };
 
-export default ValuationReportPDF;
-
-// Export the generatePDF function for backwards compatibility
-export const generatePDF = async (
-  companyData: CompanyData,
-  contactData: ContactData,
-  valuationResult: ValuationResult,
-  pages?: any[],
-  sectors?: SectorConfig[]
-) => {
-  try {
-    // Create the PDF document
-    const MyDocument = (
-      <ValuationReportPDF 
-        companyData={companyData} 
-        contactData={contactData} 
-        valuationResult={valuationResult} 
-        pages={pages} 
-        sectors={sectors} 
-      />
-    );
-    
-    // Generate the PDF as a blob
-    const pdfBlob = await pdf(MyDocument).toBlob();
-    
-    // Create a download link and trigger the download
-    const fileName = `Bedrijfswaardering_${contactData.companyName.replace(/\s+/g, '_')}_${new Date().getFullYear()}.pdf`;
-    const url = URL.createObjectURL(pdfBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    console.log('PDF generated and download triggered successfully');
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    throw error;
-  }
+// Export helper function for generating PDF
+export const generatePDF = async (data: ValuationReportPDFProps) => {
+  return pdf(<ValuationReportPDF {...data} />);
 };
+
+export default ValuationReportPDF;
