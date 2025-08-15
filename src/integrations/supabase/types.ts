@@ -14,35 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          created_at: string
+          id: string
+          new_values: Json | null
+          old_values: Json | null
+          operation: string
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          operation: string
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          operation?: string
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       footer_templates: {
         Row: {
           created_at: string
           description: string | null
+          full_image_url: string | null
           id: string
           is_default: boolean | null
           layout_config: Json
           logo_url: string | null
           name: string
+          template_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          full_image_url?: string | null
+          id?: string
+          is_default?: boolean | null
+          layout_config?: Json
+          logo_url?: string | null
+          name: string
+          template_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          full_image_url?: string | null
+          id?: string
+          is_default?: boolean | null
+          layout_config?: Json
+          logo_url?: string | null
+          name?: string
+          template_type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      general_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: Json
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
           id?: string
-          is_default?: boolean | null
-          layout_config?: Json
-          logo_url?: string | null
-          name: string
+          setting_key: string
+          setting_value: Json
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
           id?: string
-          is_default?: boolean | null
-          layout_config?: Json
-          logo_url?: string | null
-          name?: string
+          setting_key?: string
+          setting_value?: Json
           updated_at?: string
         }
         Relationships: []
@@ -93,9 +156,12 @@ export type Database = {
           id: string
           image1_url: string | null
           image2_url: string | null
+          layout_history: Json | null
+          layout_version: number | null
           middle_image_url: string | null
           page_name: string
           page_number: number
+          previous_layout: Json | null
           updated_at: string
         }
         Insert: {
@@ -105,9 +171,12 @@ export type Database = {
           id?: string
           image1_url?: string | null
           image2_url?: string | null
+          layout_history?: Json | null
+          layout_version?: number | null
           middle_image_url?: string | null
           page_name: string
           page_number: number
+          previous_layout?: Json | null
           updated_at?: string
         }
         Update: {
@@ -117,9 +186,12 @@ export type Database = {
           id?: string
           image1_url?: string | null
           image2_url?: string | null
+          layout_history?: Json | null
+          layout_version?: number | null
           middle_image_url?: string | null
           page_name?: string
           page_number?: number
+          previous_layout?: Json | null
           updated_at?: string
         }
         Relationships: []
