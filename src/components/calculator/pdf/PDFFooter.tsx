@@ -77,9 +77,9 @@ const createFooterStyles = (config: FooterConfig) => StyleSheet.create({
     marginRight: config.dottedLineStyle.marginRight,
   },
   pageNumberText: {
-    color: config.pageNumberStyle.color,
+    color: config.pageNumberStyle.color === '#374151' ? '#374151' : config.pageNumberStyle.color,
     fontSize: config.pageNumberStyle.fontSize,
-    fontWeight: config.pageNumberStyle.fontWeight,
+    fontWeight: config.pageNumberStyle.fontWeight === 'bold' ? 700 : 400,
   },
   spacer: {
     flex: 1,

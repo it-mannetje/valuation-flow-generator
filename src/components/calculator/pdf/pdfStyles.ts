@@ -292,6 +292,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Footer right section with page number
   page2FooterRight: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   
@@ -305,10 +306,10 @@ export const pdfStyles = StyleSheet.create({
   
   // Dotted line above page number
   page2DottedLine: {
-    width: 50,
-    height: 1,
-    borderTop: '1 dotted #6B7280',
-    marginBottom: 10,
+    width: 2,
+    height: 20,
+    backgroundColor: '#2563EB',
+    marginRight: 10,
   },
   
   // Page number text
