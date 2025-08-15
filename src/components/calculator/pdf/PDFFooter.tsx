@@ -110,6 +110,21 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
       return null;
     }
     
+    // Check if it's a base64 image and handle it safely
+    if (logoUrl.startsWith('data:image/')) {
+      console.log(`⚠️ Base64 image detected for page ${pageNumber}, length: ${logoUrl.length}`);
+      // For now, skip base64 images that cause issues and use fallback text
+      return (
+        <View style={styles.logoContainer}>
+          <Text style={{ 
+            fontSize: 16, 
+            fontWeight: 'bold', 
+            color: '#2563EB' 
+          }}>fbm</Text>
+        </View>
+      );
+    }
+    
     try {
       console.log(`✅ Successfully rendering logo for page ${pageNumber}`);
       return (
@@ -119,7 +134,16 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
       );
     } catch (error) {
       console.warn('❌ Failed to load footer logo:', logoUrl, error);
-      return null;
+      // Fallback to text logo
+      return (
+        <View style={styles.logoContainer}>
+          <Text style={{ 
+            fontSize: 16, 
+            fontWeight: 'bold', 
+            color: '#2563EB' 
+          }}>fbm</Text>
+        </View>
+      );
     }
   };
 
