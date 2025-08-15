@@ -39,12 +39,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     console.log(`Getting page data for page ${pageNumber}:`, page);
     const pageData = {
       background: page?.background_image_url || null,
-      topLogo: page?.top_logo_url || null,
-      topLogoPosition: page?.top_logo_position || 'left',
-      footerLogo: page?.footer_logo_url || null,
-      footerLogoPosition: page?.footer_logo_position || 'left',
       middle_image_url: page?.middle_image_url || null,
-      logo_image_url: page?.logo_image_url || null,
       image1_url: page?.image1_url || null,
       image2_url: page?.image2_url || null,
       content: page?.content || null,
@@ -179,8 +174,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
             <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
           </View>
-          {/* Logo in header */}
-          {renderLogo(getPageData(1).topLogo, pdfStyles.headerLogo)}
+          {/* Logo in header - default FBM logo */}
+          <Text style={pdfStyles.fbmLogo}>fbm</Text>
         </View>
         
         {/* Main content area with image and company info */}
@@ -275,7 +270,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Portrait image centered over both columns */}
         <Image 
           style={pdfStyles.page2PortraitImage} 
-          src={getPageData(2).middle_image_url || getPageData(2).logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
+          src={getPageData(2).middle_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
         />
         
         {/* Dynamic Footer */}
@@ -283,14 +278,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           /* Fallback to original footer if no dynamic footer configured */
           <View style={pdfStyles.page2Footer}>
             <View style={pdfStyles.page2FooterLeft}>
-              {getPageData(2).footerLogo ? (
-                renderLogo(getPageData(2).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
-              ) : (
-                <> 
-                  <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
-                </>
-              )}
+              <> 
+                <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
+                <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+              </>
             </View>
             <View style={pdfStyles.page2FooterRight}>
               <View style={pdfStyles.page2DottedLine} />
@@ -460,14 +451,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             /* Fallback to original footer if no dynamic footer configured */
             <View style={pdfStyles.page3Footer}>
               <View style={pdfStyles.page3FooterLeft}>
-                {getPageData(3).footerLogo ? (
-                  renderLogo(getPageData(3).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
-                ) : (
-                  <>
-                    <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
-                    <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
-                  </>
-                )}
+                <>
+                  <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
+                  <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
+                </>
               </View>
               <View style={pdfStyles.page3FooterRight}>
                 <View style={pdfStyles.page3FooterDots} />
@@ -527,12 +514,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           /* Fallback to original footer if no dynamic footer configured */
           <View style={pdfStyles.page4Footer}>
             <View style={pdfStyles.page4FooterLeft}>
-              {renderLogo(getPageData(4).footerLogo, [pdfStyles.page4FooterLogo]) || (
-                <>
-                  <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
-                  <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
-                </>
-              )}
+              <>
+                <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
+                <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
+              </>
             </View>
             <View style={pdfStyles.page4FooterRight}>
               <View style={pdfStyles.page4FooterDots} />
@@ -665,12 +650,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           /* Fallback to original footer if no dynamic footer configured */
           <View style={pdfStyles.page5Footer}>
             <View style={pdfStyles.page5FooterLeft}>
-              {renderLogo(getPageData(5).footerLogo, [pdfStyles.page5FooterLogo]) || (
-                <>
-                  <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
-                  <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
-                </>
-              )}
+              <>
+                <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
+                <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
+              </>
             </View>
             <View style={pdfStyles.page5FooterRight}>
               <View style={pdfStyles.page5FooterDots} />
@@ -701,12 +684,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Header with logo on the right */}
         <View style={pdfStyles.page6Header}>
           <View style={pdfStyles.page6HeaderLogo}>
-            {renderLogo(getPageData(6).topLogo, [pdfStyles.page6Logo]) || (
-              <>
-                <Text style={pdfStyles.page6LogoText}>fbm</Text>
-                <Text style={pdfStyles.page6LogoSubtext}>Corporate Finance</Text>
-              </>
-            )}
+            <>
+              <Text style={pdfStyles.page6LogoText}>fbm</Text>
+              <Text style={pdfStyles.page6LogoSubtext}>Corporate Finance</Text>
+            </>
           </View>
         </View>
         
@@ -725,11 +706,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           <Text style={pdfStyles.page6ContactTitle}>{getPageData(6).content?.section2 || "Contact gegevens vanuit pdf beheer"}</Text>
           <Text style={pdfStyles.page6ContactWebsite}>www.fbm.nl</Text>
           
-          {getPageData(6).footerLogo && (
-            <View style={pdfStyles.page6FooterLogoContainer}>
-              {renderLogo(getPageData(6).footerLogo, [pdfStyles.page6FooterLogo])}
-            </View>
-          )}
+          {/* Contact info without footer logo */}
         </View>
       </Page>
     </Document>

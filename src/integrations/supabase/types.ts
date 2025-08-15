@@ -90,51 +90,36 @@ export type Database = {
           background_image_url: string | null
           content: Json
           created_at: string
-          footer_logo_position: string | null
-          footer_logo_url: string | null
           id: string
           image1_url: string | null
           image2_url: string | null
-          logo_image_url: string | null
           middle_image_url: string | null
           page_name: string
           page_number: number
-          top_logo_position: string | null
-          top_logo_url: string | null
           updated_at: string
         }
         Insert: {
           background_image_url?: string | null
           content?: Json
           created_at?: string
-          footer_logo_position?: string | null
-          footer_logo_url?: string | null
           id?: string
           image1_url?: string | null
           image2_url?: string | null
-          logo_image_url?: string | null
           middle_image_url?: string | null
           page_name: string
           page_number: number
-          top_logo_position?: string | null
-          top_logo_url?: string | null
           updated_at?: string
         }
         Update: {
           background_image_url?: string | null
           content?: Json
           created_at?: string
-          footer_logo_position?: string | null
-          footer_logo_url?: string | null
           id?: string
           image1_url?: string | null
           image2_url?: string | null
-          logo_image_url?: string | null
           middle_image_url?: string | null
           page_name?: string
           page_number?: number
-          top_logo_position?: string | null
-          top_logo_url?: string | null
           updated_at?: string
         }
         Relationships: []
