@@ -277,21 +277,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         />
         
         {/* Dynamic Footer */}
-        {renderFooter(2) || (
-          /* Fallback to original footer if no dynamic footer configured */
-          <View style={pdfStyles.page2Footer}>
-            <View style={pdfStyles.page2FooterLeft}>
-              <> 
-                <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-                <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
-              </>
-            </View>
-            <View style={pdfStyles.page2FooterRight}>
-              <View style={pdfStyles.page2DottedLine} />
-              <Text style={pdfStyles.page2PageNumberText}>2</Text>
-            </View>
-          </View>
-        )}
+        {renderFooter(2)}
       </Page>
 
       {/* Page 3 - Calculation Results */}
