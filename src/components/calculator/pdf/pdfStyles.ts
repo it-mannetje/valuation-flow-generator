@@ -211,6 +211,24 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'left',
   },
   
+  // Page 4 title styling - dark blue
+  page4Title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+    marginBottom: 15,
+    textAlign: 'left',
+  },
+  
+  // Page 5 header text - dark blue with header font size
+  page5HeaderText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+    marginBottom: 15,
+    textAlign: 'left',
+  },
+  
   // Text content paragraphs - dark grey, font-size 11px
   page2Paragraph: {
     fontSize: 11,
@@ -1026,12 +1044,6 @@ export const pdfStyles = StyleSheet.create({
     maxWidth: '50%', // Maximum width to middle of page
   },
   
-  page4Title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  
   // Main content layout
   page4MainContent: {
     flexDirection: 'row',
@@ -1458,5 +1470,65 @@ export const pdfStyles = StyleSheet.create({
   page6FooterLogo: {
     width: 60,
     height: 30,
+  },
+
+  // Page 6 new styles for full background layout
+  page6FullBackground: {
+    position: 'absolute',
+    top: '10%', // 10% header space
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '90%',
+  },
+  
+  page6FullBackgroundImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  
+  page6TitleOverlay: {
+    position: 'absolute',
+    top: '12%',
+    left: 40,
+    right: 40,
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 8,
+    zIndex: 10,
+  },
+  
+  page6WhiteTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  
+  page6Section1Text: {
+    fontSize: 14,
+    color: '#374151',
+    lineHeight: 1.5,
+    textAlign: 'center',
+  },
+  
+  page6BottomText: {
+    position: 'absolute',
+    bottom: 60,
+    left: '25%', // 25% left margin
+    right: 40,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: 15,
+    borderRadius: 6,
+  },
+  
+  page6Section2Text: {
+    fontSize: 12,
+    color: '#374151',
+    lineHeight: 1.4,
   },
 });

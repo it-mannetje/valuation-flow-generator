@@ -12,6 +12,7 @@ export interface CompanyData {
   
   // Investeringen
   averageYearlyInvestment: number;
+  averageYearlyInvestmentDisplay?: string;
   
   // Overig
   sector: string;

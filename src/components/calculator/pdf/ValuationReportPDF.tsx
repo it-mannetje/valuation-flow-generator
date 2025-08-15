@@ -275,8 +275,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getPageData(2).page_name || "Voorwoord"}
             </Text>
             
-            {getPageData(2).content ? (
-              renderContentSections(getPageData(2).content)
+            {getPageData(2).content?.section1 ? (
+              <Text style={pdfStyles.page2Paragraph}>
+                {getPageData(2).content.section1}
+              </Text>
             ) : (
               <Text style={pdfStyles.page2Paragraph}>
                 Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
@@ -343,7 +345,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.averageYearlyInvestmentDisplay || formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Sector</Text>
@@ -431,15 +433,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   <View style={pdfStyles.page3ChartBars}>
                     <View style={pdfStyles.page3ChartBar1}>
                       <View style={pdfStyles.page3Bar1} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation / 1000).toLocaleString()}</Text>
+                    <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                     <View style={pdfStyles.page3ChartBar2}>
                       <View style={pdfStyles.page3Bar2} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation / 1000).toLocaleString()}</Text>
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                     <View style={pdfStyles.page3ChartBar3}>
                       <View style={pdfStyles.page3Bar3} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation / 1000).toLocaleString()}</Text>
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                   </View>
                   
@@ -472,21 +474,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page4MainContent}>
           {/* Left column - Text content */}
           <View style={pdfStyles.page4LeftColumn}>
-            {getPageData(4).content ? (
-              renderContentSections(getPageData(4).content)
-            ) : (
-              <>
-                <Text style={pdfStyles.page4ContentText}>
-                  {getSectorText() || `Voor bedrijven in de sector "${valuationResult.sector}" hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
-                </Text>
-                <Text style={pdfStyles.page4ContentText}>
-                  De waardering van {formatCurrency(valuationResult.baseValuation)} is gebaseerd op een EBITDA van {formatCurrency(estimatedEbitda)} vermenigvuldigd met een sectorspecifieke multiple van {valuationResult.multiple.toFixed(1)}x.
-                </Text>
-                <Text style={pdfStyles.page4ContentText}>
-                  Deze waardering geeft een indicatie van de ondernemingswaarde op basis van de huidige prestaties en verwachtingen voor de komende periode.
-                </Text>
-              </>
-            )}
+            <Text style={pdfStyles.page4Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+            
+            <Text style={pdfStyles.page4ContentText}>
+              {getSectorText() || `Voor bedrijven in de sector "${valuationResult.sector}" hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
+            </Text>
           </View>
           
           {/* Right column - Image */}
@@ -520,26 +512,21 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page5MainContent}>
           {/* Left column - Text content */}
           <View style={pdfStyles.page5LeftColumn}>
-            {getPageData(5).content ? (
-              renderContentSections(getPageData(5).content)
+            {getPageData(5).content?.section1 ? (
+              <Text style={pdfStyles.page5HeaderText}>{getPageData(5).content.section1}</Text>
             ) : (
-              <>
-                <Text style={pdfStyles.page5ContentText}>
-                  Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf. Dit is essentieel voor:
-                </Text>
-                
-                <Text style={pdfStyles.page5ContentText}>
-                  • Strategische beslissingen over verkoop of overname{'\n'}
-                  • Financieringsaanvragen{'\n'}
-                  • Successieplanning{'\n'}
-                  • Investeringsbeslissingen
-                </Text>
-                
-                <Text style={pdfStyles.page5ContentText}>
-                  De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
-                  marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
-                </Text>
-              </>
+              <Text style={pdfStyles.page5HeaderText}>
+                Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf.
+              </Text>
+            )}
+            
+            {getPageData(5).content?.section2 ? (
+              <Text style={pdfStyles.page5ContentText}>{getPageData(5).content.section2}</Text>
+            ) : (
+              <Text style={pdfStyles.page5ContentText}>
+                De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
+                marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
+              </Text>
             )}
           </View>
           
@@ -628,48 +615,35 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 6 - Final Cover Page */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Background image with blue overlay */}
-        <View style={pdfStyles.page6Background}>
+        {/* Background image covering full width with 10% header space */}
+        <View style={pdfStyles.page6FullBackground}>
           {getPageData(6).background ? (
             <Image 
-              style={pdfStyles.page6BackgroundImage} 
+              style={pdfStyles.page6FullBackgroundImage} 
               src={getPageData(6).background} 
             />
           ) : (
             <Image 
-              style={pdfStyles.page6BackgroundImage} 
+              style={pdfStyles.page6FullBackgroundImage} 
               src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200&h=800" 
             />
           )}
-          <View style={pdfStyles.page6BlueOverlay} />
         </View>
         
-        {/* Header with logo on the right */}
-        <View style={pdfStyles.page6Header}>
-          <View style={pdfStyles.page6HeaderLogo}>
-            <>
-              <Text style={pdfStyles.page6LogoText}>fbm</Text>
-              <Text style={pdfStyles.page6LogoSubtext}>Corporate Finance</Text>
-            </>
-          </View>
-        </View>
-        
-        {/* Main content overlaid on the image */}
-        <View style={pdfStyles.page6MainContent}>
-          <Text style={pdfStyles.page6Title}>{getPageData(6).content?.title || "Titel vanuit pdf beheer"}</Text>
-          <Text style={pdfStyles.page6Subtitle}>{getPageData(6).content?.subtitle || "Tekst vanuit pdf beheer"}</Text>
+        {/* Page title on white background over image */}
+        <View style={pdfStyles.page6TitleOverlay}>
+          <Text style={pdfStyles.page6WhiteTitle}>{getPageData(6).page_name || "Titel vanuit pdf beheer"}</Text>
           
           {getPageData(6).content?.section1 && (
-            <Text style={pdfStyles.page6ContentText}>{getPageData(6).content.section1}</Text>
+            <Text style={pdfStyles.page6Section1Text}>{getPageData(6).content.section1}</Text>
           )}
         </View>
         
-        {/* White block shifted 15% to the right with text and footer logo */}
-        <View style={pdfStyles.page6ContactBox}>
-          <Text style={pdfStyles.page6ContactTitle}>{getPageData(6).content?.section2 || "Contact gegevens vanuit pdf beheer"}</Text>
-          <Text style={pdfStyles.page6ContactWebsite}>www.fbm.nl</Text>
-          
-          {/* Contact info without footer logo */}
+        {/* Section 2 text at bottom with 25% left margin */}
+        <View style={pdfStyles.page6BottomText}>
+          <Text style={pdfStyles.page6Section2Text}>
+            {getPageData(6).content?.section2 || "Contact gegevens vanuit pdf beheer"}
+          </Text>
         </View>
       </Page>
     </Document>
