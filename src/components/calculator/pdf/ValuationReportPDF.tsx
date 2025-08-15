@@ -205,6 +205,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.companyDate}>[{currentDate}]</Text>
           </View>
         </View>
+        
+        {/* Dynamic Footer */}
+        {renderFooter(1)}
       </Page>
 
       {/* Page 2 - Foreword */}
@@ -447,6 +450,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
           
         </View>
+        
+        {/* Dynamic Footer */}
+        {renderFooter(3)}
       </Page>
 
       {/* Page 4 - Marktontwikkelingen */}
@@ -493,6 +499,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
+        {/* Dynamic Footer */}
+        {renderFooter(4)}
       </Page>
 
       {/* Page 5 - Bedrijfswaardering */}
@@ -613,6 +621,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
+        {/* Dynamic Footer */}
+        {renderFooter(5)}
       </Page>
 
       {/* Page 6 - Final Cover Page */}
