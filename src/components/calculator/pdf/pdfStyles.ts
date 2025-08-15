@@ -678,7 +678,53 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  
+
+  page3HeaderLeft: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#2563EB',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+
+  page3PageNumber: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+
+  page3HeaderCenter: {
+    backgroundColor: '#1e3a8a', // Dark blue background
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 8,
+    maxWidth: '50%', // Maximum width to middle of page
+  },
+
+  page3PageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+
+  page3HeaderRight: {
+    flex: 1,
+    marginLeft: 20,
+  },
+
+  page3HeaderText: {
+    fontSize: 14,
+    color: '#374151',
+  },
+
+  page3Number: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+
   page3HeaderNumber: {
     width: 40,
     height: 40,
@@ -688,13 +734,7 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 15,
   },
-  
-  page3Number: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  
+
   page3HeaderTitle: {
     backgroundColor: '#1e3a8a', // Dark blue background
     paddingHorizontal: 20,
@@ -702,7 +742,7 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: '50%', // Maximum width to middle of page
   },
-  
+
   page3Title: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -887,6 +927,11 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: '#F8FAFC',
     padding: 12, // Reduced padding
     borderRadius: 8,
+  },
+
+  // Spacing after "Indicatieve bandbreedte" title  
+  page3SpacingAfterTitle: {
+    height: 15,
   },
   
   page3ChartTitle: {

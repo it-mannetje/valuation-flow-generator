@@ -119,8 +119,13 @@ export default function ValuationResultStep({
         description: "Uw bedrijfswaardering aanvraag is succesvol opgeslagen.",
       });
 
-      // Generate and download PDF with database content
-      await generatePDF(companyData, contactData, valuationResult, pages, sectors);
+      // Generate and download PDF with database content  
+      const savedData = {
+        multiplier: valuationResult.multiple,
+        average_yearly_investment: companyData.averageYearlyInvestment,
+        revenue_range_display: companyData.lastYearRevenueDisplay
+      };
+      await generatePDF(companyData, contactData, valuationResult, pages, sectors, savedData);
       
       // Proceed to next step
       onNext();

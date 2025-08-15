@@ -15,6 +15,7 @@ interface ValuationReportPDFProps {
   sectors?: SectorConfig[];
   footerTemplates?: FooterTemplate[];
   pageFooters?: PageFooter[];
+  savedValuationData?: any;
 }
 
 const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
@@ -24,7 +25,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   pages = [],
   sectors = [],
   footerTemplates = [],
-  pageFooters = []
+  pageFooters = [],
+  savedValuationData
 }) => {
   console.log('🚀 ValuationReportPDF - Footer data received:');
   console.log('📊 footerTemplates:', footerTemplates);
@@ -321,7 +323,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={pdfStyles.page3DataList}>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
+                  <Text style={pdfStyles.page3Value}>{savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
@@ -345,7 +347,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.averageYearlyInvestmentDisplay || formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
+                  <Text style={pdfStyles.page3Value}>{savedValuationData?.average_yearly_investment ? formatCurrency(savedValuationData.average_yearly_investment) : formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
                   <Text style={pdfStyles.page3Label}>Sector</Text>
@@ -410,7 +412,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   </View>
                   <View style={pdfStyles.page3MetricBox}>
                     <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValue}>{(valuationResult.multiple || 0).toFixed(1)}</Text>
+                      <Text style={pdfStyles.page3MultiplierValue}>{savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}</Text>
                       <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
                     </View>
                     <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
@@ -427,6 +429,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {/* Bandwidth chart */}
               <View style={pdfStyles.page3ChartContainer}>
                 <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
+                
+                {/* Added spacing after "Indicatieve bandbreedte" */}
+                <View style={pdfStyles.page3SpacingAfterTitle}></View>
                 
                 <View style={pdfStyles.page3Chart}>
                   {/* Chart bars */}
@@ -460,13 +465,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-          {/* Header with page number and title */}
-          <View style={pdfStyles.page4Header}>
-            <View style={pdfStyles.page4HeaderNumber}>
-              <Text style={pdfStyles.page4Number}>4.</Text>
+          {/* Header with same style as page 3 */}
+          <View style={pdfStyles.page3Header}>
+            <View style={pdfStyles.page3HeaderLeft}>
+              <Text style={pdfStyles.page3PageNumber}>4.</Text>
             </View>
-            <View style={pdfStyles.page4HeaderTitle}>
-              <Text style={pdfStyles.page4HeaderTitleText}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+            <View style={pdfStyles.page3HeaderCenter}>
+              <Text style={pdfStyles.page3PageTitle}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+            </View>
+            <View style={pdfStyles.page3HeaderRight}>
+              <Text style={pdfStyles.page3HeaderText}>{getPageData(4).content?.header || ""}</Text>
             </View>
           </View>
         
@@ -498,15 +506,23 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+        {/* Header with same style as page 3 */}
+        <View style={pdfStyles.page3Header}>
+          <View style={pdfStyles.page3HeaderLeft}>
+            <Text style={pdfStyles.page3PageNumber}>5.</Text>
+          </View>
+          <View style={pdfStyles.page3HeaderCenter}>
+            <Text style={pdfStyles.page3PageTitle}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
+          </View>
+          <View style={pdfStyles.page3HeaderRight}>
+            <Text style={pdfStyles.page3HeaderText}>{getPageData(5).content?.header || ""}</Text>
+          </View>
+        </View>
+
         {/* Main content with two sections - 55% left, 45% right */}
         <View style={pdfStyles.page5NewMainContainer}>
           {/* Left section - 55% width */}
           <View style={pdfStyles.page5NewLeftSection}>
-            {/* Header text from PDF management */}
-            <Text style={pdfStyles.page5HeaderText}>
-              {getPageData(5).page_name || "Bedrijfswaardering"}
-            </Text>
-            
             {/* Section 1 text - heading style, dark blue */}
             <Text style={pdfStyles.page5Section1Heading}>
               {getPageData(5).content?.section1 || "Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf"}
@@ -518,82 +534,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </Text>
           </View>
           
-          {/* Right section - 45% width */}
+          {/* Right section - 45% width - content removed */}
           <View style={pdfStyles.page5NewRightSection}>
-            {(getPageData(5).image1_url || getPageData(5).image2_url) ? (
-              <Image 
-                style={pdfStyles.page5SectionImage} 
-                src={getPageData(5).image1_url || getPageData(5).image2_url} 
-              />
-            ) : (
-              <View style={pdfStyles.page5LogosGrid}>
-                {/* Top row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo1" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo2" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo3" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-                
-                {/* Middle row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo4" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo5" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>BUY SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo6" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-                
-                {/* Bottom row */}
-                <View style={pdfStyles.page5LogoRow}>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo7" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo8" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                  <View style={pdfStyles.page5LogoCard}>
-                    <Text style={pdfStyles.page5LogoLabel}>SELL SIDE</Text>
-                    <Image style={pdfStyles.page5LogoImage} src="https://via.placeholder.com/80x40/2563EB/ffffff?text=Logo9" />
-                    <Text style={pdfStyles.page5LogoSubtext}>Acquired</Text>
-                    <View style={pdfStyles.page5LogoBlueSide} />
-                  </View>
-                </View>
-              </View>
-            )}
+            {/* Content removed as requested */}
           </View>
         </View>
         
@@ -648,7 +591,8 @@ export const generatePDF = async (
   contactData: ContactData,
   valuationResult: ValuationResult,
   pages?: any[],
-  sectors?: SectorConfig[]
+  sectors?: SectorConfig[],
+  savedValuationData?: any
 ) => {
   try {
     // Create the PDF document
@@ -659,6 +603,7 @@ export const generatePDF = async (
         valuationResult={valuationResult} 
         pages={pages} 
         sectors={sectors} 
+        savedValuationData={savedValuationData}
       />
     );
     
