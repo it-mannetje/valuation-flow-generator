@@ -83,11 +83,6 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   
-  // Logo in header (top right)
-  headerLogo: {
-    width: 50,
-    height: 50,
-  },
   
   // Main content area below header
   coverMainContent: {
@@ -285,14 +280,30 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'contain',
   },
   
-  // Text content paragraphs - dark grey, font-size 11px
+  // Text content paragraphs - dark grey, font-size 12px
+  page2TextContent: {
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: '#4b5563', // Dark grey
+    textAlign: 'justify' as const,
+    marginBottom: 10,
+  },
+
+  headerLogo: {
+    position: 'absolute' as const,
+    top: 15,
+    right: 25,
+    width: 60,
+    height: 40,
+    objectFit: 'contain' as const,
+  },
+
   page2Paragraph: {
-    fontSize: 11,
-    lineHeight: 1.4,
-    color: '#374151',
-    marginBottom: 12,
-    textAlign: 'justify',
-    flex: 1,
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: '#4b5563', // Dark grey
+    textAlign: 'justify' as const,
+    marginBottom: 10,
   },
   
   // Greeting text

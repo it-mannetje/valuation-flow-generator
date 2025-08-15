@@ -213,11 +213,17 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Blue header section */}
         <View style={pdfStyles.coverHeaderSection}>
           <View style={pdfStyles.headerLeftContent}>
-            <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
+            <Text style={pdfStyles.headerTitle}>
+              {getPageData(1).content?.title || "Rapport waardebepaling"}
+            </Text>
             <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
           </View>
-          {/* Logo in header - default FBM logo */}
-          <Text style={pdfStyles.fbmLogo}>fbm</Text>
+          {/* Logo in upper right corner */}
+          {getPageData(1).content?.logo_url ? (
+            renderLogo(getPageData(1).content.logo_url, pdfStyles.headerLogo)
+          ) : (
+            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+          )}
         </View>
         
         {/* Main content area with image and company info */}
@@ -277,21 +283,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getPageData(2).page_name || "Voorwoord"}
             </Text>
             
-            {getPageData(2).content?.section1 ? (
-              <Text style={pdfStyles.page2Paragraph}>
-                {getPageData(2).content.section1}
-              </Text>
-            ) : (
-              <Text style={pdfStyles.page2Paragraph}>
-                Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
-                FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
-                Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
-                een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
-                diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
-                op het gebied van fusies en overnames, financieringen, herstructureringen en 
-                bedrijfswaarderingen.
-              </Text>
-            )}
+            {/* Show all text content from PDF management */}
+            <View style={{ flex: 1 }}>
+              {getPageData(2).content?.content ? (
+                 getPageData(2).content.content.map((section: any, index: number) => (
+                   <Text key={index} style={pdfStyles.page2TextContent}>
+                     {section.text || ''}
+                   </Text>
+                 ))
+               ) : (
+                 <Text style={pdfStyles.page2TextContent}>
+                  Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
+                  FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
+                  Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
+                  een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
+                  diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
+                  op het gebied van fusies en overnames, financieringen, herstructureringen en 
+                  bedrijfswaarderingen.
+                </Text>
+              )}
+            </View>
           </View>
         </View>
         
@@ -465,16 +476,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-          {/* Header with same style as page 3 */}
+          {/* Header with same style as page 3 with proper spacing */}
           <View style={pdfStyles.page3Header}>
-            <View style={pdfStyles.page3HeaderLeft}>
-              <Text style={pdfStyles.page3PageNumber}>4.</Text>
+            <View style={pdfStyles.page3HeaderNumber}>
+              <Text style={pdfStyles.page3Number}>4</Text>
             </View>
-            <View style={pdfStyles.page3HeaderCenter}>
-              <Text style={pdfStyles.page3PageTitle}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
-            </View>
-            <View style={pdfStyles.page3HeaderRight}>
-              <Text style={pdfStyles.page3HeaderText}>{getPageData(4).content?.header || ""}</Text>
+            <View style={pdfStyles.page3HeaderTitle}>
+              <Text style={pdfStyles.page3Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
             </View>
           </View>
         
@@ -506,16 +514,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with same style as page 3 */}
+        {/* Header with same style as page 3 with proper spacing */}
         <View style={pdfStyles.page3Header}>
-          <View style={pdfStyles.page3HeaderLeft}>
-            <Text style={pdfStyles.page3PageNumber}>5.</Text>
+          <View style={pdfStyles.page3HeaderNumber}>
+            <Text style={pdfStyles.page3Number}>5</Text>
           </View>
-          <View style={pdfStyles.page3HeaderCenter}>
-            <Text style={pdfStyles.page3PageTitle}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
-          </View>
-          <View style={pdfStyles.page3HeaderRight}>
-            <Text style={pdfStyles.page3HeaderText}>{getPageData(5).content?.header || ""}</Text>
+          <View style={pdfStyles.page3HeaderTitle}>
+            <Text style={pdfStyles.page3Title}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
           </View>
         </View>
 

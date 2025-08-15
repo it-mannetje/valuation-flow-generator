@@ -157,7 +157,7 @@ export default function PDFContentManager() {
     updateContentField('content', content);
   };
 
-  const handleImageUpload = async (type: 'background' | 'middle_image' | 'image1' | 'image2', file: File) => {
+  const handleImageUpload = async (type: 'background' | 'middle_image' | 'image1' | 'image2' | 'logo', file: File) => {
     try {
       // Convert file to base64
       const base64String = await new Promise<string>((resolve, reject) => {
@@ -180,6 +180,8 @@ export default function PDFContentManager() {
         updatePageContent({ image1_url: base64String });
       } else if (type === 'image2') {
         updatePageContent({ image2_url: base64String });
+      } else if (type === 'logo') {
+        updateContentField('logo_url', base64String);
       }
 
       toast({
