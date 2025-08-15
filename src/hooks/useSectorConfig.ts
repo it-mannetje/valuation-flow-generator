@@ -63,6 +63,72 @@ export function useSectorConfig() {
     }
   };
 
+  const createSector = async (sectorData: Omit<SectorConfig, 'id'>) => {
+    try {
+      const id = sectorData.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      
+      const { error } = await supabase
+        .from('sector_configs')
+        .insert({
+          id,
+          name: sectorData.name,
+          multiple: sectorData.multiple,
+          description: sectorData.description,
+          text: sectorData.text
+        });
+
+      if (error) throw error;
+
+      // Update local state
+      const newSector = { id, ...sectorData };
+      setSectors(prev => [...prev, newSector]);
+      
+      toast({
+        title: "Sector Toegevoegd",
+        description: "De nieuwe sector is succesvol aangemaakt.",
+      });
+
+      return true;
+    } catch (err) {
+      console.error('Error creating sector:', err);
+      toast({
+        title: "Fout",
+        description: "Kon sector niet aanmaken. Probeer opnieuw.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  const deleteSector = async (sectorId: string) => {
+    try {
+      const { error } = await supabase
+        .from('sector_configs')
+        .delete()
+        .eq('id', sectorId);
+
+      if (error) throw error;
+
+      // Update local state
+      setSectors(prev => prev.filter(s => s.id !== sectorId));
+      
+      toast({
+        title: "Sector Verwijderd",
+        description: "De sector is succesvol verwijderd.",
+      });
+
+      return true;
+    } catch (err) {
+      console.error('Error deleting sector:', err);
+      toast({
+        title: "Fout",
+        description: "Kon sector niet verwijderen. Probeer opnieuw.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
   useEffect(() => {
     fetchSectors();
   }, []);
@@ -72,6 +138,8 @@ export function useSectorConfig() {
     isLoading,
     error,
     updateSector,
+    createSector,
+    deleteSector,
     refetch: fetchSectors
   };
 }
