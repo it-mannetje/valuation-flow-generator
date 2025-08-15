@@ -92,7 +92,14 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
   config, 
   isEnabled = true 
 }) => {
-  if (!isEnabled) return null;
+  console.log(`🦶 PDFFooter called for page ${pageNumber}, isEnabled: ${isEnabled}`);
+  console.log(`🦶 PDFFooter config:`, config);
+  console.log(`🦶 PDFFooter logoUrl:`, logoUrl);
+  
+  if (!isEnabled) {
+    console.log(`🦶 PDFFooter disabled for page ${pageNumber}`);
+    return null;
+  }
 
   const styles = createFooterStyles(config);
 

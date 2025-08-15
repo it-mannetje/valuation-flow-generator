@@ -142,17 +142,35 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
   // Helper function to get footer config for a page
   const getFooterConfig = (pageNumber: number) => {
+    console.log(`🔍 Getting footer config for page ${pageNumber}`);
+    console.log(`📊 Available pageFooters:`, pageFooters);
+    console.log(`📋 Available footerTemplates:`, footerTemplates);
+    
     const pageFooter = pageFooters.find(pf => pf.page_number === pageNumber);
-    if (!pageFooter || !pageFooter.is_enabled) return null;
+    console.log(`🔎 Found pageFooter for page ${pageNumber}:`, pageFooter);
+    
+    if (!pageFooter || !pageFooter.is_enabled) {
+      console.log(`❌ No enabled pageFooter found for page ${pageNumber}`);
+      return null;
+    }
     
     const template = footerTemplates.find(t => t.id === pageFooter.footer_template_id);
+    console.log(`🎨 Found template for page ${pageNumber}:`, template);
+    
     return template || null;
   };
 
   // Helper function to render footer
   const renderFooter = (pageNumber: number) => {
+    console.log(`🚀 Rendering footer for page ${pageNumber}`);
     const footerConfig = getFooterConfig(pageNumber);
-    if (!footerConfig) return null;
+    
+    if (!footerConfig) {
+      console.log(`⚠️ No footer config found for page ${pageNumber}`);
+      return null;
+    }
+    
+    console.log(`✅ Rendering PDFFooter for page ${pageNumber} with config:`, footerConfig);
     
     return (
       <PDFFooter

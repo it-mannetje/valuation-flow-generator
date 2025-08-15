@@ -286,6 +286,19 @@ export default function PDFContentManager() {
 
       console.log('Creating PDF component...');
       
+      // Fetch footer data
+      const { data: footerTemplates } = await supabase
+        .from('footer_templates')
+        .select('*');
+      
+      const { data: pageFooters } = await supabase
+        .from('page_footers')
+        .select('*')
+        .eq('is_enabled', true);
+      
+      console.log('Footer templates:', footerTemplates);
+      console.log('Page footers:', pageFooters);
+      
       // Import ValuationReportPDF instead of AdminPreviewPDF to use the same code
       const { default: ValuationReportPDF } = await import('@/components/calculator/pdf/ValuationReportPDF');
       
@@ -297,6 +310,8 @@ export default function PDFContentManager() {
           valuationResult={valuationResult}
           pages={pages}
           sectors={sectors}
+          footerTemplates={footerTemplates as any || []}
+          pageFooters={pageFooters as any || []}
         />
       ).toBlob();
 

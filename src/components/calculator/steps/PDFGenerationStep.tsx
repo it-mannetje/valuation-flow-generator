@@ -48,6 +48,19 @@ export default function PDFGenerationStep({
         .select('*')
         .order('page_number');
       
+      // Fetch footer data
+      const { data: footerTemplates } = await supabase
+        .from('footer_templates')
+        .select('*');
+      
+      const { data: pageFooters } = await supabase
+        .from('page_footers')
+        .select('*')
+        .eq('is_enabled', true);
+      
+      console.log('PDF Generation - Footer templates:', footerTemplates);
+      console.log('PDF Generation - Page footers:', pageFooters);
+      
       console.log('Creating PDF component...');
       
       // Generate actual PDF using ValuationReportPDF component
@@ -58,6 +71,8 @@ export default function PDFGenerationStep({
           valuationResult={valuationResult}
           pages={pages || []}
           sectors={sectors}
+          footerTemplates={footerTemplates as any || []}
+          pageFooters={pageFooters as any || []}
         />
       ).toBlob();
 
