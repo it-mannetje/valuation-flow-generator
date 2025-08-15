@@ -347,13 +347,33 @@ export default function FooterTemplateManager() {
                     )}
                   </TableCell>
                   <TableCell>
-                    {template.logo_url ? (
-                      <div className="flex items-center gap-2">
-                        <ImageIcon className="w-4 h-4" />
-                        <span className="text-sm text-muted-foreground">Logo aanwezig</span>
+                    {editingTemplate === template.id ? (
+                      <div>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) setSelectedLogo(file);
+                          }}
+                          className="mb-2"
+                        />
+                        {template.logo_url && (
+                          <div className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" />
+                            <span className="text-xs text-muted-foreground">Huidig logo behouden als geen nieuw bestand gekozen</span>
+                          </div>
+                        )}
                       </div>
                     ) : (
-                      <span className="text-sm text-muted-foreground">Geen logo</span>
+                      template.logo_url ? (
+                        <div className="flex items-center gap-2">
+                          <ImageIcon className="w-4 h-4" />
+                          <span className="text-sm text-muted-foreground">Logo aanwezig</span>
+                        </div>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">Geen logo</span>
+                      )
                     )}
                   </TableCell>
                   <TableCell>
