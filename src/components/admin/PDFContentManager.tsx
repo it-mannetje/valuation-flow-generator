@@ -427,7 +427,7 @@ export default function PDFContentManager() {
                 <TabsContent value="content" className="space-y-6">
                   {/* Page Title */}
                   <div>
-                    <Label htmlFor="page-title">Pagina Titel</Label>
+                    <Label htmlFor="page-title">Tekst header</Label>
                     <Input
                       id="page-title"
                       value={selectedPage.content.title || ''}
