@@ -3,6 +3,9 @@ import { Document, Page, Text, View, Image, pdf } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
 import { pdfStyles } from './pdfStyles';
+import PDFFooter from './PDFFooter';
+
+import { FooterTemplate, PageFooter } from '@/types/footer';
 
 interface ValuationReportPDFProps {
   companyData: CompanyData;
@@ -10,6 +13,8 @@ interface ValuationReportPDFProps {
   valuationResult: ValuationResult;
   pages?: any[];
   sectors?: SectorConfig[];
+  footerTemplates?: FooterTemplate[];
+  pageFooters?: PageFooter[];
 }
 
 const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
@@ -17,7 +22,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   contactData,
   valuationResult,
   pages = [],
-  sectors = []
+  sectors = [],
+  footerTemplates = [],
+  pageFooters = []
 }) => {
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
   const currentDate = new Date().toLocaleDateString('nl-NL', {
@@ -138,6 +145,30 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     return '';
   };
 
+  // Helper function to get footer config for a page
+  const getFooterConfig = (pageNumber: number) => {
+    const pageFooter = pageFooters.find(pf => pf.page_number === pageNumber);
+    if (!pageFooter || !pageFooter.is_enabled) return null;
+    
+    const template = footerTemplates.find(t => t.id === pageFooter.footer_template_id);
+    return template || null;
+  };
+
+  // Helper function to render footer
+  const renderFooter = (pageNumber: number) => {
+    const footerConfig = getFooterConfig(pageNumber);
+    if (!footerConfig) return null;
+    
+    return (
+      <PDFFooter
+        pageNumber={pageNumber}
+        logoUrl={footerConfig.logo_url}
+        config={footerConfig.layout_config}
+        isEnabled={true}
+      />
+    );
+  };
+
   return (
     <Document>
       {/* Page 1 - Cover */}
@@ -247,23 +278,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           src={getPageData(2).middle_image_url || getPageData(2).logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
         />
         
-        {/* White footer bar with logo and page number */}
-        <View style={pdfStyles.page2Footer}>
-          <View style={pdfStyles.page2FooterLeft}>
-            {getPageData(2).footerLogo ? (
-              renderLogo(getPageData(2).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
-            ) : (
-              <> 
-                <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-                <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
-              </>
-            )}
+        {/* Dynamic Footer */}
+        {renderFooter(2) || (
+          /* Fallback to original footer if no dynamic footer configured */
+          <View style={pdfStyles.page2Footer}>
+            <View style={pdfStyles.page2FooterLeft}>
+              {getPageData(2).footerLogo ? (
+                renderLogo(getPageData(2).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
+              ) : (
+                <> 
+                  <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
+                  <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
+                </>
+              )}
+            </View>
+            <View style={pdfStyles.page2FooterRight}>
+              <View style={pdfStyles.page2DottedLine} />
+              <Text style={pdfStyles.page2PageNumberText}>2</Text>
+            </View>
           </View>
-          <View style={pdfStyles.page2FooterRight}>
-            <View style={pdfStyles.page2DottedLine} />
-            <Text style={pdfStyles.page2PageNumberText}>2</Text>
-          </View>
-        </View>
+        )}
       </Page>
 
       {/* Page 3 - Calculation Results */}
@@ -421,23 +455,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </View>
           </View>
           
-          {/* Footer */}
-          <View style={pdfStyles.page3Footer}>
-            <View style={pdfStyles.page3FooterLeft}>
-              {getPageData(3).footerLogo ? (
-                renderLogo(getPageData(3).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
-              ) : (
-                <>
-                  <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
-                </>
-              )}
+          {/* Dynamic Footer */}
+          {renderFooter(3) || (
+            /* Fallback to original footer if no dynamic footer configured */
+            <View style={pdfStyles.page3Footer}>
+              <View style={pdfStyles.page3FooterLeft}>
+                {getPageData(3).footerLogo ? (
+                  renderLogo(getPageData(3).footerLogo, [pdfStyles.headerLogo, { width: 80, height: 30 }])
+                ) : (
+                  <>
+                    <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
+                    <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
+                  </>
+                )}
+              </View>
+              <View style={pdfStyles.page3FooterRight}>
+                <View style={pdfStyles.page3FooterDots} />
+                <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
+              </View>
             </View>
-            <View style={pdfStyles.page3FooterRight}>
-              <View style={pdfStyles.page3FooterDots} />
-              <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
-            </View>
-          </View>
+          )}
         </View>
       </Page>
 
@@ -485,21 +522,24 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Footer */}
-        <View style={pdfStyles.page4Footer}>
-          <View style={pdfStyles.page4FooterLeft}>
-            {renderLogo(getPageData(4).footerLogo, [pdfStyles.page4FooterLogo]) || (
-              <>
-                <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
-              </>
-            )}
+        {/* Dynamic Footer */}
+        {renderFooter(4) || (
+          /* Fallback to original footer if no dynamic footer configured */
+          <View style={pdfStyles.page4Footer}>
+            <View style={pdfStyles.page4FooterLeft}>
+              {renderLogo(getPageData(4).footerLogo, [pdfStyles.page4FooterLogo]) || (
+                <>
+                  <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
+                  <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
+                </>
+              )}
+            </View>
+            <View style={pdfStyles.page4FooterRight}>
+              <View style={pdfStyles.page4FooterDots} />
+              <Text style={pdfStyles.page4FooterPageNumber}>4</Text>
+            </View>
           </View>
-          <View style={pdfStyles.page4FooterRight}>
-            <View style={pdfStyles.page4FooterDots} />
-            <Text style={pdfStyles.page4FooterPageNumber}>4</Text>
-          </View>
-        </View>
+        )}
       </Page>
 
       {/* Page 5 - Bedrijfswaardering */}
@@ -620,21 +660,24 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Footer */}
-        <View style={pdfStyles.page5Footer}>
-          <View style={pdfStyles.page5FooterLeft}>
-            {renderLogo(getPageData(5).footerLogo, [pdfStyles.page5FooterLogo]) || (
-              <>
-                <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
-              </>
-            )}
+        {/* Dynamic Footer */}
+        {renderFooter(5) || (
+          /* Fallback to original footer if no dynamic footer configured */
+          <View style={pdfStyles.page5Footer}>
+            <View style={pdfStyles.page5FooterLeft}>
+              {renderLogo(getPageData(5).footerLogo, [pdfStyles.page5FooterLogo]) || (
+                <>
+                  <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
+                  <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
+                </>
+              )}
+            </View>
+            <View style={pdfStyles.page5FooterRight}>
+              <View style={pdfStyles.page5FooterDots} />
+              <Text style={pdfStyles.page5FooterPageNumber}>5</Text>
+            </View>
           </View>
-          <View style={pdfStyles.page5FooterRight}>
-            <View style={pdfStyles.page5FooterDots} />
-            <Text style={pdfStyles.page5FooterPageNumber}>5</Text>
-          </View>
-        </View>
+        )}
       </Page>
 
       {/* Page 6 - Final Cover Page */}

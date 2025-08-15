@@ -13,6 +13,7 @@ import { Settings, Edit, Save, RotateCcw, Upload, Download, Loader2, Plus, Trash
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import PDFContentManager from './PDFContentManager';
+import FooterTemplateManager from './FooterTemplateManager';
 import { useSectorConfig } from '@/hooks/useSectorConfig';
 
 export default function AdminDashboard() {
@@ -118,9 +119,10 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="sectors" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="sectors">Sector Management</TabsTrigger>
             <TabsTrigger value="pdf">PDF Beheer</TabsTrigger>
+            <TabsTrigger value="footer">Footer Templates</TabsTrigger>
             <TabsTrigger value="settings">Algemene Instellingen</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
           </TabsList>
@@ -336,6 +338,18 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent className="p-6">
                 <PDFContentManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="footer">
+            <Card className="shadow-lg">
+              <CardHeader className="bg-gradient-card border-b">
+                <CardTitle className="text-xl">Footer Template Beheer</CardTitle>
+                <p className="text-muted-foreground">Beheer footer templates en instellingen per pagina</p>
+              </CardHeader>
+              <CardContent className="p-6">
+                <FooterTemplateManager />
               </CardContent>
             </Card>
           </TabsContent>

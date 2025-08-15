@@ -14,6 +14,77 @@ export type Database = {
   }
   public: {
     Tables: {
+      footer_templates: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_default: boolean | null
+          layout_config: Json
+          logo_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          layout_config?: Json
+          logo_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          layout_config?: Json
+          logo_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      page_footers: {
+        Row: {
+          created_at: string
+          footer_template_id: string | null
+          id: string
+          is_enabled: boolean | null
+          page_id: string
+          page_number: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          footer_template_id?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          page_id: string
+          page_number: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          footer_template_id?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          page_id?: string
+          page_number?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_footers_footer_template_id_fkey"
+            columns: ["footer_template_id"]
+            isOneToOne: false
+            referencedRelation: "footer_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pdf_pages: {
         Row: {
           background_image_url: string | null
