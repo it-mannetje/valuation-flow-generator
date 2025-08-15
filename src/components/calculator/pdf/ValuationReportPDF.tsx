@@ -446,22 +446,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </View>
           </View>
           
-          {/* Dynamic Footer */}
-          {renderFooter(3) || (
-            /* Fallback to original footer if no dynamic footer configured */
-            <View style={pdfStyles.page3Footer}>
-              <View style={pdfStyles.page3FooterLeft}>
-                <>
-                  <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
-                </>
-              </View>
-              <View style={pdfStyles.page3FooterRight}>
-                <View style={pdfStyles.page3FooterDots} />
-                <Text style={pdfStyles.page3FooterPageNumber}>3</Text>
-              </View>
-            </View>
-          )}
         </View>
       </Page>
 
@@ -509,22 +493,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(4) || (
-          /* Fallback to original footer if no dynamic footer configured */
-          <View style={pdfStyles.page4Footer}>
-            <View style={pdfStyles.page4FooterLeft}>
-              <>
-                <Text style={pdfStyles.page4FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page4FooterText}>Corporate Finance</Text>
-              </>
-            </View>
-            <View style={pdfStyles.page4FooterRight}>
-              <View style={pdfStyles.page4FooterDots} />
-              <Text style={pdfStyles.page4FooterPageNumber}>4</Text>
-            </View>
-          </View>
-        )}
       </Page>
 
       {/* Page 5 - Bedrijfswaardering */}
@@ -645,22 +613,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(5) || (
-          /* Fallback to original footer if no dynamic footer configured */
-          <View style={pdfStyles.page5Footer}>
-            <View style={pdfStyles.page5FooterLeft}>
-              <>
-                <Text style={pdfStyles.page5FooterLogoText}>fbm</Text>
-                <Text style={pdfStyles.page5FooterText}>Corporate Finance</Text>
-              </>
-            </View>
-            <View style={pdfStyles.page5FooterRight}>
-              <View style={pdfStyles.page5FooterDots} />
-              <Text style={pdfStyles.page5FooterPageNumber}>5</Text>
-            </View>
-          </View>
-        )}
       </Page>
 
       {/* Page 6 - Final Cover Page */}
