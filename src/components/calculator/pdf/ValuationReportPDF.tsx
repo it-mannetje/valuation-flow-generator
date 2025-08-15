@@ -26,6 +26,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   footerTemplates = [],
   pageFooters = []
 }) => {
+  console.log('🚀 ValuationReportPDF - Footer data received:');
+  console.log('📊 footerTemplates:', footerTemplates);
+  console.log('📋 pageFooters:', pageFooters);
+  console.log('📄 pages:', pages);
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
   const currentDate = new Date().toLocaleDateString('nl-NL', {
     day: '2-digit',
@@ -146,6 +150,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     console.log(`📊 Available pageFooters:`, pageFooters);
     console.log(`📋 Available footerTemplates:`, footerTemplates);
     
+    if (!pageFooters || pageFooters.length === 0) {
+      console.log(`❌ No pageFooters available`);
+      return null;
+    }
+    
+    if (!footerTemplates || footerTemplates.length === 0) {
+      console.log(`❌ No footerTemplates available`);
+      return null;
+    }
+    
     const pageFooter = pageFooters.find(pf => pf.page_number === pageNumber);
     console.log(`🔎 Found pageFooter for page ${pageNumber}:`, pageFooter);
     
@@ -166,8 +180,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     const footerConfig = getFooterConfig(pageNumber);
     
     if (!footerConfig) {
-      console.log(`⚠️ No footer config found for page ${pageNumber}`);
-      return null;
+      console.log(`⚠️ No footer config found for page ${pageNumber}, rendering debug footer`);
+      // For debugging, render a simple footer to see if it shows up
+      return (
+        <View style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          backgroundColor: '#f0f0f0',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingHorizontal: 40,
+          zIndex: 10,
+        }}>
+          <Text style={{ fontSize: 14, fontWeight: 'bold' }}>DEBUG FOOTER</Text>
+          <Text style={{ fontSize: 12 }}>Page {pageNumber}</Text>
+        </View>
+      );
     }
     
     console.log(`✅ Rendering PDFFooter for page ${pageNumber} with config:`, footerConfig);
