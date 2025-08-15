@@ -104,16 +104,21 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
   const styles = createFooterStyles(config);
 
   const renderLogo = () => {
-    if (!logoUrl) return null;
+    console.log(`🖼️ Rendering logo for page ${pageNumber}, logoUrl:`, logoUrl);
+    if (!logoUrl) {
+      console.log(`❌ No logoUrl provided for page ${pageNumber}`);
+      return null;
+    }
     
     try {
+      console.log(`✅ Successfully rendering logo for page ${pageNumber}`);
       return (
         <View style={styles.logoContainer}>
           <Image src={logoUrl} style={styles.logo} />
         </View>
       );
     } catch (error) {
-      console.warn('Failed to load footer logo:', logoUrl, error);
+      console.warn('❌ Failed to load footer logo:', logoUrl, error);
       return null;
     }
   };
@@ -127,14 +132,30 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
     </View>
   );
 
+  console.log(`🎨 Footer layout for page ${pageNumber}: logoPosition=${config.logoPosition}, pageNumberPosition=${config.pageNumberPosition}`);
+  
   return (
     <View style={styles.footer}>
-      {config.logoPosition === 'left' && renderLogo()}
-      {config.logoPosition === 'center' && <View style={styles.spacer} />}
+      {/* Left side - logo or spacer */}
+      {config.logoPosition === 'left' ? (
+        renderLogo()
+      ) : config.pageNumberPosition === 'left' ? (
+        renderPageNumber()
+      ) : (
+        <View style={styles.spacer} />
+      )}
+      
+      {/* Center - logo if centered */}
       {config.logoPosition === 'center' && renderLogo()}
-      {config.pageNumberPosition === 'center' && <View style={styles.spacer} />}
-      {config.pageNumberPosition === 'right' && <View style={styles.spacer} />}
-      {renderPageNumber()}
+      
+      {/* Right side - page number or spacer */}
+      {config.pageNumberPosition === 'right' ? (
+        renderPageNumber()
+      ) : config.logoPosition === 'right' ? (
+        renderLogo()
+      ) : (
+        <View style={styles.spacer} />
+      )}
     </View>
   );
 };
