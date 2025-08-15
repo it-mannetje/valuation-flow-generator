@@ -498,43 +498,31 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with page number and title */}
-        <View style={pdfStyles.page5Header}>
-          <View style={pdfStyles.page5HeaderNumber}>
-            <Text style={pdfStyles.page5Number}>5.</Text>
-          </View>
-          <View style={pdfStyles.page5HeaderTitle}>
-            <Text style={pdfStyles.page5Title}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
-          </View>
-        </View>
-        
-        {/* Main content area with two columns */}
-        <View style={pdfStyles.page5MainContent}>
-          {/* Left column - Text content */}
-          <View style={pdfStyles.page5LeftColumn}>
-            {getPageData(5).content?.section1 ? (
-              <Text style={pdfStyles.page5HeaderText}>{getPageData(5).content.section1}</Text>
-            ) : (
-              <Text style={pdfStyles.page5HeaderText}>
-                Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf.
-              </Text>
-            )}
+        {/* Main content with two sections - 55% left, 45% right */}
+        <View style={pdfStyles.page5NewMainContainer}>
+          {/* Left section - 55% width */}
+          <View style={pdfStyles.page5NewLeftSection}>
+            {/* Header text from PDF management */}
+            <Text style={pdfStyles.page5HeaderText}>
+              {getPageData(5).page_name || "Bedrijfswaardering"}
+            </Text>
             
-            {getPageData(5).content?.section2 ? (
-              <Text style={pdfStyles.page5ContentText}>{getPageData(5).content.section2}</Text>
-            ) : (
-              <Text style={pdfStyles.page5ContentText}>
-                De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, 
-                marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector.
-              </Text>
-            )}
+            {/* Section 1 text - heading style, dark blue */}
+            <Text style={pdfStyles.page5Section1Heading}>
+              {getPageData(5).content?.section1 || "Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf"}
+            </Text>
+            
+            {/* Section 2 text from PDF management */}
+            <Text style={pdfStyles.page5Section2Text}>
+              {getPageData(5).content?.section2 || "De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector."}
+            </Text>
           </View>
           
-          {/* Right column - Image from PDF management */}
-          <View style={pdfStyles.page5RightColumn}>
+          {/* Right section - 45% width */}
+          <View style={pdfStyles.page5NewRightSection}>
             {(getPageData(5).image1_url || getPageData(5).image2_url) ? (
               <Image 
-                style={pdfStyles.page4MainImage} 
+                style={pdfStyles.page5SectionImage} 
                 src={getPageData(5).image1_url || getPageData(5).image2_url} 
               />
             ) : (

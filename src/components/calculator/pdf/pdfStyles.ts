@@ -236,6 +236,54 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'left',
   },
+
+  // Page 5 new layout styles
+  page5NewMainContainer: {
+    flexDirection: 'row',
+    height: '100%',
+    padding: 20,
+  },
+
+  // Left section - 55% width
+  page5NewLeftSection: {
+    width: '55%',
+    paddingRight: 20,
+    flexDirection: 'column',
+  },
+
+  // Right section - 45% width
+  page5NewRightSection: {
+    width: '45%',
+    paddingLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  // Section 1 heading style - dark blue, larger font
+  page5Section1Heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1E3A8A', // Dark blue
+    lineHeight: 1.4,
+    marginBottom: 20,
+    marginTop: 20,
+  },
+
+  // Section 2 text - normal paragraph
+  page5Section2Text: {
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: '#374151',
+    textAlign: 'justify',
+  },
+
+  // Section image in right column
+  page5SectionImage: {
+    width: '100%',
+    height: 'auto',
+    maxHeight: '80%',
+    objectFit: 'contain',
+  },
   
   // Text content paragraphs - dark grey, font-size 11px
   page2Paragraph: {
