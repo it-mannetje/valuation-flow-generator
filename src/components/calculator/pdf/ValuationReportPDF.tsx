@@ -460,21 +460,21 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with page number and title */}
-        <View style={pdfStyles.page4Header}>
-          <View style={pdfStyles.page4HeaderNumber}>
-            <Text style={pdfStyles.page4Number}>4.</Text>
+          {/* Header with page number and title */}
+          <View style={pdfStyles.page4Header}>
+            <View style={pdfStyles.page4HeaderNumber}>
+              <Text style={pdfStyles.page4Number}>4.</Text>
+            </View>
+            <View style={pdfStyles.page4HeaderTitle}>
+              <Text style={pdfStyles.page4HeaderTitleText}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+            </View>
           </View>
-          <View style={pdfStyles.page4HeaderTitle}>
-            <Text style={pdfStyles.page4Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
-          </View>
-        </View>
         
         {/* Main content area with two columns */}
         <View style={pdfStyles.page4MainContent}>
           {/* Left column - Text content */}
           <View style={pdfStyles.page4LeftColumn}>
-            <Text style={pdfStyles.page4Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+            <Text style={pdfStyles.page4Title}>{getPageData(4).content?.title || getPageData(4).page_name || "Marktontwikkelingen"}</Text>
             
             <Text style={pdfStyles.page4ContentText}>
               {getSectorText() || `Voor bedrijven in de sector "${valuationResult.sector}" hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
@@ -640,11 +640,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         </View>
         
         {/* Section 2 text at bottom with 25% left margin */}
-        <View style={pdfStyles.page6BottomText}>
-          <Text style={pdfStyles.page6Section2Text}>
-            {getPageData(6).content?.section2 || "Contact gegevens vanuit pdf beheer"}
-          </Text>
-        </View>
+        {getPageData(6).content?.section2 && (
+          <View style={pdfStyles.page6BottomText}>
+            <Text style={pdfStyles.page6Section2Text}>
+              {getPageData(6).content.section2}
+            </Text>
+          </View>
+        )}
       </Page>
     </Document>
   );

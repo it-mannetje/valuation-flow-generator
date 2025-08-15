@@ -219,6 +219,14 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'left',
   },
+
+  // Page 4 header title styling - white text
+  page4HeaderTitleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'left',
+  },
   
   // Page 5 header text - dark blue with header font size
   page5HeaderText: {
@@ -232,10 +240,11 @@ export const pdfStyles = StyleSheet.create({
   // Text content paragraphs - dark grey, font-size 11px
   page2Paragraph: {
     fontSize: 11,
-    lineHeight: 1.5,
+    lineHeight: 1.4,
     color: '#374151',
     marginBottom: 12,
     textAlign: 'justify',
+    flex: 1,
   },
   
   // Greeting text
@@ -872,7 +881,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3Bar1: {
-    width: 30,
+    width: 40,
     height: 50,
     backgroundColor: '#2563EB', // Blue color matching design
     marginBottom: 8,
@@ -880,7 +889,7 @@ export const pdfStyles = StyleSheet.create({
   },
 
   page3Bar2: {
-    width: 30,
+    width: 40,
     height: 65,
     backgroundColor: '#3B82F6', // Lighter blue
     marginBottom: 8,
@@ -888,7 +897,7 @@ export const pdfStyles = StyleSheet.create({
   },
 
   page3Bar3: {
-    width: 30,
+    width: 40,
     height: 80,
     backgroundColor: '#1E40AF', // Darker blue
     marginBottom: 8,
