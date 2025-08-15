@@ -178,42 +178,43 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: 'white',
   },
   
-  // Left column with main image (50% width)
+  // Left column with main image (45% width)
   page2LeftColumn: {
-    width: '50%',
+    width: '45%',
     position: 'relative',
     height: '100%',
+    padding: 0,
   },
   
-  // Main image in left column (90% height to leave space for footer and portrait)
+  // Main image in left column (80% height to leave space for footer)
   page2MainImage: {
     width: '100%',
-    height: '90%',
+    height: '80%',
     objectFit: 'cover',
   },
   
-  // Right column with text content (50% width)
+  // Right column with text content (55% width)
   page2RightColumn: {
-    width: '50%',
-    padding: '60px 40px 100px 40px',
+    width: '55%',
+    padding: '40px 40px 100px 40px',
     flexDirection: 'column',
     height: '100%',
     backgroundColor: 'white',
   },
   
-  // Voorwoord title styling
+  // Page title styling - dark blue
   page2Title: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1e3a8a',
-    marginBottom: 30,
+    marginBottom: 20,
     textAlign: 'left',
   },
   
-  // Text content paragraphs - increased font size for better visibility
+  // Text content paragraphs - dark grey, font-size 11px
   page2Paragraph: {
-    fontSize: 11, // Increased from 9 to 11 
-    lineHeight: 1.6,
+    fontSize: 11,
+    lineHeight: 1.5,
     color: '#374151',
     marginBottom: 12,
     textAlign: 'justify',

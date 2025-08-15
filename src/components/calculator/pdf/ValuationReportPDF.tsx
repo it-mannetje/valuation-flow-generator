@@ -250,6 +250,50 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderFooter(1)}
       </Page>
 
+      {/* Page 2 - New Layout */}
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+        {/* Main content area with two columns */}
+        <View style={pdfStyles.page2Layout}>
+          {/* Left column - Image (45%) */}
+          <View style={pdfStyles.page2LeftColumn}>
+            {getPageData(2).background ? (
+              <Image 
+                style={pdfStyles.page2MainImage} 
+                src={getPageData(2).background} 
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page2MainImage} 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=1000" 
+              />
+            )}
+          </View>
+          
+          {/* Right column - Title and text (55%) */}
+          <View style={pdfStyles.page2RightColumn}>
+            <Text style={pdfStyles.page2Title}>
+              {getPageData(2).page_name || "Voorwoord"}
+            </Text>
+            
+            {getPageData(2).content ? (
+              renderContentSections(getPageData(2).content)
+            ) : (
+              <Text style={pdfStyles.page2Paragraph}>
+                Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
+                FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
+                Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
+                een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
+                diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
+                op het gebied van fusies en overnames, financieringen, herstructureringen en 
+                bedrijfswaarderingen.
+              </Text>
+            )}
+          </View>
+        </View>
+        
+        {/* Dynamic Footer */}
+        {renderFooter(2)}
+      </Page>
 
       {/* Page 3 - Calculation Results */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
