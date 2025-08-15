@@ -5,7 +5,7 @@ import { formatCurrency } from '@/lib/calculator';
 import { pdfStyles } from './pdfStyles';
 import PDFFooter from './PDFFooter';
 
-import { FooterTemplate, PageFooter } from '@/types/footer';
+import { FooterTemplate, PageFooter, FooterConfig } from '@/types/footer';
 
 interface ValuationReportPDFProps {
   companyData: CompanyData;
@@ -145,33 +145,41 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   };
 
   // Helper function to get footer config for a page
-  const getFooterConfig = (pageNumber: number) => {
-    console.log(`🔍 Getting footer config for page ${pageNumber}`);
+  const getFooterConfig = (pageNumber: number): FooterConfig | null => {
+    console.log(`🔍 Looking for footer config for page ${pageNumber}`);
     console.log(`📊 Available pageFooters:`, pageFooters);
     console.log(`📋 Available footerTemplates:`, footerTemplates);
     
-    if (!pageFooters || pageFooters.length === 0) {
-      console.log(`❌ No pageFooters available`);
-      return null;
+    // For debugging - always return a default footer config if data is available
+    if (footerTemplates && footerTemplates.length > 0) {
+      const defaultTemplate = footerTemplates.find(ft => ft.is_default) || footerTemplates[0];
+      
+      if (defaultTemplate) {
+        console.log(`✅ Using default template for page ${pageNumber}:`, defaultTemplate);
+        return {
+          ...defaultTemplate.layout_config,
+          // Override page number styling to match user requirements
+          pageNumberStyle: {
+            backgroundColor: '#f3f4f6', // Light gray
+            borderRadius: 15,
+            width: '85px', // ~3cm
+            height: '42px', // ~1.5cm
+            color: '#374151',
+            fontSize: 12,
+            fontWeight: 'normal'
+          },
+          dottedLineStyle: {
+            color: '#1e40af', // Dark blue
+            width: 2,
+            height: 20,
+            marginRight: 8
+          }
+        };
+      }
     }
     
-    if (!footerTemplates || footerTemplates.length === 0) {
-      console.log(`❌ No footerTemplates available`);
-      return null;
-    }
-    
-    const pageFooter = pageFooters.find(pf => pf.page_number === pageNumber);
-    console.log(`🔎 Found pageFooter for page ${pageNumber}:`, pageFooter);
-    
-    if (!pageFooter || !pageFooter.is_enabled) {
-      console.log(`❌ No enabled pageFooter found for page ${pageNumber}`);
-      return null;
-    }
-    
-    const template = footerTemplates.find(t => t.id === pageFooter.footer_template_id);
-    console.log(`🎨 Found template for page ${pageNumber}:`, template);
-    
-    return template || null;
+    console.log(`❌ No footer config available for page ${pageNumber}`);
+    return null;
   };
 
   // Helper function to render footer
@@ -180,26 +188,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     const footerConfig = getFooterConfig(pageNumber);
     
     if (!footerConfig) {
-      console.log(`⚠️ No footer config found for page ${pageNumber}, rendering debug footer`);
-      // For debugging, render a simple footer to see if it shows up
-      return (
-        <View style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 50,
-          backgroundColor: '#f0f0f0',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingHorizontal: 40,
-          zIndex: 10,
-        }}>
-          <Text style={{ fontSize: 14, fontWeight: 'bold' }}>DEBUG FOOTER</Text>
-          <Text style={{ fontSize: 12 }}>Page {pageNumber}</Text>
-        </View>
-      );
+      console.log(`⚠️ No footer config found for page ${pageNumber}`);
+      return null;
     }
     
     console.log(`✅ Rendering PDFFooter for page ${pageNumber} with config:`, footerConfig);
@@ -207,8 +197,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     return (
       <PDFFooter
         pageNumber={pageNumber}
-        logoUrl={footerConfig.logo_url}
-        config={footerConfig.layout_config}
+        logoUrl={null} // Use text logo instead
+        config={footerConfig}
         isEnabled={true}
       />
     );

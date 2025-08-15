@@ -75,6 +75,8 @@ const createFooterStyles = (config: FooterConfig) => StyleSheet.create({
     height: config.dottedLineStyle.height,
     backgroundColor: config.dottedLineStyle.color,
     marginRight: config.dottedLineStyle.marginRight,
+    // Create a dotted effect by making it look like a line with breaks
+    borderRadius: 1,
   },
   pageNumberText: {
     color: config.pageNumberStyle.color === '#374151' ? '#374151' : config.pageNumberStyle.color,
@@ -104,47 +106,17 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
   const styles = createFooterStyles(config);
 
   const renderLogo = () => {
-    console.log(`🖼️ Rendering logo for page ${pageNumber}, logoUrl:`, logoUrl);
-    if (!logoUrl) {
-      console.log(`❌ No logoUrl provided for page ${pageNumber}`);
-      return null;
-    }
-    
-    // Check if it's a base64 image and handle it safely
-    if (logoUrl.startsWith('data:image/')) {
-      console.log(`⚠️ Base64 image detected for page ${pageNumber}, length: ${logoUrl.length}`);
-      // For now, skip base64 images that cause issues and use fallback text
-      return (
-        <View style={styles.logoContainer}>
-          <Text style={{ 
-            fontSize: 16, 
-            fontWeight: 'bold', 
-            color: '#2563EB' 
-          }}>fbm</Text>
-        </View>
-      );
-    }
-    
-    try {
-      console.log(`✅ Successfully rendering logo for page ${pageNumber}`);
-      return (
-        <View style={styles.logoContainer}>
-          <Image src={logoUrl} style={styles.logo} />
-        </View>
-      );
-    } catch (error) {
-      console.warn('❌ Failed to load footer logo:', logoUrl, error);
-      // Fallback to text logo
-      return (
-        <View style={styles.logoContainer}>
-          <Text style={{ 
-            fontSize: 16, 
-            fontWeight: 'bold', 
-            color: '#2563EB' 
-          }}>fbm</Text>
-        </View>
-      );
-    }
+    console.log(`🖼️ Rendering logo for page ${pageNumber}`);
+    // Always use text logo for consistency
+    return (
+      <View style={styles.logoContainer}>
+        <Text style={{ 
+          fontSize: 16, 
+          fontWeight: 'bold', 
+          color: '#2563EB' 
+        }}>fbm</Text>
+      </View>
+    );
   };
 
   const renderPageNumber = () => (
