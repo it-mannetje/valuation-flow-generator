@@ -27,6 +27,7 @@ export default function FooterTemplateManager() {
   const [newTemplate, setNewTemplate] = useState({
     name: '',
     description: '',
+    template_type: 'components' as 'components' | 'full_image',
     layout_config: {
       height: '56.69',
       backgroundColor: '#FFFFFF',
@@ -119,10 +120,17 @@ export default function FooterTemplateManager() {
   const handleCreateTemplate = async () => {
     try {
       let logoUrl = null;
+      let fullImageUrl = null;
       
       if (selectedLogo) {
-        logoUrl = await handleLogoUpload(selectedLogo);
-        if (!logoUrl) return;
+        const uploadedUrl = await handleLogoUpload(selectedLogo);
+        if (!uploadedUrl) return;
+        
+        if (newTemplate.template_type === 'full_image') {
+          fullImageUrl = uploadedUrl;
+        } else {
+          logoUrl = uploadedUrl;
+        }
       }
 
       const { data, error } = await supabase
@@ -130,7 +138,9 @@ export default function FooterTemplateManager() {
         .insert({
           name: newTemplate.name,
           description: newTemplate.description,
+          template_type: newTemplate.template_type,
           logo_url: logoUrl,
+          full_image_url: fullImageUrl,
           layout_config: newTemplate.layout_config as any
         })
         .select()
@@ -143,6 +153,7 @@ export default function FooterTemplateManager() {
       setNewTemplate({
         name: '',
         description: '',
+        template_type: 'components',
         layout_config: newTemplate.layout_config
       });
       setSelectedLogo(null);
@@ -313,16 +324,17 @@ export default function FooterTemplateManager() {
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Naam</TableHead>
-                <TableHead>Beschrijving</TableHead>
-                <TableHead>Logo</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Acties</TableHead>
-              </TableRow>
-            </TableHeader>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Naam</TableHead>
+                  <TableHead>Beschrijving</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Logo/Afbeelding</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Acties</TableHead>
+                </TableRow>
+              </TableHeader>
             <TableBody>
               {templates.map((template) => (
                 <TableRow key={template.id}>
@@ -348,6 +360,26 @@ export default function FooterTemplateManager() {
                   </TableCell>
                   <TableCell>
                     {editingTemplate === template.id ? (
+                      <Select 
+                        value={editData.template_type || 'components'} 
+                        onValueChange={(value) => setEditData(prev => ({ ...prev, template_type: value as 'components' | 'full_image' }))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="components">Componenten (Logo + Paginanummer)</SelectItem>
+                          <SelectItem value="full_image">Volledige Afbeelding</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Badge variant="outline">
+                        {template.template_type === 'full_image' ? 'Volledige Afbeelding' : 'Componenten'}
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editingTemplate === template.id ? (
                       <div>
                         <Input
                           type="file"
@@ -358,21 +390,27 @@ export default function FooterTemplateManager() {
                           }}
                           className="mb-2"
                         />
-                        {template.logo_url && (
+                        {(template.logo_url || template.full_image_url) && (
                           <div className="flex items-center gap-2">
                             <ImageIcon className="w-4 h-4" />
-                            <span className="text-xs text-muted-foreground">Huidig logo behouden als geen nieuw bestand gekozen</span>
+                            <span className="text-xs text-muted-foreground">
+                              Huidige {template.template_type === 'full_image' ? 'afbeelding' : 'logo'} behouden als geen nieuw bestand gekozen
+                            </span>
                           </div>
                         )}
                       </div>
                     ) : (
-                      template.logo_url ? (
+                      (template.logo_url || template.full_image_url) ? (
                         <div className="flex items-center gap-2">
                           <ImageIcon className="w-4 h-4" />
-                          <span className="text-sm text-muted-foreground">Logo aanwezig</span>
+                          <span className="text-sm text-muted-foreground">
+                            {template.template_type === 'full_image' ? 'Afbeelding' : 'Logo'} aanwezig
+                          </span>
                         </div>
                       ) : (
-                        <span className="text-sm text-muted-foreground">Geen logo</span>
+                        <span className="text-sm text-muted-foreground">
+                          Geen {template.template_type === 'full_image' ? 'afbeelding' : 'logo'}
+                        </span>
                       )
                     )}
                   </TableCell>
@@ -483,7 +521,7 @@ export default function FooterTemplateManager() {
             <CardTitle>Nieuwe Footer Template</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="template-name">Template Naam</Label>
                 <Input
@@ -492,6 +530,21 @@ export default function FooterTemplateManager() {
                   onChange={(e) => setNewTemplate(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="bijv. Modern Footer"
                 />
+              </div>
+              <div>
+                <Label htmlFor="template-type">Template Type</Label>
+                <Select 
+                  value={newTemplate.template_type} 
+                  onValueChange={(value) => setNewTemplate(prev => ({ ...prev, template_type: value as 'components' | 'full_image' }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="components">Componenten (Logo + Paginanummer)</SelectItem>
+                    <SelectItem value="full_image">Volledige Afbeelding</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label htmlFor="template-description">Beschrijving</Label>
@@ -505,7 +558,9 @@ export default function FooterTemplateManager() {
             </div>
             
             <div>
-              <Label htmlFor="logo-upload">Logo Upload</Label>
+              <Label htmlFor="logo-upload">
+                {newTemplate.template_type === 'full_image' ? 'Volledige Footer Afbeelding' : 'Logo Upload'}
+              </Label>
               <Input
                 id="logo-upload"
                 type="file"
@@ -516,7 +571,10 @@ export default function FooterTemplateManager() {
                 }}
               />
               <p className="text-sm text-muted-foreground mt-1">
-                Upload een logo voor de footer (PNG, JPG, SVG)
+                {newTemplate.template_type === 'full_image' 
+                  ? 'Upload een volledige footer afbeelding die de gehele voeterbreedte vult' 
+                  : 'Upload een logo voor de footer (PNG, JPG, SVG)'
+                }
               </p>
             </div>
 

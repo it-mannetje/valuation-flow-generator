@@ -5,6 +5,8 @@ export interface FooterTemplate {
   is_default: boolean;
   logo_url?: string;
   layout_config: FooterConfig;
+  template_type: 'components' | 'full_image';
+  full_image_url?: string;
   created_at: string;
   updated_at: string;
 }

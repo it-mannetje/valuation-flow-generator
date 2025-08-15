@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils';
 import PDFContentManager from './PDFContentManager';
 import FooterTemplateManager from './FooterTemplateManager';
 import { useSectorConfig } from '@/hooks/useSectorConfig';
+import GeneralSettingsManager from './GeneralSettingsManager';
+import AuditLogViewer from './AuditLogViewer';
 
 export default function AdminDashboard() {
   const { sectors, isLoading, updateSector, createSector, deleteSector } = useSectorConfig();
@@ -360,44 +362,8 @@ export default function AdminDashboard() {
                 <CardTitle>Algemene Instellingen</CardTitle>
                 <p className="text-muted-foreground">Configureer algemene parameters voor de calculator</p>
               </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="default-multiple">Standaard Multiple Range</Label>
-                    <Input id="default-multiple" placeholder="±0.3" disabled />
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Standaard range voor min/max waardering berekening
-                    </p>
-                  </div>
-                  <div>
-                    <Label htmlFor="currency">Valuta</Label>
-                    <Select defaultValue="EUR">
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="EUR">Euro (€)</SelectItem>
-                        <SelectItem value="USD">Dollar ($)</SelectItem>
-                        <SelectItem value="GBP">Pond (£)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="disclaimer-text">Disclaimer Tekst</Label>
-                  <Textarea
-                    id="disclaimer-text"
-                    rows={4}
-                    defaultValue="Deze waardering is een indicatie gebaseerd op EBITDA-multiples en sectorgemiddelden. De werkelijke waarde van uw bedrijf kan afwijken door factoren zoals marktpositie, groeiperspectieven, activa, schulden en marktontwikkelingen."
-                  />
-                </div>
-
-                <div className="flex justify-end">
-                  <Button className="bg-gradient-primary">
-                    Instellingen Opslaan
-                  </Button>
-                </div>
+              <CardContent className="p-6">
+                <GeneralSettingsManager />
               </CardContent>
             </Card>
           </TabsContent>
@@ -406,12 +372,10 @@ export default function AdminDashboard() {
             <Card className="shadow-lg">
               <CardHeader className="bg-gradient-card border-b">
                 <CardTitle>Audit Log</CardTitle>
-                <p className="text-muted-foreground">Overzicht van alle wijzigingen en activiteiten</p>
+                <p className="text-muted-foreground">Bekijk alle wijzigingen aan de database configuratie</p>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="text-center text-muted-foreground py-8">
-                  <p>Audit log functionaliteit wordt ontwikkeld...</p>
-                </div>
+                <AuditLogViewer />
               </CardContent>
             </Card>
           </TabsContent>

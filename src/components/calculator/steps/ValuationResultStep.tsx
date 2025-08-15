@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
-import { formatCurrency, formatNumber } from '@/lib/calculator';
+import { formatCurrency, formatNumber, calculateValuation } from '@/lib/calculator';
 import { TrendingUp, Building2, Users, DollarSign, FileText, ChevronLeft, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';

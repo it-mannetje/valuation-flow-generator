@@ -16,7 +16,8 @@ import {
   Upload, 
   Trash2, 
   Plus,
-  Eye
+  Eye,
+  RotateCcw
 } from 'lucide-react';
 import AdminPreviewPDF from '@/components/calculator/pdf/AdminPreviewPDF';
 import { pdf } from '@react-pdf/renderer';
@@ -31,6 +32,9 @@ interface PDFPage {
   image1_url?: string;
   image2_url?: string;
   content: any;
+  layout_version?: number;
+  previous_layout?: any;
+  layout_history?: any[];
   created_at: string;
   updated_at: string;
 }
@@ -65,12 +69,14 @@ export default function PDFContentManager() {
       if (error) throw error;
       
       const typedData: PDFPage[] = (data || []).map(page => ({
-        ...page
+        ...page,
+        layout_history: Array.isArray(page.layout_history) ? page.layout_history : [],
+        previous_layout: page.previous_layout || undefined
       }));
       
-      setPages(typedData);
+      setPages(typedData as PDFPage[]);
       if (typedData && typedData.length > 0) {
-        setSelectedPage(typedData[0]);
+        setSelectedPage(typedData[0] as PDFPage);
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
@@ -86,6 +92,9 @@ export default function PDFContentManager() {
 
   const handleSavePage = async () => {
     if (!selectedPage) return;
+
+    // Save current layout version before making changes
+    await saveLayoutVersion(selectedPage.id, selectedPage.content);
 
     setSaving(true);
     try {
@@ -155,6 +164,72 @@ export default function PDFContentManager() {
     const content = [...(selectedPage.content.content || [])];
     content.splice(index, 1);
     updateContentField('content', content);
+  };
+
+  const saveLayoutVersion = async (pageId: string, currentLayout: any) => {
+    if (!selectedPage) return;
+
+    try {
+      const currentHistory = selectedPage.layout_history || [];
+      const newHistory = [
+        ...currentHistory,
+        {
+          version: selectedPage.layout_version || 1,
+          layout: currentLayout,
+          saved_at: new Date().toISOString()
+        }
+      ];
+
+      await supabase
+        .from('pdf_pages')
+        .update({
+          previous_layout: currentLayout,
+          layout_history: newHistory,
+          layout_version: (selectedPage.layout_version || 1) + 1
+        })
+        .eq('id', pageId);
+
+      toast({
+        title: "Layout Versie Opgeslagen",
+        description: "Vorige layout is opgeslagen in de geschiedenis",
+      });
+    } catch (error) {
+      console.error('Error saving layout version:', error);
+    }
+  };
+
+  const restorePreviousLayout = async () => {
+    if (!selectedPage?.previous_layout) {
+      toast({
+        title: "Geen Vorige Layout",
+        description: "Er is geen vorige layout beschikbaar om te herstellen",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await supabase
+        .from('pdf_pages')
+        .update({
+          content: selectedPage.previous_layout,
+        })
+        .eq('id', selectedPage.id);
+
+      toast({
+        title: "Layout Hersteld",
+        description: "Vorige layout is succesvol hersteld",
+      });
+
+      await fetchPages();
+    } catch (error) {
+      console.error('Error restoring layout:', error);
+      toast({
+        title: "Fout",
+        description: "Kon vorige layout niet herstellen",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleImageUpload = async (type: 'background' | 'middle_image' | 'image1' | 'image2' | 'logo', file: File) => {
@@ -410,6 +485,14 @@ export default function PDFContentManager() {
                   <Button variant="outline" onClick={handleGeneratePreview} disabled={generatePreview}>
                     <Eye className="w-4 h-4 mr-2" />
                     {generatePreview ? 'Genereren...' : 'PDF Preview'}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={restorePreviousLayout} 
+                    disabled={!selectedPage?.previous_layout}
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Vorige Layout
                   </Button>
                   <Button onClick={handleSavePage} disabled={saving}>
                     <Save className="w-4 h-4 mr-2" />

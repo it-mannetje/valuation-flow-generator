@@ -1,6 +1,6 @@
 import { CompanyData, ValuationResult, SectorConfig } from '@/types/calculator';
 
-export function calculateValuation(companyData: CompanyData, sectors: SectorConfig[]): ValuationResult {
+export async function calculateValuation(companyData: CompanyData, sectors: SectorConfig[]): Promise<ValuationResult> {
   // Find sector configuration
   const sectorConfig = sectors.find(s => s.id === companyData.sector);
   
@@ -78,9 +78,30 @@ export function calculateValuation(companyData: CompanyData, sectors: SectorConf
   // Calculate base valuation
   const baseValuation = multiple * adjustedEbitda;
   
-  // Calculate range (±0.3 multiple)
-  const minValuation = (multiple - 0.3) * adjustedEbitda;
-  const maxValuation = (multiple + 0.3) * adjustedEbitda;
+  // Get default range from settings or use fallback
+  let varianceMin = 0.3;
+  let varianceMax = 0.3;
+  
+  try {
+    const { supabase } = await import('@/integrations/supabase/client');
+    const { data: settingsData } = await supabase
+      .from('general_settings')
+      .select('setting_value')
+      .eq('setting_key', 'default_multiple_range')
+      .single();
+    
+    if (settingsData?.setting_value && typeof settingsData.setting_value === 'object') {
+      const rangeValue = settingsData.setting_value as { min?: number; max?: number };
+      varianceMin = rangeValue.min || 0.3;
+      varianceMax = rangeValue.max || 0.3;
+    }
+  } catch (error) {
+    console.warn('Could not fetch default range settings, using fallback:', error);
+  }
+
+  // Calculate range using dynamic variance
+  const minValuation = (multiple - varianceMin) * adjustedEbitda;
+  const maxValuation = (multiple + varianceMax) * adjustedEbitda;
 
   return {
     baseValuation: Math.round(baseValuation),

@@ -37,7 +37,7 @@ export default function CalculatorWizard() {
     setIsLoading(true);
     
     try {
-      const valuationResult = calculateValuation(data, sectors);
+      const valuationResult = await calculateValuation(data, sectors);
       
       setState(prev => ({
         ...prev,
