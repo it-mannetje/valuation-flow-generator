@@ -210,12 +210,12 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'left',
   },
   
-  // Text content paragraphs - smaller font to fit better
+  // Text content paragraphs - increased font size for better visibility
   page2Paragraph: {
-    fontSize: 9,
-    lineHeight: 1.4,
+    fontSize: 11, // Increased from 9 to 11 
+    lineHeight: 1.6,
     color: '#374151',
-    marginBottom: 8,
+    marginBottom: 12,
     textAlign: 'justify',
   },
   
@@ -260,13 +260,13 @@ export const pdfStyles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 60,
-    backgroundColor: 'white',
+    height: 56.69, // Changed to match footer template height
+    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 40,
-    zIndex: 5,
+    zIndex: 15, // Higher z-index to ensure visibility
     borderTop: '1 solid #E5E7EB',
   },
   
