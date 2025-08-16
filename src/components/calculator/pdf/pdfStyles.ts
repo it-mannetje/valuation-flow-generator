@@ -69,7 +69,7 @@ export const pdfStyles = StyleSheet.create({
   // Main title in header - white text with dark blue background
   headerTitle: {
     color: 'white',
-    backgroundColor: '#1e3a8a',
+    backgroundColor: '#172342',
     fontSize: 18,
     fontWeight: 'bold',
     padding: '8 16',
@@ -78,7 +78,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Confidential text in header (next to title) - light blue and bold
   headerConfidential: {
-    color: '#60a5fa',
+    color: '#0281BD',
     fontSize: 10,
     fontWeight: 'bold',
   },
@@ -127,7 +127,7 @@ export const pdfStyles = StyleSheet.create({
     top: 40,
     bottom: 40,
     width: 2,
-    borderLeft: '2 dotted #3b82f6',
+    borderLeft: '2 dotted #0281BD',
     backgroundColor: 'transparent',
   },
   
@@ -135,7 +135,7 @@ export const pdfStyles = StyleSheet.create({
   companyNameLarge: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#dc2626',
+    color: '#EE0000',
     textAlign: 'left',
     marginBottom: 15,
     lineHeight: 1,
@@ -145,7 +145,7 @@ export const pdfStyles = StyleSheet.create({
   // Red date below company name
   companyDate: {
     fontSize: 14,
-    color: '#dc2626',
+    color: '#EE0000',
     textAlign: 'left',
     fontWeight: 'normal',
   },
@@ -201,7 +201,7 @@ export const pdfStyles = StyleSheet.create({
   page2Title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1e3a8a',
+    color: '#172342',
     marginBottom: 20,
     textAlign: 'left',
   },
@@ -210,11 +210,11 @@ export const pdfStyles = StyleSheet.create({
   page4Title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1e3a8a',
+    color: '#172342',
     marginBottom: 15,
     textAlign: 'left',
   },
-
+ 
   // Page 4 header title styling - white text
   page4HeaderTitleText: {
     fontSize: 20,
@@ -227,7 +227,7 @@ export const pdfStyles = StyleSheet.create({
   page5HeaderText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1e3a8a',
+    color: '#172342',
     marginBottom: 15,
     textAlign: 'left',
   },
@@ -258,7 +258,7 @@ export const pdfStyles = StyleSheet.create({
   page5Section1Heading: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1E3A8A', // Dark blue
+    color: '#172342', // Dark blue
     lineHeight: 1.4,
     marginBottom: 20,
     marginTop: 20,
@@ -367,14 +367,14 @@ export const pdfStyles = StyleSheet.create({
   page2FooterLogo: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1E40AF',
+    color: '#0281BD',
     marginRight: 8,
   },
   
   // Corporate Finance text
   page2FooterText: {
     fontSize: 14,
-    color: '#1E40AF',
+    color: '#0281BD',
   },
   
   // Footer right section with page number
@@ -395,14 +395,14 @@ export const pdfStyles = StyleSheet.create({
   page2DottedLine: {
     width: 2,
     height: 20,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#0281BD',
     marginRight: 10,
   },
   
   // Page number text
   page2PageNumberText: {
     fontSize: 18,
-    color: '#1E40AF',
+    color: '#0281BD',
     fontWeight: 'bold',
   },
   
@@ -410,7 +410,7 @@ export const pdfStyles = StyleSheet.create({
   fbmLogo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1E40AF',
+    color: '#0281BD',
   },
   
   // Section titles
@@ -418,7 +418,7 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: 'white',
-    backgroundColor: '#1E40AF',
+    backgroundColor: '#15375f',
     padding: '12 24',
     borderRadius: 8,
     marginBottom: 30,
@@ -508,7 +508,7 @@ export const pdfStyles = StyleSheet.create({
   // Highlight boxes
   highlightBox: {
     backgroundColor: '#EFF6FF',
-    border: '2 solid #3B82F6',
+    border: '2 solid #0281BD',
     borderRadius: 8,
     padding: 20,
     marginBottom: 15,
@@ -519,7 +519,7 @@ export const pdfStyles = StyleSheet.create({
   highlightValue: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#DC2626',
+    color: '#EE0000',
     textAlign: 'center',
     marginBottom: 5,
   },
@@ -577,7 +577,7 @@ export const pdfStyles = StyleSheet.create({
   bandbreedteValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#DC2626',
+    color: '#EE0000',
   },
   
   // ========== SECTOR INFO STYLES ==========
@@ -596,7 +596,7 @@ export const pdfStyles = StyleSheet.create({
   
   placeholderText: {
     fontSize: 12,
-    color: '#DC2626',
+    color: '#EE0000',
     fontStyle: 'italic',
     marginBottom: 15,
   },
@@ -625,7 +625,7 @@ export const pdfStyles = StyleSheet.create({
   // ========== NEXT STEPS STYLES ==========
   
   nextStepsContent: {
-    backgroundColor: '#1E40AF',
+    backgroundColor: '#15375f',
     borderRadius: 12,
     padding: 30,
     marginTop: 40,
@@ -641,7 +641,7 @@ export const pdfStyles = StyleSheet.create({
   
   nextStepsSubtitle: {
     fontSize: 14,
-    color: '#DC2626',
+    color: '#EE0000',
     marginBottom: 30,
   },
   
@@ -654,14 +654,14 @@ export const pdfStyles = StyleSheet.create({
   
   contactText: {
     fontSize: 12,
-    color: '#1E40AF',
+    color: '#0281BD',
     marginBottom: 3,
   },
   
   websiteText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#1E40AF',
+    color: '#0281BD',
     marginTop: 10,
   },
   
@@ -693,7 +693,7 @@ export const pdfStyles = StyleSheet.create({
   page3HeaderLeft: {
     width: 40,
     height: 40,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#0281BD',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -707,7 +707,7 @@ export const pdfStyles = StyleSheet.create({
   },
 
   page3HeaderCenter: {
-    backgroundColor: '#1e3a8a', // Dark blue background
+    backgroundColor: '#172342', // Dark blue background
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 8,
@@ -739,7 +739,7 @@ export const pdfStyles = StyleSheet.create({
   page3HeaderNumber: {
     width: 40,
     height: 40,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#0281BD',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -747,7 +747,7 @@ export const pdfStyles = StyleSheet.create({
   },
 
   page3HeaderTitle: {
-    backgroundColor: '#1e3a8a', // Dark blue background
+    backgroundColor: '#172342', // Dark blue background
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 8,
@@ -789,7 +789,7 @@ export const pdfStyles = StyleSheet.create({
   page3ColumnTitle: {
     fontSize: 14, // Reduced font size
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#0281BD',
     marginBottom: 12, // Reduced margin
     textDecoration: 'underline',
   },
@@ -815,7 +815,7 @@ export const pdfStyles = StyleSheet.create({
   
   page3Value: {
     fontSize: 9, // Reduced font size
-    color: '#DC2626',
+    color: '#EE0000',
     fontWeight: 'bold',
     textAlign: 'right',
     marginLeft: 10,
@@ -868,14 +868,14 @@ export const pdfStyles = StyleSheet.create({
   page3MetricValue: {
     fontSize: 20, // Larger font size
     fontWeight: 'bold',
-    color: '#dc2626', // Red color
+    color: '#EE0000', // Red color
     marginBottom: 3,
   },
   
   page3MetricValueLarge: {
     fontSize: 22, // Reduced font size
     fontWeight: 'bold',
-    color: '#DC2626',
+    color: '#EE0000',
     marginBottom: 3, // Reduced margin
   },
   
@@ -895,7 +895,7 @@ export const pdfStyles = StyleSheet.create({
   
   page3MetricDate: {
     fontSize: 10, // Reduced font size
-    color: '#DC2626',
+    color: '#EE0000',
     fontWeight: 'bold',
     marginBottom: 2,
   },
@@ -915,12 +915,12 @@ export const pdfStyles = StyleSheet.create({
   page3MultiplierValue: {
     fontSize: 16, // Reduced font size
     fontWeight: 'bold',
-    color: '#DC2626',
+    color: '#EE0000',
   },
   
   page3MultiplierText: {
     fontSize: 12, // Reduced font size
-    color: '#2563EB',
+    color: '#0281BD',
   },
   
   // Disclaimer
@@ -948,7 +948,7 @@ export const pdfStyles = StyleSheet.create({
   page3ChartTitle: {
     fontSize: 12, // Reduced font size
     fontWeight: 'bold',
-    color: '#2563EB',
+    color: '#0281BD',
     marginBottom: 10, // Reduced margin
     textAlign: 'center',
   },
@@ -987,7 +987,7 @@ export const pdfStyles = StyleSheet.create({
   page3Bar1: {
     width: 40,
     height: 50,
-    backgroundColor: '#2563EB', // Blue color matching design
+    backgroundColor: '#0281BD', // Blue color matching design
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -995,7 +995,7 @@ export const pdfStyles = StyleSheet.create({
   page3Bar2: {
     width: 40,
     height: 65,
-    backgroundColor: '#3B82F6', // Lighter blue
+    backgroundColor: '#BCE9FF', // Lighter blue
     marginBottom: 8,
     borderRadius: 2,
   },
@@ -1003,14 +1003,14 @@ export const pdfStyles = StyleSheet.create({
   page3Bar3: {
     width: 40,
     height: 80,
-    backgroundColor: '#1E40AF', // Darker blue
+    backgroundColor: '#15375f', // Darker blue
     marginBottom: 8,
     borderRadius: 2,
   },
   
   page3BarValue: {
     fontSize: 8, // Reduced font size
-    color: '#DC2626',
+    color: '#EE0000',
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -1136,7 +1136,7 @@ export const pdfStyles = StyleSheet.create({
   page4HeaderNumber: {
     width: 50,
     height: 50,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#0281BD',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1150,7 +1150,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page4HeaderTitle: {
-    backgroundColor: '#1e3a8a', // Dark blue background
+    backgroundColor: '#172342', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 12,
@@ -1274,7 +1274,7 @@ export const pdfStyles = StyleSheet.create({
   page5HeaderNumber: {
     width: 50,
     height: 50,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#0281BD',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1288,7 +1288,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5HeaderTitle: {
-    backgroundColor: '#1e3a8a', // Dark blue background
+    backgroundColor: '#172342', // Dark blue background
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 12,
@@ -1617,7 +1617,7 @@ export const pdfStyles = StyleSheet.create({
   page6WhiteTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1e3a8a',
+    color: '#172342',
     marginBottom: 10,
     textAlign: 'center',
   },
