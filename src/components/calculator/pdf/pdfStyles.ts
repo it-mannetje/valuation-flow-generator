@@ -177,14 +177,14 @@ export const pdfStyles = StyleSheet.create({
   page2LeftColumn: {
     width: '45%',
     position: 'relative',
-    height: '100%',
+    height: '90%', // Changed to 90%
     padding: 0,
   },
   
-  // Main image in left column (80% height to leave space for footer)
+  // Main image in left column (90% height)
   page2MainImage: {
     width: '100%',
-    height: '80%',
+    height: '100%',
     objectFit: 'cover',
   },
   
@@ -193,7 +193,7 @@ export const pdfStyles = StyleSheet.create({
     width: '55%',
     padding: '40px 40px 100px 40px',
     flexDirection: 'column',
-    height: '100%',
+    height: '90%', // Changed to 90%
     backgroundColor: 'white',
   },
   
@@ -280,9 +280,9 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'contain',
   },
   
-  // Text content paragraphs - dark grey, font-size 12px
+  // Text content paragraphs - dark grey, font-size 10px
   page2TextContent: {
-    fontSize: 12,
+    fontSize: 10, // Changed from 12 to 10px
     lineHeight: 1.5,
     color: '#4b5563', // Dark grey
     textAlign: 'justify' as const,
@@ -790,7 +790,7 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 14, // Reduced font size
     fontWeight: 'bold',
     color: '#0281BD',
-    marginBottom: 12, // Reduced margin
+    marginBottom: 24, // Increased from 12 to 24 for more white space
     textDecoration: 'underline',
   },
   
@@ -932,6 +932,16 @@ export const pdfStyles = StyleSheet.create({
     lineHeight: 1.2, // Reduced line height
     fontStyle: 'italic',
   },
+
+  // Dark blue dotted line after disclaimer
+  page3DisclaimerDottedLine: {
+    borderTopWidth: 2,
+    borderTopColor: '#172342',
+    borderStyle: 'dotted',
+    marginTop: 16,
+    marginBottom: 16,
+    width: '100%',
+  },
   
   // Chart section
   page3ChartContainer: {
@@ -964,6 +974,8 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 80, // Reduced height
     paddingHorizontal: 10,
+    borderBottomWidth: 3, // Added thick dark blue line under bars
+    borderBottomColor: '#172342',
   },
   
   page3ChartBar1: {
@@ -1009,7 +1021,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3BarValue: {
-    fontSize: 8, // Reduced font size
+    fontSize: 12, // Increased from 8 to 12
     color: '#EE0000',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -1130,7 +1142,8 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
     paddingHorizontal: 40,
-    paddingTop: 20,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 42, // 1.5cm left margin
   },
   
   page4HeaderNumber: {
@@ -1174,6 +1187,7 @@ export const pdfStyles = StyleSheet.create({
     width: '50%',
     paddingLeft: 30,
     alignItems: 'center',
+    paddingTop: 56, // 2cm down for right image
   },
   
   page4ContentTitle: {
@@ -1268,7 +1282,8 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
     paddingHorizontal: 40,
-    paddingTop: 20,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 42, // 1.5cm left margin
   },
   
   page5HeaderNumber: {
@@ -1327,9 +1342,9 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5ContentText: {
-    fontSize: 12, // Smaller font to fit all text
+    fontSize: 12, // Keep at 12px
     lineHeight: 1.4, // Tighter line height
-    color: '#374151',
+    color: '#4b5563', // Changed to dark gray
     marginBottom: 12,
     textAlign: 'justify',
   },

@@ -218,9 +218,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </Text>
             <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
           </View>
-          {/* Logo in upper right corner */}
-          {getPageData(1).content?.logo_url ? (
-            renderLogo(getPageData(1).content.logo_url, pdfStyles.headerLogo)
+          {/* Logo in upper right corner - now fetched from PDF management */}
+          {getPageData(1).image1_url ? (
+            renderLogo(getPageData(1).image1_url, pdfStyles.headerLogo)
           ) : (
             <Text style={pdfStyles.fbmLogo}>fbm</Text>
           )}
@@ -437,6 +437,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
               </Text>
               
+              {/* Dark blue dotted line after disclaimer */}
+              <View style={pdfStyles.page3DisclaimerDottedLine} />
+              
               {/* Bandwidth chart */}
               <View style={pdfStyles.page3ChartContainer}>
                 <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
@@ -476,15 +479,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-          {/* Header with same style as page 3 with proper spacing */}
-          <View style={pdfStyles.page3Header}>
-            <View style={pdfStyles.page3HeaderNumber}>
-              <Text style={pdfStyles.page3Number}>4</Text>
-            </View>
-            <View style={pdfStyles.page3HeaderTitle}>
-              <Text style={pdfStyles.page3Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
-            </View>
+        {/* Header with proper margin spacing */}
+        <View style={pdfStyles.page4Header}>
+          <View style={pdfStyles.page4HeaderNumber}>
+            <Text style={pdfStyles.page4Number}>4</Text>
           </View>
+          <View style={pdfStyles.page4HeaderTitle}>
+            <Text style={pdfStyles.page4Title}>{getPageData(4).page_name || "Marktontwikkelingen"}</Text>
+          </View>
+        </View>
         
         {/* Main content area with two columns */}
         <View style={pdfStyles.page4MainContent}>
@@ -493,7 +496,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.page4Title}>{getPageData(4).content?.title || getPageData(4).page_name || "Marktontwikkelingen"}</Text>
             
             <Text style={pdfStyles.page4ContentText}>
-              {getSectorText() || `Voor bedrijven in de sector "${valuationResult.sector}" hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
+              {getSectorText() || `Voor bedrijven in de ${companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector} sector hanteren wij een multiple van ${valuationResult.multiple.toFixed(1)}x de EBITDA. Deze multiple is gebaseerd op marktgegevens en vergelijkbare transacties in deze sector.`}
             </Text>
           </View>
           
@@ -514,13 +517,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header with same style as page 3 with proper spacing */}
-        <View style={pdfStyles.page3Header}>
-          <View style={pdfStyles.page3HeaderNumber}>
-            <Text style={pdfStyles.page3Number}>5</Text>
+        {/* Header with proper margin spacing */}
+        <View style={pdfStyles.page5Header}>
+          <View style={pdfStyles.page5HeaderNumber}>
+            <Text style={pdfStyles.page5Number}>5</Text>
           </View>
-          <View style={pdfStyles.page3HeaderTitle}>
-            <Text style={pdfStyles.page3Title}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
+          <View style={pdfStyles.page5HeaderTitle}>
+            <Text style={pdfStyles.page5Title}>{getPageData(5).page_name || "Bedrijfswaardering"}</Text>
           </View>
         </View>
 
@@ -533,8 +536,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getPageData(5).content?.section1 || "Een waardebepaling geeft inzicht in de potentiële marktwaarde van uw bedrijf"}
             </Text>
             
-            {/* Section 2 text from PDF management */}
-            <Text style={pdfStyles.page5Section2Text}>
+            {/* Section 2 text from PDF management - ensure complete display */}
+            <Text style={pdfStyles.page5ContentText}>
               {getPageData(5).content?.section2 || "De waarde van uw bedrijf wordt bepaald door diverse factoren zoals financiële prestaties, marktpositie, groeimogelijkheden, afhankelijkheden en de algemene marktomstandigheden in uw sector."}
             </Text>
           </View>
