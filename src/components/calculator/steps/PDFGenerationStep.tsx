@@ -58,10 +58,7 @@ export default function PDFGenerationStep({
         .select('*')
         .eq('is_enabled', true);
       
-      console.log('PDF Generation - Footer templates:', footerTemplates);
-      console.log('PDF Generation - Page footers:', pageFooters);
-      
-      console.log('Creating PDF component...');
+      // Generating PDF with footer templates
       
       // Generate actual PDF using ValuationReportPDF component
       const pdfBlob = await pdf(
@@ -76,7 +73,7 @@ export default function PDFGenerationStep({
         />
       ).toBlob();
 
-      console.log('PDF blob created:', pdfBlob);
+      // PDF blob created successfully
 
       // Create downloadable file
       const url = URL.createObjectURL(pdfBlob);

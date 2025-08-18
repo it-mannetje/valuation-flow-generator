@@ -28,10 +28,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   pageFooters = [],
   savedValuationData
 }) => {
-  console.log('🚀 ValuationReportPDF - Footer data received:');
-  console.log('📊 footerTemplates:', footerTemplates);
-  console.log('📋 pageFooters:', pageFooters);
-  console.log('📄 pages:', pages);
   const estimatedEbitda = (companyData.result2024 + companyData.expectedResult2025) / 2;
   const currentDate = new Date().toLocaleDateString('nl-NL', {
     day: '2-digit',
@@ -42,7 +38,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   // Helper function to get page data
   const getPageData = (pageNumber: number) => {
     const page = pages.find(p => p.page_number === pageNumber);
-    console.log(`Getting page data for page ${pageNumber}:`, page);
     const pageData = {
       background: page?.background_image_url || null,
       middle_image_url: page?.middle_image_url || null,
@@ -51,51 +46,30 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       content: page?.content || null,
       page_name: page?.page_name || null
     };
-    console.log(`Page ${pageNumber} data:`, pageData);
     return pageData;
   };
 
   // Helper function to render images safely
   const renderBackgroundImage = (imageUrl: string | null) => {
-    console.log('Rendering background image:', imageUrl);
-    if (!imageUrl) {
-      console.log('No background image URL provided');
-      return null;
-    }
-    
-    // Support both base64 and regular URLs
-    if (imageUrl.startsWith('blob:')) {
-      console.warn('Background image skipped - blob URLs not supported in PDF:', imageUrl);
+    if (!imageUrl || imageUrl.startsWith('blob:')) {
       return null;
     }
     
     try {
-      console.log('Successfully rendering background image');
       return <Image src={imageUrl} style={pdfStyles.backgroundImage} />;
     } catch (error) {
-      console.warn('Failed to load background image:', imageUrl, error);
       return null;
     }
   };
 
   const renderLogo = (logoUrl: string | null, logoStyle: any) => {
-    console.log('Rendering logo:', logoUrl);
-    if (!logoUrl) {
-      console.log('No logo URL provided');
-      return null;
-    }
-    
-    // Support both base64 and regular URLs
-    if (logoUrl.startsWith('blob:')) {
-      console.warn('Logo skipped - blob URLs not supported in PDF:', logoUrl);
+    if (!logoUrl || logoUrl.startsWith('blob:')) {
       return null;
     }
     
     try {
-      console.log('Successfully rendering logo');
       return <Image src={logoUrl} style={logoStyle} />;
     } catch (error) {
-      console.warn('Failed to load logo:', logoUrl, error);
       return null;
     }
   };
@@ -148,15 +122,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
   // Helper function to get footer config for a page
   const getFooterConfig = (pageNumber: number): FooterConfig | null => {
-    console.log(`🔍 Looking for footer config for page ${pageNumber}`);
-    console.log(`📊 Available pageFooters:`, pageFooters);
-    console.log(`📋 Available footerTemplates:`, footerTemplates);
-    
     // Find the page footer setting for this specific page
     const pageFooter = pageFooters?.find(pf => pf.page_number === pageNumber);
     
     if (!pageFooter || !pageFooter.is_enabled) {
-      console.log(`❌ No enabled footer found for page ${pageNumber}`);
       return null;
     }
     
@@ -164,25 +133,19 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     const footerTemplate = footerTemplates?.find(ft => ft.id === pageFooter.footer_template_id);
     
     if (!footerTemplate) {
-      console.log(`❌ No footer template found for page ${pageNumber}`);
       return null;
     }
     
-    console.log(`✅ Using footer template for page ${pageNumber}:`, footerTemplate);
     return footerTemplate.layout_config;
   };
 
   // Helper function to render footer
   const renderFooter = (pageNumber: number) => {
-    console.log(`🚀 Rendering footer for page ${pageNumber}`);
     const footerConfig = getFooterConfig(pageNumber);
     
     if (!footerConfig) {
-      console.log(`⚠️ No footer config found for page ${pageNumber}`);
       return null;
     }
-    
-    console.log(`✅ Rendering PDFFooter for page ${pageNumber} with config:`, footerConfig);
     
     return (
       <PDFFooter
@@ -645,7 +608,7 @@ export const generatePDF = async (
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     
-    console.log('PDF generated and download triggered successfully');
+    // PDF generation successful
   } catch (error) {
     console.error('Error generating PDF:', error);
     throw error;

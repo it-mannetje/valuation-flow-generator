@@ -245,7 +245,7 @@ export default function PDFContentManager() {
         reader.readAsDataURL(file);
       });
 
-      console.log(`Converting ${type} image to base64:`, base64String.substring(0, 50) + '...');
+      // Convert image to base64 for storage
       
       if (type === 'background') {
         updatePageContent({ background_image_url: base64String });
@@ -278,9 +278,6 @@ export default function PDFContentManager() {
     setPdfPreviewUrl(null);
     
     try {
-      console.log('Starting PDF generation...');
-      console.log('Pages data:', pages);
-      console.log('Sectors data:', sectors);
       
       // Fetch the latest valuation request from the database
       const { data: latestRequest } = await supabase
@@ -361,8 +358,6 @@ export default function PDFContentManager() {
         };
       }
 
-      console.log('Creating PDF component...');
-      
       // Fetch footer data
       const { data: footerTemplates } = await supabase
         .from('footer_templates')
@@ -372,9 +367,6 @@ export default function PDFContentManager() {
         .from('page_footers')
         .select('*')
         .eq('is_enabled', true);
-      
-      console.log('Footer templates:', footerTemplates);
-      console.log('Page footers:', pageFooters);
       
       // Import ValuationReportPDF instead of AdminPreviewPDF to use the same code
       const { default: ValuationReportPDF } = await import('@/components/calculator/pdf/ValuationReportPDF');
@@ -392,7 +384,7 @@ export default function PDFContentManager() {
         />
       ).toBlob();
 
-      console.log('PDF blob created:', pdfBlob);
+      // PDF blob created successfully
 
       // Create download link instead of pop-up to avoid blocker
       const url = URL.createObjectURL(pdfBlob);

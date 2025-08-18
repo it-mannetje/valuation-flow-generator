@@ -71,21 +71,14 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
   config, 
   isEnabled = true 
 }) => {
-  console.log(`🦶 PDFFooter called for page ${pageNumber}, isEnabled: ${isEnabled}`);
-  console.log(`🦶 PDFFooter config:`, config);
-  console.log(`🦶 PDFFooter logoUrl:`, logoUrl);
-  
   if (!isEnabled) {
-    console.log(`🦶 PDFFooter disabled for page ${pageNumber}`);
     return null;
   }
 
   const styles = createFooterStyles(config);
 
   const renderLogo = () => {
-    console.log(`🖼️ Rendering logo for page ${pageNumber}`);
-    // Use logo from PDF management if available, otherwise show text
-    if (logoUrl) {
+    if (logoUrl && !logoUrl.startsWith('blob:')) {
       return (
         <View style={styles.logoContainer}>
           <Image src={logoUrl} style={styles.logo} />
@@ -112,8 +105,6 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
     </View>
   );
 
-  console.log(`🎨 Footer layout for page ${pageNumber}: logoPosition=${config.logoPosition}, pageNumberPosition=${config.pageNumberPosition}`);
-  
   return (
     <View style={styles.footer}>
       {/* Left side - logo or spacer */}
