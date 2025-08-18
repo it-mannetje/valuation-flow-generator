@@ -423,8 +423,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(3)}
       </Page>
 
       {/* Page 4 - Marktontwikkelingen */}
