@@ -1005,7 +1005,6 @@ export const pdfStyles = StyleSheet.create({
   // Chart section
   page3ChartContainer: {
     backgroundColor: '#F8FAFC',
-    padding: 12, // Reduced padding
     borderRadius: 8,
   },
 
