@@ -175,7 +175,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               {/* Main content area with two columns */}
               <View style={pdfStyles.page2Layout}>
                 {/* Left column - Main image (50%) */}
-                <View style={pdfStyles.page2LeftColumn40}>
+                <View style={pdfStyles.page2LeftColumn}>
                   {page.background_image_url ? (
                     <Image 
                       style={pdfStyles.page2MainImage} 
@@ -268,7 +268,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                 </View>
                 
                 {/* Main content area with two columns */}
-                <View style={pdfStyles.page3MainContentScaled}>
+                <View style={pdfStyles.page3MainContent}>
                   {/* Left column - Input data */}
                   <View style={pdfStyles.page3LeftColumn}>
                     <Text style={pdfStyles.page3ColumnTitle}>Ingevoerde gegevens</Text>

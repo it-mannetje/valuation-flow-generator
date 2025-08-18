@@ -83,7 +83,7 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   
-
+  
   // Main content area below header
   coverMainContent: {
     position: 'absolute',
@@ -173,31 +173,12 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: 'white',
   },
   
-  // Left column with main image (40% width)
-  page2LeftColumn40: {
-    width: '40%',
-    position: 'relative',
-    height: '90%',
-    padding: 0,
-  },
-
-  // Middle column for portrait image (15% width)
-  page2MiddleColumn15: {
-    width: '15%',
-    position: 'relative',
-    height: '90%',
-    padding: 0,
-    paddingTop: 40,
-    alignItems: 'center',
-  },
-
-  // Right column with text content (45% width) 
-  page2RightColumn45: {
+  // Left column with main image (45% width)
+  page2LeftColumn: {
     width: '45%',
-    padding: '40px 40px 100px 40px',
-    flexDirection: 'column',
-    height: '90%',
-    backgroundColor: 'white',
+    position: 'relative',
+    height: '90%', // Changed to 90%
+    padding: 0,
   },
   
   // Main image in left column (90% height)
@@ -393,13 +374,16 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 'auto',
   },
 
-  // Portrait image for middle column
-  page2PortraitImageMiddle: {
-    width: '80%',
+  // Portrait image fixed at absolute bottom
+  page2PortraitImageFixed: {
+    position: 'absolute',
+    bottom: 100, // Above footer
+    right: 40,
+    width: 120,
     height: 140,
     objectFit: 'cover',
     borderRadius: 4,
-    marginTop: 20,
+    zIndex: 15,
   },
 
   // Portrait image positioned on left side with scaling
@@ -515,160 +499,104 @@ export const pdfStyles = StyleSheet.create({
   // Signature text
   signatureText: {
     fontSize: 12,
-    color: '#374151',
-    marginTop: 30,
-    marginBottom: 15,
-  },
-  
-  signatureName: {
-    fontSize: 14,
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 5,
-  },
-  
-  signatureTitle: {
-    fontSize: 12,
-    color: '#6B7280',
-  },
-  
-  // Company info styles
-  companyInfoBox: {
-    backgroundColor: '#F8FAFC',
-    padding: 20,
-    borderRadius: 8,
-    borderLeft: '4 solid #3B82F6',
-    marginTop: 30,
-  },
-  
-  companyInfoTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 10,
-  },
-  
-  companyInfoValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#EE0000',
-    marginBottom: 5,
-  },
-  
-  // Valuation results
-  resultBox: {
-    backgroundColor: '#F9FAFB',
-    padding: 25,
-    borderRadius: 12,
-    marginTop: 20,
-    borderLeft: '5 solid #3B82F6',
-  },
-  
-  resultTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 15,
-  },
-  
-  resultRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  
-  resultLabel: {
-    fontSize: 14,
-    color: '#374151',
-  },
-  
-  resultValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#EE0000',
-  },
-  
-  // Key assumptions
-  assumptionsBox: {
-    backgroundColor: '#F8FAFC',
-    padding: 20,
-    borderRadius: 8,
     marginTop: 20,
   },
   
-  assumptionsTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 15,
-  },
-  
-  assumptionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  
-  assumptionLabel: {
-    fontSize: 12,
-    color: '#374151',
-  },
-  
-  assumptionValue: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  
-  // Disclaimer
-  disclaimer: {
-    fontSize: 10,
-    color: '#6B7280',
-    lineHeight: 1.4,
-    marginTop: 20,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  
-  // Footer styles for cover
-  coverFooter: {
+  // Page numbers
+  pageNumber: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 60,
-    backgroundColor: 'white',
+    bottom: 40,
+    right: 40,
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  
+  // ========== CALCULATION PAGE STYLES ==========
+  
+  // Two column layout
+  calculationGrid: {
+    flexDirection: 'row',
+    gap: 30,
+    marginBottom: 30,
+  },
+  
+  // Left column with gray background
+  leftColumn: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    padding: 20,
+    borderRadius: 8,
+  },
+  
+  // Right column
+  rightColumn: {
+    flex: 1,
+  },
+  
+  // Column titles
+  columnTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 20,
+  },
+  
+  // Data rows
+  dataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-    borderTop: '1 solid #E5E7EB',
-    zIndex: 10,
+    marginBottom: 12,
+    paddingBottom: 8,
+    borderBottom: '1 solid #E5E7EB',
   },
   
-  footerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  // Labels
+  label: {
+    fontSize: 11,
+    color: '#6B7280',
+    flex: 1,
   },
   
-  footerLogo: {
-    fontSize: 18,
+  // Values
+  value: {
+    fontSize: 11,
     fontWeight: 'bold',
-    color: '#3B82F6',
-    marginRight: 8,
+    color: '#111827',
+    textAlign: 'right',
+    flex: 1,
   },
   
-  footerText: {
-    fontSize: 14,
-    color: '#3B82F6',
-  },
-  
-  footerRight: {
+  // Highlight boxes
+  highlightBox: {
+    backgroundColor: '#EFF6FF',
+    border: '2 solid #0281BD',
+    borderRadius: 8,
+    padding: 20,
+    marginBottom: 15,
     alignItems: 'center',
   },
   
-  footerDots: {
+  // Large highlight values
+  highlightValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#EE0000',
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  
+  // Highlight labels
+  highlightLabel: {
+    fontSize: 12,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 3,
+  },
+  
+  // Highlight subtext
+  highlightSubtext: {
     fontSize: 10,
     color: '#6B7280',
     textAlign: 'center',
@@ -809,7 +737,7 @@ export const pdfStyles = StyleSheet.create({
     height: 40,
   },
   
-
+  
   // ========== PAGE 3 STYLES ==========
   
   // Page 3 header
@@ -889,33 +817,21 @@ export const pdfStyles = StyleSheet.create({
     color: 'white',
   },
   
-  // Main content layout - scaled for page 3
-  page3MainContentScaled: {
+  // Main content layout
+  page3MainContent: {
     flexDirection: 'row',
     flex: 1,
-    marginBottom: 100, // Increased margin to prevent overflow
-    transform: 'scale(0.9)', // Scale down content to fit
-    transformOrigin: 'top left',
+    marginBottom: 80, // Increased margin to ensure footer visibility
   },
   
   page3LeftColumn: {
     width: '45%',
     paddingRight: 15, // Reduced padding
   },
-
-  page3LeftColumnScaled: {
-    width: '45%',
-    paddingRight: 12,
-  },
   
   page3RightColumn: {
     width: '45%',
     paddingLeft: 15, // Reduced padding
-  },
-
-  page3RightColumnScaled: {
-    width: '45%',
-    paddingLeft: 12,
   },
   
   page3Separator: {
@@ -934,22 +850,10 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 14, // Changed to 14px as requested
     textDecoration: 'underline',
   },
-
-  page3ColumnTitleScaled: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#172342',
-    marginBottom: 12,
-    textDecoration: 'underline',
-  },
   
   // Data list styles
   page3DataList: {
     marginBottom: 15, // Reduced margin
-  },
-
-  page3DataListScaled: {
-    marginBottom: 12,
   },
   
   page3DataRow: {
@@ -965,12 +869,6 @@ export const pdfStyles = StyleSheet.create({
     color: '#374151',
     flex: 1,
   },
-
-  page3LabelScaled: {
-    fontSize: 8,
-    color: '#374151',
-    flex: 1,
-  },
   
   page3Value: {
     fontSize: 9, // Reduced font size
@@ -979,26 +877,12 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'right',
     marginLeft: 10,
   },
-
-  page3ValueScaled: {
-    fontSize: 8,
-    color: '#EE0000',
-    fontWeight: 'bold',
-    textAlign: 'right',
-    marginLeft: 8,
-  },
   
   // Images section
   page3Images: {
     flexDirection: 'row',
     gap: 8, // Reduced gap
     marginTop: 8, // Reduced margin
-  },
-
-  page3ImagesScaled: {
-    flexDirection: 'row',
-    gap: 6,
-    marginTop: 6,
   },
   
   page3Image: {
@@ -1007,21 +891,10 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 6,
     objectFit: 'cover',
   },
-
-  page3ImageScaled: {
-    width: '100%',
-    height: 80,
-    borderRadius: 4,
-    objectFit: 'cover',
-  },
   
   // Metrics section - 2x2 grid layout
   page3MetricsContainer: {
     marginBottom: 12,
-  },
-
-  page3MetricsContainerScaled: {
-    marginBottom: 10,
   },
   
   page3MetricsGrid: {
@@ -1039,15 +912,6 @@ export const pdfStyles = StyleSheet.create({
     width: '48%', // Two boxes per row
     minHeight: 60, // Consistent height
   },
-
-  page3MetricBoxScaled: {
-    backgroundColor: '#F8FAFC',
-    padding: 6,
-    borderRadius: 4,
-    alignItems: 'center',
-    width: '48%',
-    minHeight: 50,
-  },
   
   page3MetricBoxLarge: {
     backgroundColor: '#F8FAFC',
@@ -1064,13 +928,6 @@ export const pdfStyles = StyleSheet.create({
     color: '#EE0000', // Red color
     marginBottom: 3,
   },
-
-  page3MetricValueScaled: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#EE0000',
-    marginBottom: 2,
-  },
   
   page3MetricValueLarge: {
     fontSize: 22, // Reduced font size
@@ -1083,13 +940,6 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 10, // Reduced font size
     color: '#374151',
     marginBottom: 2,
-    textAlign: 'center',
-  },
-
-  page3MetricLabelScaled: {
-    fontSize: 8,
-    color: '#374151',
-    marginBottom: 1,
     textAlign: 'center',
   },
   
@@ -1124,20 +974,9 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#EE0000',
   },
-
-  page3MultiplierValueScaled: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    color: '#EE0000',
-  },
   
   page3MultiplierText: {
     fontSize: 12, // Reduced font size
-    color: '#0281BD',
-  },
-
-  page3MultiplierTextScaled: {
-    fontSize: 10,
     color: '#0281BD',
   },
   
@@ -1149,16 +988,6 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 5, // Reduced top margin
     marginBottom: 5, // Reduced bottom margin
     lineHeight: 1.2, // Reduced line height
-    fontStyle: 'italic',
-  },
-
-  page3DisclaimerScaled: {
-    fontSize: 7,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginTop: 4,
-    marginBottom: 4,
-    lineHeight: 1.1,
     fontStyle: 'italic',
   },
 
@@ -1179,19 +1008,9 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 8,
   },
 
-  page3ChartContainerScaled: {
-    backgroundColor: '#F8FAFC',
-    padding: 10,
-    borderRadius: 6,
-  },
-
   // Spacing after "Indicatieve bandbreedte" title  
   page3SpacingAfterTitle: {
     height: 15,
-  },
-
-  page3SpacingAfterTitleScaled: {
-    height: 10,
   },
   
   page3ChartTitle: {
@@ -1201,22 +1020,9 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 10, // Reduced margin
     textAlign: 'center',
   },
-
-  page3ChartTitleScaled: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: '#0281BD',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
   
   page3Chart: {
     height: 120, // Larger height
-    position: 'relative',
-  },
-
-  page3ChartScaled: {
-    height: 100,
     position: 'relative',
   },
   
@@ -1227,16 +1033,6 @@ export const pdfStyles = StyleSheet.create({
     height: 80, // Reduced height
     paddingHorizontal: 10,
     borderBottomWidth: 2, // Removed the second grey line under bars
-    borderBottomColor: '#172342',
-  },
-
-  page3ChartBarsScaled: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    height: 65,
-    paddingHorizontal: 8,
-    borderBottomWidth: 2,
     borderBottomColor: '#172342',
   },
   
@@ -1266,27 +1062,11 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 2,
   },
 
-  page3Bar1Scaled: {
-    width: 32,
-    height: 40,
-    backgroundColor: '#0281BD',
-    marginBottom: 6,
-    borderRadius: 2,
-  },
-
   page3Bar2: {
     width: 40,
     height: 65,
     backgroundColor: '#BCE9FF', // Lighter blue
     marginBottom: 8,
-    borderRadius: 2,
-  },
-
-  page3Bar2Scaled: {
-    width: 32,
-    height: 52,
-    backgroundColor: '#BCE9FF',
-    marginBottom: 6,
     borderRadius: 2,
   },
 
@@ -1297,24 +1077,9 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 2,
   },
-
-  page3Bar3Scaled: {
-    width: 32,
-    height: 64,
-    backgroundColor: '#15375f',
-    marginBottom: 6,
-    borderRadius: 2,
-  },
   
   page3BarValue: {
     fontSize: 12, // Increased from 8 to 12
-    color: '#EE0000',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-  page3BarValueScaled: {
-    fontSize: 9,
     color: '#EE0000',
     fontWeight: 'bold',
     textAlign: 'center',

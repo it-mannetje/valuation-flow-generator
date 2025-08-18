@@ -239,12 +239,12 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderFooter(1)}
       </Page>
 
-      {/* Page 2 - Three Column Layout */}
+      {/* Page 2 - New Layout */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Main content area with three columns */}
+        {/* Main content area with two columns */}
         <View style={pdfStyles.page2Layout}>
-          {/* Left column - Image (40%) */}
-          <View style={pdfStyles.page2LeftColumn40}>
+          {/* Left column - Image (45%) */}
+          <View style={pdfStyles.page2LeftColumn}>
             {getPageData(2).background && (
               <Image 
                 style={pdfStyles.page2MainImage} 
@@ -253,23 +253,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             )}
           </View>
           
-          {/* Middle column - Portrait photo (15%) */}
-          <View style={pdfStyles.page2MiddleColumn15}>
-            {getPageData(2).image1_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImageMiddle} 
-                src={getPageData(2).image1_url} 
-              />
-            ) : getPageData(2).middle_image_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImageMiddle} 
-                src={getPageData(2).middle_image_url} 
-              />
-            ) : null}
-          </View>
-          
-          {/* Right column - Title and text (45%) */}
-          <View style={pdfStyles.page2RightColumn45}>
+          {/* Right column - Title and text (55%) */}
+          <View style={pdfStyles.page2RightColumn}>
             <Text style={pdfStyles.page2Title}>
               {getPageData(2).page_name || "Voorwoord"}
             </Text>
@@ -294,6 +279,19 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </Text>
               )}
             </View>
+            
+            {/* Portrait photo positioned absolutely at bottom */}
+            {getPageData(2).image1_url ? (
+              <Image 
+                style={pdfStyles.page2PortraitImageFixed} 
+                src={getPageData(2).image1_url} 
+              />
+            ) : getPageData(2).middle_image_url ? (
+              <Image 
+                style={pdfStyles.page2PortraitImageFixed} 
+                src={getPageData(2).middle_image_url} 
+              />
+            ) : null}
           </View>
         </View>
         
@@ -317,69 +315,69 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
           
           {/* Main content area with two columns */}
-          <View style={pdfStyles.page3MainContentScaled}>
+          <View style={pdfStyles.page3MainContent}>
             {/* Left column - Input data */}
-            <View style={pdfStyles.page3LeftColumnScaled}>
-              <Text style={pdfStyles.page3ColumnTitleScaled}>Ingevoerde gegevens</Text>
+            <View style={pdfStyles.page3LeftColumn}>
+              <Text style={pdfStyles.page3ColumnTitle}>Ingevoerde gegevens</Text>
               
-              <View style={pdfStyles.page3DataListScaled}>
+              <View style={pdfStyles.page3DataList}>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
+                  <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Aandeel jaarlijks terugkerende omzet</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
+                  <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Resultaat vorig boekjaar</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{formatCurrency(companyData.result2024)}</Text>
+                  <Text style={pdfStyles.page3Label}>Resultaat vorig boekjaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.result2024)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Verwacht resultaat dit boekjaar</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{formatCurrency(companyData.expectedResult2025)}</Text>
+                  <Text style={pdfStyles.page3Label}>Verwacht resultaat dit boekjaar</Text>
+                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.expectedResult2025)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Verlies in de afgelopen 3 jaar</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
+                  <Text style={pdfStyles.page3Label}>Verlies in de afgelopen 3 jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Vooruitzichten</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.prospects}</Text>
+                  <Text style={pdfStyles.page3Label}>Vooruitzichten</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.prospects}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{savedValuationData?.average_yearly_investment ? formatCurrency(savedValuationData.average_yearly_investment) : formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
+                  <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
+                  <Text style={pdfStyles.page3Value}>{savedValuationData?.average_yearly_investment ? formatCurrency(savedValuationData.average_yearly_investment) : formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Sector</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
+                  <Text style={pdfStyles.page3Label}>Sector</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Aantal (FTE) medewerkers</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.employeesDisplay || companyData.employees}</Text>
+                  <Text style={pdfStyles.page3Label}>Aantal (FTE) medewerkers</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.employeesDisplay || companyData.employees}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Omzet via de grootste klant</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
+                  <Text style={pdfStyles.page3Label}>Omzet via de grootste klant</Text>
+                  <Text style={pdfStyles.page3Value}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
                 </View>
                 <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3LabelScaled}>Afhankelijkheid van grootste toeleverancier</Text>
-                  <Text style={pdfStyles.page3ValueScaled}>Geen enkel probleem</Text>
+                  <Text style={pdfStyles.page3Label}>Afhankelijkheid van grootste toeleverancier</Text>
+                  <Text style={pdfStyles.page3Value}>Geen enkel probleem</Text>
                 </View>
               </View>
               
               {/* Business images */}
-              <View style={pdfStyles.page3ImagesScaled}>
+              <View style={pdfStyles.page3Images}>
                 {getPageData(3).image1_url && (
                   <Image 
-                    style={pdfStyles.page3ImageScaled} 
+                    style={pdfStyles.page3Image} 
                     src={getPageData(3).image1_url}
                   />
                 )}
                 {getPageData(3).image2_url && (
                   <Image 
-                    style={pdfStyles.page3ImageScaled} 
+                    style={pdfStyles.page3Image} 
                     src={getPageData(3).image2_url}
                   />
                 )}
@@ -390,40 +388,40 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={pdfStyles.page3Separator} />
             
             {/* Right column - Key assumptions and results */}
-            <View style={pdfStyles.page3RightColumnScaled}>
-              <Text style={pdfStyles.page3ColumnTitleScaled}>Belangrijkste uitgangspunten</Text>
+            <View style={pdfStyles.page3RightColumn}>
+              <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
               
               {/* Key metrics boxes - 2x2 grid layout */}
-              <View style={pdfStyles.page3MetricsContainerScaled}>
+              <View style={pdfStyles.page3MetricsContainer}>
                 {/* First row */}
                 <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBoxScaled}>
-                    <Text style={pdfStyles.page3MetricValueScaled}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabelScaled}>EBITDA (Adjusted)</Text>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
                   </View>
-                  <View style={pdfStyles.page3MetricBoxScaled}>
-                    <Text style={pdfStyles.page3MetricValueScaled}>{currentDate}</Text>
-                    <Text style={pdfStyles.page3MetricLabelScaled}>Waarderingsmoment</Text>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Waarderingsmoment</Text>
                   </View>
                 </View>
                 {/* Second row */}
                 <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBoxScaled}>
-                    <Text style={pdfStyles.page3MetricValueScaled}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabelScaled}>Ondernemingswaarde</Text>
+                  <View style={pdfStyles.page3MetricBox}>
+                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
                   </View>
-                  <View style={pdfStyles.page3MetricBoxScaled}>
+                  <View style={pdfStyles.page3MetricBox}>
                     <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValueScaled}>{savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}</Text>
-                      <Text style={pdfStyles.page3MultiplierTextScaled}> x EBITDA</Text>
+                      <Text style={pdfStyles.page3MultiplierValue}>{savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}</Text>
+                      <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
                     </View>
-                    <Text style={pdfStyles.page3MetricLabelScaled}>Multiple op EBITDA</Text>
+                    <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
                   </View>
                 </View>
               </View>
               
               {/* Disclaimer text */}
-              <Text style={pdfStyles.page3DisclaimerScaled}>
+              <Text style={pdfStyles.page3Disclaimer}>
                 Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
               </Text>
               
@@ -431,26 +429,26 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <View style={pdfStyles.page3HorizontalDottedLine} />
               
               {/* Bandwidth chart */}
-              <View style={pdfStyles.page3ChartContainerScaled}>
-                <Text style={pdfStyles.page3ChartTitleScaled}>Indicatieve bandbreedte</Text>
+              <View style={pdfStyles.page3ChartContainer}>
+                <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
                 
                 {/* Added spacing after "Indicatieve bandbreedte" */}
-                <View style={pdfStyles.page3SpacingAfterTitleScaled}></View>
+                <View style={pdfStyles.page3SpacingAfterTitle}></View>
                 
-                <View style={pdfStyles.page3ChartScaled}>
+                <View style={pdfStyles.page3Chart}>
                   {/* Chart bars */}
-                  <View style={pdfStyles.page3ChartBarsScaled}>
+                  <View style={pdfStyles.page3ChartBars}>
                     <View style={pdfStyles.page3ChartBar1}>
-                      <View style={pdfStyles.page3Bar1Scaled} />
-                    <Text style={pdfStyles.page3BarValueScaled}>€ {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')}</Text>
+                      <View style={pdfStyles.page3Bar1} />
+                    <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                     <View style={pdfStyles.page3ChartBar2}>
-                      <View style={pdfStyles.page3Bar2Scaled} />
-                      <Text style={pdfStyles.page3BarValueScaled}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
+                      <View style={pdfStyles.page3Bar2} />
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                     <View style={pdfStyles.page3ChartBar3}>
-                      <View style={pdfStyles.page3Bar3Scaled} />
-                      <Text style={pdfStyles.page3BarValueScaled}>€ {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}</Text>
+                      <View style={pdfStyles.page3Bar3} />
+                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}</Text>
                     </View>
                   </View>
                   
@@ -504,11 +502,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
           {/* Right section with image from PDF management and section 2 text */}
           <View style={pdfStyles.page4RightColumn}>
-            {/* Image from pdf management - using page 2 image placement logic */}
-            {(getPageData(4).image1_url || getPageData(4).middle_image_url) && (
+            {/* Image from pdf management - scaled if needed */}
+            {getPageData(4).image1_url && (
               <Image 
-                style={pdfStyles.page4SectionImage} 
-                src={getPageData(4).image1_url || getPageData(4).middle_image_url}
+                style={pdfStyles.page4ImageScaled} 
+                src={getPageData(4).image1_url}
               />
             )}
             
@@ -558,11 +556,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           
           {/* Right section - image only (50% width) */}
           <View style={pdfStyles.page5RightColumn}>
-            {/* Image from pdf management - using page 2 image placement logic */}
-            {(getPageData(5).image1_url || getPageData(5).middle_image_url) && (
+            {/* Image from pdf management - scaled if needed */}
+            {getPageData(5).image1_url && (
               <Image 
-                style={pdfStyles.page5SectionImage} 
-                src={getPageData(5).image1_url || getPageData(5).middle_image_url}
+                style={pdfStyles.page5SectionImageScaled} 
+                src={getPageData(5).image1_url}
               />
             )}
           </View>
