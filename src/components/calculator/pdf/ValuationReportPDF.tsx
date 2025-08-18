@@ -497,16 +497,20 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page4MainContent}>
           {/* Left section - text sections 1 and 2 */}
           <View style={pdfStyles.page4LeftColumn}>
-            {getPageData(4).content?.content ? (
-              renderContentSections(getPageData(4).content.content)
-            ) : (
+            {/* Section 1 text from PDF management */}
+            {getPageData(4).content?.content && getPageData(4).content.content[0] && (
               <Text style={pdfStyles.forewordText}>
-                De overnamemarkt in de {companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name : 'sector'} kent een sterke dynamiek.
+                {getPageData(4).content.content[0].text || ''}
               </Text>
             )}
+            
+            {/* Sector text below section 1 */}
+            <Text style={pdfStyles.forewordText}>
+              {getSectorText()}
+            </Text>
           </View>
 
-          {/* Right section with image */}
+          {/* Right section with image and section 2 text */}
           <View style={pdfStyles.page4RightColumn}>
             {getPageData(4).image1_url ? (
               <Image 
@@ -518,6 +522,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 style={pdfStyles.page4MainImage} 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
               />
+            )}
+            
+            {/* Section 2 text below image */}
+            {getPageData(4).content?.content && getPageData(4).content.content[1] && (
+              <Text style={pdfStyles.page4Section2Text}>
+                {getPageData(4).content.content[1].text || ''}
+              </Text>
             )}
           </View>
         </View>
@@ -534,7 +545,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.page5Number}>5</Text>
           </View>
           <View style={pdfStyles.page5HeaderTitleDarkBlue}>
-            <Text style={pdfStyles.page5HeaderTextWhite}>Business Valuation</Text>
+            <Text style={pdfStyles.page5HeaderTextWhite}>{getPageData(5).page_name || "Business Valuation"}</Text>
           </View>
         </View>
 
@@ -575,6 +586,51 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         
         {/* Dynamic Footer */}
         {renderFooter(5)}
+      </Page>
+
+      {/* Page 6 - Contact */}
+      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+        {/* Header section with number and title */}
+        <View style={pdfStyles.page4HeaderContainer}>
+          <View style={pdfStyles.page4HeaderNumber}>
+            <Text style={pdfStyles.page4Number}>6</Text>
+          </View>
+          <View style={pdfStyles.page4HeaderTitle}>
+            <Text style={pdfStyles.page4HeaderTitleText}>Contact</Text>
+          </View>
+        </View>
+        
+        {/* Main content area */}
+        <View style={pdfStyles.page4MainContent}>
+          {/* Left section - contact content */}
+          <View style={pdfStyles.page4LeftColumn}>
+            {getPageData(6).content?.content ? (
+              renderContentSections(getPageData(6).content.content)
+            ) : (
+              <Text style={pdfStyles.forewordText}>
+                Voor meer informatie over deze waardering of andere vragen, neem contact met ons op.
+              </Text>
+            )}
+          </View>
+
+          {/* Right section with image */}
+          <View style={pdfStyles.page4RightColumn}>
+            {getPageData(6).image1_url ? (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src={getPageData(6).image1_url}
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
+              />
+            )}
+          </View>
+        </View>
+        
+        {/* Dynamic Footer */}
+        {renderFooter(6)}
       </Page>
 
     </Document>

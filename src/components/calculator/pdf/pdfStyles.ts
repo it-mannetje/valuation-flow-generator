@@ -355,6 +355,16 @@ export const pdfStyles = StyleSheet.create({
     zIndex: 10,
     borderRadius: 4,
   },
+
+  // Portrait image below text in right column
+  page2PortraitImageBelow: {
+    width: 120,
+    height: 140,
+    objectFit: 'cover',
+    marginTop: 20,
+    borderRadius: 4,
+    alignSelf: 'center',
+  },
   
   // White footer bar spanning full width
   page2Footer: {
@@ -948,6 +958,17 @@ export const pdfStyles = StyleSheet.create({
     fontStyle: 'italic',
   },
 
+  // Disclaimer text with reduced whitespace
+  page3DisclaimerCompact: {
+    fontSize: 10,
+    lineHeight: 1.2, // Further reduced spacing
+    color: '#6B7280',
+    marginTop: 8, // Further reduced from 15
+    marginBottom: 8, // Further reduced from 10
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+
   // Dark blue dotted line after disclaimer
   page3DisclaimerDottedLine: {
     borderTopWidth: 2,
@@ -1160,6 +1181,16 @@ export const pdfStyles = StyleSheet.create({
     paddingTop: 24, // 0.8cm top margin
     marginLeft: 42, // 1.5cm left margin
   },
+
+  // Page 4 header container
+  page4HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 40,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 42, // 1.5cm left margin
+  },
   
   page4HeaderNumber: {
     width: 50,
@@ -1217,6 +1248,15 @@ export const pdfStyles = StyleSheet.create({
     lineHeight: 1.5,
     color: '#374151',
     marginBottom: 12,
+    textAlign: 'justify',
+  },
+
+  // Page 4 section 2 text below image
+  page4Section2Text: {
+    fontSize: 11,
+    lineHeight: 1.5,
+    color: '#374151',
+    marginTop: 20,
     textAlign: 'justify',
   },
   
@@ -1323,6 +1363,33 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     maxWidth: '50%', // Maximum width to middle of page
+  },
+
+  // Page 5 header with dark blue background and larger size
+  page5HeaderTitleDarkBlue: {
+    backgroundColor: '#172342', // Changed to #172342
+    paddingHorizontal: 30,
+    paddingVertical: 15, // Increased height to match page 4
+    borderRadius: 12,
+    maxWidth: '50%', // Maximum width to middle of page
+  },
+
+  // Page 5 header text in white
+  page5HeaderTextWhite: {
+    fontSize: 16, // Decreased header text size
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'left',
+  },
+
+  // Page 5 header container styles
+  page5HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 40,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 42, // 1.5cm left margin
   },
   
   page5Title: {
@@ -1691,14 +1758,6 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'contain',
   },
 
-  page4HeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    paddingTop: 24, // 0.8cm top margin
-    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
-  },
-
   page4Content: {
     flex: 1,
     paddingHorizontal: 40,
@@ -1718,14 +1777,6 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  page5HeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    paddingTop: 24, // 0.8cm top margin
-    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
-  },
-
   page5FooterLogoImage: {
     width: 50,
     height: 30,
@@ -1742,27 +1793,6 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Page 2 portrait image below text
-  page2PortraitImageBelow: {
-    width: 80,
-    height: 100,
-    objectFit: 'cover',
-    marginTop: 15,
-    alignSelf: 'center',
-    borderRadius: 4,
-  },
-
-  // Page 3 disclaimer with compact spacing
-  page3DisclaimerCompact: {
-    fontSize: 8,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginTop: 5, // Reduced whitespace above
-    marginBottom: 5, // Reduced whitespace below
-    lineHeight: 1.2,
-    fontStyle: 'italic',
-  },
-
   // Page 5 header with blue background
   page5HeaderTitleBlue: {
     backgroundColor: '#0281BD', // Blue background for page title
@@ -1770,22 +1800,5 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     maxWidth: '50%',
-  },
-
-  // Page 5 header with dark blue background and decreased height
-  page5HeaderTitleDarkBlue: {
-    backgroundColor: '#1e40af', // Dark blue background
-    paddingHorizontal: 30,
-    paddingVertical: 6, // Decreased height
-    borderRadius: 12,
-    maxWidth: '50%',
-  },
-
-  // Page 5 header text with white color
-  page5HeaderTextWhite: {
-    fontSize: 14, // Decreased header text size
-    fontWeight: 'bold',
-    color: 'white', // White text
-    textAlign: 'left',
   },
 });
