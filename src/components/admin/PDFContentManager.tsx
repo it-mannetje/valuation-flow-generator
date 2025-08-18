@@ -610,26 +610,36 @@ export default function PDFContentManager() {
                             Verwijder
                           </Button>
                         </div>
-                      ) : (
-                        <div className="text-center">
-                          <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                          <Label htmlFor="background-upload" className="cursor-pointer">
-                            <span className="text-sm text-muted-foreground">
-                              Klik om achtergrond afbeelding te uploaden
-                            </span>
-                            <Input
-                              id="background-upload"
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) handleImageUpload('background', file);
-                              }}
-                            />
-                          </Label>
-                        </div>
-                      )}
+                       ) : (
+                         <div className="text-center">
+                           <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                           <Label htmlFor="background-upload" className="cursor-pointer">
+                             <span className="text-sm text-muted-foreground">
+                               Klik om achtergrond afbeelding te uploaden
+                             </span>
+                             <Input
+                               id="background-upload"
+                               type="file"
+                               accept="image/*"
+                               className="hidden"
+                               onChange={(e) => {
+                                 const file = e.target.files?.[0];
+                                 if (file) handleImageUpload('background', file);
+                               }}
+                             />
+                           </Label>
+                         </div>
+                       )}
+                       {selectedPage.background_image_url && (
+                         <div className="mt-4 p-2 border rounded-lg">
+                           <p className="text-xs text-gray-500 mb-2">Preview:</p>
+                           <img 
+                             src={selectedPage.background_image_url} 
+                             alt="Background preview" 
+                             className="max-w-48 max-h-32 object-contain"
+                           />
+                         </div>
+                       )}
                     </div>
                   </div>
 
@@ -655,26 +665,36 @@ export default function PDFContentManager() {
                               Verwijder
                             </Button>
                           </div>
-                        ) : (
-                          <div className="text-center">
-                            <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                            <Label htmlFor="middle-image-upload" className="cursor-pointer">
-                              <span className="text-sm text-muted-foreground">
-                                Klik om portret afbeelding te uploaden
-                              </span>
-                              <Input
-                                id="middle-image-upload"
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) handleImageUpload('middle_image', file);
-                                }}
-                              />
-                            </Label>
-                          </div>
-                        )}
+                         ) : (
+                           <div className="text-center">
+                             <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                             <Label htmlFor="middle-image-upload" className="cursor-pointer">
+                               <span className="text-sm text-muted-foreground">
+                                 Klik om portret afbeelding te uploaden
+                               </span>
+                               <Input
+                                 id="middle-image-upload"
+                                 type="file"
+                                 accept="image/*"
+                                 className="hidden"
+                                 onChange={(e) => {
+                                   const file = e.target.files?.[0];
+                                   if (file) handleImageUpload('middle_image', file);
+                                 }}
+                               />
+                             </Label>
+                           </div>
+                         )}
+                         {selectedPage.middle_image_url && (
+                           <div className="mt-4 p-2 border rounded-lg">
+                             <p className="text-xs text-gray-500 mb-2">Preview:</p>
+                             <img 
+                               src={selectedPage.middle_image_url} 
+                               alt="Portrait preview" 
+                               className="max-w-32 max-h-48 object-contain"
+                             />
+                           </div>
+                         )}
                       </div>
                     </div>
                   )}
@@ -752,26 +772,36 @@ export default function PDFContentManager() {
                                 Verwijder
                               </Button>
                             </div>
-                          ) : (
-                            <div className="text-center">
-                              <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                              <Label htmlFor="image1-upload" className="cursor-pointer">
-                                <span className="text-sm text-muted-foreground">
-                                  Klik om bedrijfs afbeelding 1 te uploaden
-                                </span>
-                                <Input
-                                  id="image1-upload"
-                                  type="file"
-                                  accept="image/*"
-                                  className="hidden"
-                                  onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) handleImageUpload('image1', file);
-                                  }}
-                                />
-                              </Label>
-                            </div>
-                          )}
+                           ) : (
+                             <div className="text-center">
+                               <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                               <Label htmlFor="image1-upload" className="cursor-pointer">
+                                 <span className="text-sm text-muted-foreground">
+                                   Klik om bedrijfs afbeelding 1 te uploaden
+                                 </span>
+                                 <Input
+                                   id="image1-upload"
+                                   type="file"
+                                   accept="image/*"
+                                   className="hidden"
+                                   onChange={(e) => {
+                                     const file = e.target.files?.[0];
+                                     if (file) handleImageUpload('image1', file);
+                                   }}
+                                 />
+                               </Label>
+                             </div>
+                           )}
+                           {selectedPage.image1_url && (
+                             <div className="mt-4 p-2 border rounded-lg">
+                               <p className="text-xs text-gray-500 mb-2">Preview:</p>
+                               <img 
+                                 src={selectedPage.image1_url} 
+                                 alt="Business image 1 preview" 
+                                 className="max-w-48 max-h-32 object-contain"
+                               />
+                             </div>
+                           )}
                         </div>
                       </div>
 
@@ -793,26 +823,36 @@ export default function PDFContentManager() {
                                 Verwijder
                               </Button>
                             </div>
-                          ) : (
-                            <div className="text-center">
-                              <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                              <Label htmlFor="image2-upload" className="cursor-pointer">
-                                <span className="text-sm text-muted-foreground">
-                                  Klik om bedrijfs afbeelding 2 te uploaden
-                                </span>
-                                <Input
-                                  id="image2-upload"
-                                  type="file"
-                                  accept="image/*"
-                                  className="hidden"
-                                  onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) handleImageUpload('image2', file);
-                                  }}
-                                />
-                              </Label>
-                            </div>
-                          )}
+                           ) : (
+                             <div className="text-center">
+                               <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                               <Label htmlFor="image2-upload" className="cursor-pointer">
+                                 <span className="text-sm text-muted-foreground">
+                                   Klik om bedrijfs afbeelding 2 te uploaden
+                                 </span>
+                                 <Input
+                                   id="image2-upload"
+                                   type="file"
+                                   accept="image/*"
+                                   className="hidden"
+                                   onChange={(e) => {
+                                     const file = e.target.files?.[0];
+                                     if (file) handleImageUpload('image2', file);
+                                   }}
+                                 />
+                               </Label>
+                             </div>
+                           )}
+                           {selectedPage.image2_url && (
+                             <div className="mt-4 p-2 border rounded-lg">
+                               <p className="text-xs text-gray-500 mb-2">Preview:</p>
+                               <img 
+                                 src={selectedPage.image2_url} 
+                                 alt="Business image 2 preview" 
+                                 className="max-w-48 max-h-32 object-contain"
+                               />
+                             </div>
+                           )}
                         </div>
                       </div>
                     </>
