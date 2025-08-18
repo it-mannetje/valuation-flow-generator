@@ -152,36 +152,24 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     console.log(`📊 Available pageFooters:`, pageFooters);
     console.log(`📋 Available footerTemplates:`, footerTemplates);
     
-    // For debugging - always return a default footer config if data is available
-    if (footerTemplates && footerTemplates.length > 0) {
-      const defaultTemplate = footerTemplates.find(ft => ft.is_default) || footerTemplates[0];
-      
-      if (defaultTemplate) {
-        console.log(`✅ Using default template for page ${pageNumber}:`, defaultTemplate);
-        return {
-          ...defaultTemplate.layout_config,
-          // Override page number styling to match user requirements
-          pageNumberStyle: {
-            backgroundColor: '#f3f4f6', // Light gray
-            borderRadius: 15,
-            width: '85px', // ~3cm
-            height: '42px', // ~1.5cm
-            color: '#374151',
-            fontSize: 12,
-            fontWeight: 'normal'
-          },
-          dottedLineStyle: {
-            color: '#1e40af', // Dark blue
-            width: 2,
-            height: 20,
-            marginRight: 8
-          }
-        };
-      }
+    // Find the page footer setting for this specific page
+    const pageFooter = pageFooters?.find(pf => pf.page_number === pageNumber);
+    
+    if (!pageFooter || !pageFooter.is_enabled) {
+      console.log(`❌ No enabled footer found for page ${pageNumber}`);
+      return null;
     }
     
-    console.log(`❌ No footer config available for page ${pageNumber}`);
-    return null;
+    // Find the footer template assigned to this page
+    const footerTemplate = footerTemplates?.find(ft => ft.id === pageFooter.footer_template_id);
+    
+    if (!footerTemplate) {
+      console.log(`❌ No footer template found for page ${pageNumber}`);
+      return null;
+    }
+    
+    console.log(`✅ Using footer template for page ${pageNumber}:`, footerTemplate);
+    return footerTemplate.layout_config;
   };
 
   // Helper function to render footer
@@ -199,7 +187,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     return (
       <PDFFooter
         pageNumber={pageNumber}
-        logoUrl={null} // Use text logo instead
+        logoUrl={footerConfig.logoPosition ? null : null} // Will use text logo from PDFFooter
         config={footerConfig}
         isEnabled={true}
       />
