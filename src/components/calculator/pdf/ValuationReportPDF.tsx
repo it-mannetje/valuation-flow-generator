@@ -300,17 +300,17 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   bedrijfswaarderingen.
                 </Text>
               )}
+              
+              {/* Add portrait image below text */}
+              {getPageData(2).content?.portrait_url && (
+                <Image 
+                  style={pdfStyles.page2PortraitImageBelow} 
+                  src={getPageData(2).content.portrait_url} 
+                />
+              )}
             </View>
           </View>
         </View>
-        
-        {/* Portrait image positioned at bottom center */}
-        {getPageData(2).content?.portrait_url && (
-          <Image 
-            style={pdfStyles.page2PortraitImage} 
-            src={getPageData(2).content.portrait_url} 
-          />
-        )}
         
         {/* Dynamic Footer */}
         {renderFooter(2)}
@@ -437,8 +437,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </View>
               </View>
               
-              {/* Disclaimer text */}
-              <Text style={pdfStyles.page3Disclaimer}>
+              {/* Disclaimer text with reduced whitespace */}
+              <Text style={pdfStyles.page3DisclaimerCompact}>
                 Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
               </Text>
               
@@ -469,8 +469,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                     </View>
                   </View>
                   
-                  {/* Chart baseline */}
-                  <View style={pdfStyles.page3ChartBaseline} />
+                  {/* Remove the second grey line under bar charts */}
                 </View>
               </View>
             </View>
@@ -494,30 +493,33 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Content sections with text from PDF management */}
-        <View style={pdfStyles.page4Content}>
-          {getPageData(4).content?.content ? (
-            renderContentSections(getPageData(4).content.content)
-          ) : (
-            <Text style={pdfStyles.forewordText}>
-              De overnamemarkt in de {companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name : 'sector'} kent een sterke dynamiek.
-            </Text>
-          )}
-        </View>
+        {/* Main content area with two columns */}
+        <View style={pdfStyles.page4MainContent}>
+          {/* Left section - text sections 1 and 2 */}
+          <View style={pdfStyles.page4LeftColumn}>
+            {getPageData(4).content?.content ? (
+              renderContentSections(getPageData(4).content.content)
+            ) : (
+              <Text style={pdfStyles.forewordText}>
+                De overnamemarkt in de {companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name : 'sector'} kent een sterke dynamiek.
+              </Text>
+            )}
+          </View>
 
-        {/* Right section with image moved down */}
-        <View style={pdfStyles.page4RightSection}>
-          {getPageData(4).image1_url ? (
-            <Image 
-              style={pdfStyles.page4ImageMoved} 
-              src={getPageData(4).image1_url}
-            />
-          ) : (
-            <Image 
-              style={pdfStyles.page4ImageMoved} 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
-            />
-          )}
+          {/* Right section with image */}
+          <View style={pdfStyles.page4RightColumn}>
+            {getPageData(4).image1_url ? (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src={getPageData(4).image1_url}
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page4MainImage} 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
+              />
+            )}
+          </View>
         </View>
         
         {/* Dynamic Footer */}
@@ -526,12 +528,12 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header section with number and title */}
+        {/* Header section with number and title on blue background */}
         <View style={pdfStyles.page5HeaderContainer}>
           <View style={pdfStyles.page5HeaderNumber}>
             <Text style={pdfStyles.page5Number}>5</Text>
           </View>
-          <View style={pdfStyles.page5HeaderTitle}>
+          <View style={pdfStyles.page5HeaderTitleBlue}>
             <Text style={pdfStyles.page5HeaderText}>Business Valuation</Text>
           </View>
         </View>

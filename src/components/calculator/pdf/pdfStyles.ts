@@ -217,7 +217,7 @@ export const pdfStyles = StyleSheet.create({
  
   // Page 4 header title styling - white text
   page4HeaderTitleText: {
-    fontSize: 20,
+    fontSize: 16, // Decreased header text size
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'left',
@@ -225,7 +225,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Page 5 header text - dark blue with header font size
   page5HeaderText: {
-    fontSize: 18,
+    fontSize: 14, // Decreased header text size
     fontWeight: 'bold',
     color: '#172342',
     marginBottom: 15,
@@ -254,11 +254,11 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  // Section 1 heading style - dark blue, larger font
+  // Section 1 heading style - blue color
   page5Section1Heading: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#172342', // Dark blue
+    color: '#0281BD', // Changed to #0281BD
     lineHeight: 1.4,
     marginBottom: 20,
     marginTop: 20,
@@ -293,8 +293,8 @@ export const pdfStyles = StyleSheet.create({
     position: 'absolute' as const,
     top: 15,
     right: 25,
-    width: 60,
-    height: 40,
+    width: 69, // Increased by 15% (60 * 1.15)
+    height: 46, // Increased by 15% (40 * 1.15)
     objectFit: 'contain' as const,
   },
 
@@ -1725,5 +1725,35 @@ export const pdfStyles = StyleSheet.create({
     minWidth: 70, // Wider than original
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  // Page 2 portrait image below text
+  page2PortraitImageBelow: {
+    width: 80,
+    height: 100,
+    objectFit: 'cover',
+    marginTop: 15,
+    alignSelf: 'center',
+    borderRadius: 4,
+  },
+
+  // Page 3 disclaimer with compact spacing
+  page3DisclaimerCompact: {
+    fontSize: 8,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginTop: 5, // Reduced whitespace above
+    marginBottom: 5, // Reduced whitespace below
+    lineHeight: 1.2,
+    fontStyle: 'italic',
+  },
+
+  // Page 5 header with blue background
+  page5HeaderTitleBlue: {
+    backgroundColor: '#0281BD', // Blue background for page title
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 12,
+    maxWidth: '50%',
   },
 });
