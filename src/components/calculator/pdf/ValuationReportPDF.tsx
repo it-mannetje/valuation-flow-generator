@@ -219,10 +219,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
           </View>
           {/* Logo in upper right corner - now fetched from PDF management */}
-          {getPageData(1).image1_url ? (
-            renderLogo(getPageData(1).image1_url, pdfStyles.headerLogo)
+          {getPageData(1).content?.logo_url ? (
+            renderLogo(getPageData(1).content.logo_url, pdfStyles.headerLogo)
           ) : (
-            <Text style={pdfStyles.fbmLogo}>fbm</Text>
+            <Text style={pdfStyles.fbmLogo}>fam</Text>
           )}
         </View>
         

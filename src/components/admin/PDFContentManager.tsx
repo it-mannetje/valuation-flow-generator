@@ -679,8 +679,59 @@ export default function PDFContentManager() {
                     </div>
                   )}
 
-                  {/* Page 3 Business Images */}
-                  {selectedPage.page_number === 3 && (
+                   {/* Page 1 Logo */}
+                   {selectedPage.page_number === 1 && (
+                     <div>
+                       <Label>Logo (header rechts)</Label>
+                       <div className="mt-2 p-4 border-2 border-dashed border-border rounded-lg">
+                         {selectedPage.content.logo_url ? (
+                           <div className="space-y-2">
+                             <div className="flex items-center gap-2">
+                               <ImageIcon className="w-4 h-4" />
+                               <span className="text-sm">Logo ingesteld</span>
+                             </div>
+                             <div className="w-20 h-20 border border-border rounded overflow-hidden">
+                               <img 
+                                 src={selectedPage.content.logo_url} 
+                                 alt="Logo preview"
+                                 className="w-full h-full object-contain"
+                               />
+                             </div>
+                             <Button
+                               variant="outline"
+                               size="sm"
+                               onClick={() => updateContentField('logo_url', undefined)}
+                             >
+                               <Trash2 className="w-4 h-4 mr-2" />
+                               Verwijder
+                             </Button>
+                           </div>
+                         ) : (
+                           <div className="text-center">
+                             <ImageIcon className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                             <Label htmlFor="logo-upload" className="cursor-pointer">
+                               <span className="text-sm text-muted-foreground">
+                                 Klik om logo te uploaden
+                               </span>
+                               <Input
+                                 id="logo-upload"
+                                 type="file"
+                                 accept="image/*"
+                                 className="hidden"
+                                 onChange={(e) => {
+                                   const file = e.target.files?.[0];
+                                   if (file) handleImageUpload('logo', file);
+                                 }}
+                               />
+                             </Label>
+                           </div>
+                         )}
+                       </div>
+                     </div>
+                   )}
+
+                   {/* Page 3 Business Images */}
+                   {selectedPage.page_number === 3 && (
                     <>
                       <Separator />
                       <div>
