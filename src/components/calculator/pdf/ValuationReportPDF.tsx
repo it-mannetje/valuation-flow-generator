@@ -259,39 +259,44 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getPageData(2).page_name || "Voorwoord"}
             </Text>
             
-          {/* Show all text content from PDF management */}
-            <View style={{ flex: 1 }}>
-              {getPageData(2).content?.content ? (
-                 getPageData(2).content.content.map((section: any, index: number) => (
-                   <Text key={index} style={pdfStyles.page2TextContent}>
-                     {section.text || ''}
-                   </Text>
-                 ))
-               ) : (
-                 <Text style={pdfStyles.page2TextContent}>
-                  Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
-                  FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
-                  Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
-                  een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
-                  diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
-                  op het gebied van fusies en overnames, financieringen, herstructureringen en 
-                  bedrijfswaarderingen.
-                </Text>
-              )}
+            {/* Portrait image positioned on left side of right section with higher z-index */}
+            <View style={pdfStyles.page2ContentContainer}>
+              {/* Image container on left side */}
+              <View style={pdfStyles.page2ImageContainer}>
+                {getPageData(2).image1_url ? (
+                  <Image 
+                    style={pdfStyles.page2PortraitImageLeft} 
+                    src={getPageData(2).image1_url} 
+                  />
+                ) : getPageData(2).middle_image_url ? (
+                  <Image 
+                    style={pdfStyles.page2PortraitImageLeft} 
+                    src={getPageData(2).middle_image_url} 
+                  />
+                ) : null}
+              </View>
+              
+              {/* Text content container on right side */}
+              <View style={pdfStyles.page2TextContainer}>
+                {getPageData(2).content?.content ? (
+                   getPageData(2).content.content.map((section: any, index: number) => (
+                     <Text key={index} style={pdfStyles.page2TextContent}>
+                       {section.text || ''}
+                     </Text>
+                   ))
+                 ) : (
+                   <Text style={pdfStyles.page2TextContent}>
+                    Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
+                    FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
+                    Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
+                    een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
+                    diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
+                    op het gebied van fusies en overnames, financieringen, herstructureringen en 
+                    bedrijfswaarderingen.
+                  </Text>
+                )}
+              </View>
             </View>
-            
-            {/* Portrait image positioned below text in right section - scale to fit */}
-            {getPageData(2).image1_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImage} 
-                src={getPageData(2).image1_url} 
-              />
-            ) : getPageData(2).middle_image_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImage} 
-                src={getPageData(2).middle_image_url} 
-              />
-            ) : null}
           </View>
         </View>
         
@@ -487,7 +492,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               </Text>
             )}
             
-            {/* Sector text below section 1 */}
+            {/* Show sector name above sector text */}
+            {companyData.sector && sectors.length > 0 && (
+              <Text style={pdfStyles.page4SectorName}>
+                {sectors.find(s => s.id === companyData.sector)?.name || ''}
+              </Text>
+            )}
+            
+            {/* Sector text below sector name */}
             <Text style={pdfStyles.page4ContentText}>
               {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
             </Text>
@@ -495,7 +507,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
           {/* Right section with image from PDF management and section 2 text */}
           <View style={pdfStyles.page4RightColumn}>
-            {/* Image from pdf management - removing hardcoded fallback */}
+            {/* Image from pdf management */}
             {getPageData(4).image1_url && (
               <Image 
                 style={pdfStyles.page4ImageMoved} 
@@ -539,27 +551,22 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               </Text>
             )}
             
-            {/* Add sector text based on input form under section 1 text */}
-            <Text style={pdfStyles.page5SectorText}>
-              {getSectorText() || 'Sector specifieke informatie wordt hier weergegeven.'}
-            </Text>
+            {/* Section 2 text with 12px font size */}
+            {getPageData(5).content?.content && getPageData(5).content.content[1] && (
+              <Text style={pdfStyles.page5Section2Small}>
+                Sectie 2: {getPageData(5).content.content[1].text || ''}
+              </Text>
+            )}
           </View>
           
-          {/* Right section - image and section 2 text (50% width) */}
+          {/* Right section - image only (50% width) */}
           <View style={pdfStyles.page5RightColumn}>
-            {/* Image from pdf management - removing hardcoded fallback */}
+            {/* Image from pdf management */}
             {getPageData(5).image1_url && (
               <Image 
                 style={pdfStyles.page5SectionImage} 
                 src={getPageData(5).image1_url}
               />
-            )}
-            
-            {/* Section 2 text below image */}
-            {getPageData(5).content?.content && getPageData(5).content.content[1] && (
-              <Text style={pdfStyles.page5Section2Text}>
-                {getPageData(5).content.content[1].text || ''}
-              </Text>
             )}
           </View>
         </View>

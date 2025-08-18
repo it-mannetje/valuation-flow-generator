@@ -328,7 +328,36 @@ export const pdfStyles = StyleSheet.create({
     color: '#6B7280',
   },
   
-  // Portrait image positioned below text in right section
+  // Container for image and text layout in page 2
+  page2ContentContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    marginTop: 20,
+  },
+
+  // Image container on left side of right section
+  page2ImageContainer: {
+    width: '30%',
+    paddingRight: 15,
+    zIndex: 10,
+  },
+
+  // Text container on right side
+  page2TextContainer: {
+    width: '70%',
+    flex: 1,
+    zIndex: 5,
+  },
+
+  // Portrait image positioned on left side with scaling
+  page2PortraitImageLeft: {
+    width: '100%',
+    height: 140,
+    objectFit: 'cover',
+    borderRadius: 4,
+  },
+
+  // Original portrait image (keeping for backwards compatibility)
   page2PortraitImage: {
     width: 120,
     height: 140,
@@ -1370,6 +1399,25 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 12,
     textAlign: 'justify',
     marginTop: 10,
+  },
+
+  // Page 4 sector name style
+  page4SectorName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#172342',
+    marginBottom: 8,
+    marginTop: 15,
+  },
+
+  // Page 5 section 2 with 12px font size
+  page5Section2Small: {
+    fontSize: 12,
+    lineHeight: 1.4,
+    color: '#374151',
+    marginBottom: 12,
+    textAlign: 'justify',
+    marginTop: 15,
   },
   
   // Company logos grid
