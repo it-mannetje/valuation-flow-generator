@@ -1063,6 +1063,68 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'center',
   },
   
+  // Page 3 footer dotted line
+  page3DottedLine: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page3PageNumberText: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
+  
+  // Footer
+  page3Footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    borderTop: '1 solid #E5E7EB',
+  },
+  
+  page3FooterLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+  page3FooterLogo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginRight: 8,
+  },
+  
+  page3FooterText: {
+    fontSize: 12,
+    color: '#2563EB',
+  },
+  
+  page3FooterRight: {
+    alignItems: 'center',
+  },
+  
+  page3FooterDots: {
+    width: 40,
+    height: 1,
+    borderTop: '1 dotted #6B7280',
+    marginBottom: 8,
+  },
+  
+  page3FooterPageNumber: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: 'bold',
+  },
 
   // ========== PAGE 4 STYLES ==========
   
@@ -1601,6 +1663,11 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 1,
   },
 
+  page3FooterLogoImage: {
+    width: 50,
+    height: 30,
+    objectFit: 'contain',
+  },
 
   page4HeaderContainer: {
     flexDirection: 'row',
