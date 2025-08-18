@@ -374,11 +374,11 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 'auto',
   },
 
-  // Portrait image fixed at absolute bottom left
+  // Portrait image fixed at absolute bottom right with 0 margin
   page2PortraitImageFixed: {
     position: 'absolute',
-    bottom: 100, // Above footer, align with left section image bottom
-    left: 0, // 0 margin left
+    bottom: 70, // Move to bottom of right section
+    right: 0, // 0 margin right (bottom of right section)
     width: 120,
     height: 140,
     objectFit: 'cover',
@@ -1080,7 +1080,7 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page3BarValue: {
-    fontSize: 12, // Increased from 8 to 12
+    fontSize: 10, // Decreased to match text font size
     color: '#EE0000',
     fontWeight: 'bold',
     textAlign: 'center',
