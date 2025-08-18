@@ -38,6 +38,9 @@ const FooterPreview: React.FC<FooterPreviewProps> = ({
         color: config.pageNumberStyle.color,
         fontSize: `${config.pageNumberStyle.fontSize}px`,
         fontWeight: config.pageNumberStyle.fontWeight,
+        borderColor: config.pageNumberStyle.borderColor || 'transparent',
+        borderWidth: `${config.pageNumberStyle.borderWidth || 0}px`,
+        borderStyle: 'solid',
       }}
       className="flex items-center justify-center px-2"
     >

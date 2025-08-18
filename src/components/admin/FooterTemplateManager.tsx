@@ -42,7 +42,9 @@ export default function FooterTemplateManager() {
         height: '28.35',
         color: '#374151',
         fontSize: 12,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        borderColor: '#E5E7EB',
+        borderWidth: 0
       },
       dottedLineStyle: {
         color: '#2563EB',

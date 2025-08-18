@@ -17,6 +17,8 @@ interface FooterConfig {
     color: string;
     fontSize: number;
     fontWeight: string;
+    borderColor?: string;
+    borderWidth?: number;
   };
   dottedLineStyle: {
     color: string;
@@ -69,6 +71,8 @@ const createFooterStyles = (config: FooterConfig) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 8,
+    borderColor: config.pageNumberStyle.borderColor || 'transparent',
+    borderWidth: config.pageNumberStyle.borderWidth || 0,
   },
   dottedLine: {
     width: config.dottedLineStyle.width,

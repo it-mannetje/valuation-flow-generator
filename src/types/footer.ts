@@ -26,6 +26,8 @@ export interface FooterConfig {
     color: string;
     fontSize: number;
     fontWeight: string;
+    borderColor?: string;
+    borderWidth?: number;
   };
   dottedLineStyle: {
     color: string;
