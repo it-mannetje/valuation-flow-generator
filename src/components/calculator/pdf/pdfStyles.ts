@@ -217,7 +217,7 @@ export const pdfStyles = StyleSheet.create({
  
   // Page 4 header title styling - white text
   page4HeaderTitleText: {
-    fontSize: 16, // Decreased header text size
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'left',
@@ -225,7 +225,7 @@ export const pdfStyles = StyleSheet.create({
   
   // Page 5 header text - dark blue with header font size
   page5HeaderText: {
-    fontSize: 14, // Decreased header text size
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#172342',
     marginBottom: 15,
@@ -254,26 +254,11 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  // Fixed left section - 50% width
-  page5FixedLeftSection: {
-    width: '50%',
-    paddingRight: 20,
-    flexDirection: 'column',
-  },
-
-  // Fixed right section - 50% width
-  page5FixedRightSection: {
-    width: '50%',
-    paddingLeft: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  // Section 1 heading style - blue color
+  // Section 1 heading style - dark blue, larger font
   page5Section1Heading: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0281BD', // Changed to #0281BD
+    color: '#172342', // Dark blue
     lineHeight: 1.4,
     marginBottom: 20,
     marginTop: 20,
@@ -308,8 +293,8 @@ export const pdfStyles = StyleSheet.create({
     position: 'absolute' as const,
     top: 15,
     right: 25,
-    width: 69, // Increased by 15% (60 * 1.15)
-    height: 46, // Increased by 15% (40 * 1.15)
+    width: 60,
+    height: 40,
     objectFit: 'contain' as const,
   },
 
@@ -354,16 +339,6 @@ export const pdfStyles = StyleSheet.create({
     marginLeft: -60, // Half of width to center
     zIndex: 10,
     borderRadius: 4,
-  },
-
-  // Portrait image below text in right column
-  page2PortraitImageBelow: {
-    width: 120,
-    height: 140,
-    objectFit: 'cover',
-    marginTop: 20,
-    borderRadius: 4,
-    alignSelf: 'center',
   },
   
   // White footer bar spanning full width
@@ -958,17 +933,6 @@ export const pdfStyles = StyleSheet.create({
     fontStyle: 'italic',
   },
 
-  // Disclaimer text with reduced whitespace
-  page3DisclaimerCompact: {
-    fontSize: 10,
-    lineHeight: 1.2, // Further reduced spacing
-    color: '#6B7280',
-    marginTop: 8, // Further reduced from 15
-    marginBottom: 8, // Further reduced from 10
-    textAlign: 'center',
-    fontStyle: 'italic',
-  },
-
   // Dark blue dotted line after disclaimer
   page3DisclaimerDottedLine: {
     borderTopWidth: 2,
@@ -1181,16 +1145,6 @@ export const pdfStyles = StyleSheet.create({
     paddingTop: 24, // 0.8cm top margin
     marginLeft: 42, // 1.5cm left margin
   },
-
-  // Page 4 header container
-  page4HeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    paddingHorizontal: 40,
-    paddingTop: 24, // 0.8cm top margin
-    marginLeft: 42, // 1.5cm left margin
-  },
   
   page4HeaderNumber: {
     width: 50,
@@ -1248,15 +1202,6 @@ export const pdfStyles = StyleSheet.create({
     lineHeight: 1.5,
     color: '#374151',
     marginBottom: 12,
-    textAlign: 'justify',
-  },
-
-  // Page 4 section 2 text below image
-  page4Section2Text: {
-    fontSize: 11,
-    lineHeight: 1.5,
-    color: '#374151',
-    marginTop: 20,
     textAlign: 'justify',
   },
   
@@ -1363,33 +1308,6 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     maxWidth: '50%', // Maximum width to middle of page
-  },
-
-  // Page 5 header with dark blue background and larger size
-  page5HeaderTitleDarkBlue: {
-    backgroundColor: '#172342', // Changed to #172342
-    paddingHorizontal: 30,
-    paddingVertical: 15, // Increased height to match page 4
-    borderRadius: 12,
-    maxWidth: '50%', // Maximum width to middle of page
-  },
-
-  // Page 5 header text in white
-  page5HeaderTextWhite: {
-    fontSize: 16, // Decreased header text size
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'left',
-  },
-
-  // Page 5 header container styles
-  page5HeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    paddingHorizontal: 40,
-    paddingTop: 24, // 0.8cm top margin
-    marginLeft: 42, // 1.5cm left margin
   },
   
   page5Title: {
@@ -1758,6 +1676,14 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'contain',
   },
 
+  page4HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
+  },
+
   page4Content: {
     flex: 1,
     paddingHorizontal: 40,
@@ -1777,6 +1703,14 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  page5HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
+  },
+
   page5FooterLogoImage: {
     width: 50,
     height: 30,
@@ -1791,14 +1725,5 @@ export const pdfStyles = StyleSheet.create({
     minWidth: 70, // Wider than original
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  // Page 5 header with blue background
-  page5HeaderTitleBlue: {
-    backgroundColor: '#0281BD', // Blue background for page title
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    borderRadius: 12,
-    maxWidth: '50%',
   },
 });
