@@ -301,13 +301,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </Text>
               )}
               
-              {/* Add portrait image below text */}
-              {getPageData(2).content?.portrait_url && (
-                <Image 
-                  style={pdfStyles.page2PortraitImageBelow} 
-                  src={getPageData(2).content.portrait_url} 
-                />
-              )}
+          {/* Add portrait image below text */}
+          {getPageData(2).image1_url && (
+            <Image 
+              style={pdfStyles.page2PortraitImageBelow} 
+              src={getPageData(2).image1_url} 
+            />
+          )}
             </View>
           </View>
         </View>
@@ -528,20 +528,20 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header section with number and title on blue background */}
+        {/* Header section with number and title on dark blue background */}
         <View style={pdfStyles.page5HeaderContainer}>
           <View style={pdfStyles.page5HeaderNumber}>
             <Text style={pdfStyles.page5Number}>5</Text>
           </View>
-          <View style={pdfStyles.page5HeaderTitleBlue}>
-            <Text style={pdfStyles.page5HeaderText}>Business Valuation</Text>
+          <View style={pdfStyles.page5HeaderTitleDarkBlue}>
+            <Text style={pdfStyles.page5HeaderTextWhite}>Business Valuation</Text>
           </View>
         </View>
 
         {/* Main content area with new layout */}
         <View style={pdfStyles.page5NewMainContainer}>
-          {/* Left section - text content (55% width) */}
-          <View style={pdfStyles.page5NewLeftSection}>
+          {/* Left section - text content (50% width) */}
+          <View style={pdfStyles.page5FixedLeftSection}>
             {/* Section 1 from PDF management */}
             {getPageData(5).content?.content && getPageData(5).content.content[0] && (
               <Text style={pdfStyles.page5Section1Heading}>
@@ -557,8 +557,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             )}
           </View>
           
-          {/* Right section - image (45% width) */}
-          <View style={pdfStyles.page5NewRightSection}>
+          {/* Right section - image (50% width) */}
+          <View style={pdfStyles.page5FixedRightSection}>
             {getPageData(5).image1_url ? (
               <Image 
                 style={pdfStyles.page5SectionImage} 
@@ -577,41 +577,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderFooter(5)}
       </Page>
 
-      {/* Page 6 - Final Cover Page */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Background image covering full width with 10% header space */}
-        <View style={pdfStyles.page6FullBackground}>
-          {getPageData(6).background ? (
-            <Image 
-              style={pdfStyles.page6FullBackgroundImage} 
-              src={getPageData(6).background} 
-            />
-          ) : (
-            <Image 
-              style={pdfStyles.page6FullBackgroundImage} 
-              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200&h=800" 
-            />
-          )}
-        </View>
-        
-        {/* Page title on white background over image */}
-        <View style={pdfStyles.page6TitleOverlay}>
-          <Text style={pdfStyles.page6WhiteTitle}>{getPageData(6).page_name || "Titel vanuit pdf beheer"}</Text>
-          
-          {getPageData(6).content?.section1 && (
-            <Text style={pdfStyles.page6Section1Text}>{getPageData(6).content.section1}</Text>
-          )}
-        </View>
-        
-        {/* Section 2 text at bottom with 25% left margin */}
-        {getPageData(6).content?.section2 && (
-          <View style={pdfStyles.page6BottomText}>
-            <Text style={pdfStyles.page6Section2Text}>
-              {getPageData(6).content.section2}
-            </Text>
-          </View>
-        )}
-      </Page>
     </Document>
   );
 };

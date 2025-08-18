@@ -254,6 +254,21 @@ export const pdfStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  // Fixed left section - 50% width
+  page5FixedLeftSection: {
+    width: '50%',
+    paddingRight: 20,
+    flexDirection: 'column',
+  },
+
+  // Fixed right section - 50% width
+  page5FixedRightSection: {
+    width: '50%',
+    paddingLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   // Section 1 heading style - blue color
   page5Section1Heading: {
     fontSize: 18,
@@ -1755,5 +1770,22 @@ export const pdfStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     maxWidth: '50%',
+  },
+
+  // Page 5 header with dark blue background and decreased height
+  page5HeaderTitleDarkBlue: {
+    backgroundColor: '#1e40af', // Dark blue background
+    paddingHorizontal: 30,
+    paddingVertical: 6, // Decreased height
+    borderRadius: 12,
+    maxWidth: '50%',
+  },
+
+  // Page 5 header text with white color
+  page5HeaderTextWhite: {
+    fontSize: 14, // Decreased header text size
+    fontWeight: 'bold',
+    color: 'white', // White text
+    textAlign: 'left',
   },
 });
