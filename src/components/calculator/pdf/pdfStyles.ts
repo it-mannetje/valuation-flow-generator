@@ -206,26 +206,26 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'left',
   },
   
-  // Page 4 title styling - dark blue
+  // Page 4 title styling - dark blue (decreased size)
   page4Title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#172342',
     marginBottom: 15,
     textAlign: 'left',
   },
  
-  // Page 4 header title styling - white text
+  // Page 4 header title styling - white text (decreased size)
   page4HeaderTitleText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'left',
   },
   
-  // Page 5 header text - dark blue with header font size
+  // Page 5 header text - dark blue with header font size (decreased size)
   page5HeaderText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#172342',
     marginBottom: 15,
@@ -293,8 +293,8 @@ export const pdfStyles = StyleSheet.create({
     position: 'absolute' as const,
     top: 15,
     right: 25,
-    width: 60,
-    height: 40,
+    width: 69, // Increased by 15% (60 * 1.15 = 69)
+    height: 46, // Increased by 15% (40 * 1.15 = 46)
     objectFit: 'contain' as const,
   },
 
@@ -328,17 +328,14 @@ export const pdfStyles = StyleSheet.create({
     color: '#6B7280',
   },
   
-  // Portrait image positioned at bottom center over both columns
+  // Portrait image positioned below text in right section
   page2PortraitImage: {
-    position: 'absolute',
     width: 120,
     height: 140,
     objectFit: 'cover',
-    left: '50%',
-    bottom: 80, // Above footer in middle between sections
-    marginLeft: -60, // Half of width to center
-    zIndex: 10,
+    marginTop: 20,
     borderRadius: 4,
+    alignSelf: 'center',
   },
   
   // White footer bar spanning full width
@@ -923,12 +920,13 @@ export const pdfStyles = StyleSheet.create({
     color: '#0281BD',
   },
   
-  // Disclaimer
+  // Disclaimer with reduced margins
   page3Disclaimer: {
     fontSize: 8, // Reduced font size
     color: '#6B7280',
     textAlign: 'center',
-    marginBottom: 10, // Reduced margin
+    marginTop: 5, // Reduced top margin
+    marginBottom: 5, // Reduced bottom margin
     lineHeight: 1.2, // Reduced line height
     fontStyle: 'italic',
   },
@@ -974,7 +972,7 @@ export const pdfStyles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 80, // Reduced height
     paddingHorizontal: 10,
-    borderBottomWidth: 3, // Added thick dark blue line under bars
+    borderBottomWidth: 2, // Removed the second grey line under bars
     borderBottomColor: '#172342',
   },
   
@@ -1303,17 +1301,18 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5HeaderTitle: {
-    backgroundColor: '#172342', // Dark blue background
+    backgroundColor: '#172342', // Changed to dark blue #172342
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 12,
     maxWidth: '50%', // Maximum width to middle of page
+    height: 50, // Same height as page 4
   },
   
   page5Title: {
-    fontSize: 18,
+    fontSize: 16, // Decreased size
     fontWeight: 'bold',
-    color: 'white',
+    color: 'white', // White text on dark blue background
   },
   
   // Main content layout
@@ -1325,12 +1324,12 @@ export const pdfStyles = StyleSheet.create({
   },
   
   page5LeftColumn: {
-    width: '50%', // 50% width as requested
+    width: '50%', // Set to 50% width as requested
     paddingRight: 30,
   },
-  
+
   page5RightColumn: {
-    width: '50%', // Adjust to match left column
+    width: '50%', // Set to 50% width as requested
     paddingLeft: 30,
   },
   
@@ -1344,7 +1343,7 @@ export const pdfStyles = StyleSheet.create({
   page5ContentText: {
     fontSize: 12, // Keep at 12px
     lineHeight: 1.4, // Tighter line height
-    color: '#4b5563', // Changed to dark gray
+    color: '#0281BD', // Changed to blue color
     marginBottom: 12,
     textAlign: 'justify',
   },
@@ -1603,12 +1602,12 @@ export const pdfStyles = StyleSheet.create({
   // Page 6 new styles for full background layout
   page6FullBackground: {
     position: 'absolute',
-    top: '10%', // 10% header space
+    top: '5%', // Move background image more to the top (reduced from 10% to 5%)
     left: 0,
     right: 0,
     bottom: 0,
     width: '100%',
-    height: '90%',
+    height: '95%', // Increased height accordingly
   },
   
   page6FullBackgroundImage: {

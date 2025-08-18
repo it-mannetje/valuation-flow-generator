@@ -281,7 +281,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getPageData(2).page_name || "Voorwoord"}
             </Text>
             
-            {/* Show all text content from PDF management */}
+          {/* Show all text content from PDF management */}
             <View style={{ flex: 1 }}>
               {getPageData(2).content?.content ? (
                  getPageData(2).content.content.map((section: any, index: number) => (
@@ -301,16 +301,16 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </Text>
               )}
             </View>
+            
+            {/* Portrait image positioned below text in right section */}
+            {getPageData(2).image1_url && (
+              <Image 
+                style={pdfStyles.page2PortraitImage} 
+                src={getPageData(2).image1_url} 
+              />
+            )}
           </View>
         </View>
-        
-        {/* Portrait image positioned at bottom center */}
-        {getPageData(2).content?.portrait_url && (
-          <Image 
-            style={pdfStyles.page2PortraitImage} 
-            src={getPageData(2).content.portrait_url} 
-          />
-        )}
         
         {/* Dynamic Footer */}
         {renderFooter(2)}
@@ -494,30 +494,45 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Content sections with text from PDF management */}
-        <View style={pdfStyles.page4Content}>
-          {getPageData(4).content?.content ? (
-            renderContentSections(getPageData(4).content.content)
-          ) : (
-            <Text style={pdfStyles.forewordText}>
-              De overnamemarkt in de {companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name : 'sector'} kent een sterke dynamiek.
+        {/* Main content layout */}
+        <View style={pdfStyles.page4MainContent}>
+          {/* Left section - Section 1 text and sector text */}
+          <View style={pdfStyles.page4LeftColumn}>
+            {/* Section 1 text from PDF management */}
+            {getPageData(4).content?.content && getPageData(4).content.content[0] && (
+              <Text style={pdfStyles.page4ContentText}>
+                {getPageData(4).content.content[0].text || ''}
+              </Text>
+            )}
+            
+            {/* Sector text below section 1 */}
+            <Text style={pdfStyles.page4ContentText}>
+              {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
             </Text>
-          )}
-        </View>
+          </View>
 
-        {/* Right section with image moved down */}
-        <View style={pdfStyles.page4RightSection}>
-          {getPageData(4).image1_url ? (
-            <Image 
-              style={pdfStyles.page4ImageMoved} 
-              src={getPageData(4).image1_url}
-            />
-          ) : (
-            <Image 
-              style={pdfStyles.page4ImageMoved} 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
-            />
-          )}
+          {/* Right section with image and section 2 text */}
+          <View style={pdfStyles.page4RightColumn}>
+            {/* Image from pdf management */}
+            {getPageData(4).image1_url ? (
+              <Image 
+                style={pdfStyles.page4ImageMoved} 
+                src={getPageData(4).image1_url}
+              />
+            ) : (
+              <Image 
+                style={pdfStyles.page4ImageMoved} 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
+              />
+            )}
+            
+            {/* Section 2 text below image */}
+            {getPageData(4).content?.content && getPageData(4).content.content[1] && (
+              <Text style={pdfStyles.page4ContentText}>
+                {getPageData(4).content.content[1].text || ''}
+              </Text>
+            )}
+          </View>
         </View>
         
         {/* Dynamic Footer */}
@@ -532,31 +547,25 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <Text style={pdfStyles.page5Number}>5</Text>
           </View>
           <View style={pdfStyles.page5HeaderTitle}>
-            <Text style={pdfStyles.page5HeaderText}>Business Valuation</Text>
+            <Text style={pdfStyles.page5Title}>Business Valuation</Text>
           </View>
         </View>
 
         {/* Main content area with new layout */}
-        <View style={pdfStyles.page5NewMainContainer}>
-          {/* Left section - text content (55% width) */}
-          <View style={pdfStyles.page5NewLeftSection}>
-            {/* Section 1 from PDF management */}
+        <View style={pdfStyles.page5MainContent}>
+          {/* Left section - text content (50% width) */}
+          <View style={pdfStyles.page5LeftColumn}>
+            {/* Section 1 from PDF management with blue color */}
             {getPageData(5).content?.content && getPageData(5).content.content[0] && (
-              <Text style={pdfStyles.page5Section1Heading}>
+              <Text style={pdfStyles.page5ContentText}>
                 {getPageData(5).content.content[0].text || ''}
-              </Text>
-            )}
-            
-            {/* Section 2 from PDF management with 12px font */}
-            {getPageData(5).content?.content && getPageData(5).content.content[1] && (
-              <Text style={pdfStyles.page5Section2Text}>
-                {getPageData(5).content.content[1].text || ''}
               </Text>
             )}
           </View>
           
-          {/* Right section - image (45% width) */}
-          <View style={pdfStyles.page5NewRightSection}>
+          {/* Right section - image and section 2 text (50% width) */}
+          <View style={pdfStyles.page5RightColumn}>
+            {/* Image from pdf management */}
             {getPageData(5).image1_url ? (
               <Image 
                 style={pdfStyles.page5SectionImage} 
@@ -567,6 +576,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 style={pdfStyles.page5SectionImage} 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
               />
+            )}
+            
+            {/* Section 2 text below image */}
+            {getPageData(5).content?.content && getPageData(5).content.content[1] && (
+              <Text style={pdfStyles.page5Section2Text}>
+                {getPageData(5).content.content[1].text || ''}
+              </Text>
             )}
           </View>
         </View>
@@ -609,6 +625,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </Text>
           </View>
         )}
+        
+        {/* Dynamic Footer */}
+        {renderFooter(6)}
       </Page>
     </Document>
   );
