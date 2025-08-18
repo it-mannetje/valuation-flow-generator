@@ -1,30 +1,7 @@
 import React from 'react';
 import { View, Text, Image } from '@react-pdf/renderer';
 import { StyleSheet } from '@react-pdf/renderer';
-
-interface FooterConfig {
-  height: string;
-  backgroundColor: string;
-  logoPosition: 'left' | 'center' | 'right';
-  logoMaxWidth: number;
-  logoMaxHeight: number;
-  pageNumberPosition: 'left' | 'center' | 'right';
-  pageNumberStyle: {
-    backgroundColor: string;
-    borderRadius: number;
-    width: string;
-    height: string;
-    color: string;
-    fontSize: number;
-    fontWeight: string;
-  };
-  dottedLineStyle: {
-    color: string;
-    width: number;
-    height: number;
-    marginRight: number;
-  };
-}
+import { FooterConfig } from '@/types/footer';
 
 interface PDFFooterProps {
   pageNumber: number;
