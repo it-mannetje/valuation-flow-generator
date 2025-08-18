@@ -228,15 +228,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.coverMainContent}>
           {/* Left section - Main image (60% width) */}
           <View style={pdfStyles.coverImageSection}>
-            {getPageData(1).background ? (
+            {getPageData(1).background && (
               <Image 
                 style={pdfStyles.coverMainImage} 
                 src={getPageData(1).background} 
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.coverMainImage} 
-                src="https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&q=80&w=800&h=600" 
               />
             )}
           </View>
@@ -262,15 +257,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         <View style={pdfStyles.page2Layout}>
           {/* Left column - Image (45%) */}
           <View style={pdfStyles.page2LeftColumn}>
-            {getPageData(2).background ? (
+            {getPageData(2).background && (
               <Image 
                 style={pdfStyles.page2MainImage} 
                 src={getPageData(2).background} 
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.page2MainImage} 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=1000" 
               />
             )}
           </View>
@@ -302,13 +292,18 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               )}
             </View>
             
-            {/* Portrait image positioned below text in right section */}
-            {getPageData(2).image1_url && (
+            {/* Portrait image positioned below text in right section - scale to fit */}
+            {getPageData(2).image1_url ? (
               <Image 
                 style={pdfStyles.page2PortraitImage} 
                 src={getPageData(2).image1_url} 
               />
-            )}
+            ) : getPageData(2).middle_image_url ? (
+              <Image 
+                style={pdfStyles.page2PortraitImage} 
+                src={getPageData(2).middle_image_url} 
+              />
+            ) : null}
           </View>
         </View>
         
@@ -469,8 +464,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                     </View>
                   </View>
                   
-                  {/* Chart baseline */}
-                  <View style={pdfStyles.page3ChartBaseline} />
+                  {/* Chart baseline - removed second grey line */}
                 </View>
               </View>
             </View>
@@ -511,18 +505,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </Text>
           </View>
 
-          {/* Right section with image and section 2 text */}
+          {/* Right section with image from PDF management and section 2 text */}
           <View style={pdfStyles.page4RightColumn}>
-            {/* Image from pdf management */}
-            {getPageData(4).image1_url ? (
+            {/* Image from pdf management - removing hardcoded fallback */}
+            {getPageData(4).image1_url && (
               <Image 
                 style={pdfStyles.page4ImageMoved} 
                 src={getPageData(4).image1_url}
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.page4ImageMoved} 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
               />
             )}
             
@@ -541,40 +530,40 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 5 - Bedrijfswaardering */}
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
-        {/* Header section with number and title */}
+        {/* Header section with number and title - decreased height by 10px */}
         <View style={pdfStyles.page5HeaderContainer}>
           <View style={pdfStyles.page5HeaderNumber}>
             <Text style={pdfStyles.page5Number}>5</Text>
           </View>
-          <View style={pdfStyles.page5HeaderTitle}>
-            <Text style={pdfStyles.page5Title}>Business Valuation</Text>
+          <View style={pdfStyles.page5HeaderTitleSmaller}>
+            <Text style={pdfStyles.page5TitleWhite}>Business Valuation</Text>
           </View>
         </View>
 
         {/* Main content area with new layout */}
         <View style={pdfStyles.page5MainContent}>
           {/* Left section - text content (50% width) */}
-          <View style={pdfStyles.page5LeftColumn}>
-            {/* Section 1 from PDF management with blue color */}
+          <View style={pdfStyles.page5LeftColumnWider}>
+            {/* Section 1 from PDF management with increased font size */}
             {getPageData(5).content?.content && getPageData(5).content.content[0] && (
-              <Text style={pdfStyles.page5ContentText}>
+              <Text style={pdfStyles.page5Section1Text}>
                 {getPageData(5).content.content[0].text || ''}
               </Text>
             )}
+            
+            {/* Add sector text based on input form under section 1 text */}
+            <Text style={pdfStyles.page5SectorText}>
+              {getSectorText() || 'Sector specifieke informatie wordt hier weergegeven.'}
+            </Text>
           </View>
           
           {/* Right section - image and section 2 text (50% width) */}
           <View style={pdfStyles.page5RightColumn}>
-            {/* Image from pdf management */}
-            {getPageData(5).image1_url ? (
+            {/* Image from pdf management - removing hardcoded fallback */}
+            {getPageData(5).image1_url && (
               <Image 
                 style={pdfStyles.page5SectionImage} 
                 src={getPageData(5).image1_url}
-              />
-            ) : (
-              <Image 
-                style={pdfStyles.page5SectionImage} 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800&h=600" 
               />
             )}
             
@@ -595,15 +584,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="landscape" style={pdfStyles.page}>
         {/* Background image covering full width with 10% header space */}
         <View style={pdfStyles.page6FullBackground}>
-          {getPageData(6).background ? (
+          {getPageData(6).background && (
             <Image 
               style={pdfStyles.page6FullBackgroundImage} 
               src={getPageData(6).background} 
-            />
-          ) : (
-            <Image 
-              style={pdfStyles.page6FullBackgroundImage} 
-              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200&h=800" 
             />
           )}
         </View>

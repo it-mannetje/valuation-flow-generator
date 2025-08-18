@@ -1019,14 +1019,7 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'center',
   },
   
-  page3ChartBaseline: {
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-    height: 1,
-    backgroundColor: '#9CA3AF',
-  },
+  // Chart baseline removed to eliminate second grey line under bar charts
   
   // Results grid for 2x2 layout
   page3ResultsGrid: {
@@ -1302,11 +1295,26 @@ export const pdfStyles = StyleSheet.create({
     maxWidth: '50%', // Maximum width to middle of page
     height: 50, // Same height as page 4
   },
-  
+
+  page5HeaderTitleSmaller: {
+    backgroundColor: '#172342',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 12,
+    maxWidth: '50%',
+    height: 40, // Decreased height by 10px (was 50px)
+  },
+
   page5Title: {
     fontSize: 16, // Decreased size
     fontWeight: 'bold',
     color: 'white', // White text on dark blue background
+  },
+
+  page5TitleWhite: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white', // Set text color header text to white
   },
   
   // Main content layout
@@ -1319,6 +1327,11 @@ export const pdfStyles = StyleSheet.create({
   
   page5LeftColumn: {
     width: '50%', // Set to 50% width as requested
+    paddingRight: 30,
+  },
+
+  page5LeftColumnWider: {
+    width: '50%', // Set width of left section to 50%
     paddingRight: 30,
   },
 
@@ -1340,6 +1353,23 @@ export const pdfStyles = StyleSheet.create({
     color: '#0281BD', // Changed to blue color
     marginBottom: 12,
     textAlign: 'justify',
+  },
+
+  page5Section1Text: {
+    fontSize: 14, // Increase font-size Text section 1
+    lineHeight: 1.4,
+    color: '#0281BD',
+    marginBottom: 12,
+    textAlign: 'justify',
+  },
+
+  page5SectorText: {
+    fontSize: 12,
+    lineHeight: 1.4,
+    color: '#374151',
+    marginBottom: 12,
+    textAlign: 'justify',
+    marginTop: 10,
   },
   
   // Company logos grid
