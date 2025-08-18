@@ -588,6 +588,88 @@ export default function FooterTemplateManager() {
               </p>
             </div>
 
+            {newTemplate.template_type === 'components' && (
+              <div className="border rounded-lg p-4 space-y-4">
+                <h4 className="font-medium">Paginanummer Styling</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div>
+                    <Label htmlFor="page-bg-color">Achtergrondkleur</Label>
+                    <Input
+                      id="page-bg-color"
+                      type="color"
+                      value={newTemplate.layout_config.pageNumberStyle.backgroundColor}
+                      onChange={(e) => setNewTemplate(prev => ({
+                        ...prev,
+                        layout_config: {
+                          ...prev.layout_config,
+                          pageNumberStyle: {
+                            ...prev.layout_config.pageNumberStyle,
+                            backgroundColor: e.target.value
+                          }
+                        }
+                      }))}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="page-text-color">Tekstkleur</Label>
+                    <Input
+                      id="page-text-color"
+                      type="color"
+                      value={newTemplate.layout_config.pageNumberStyle.color}
+                      onChange={(e) => setNewTemplate(prev => ({
+                        ...prev,
+                        layout_config: {
+                          ...prev.layout_config,
+                          pageNumberStyle: {
+                            ...prev.layout_config.pageNumberStyle,
+                            color: e.target.value
+                          }
+                        }
+                      }))}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="page-border-color">Randkleur</Label>
+                    <Input
+                      id="page-border-color"
+                      type="color"
+                      value={newTemplate.layout_config.pageNumberStyle.borderColor}
+                      onChange={(e) => setNewTemplate(prev => ({
+                        ...prev,
+                        layout_config: {
+                          ...prev.layout_config,
+                          pageNumberStyle: {
+                            ...prev.layout_config.pageNumberStyle,
+                            borderColor: e.target.value
+                          }
+                        }
+                      }))}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="page-border-width">Randbreedte</Label>
+                    <Input
+                      id="page-border-width"
+                      type="number"
+                      min="0"
+                      max="5"
+                      value={newTemplate.layout_config.pageNumberStyle.borderWidth}
+                      onChange={(e) => setNewTemplate(prev => ({
+                        ...prev,
+                        layout_config: {
+                          ...prev.layout_config,
+                          pageNumberStyle: {
+                            ...prev.layout_config.pageNumberStyle,
+                            borderWidth: parseInt(e.target.value) || 0
+                          }
+                        }
+                      }))}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={() => {
                 setShowCreateForm(false);
