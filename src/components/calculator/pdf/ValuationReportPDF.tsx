@@ -280,15 +280,15 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               )}
             </View>
             
-            {/* Portrait photo moved to bottom */}
+            {/* Portrait photo positioned absolutely at bottom */}
             {getPageData(2).image1_url ? (
               <Image 
-                style={pdfStyles.page2PortraitImageBottom} 
+                style={pdfStyles.page2PortraitImageFixed} 
                 src={getPageData(2).image1_url} 
               />
             ) : getPageData(2).middle_image_url ? (
               <Image 
-                style={pdfStyles.page2PortraitImageBottom} 
+                style={pdfStyles.page2PortraitImageFixed} 
                 src={getPageData(2).middle_image_url} 
               />
             ) : null}

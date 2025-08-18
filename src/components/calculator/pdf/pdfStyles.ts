@@ -272,11 +272,19 @@ export const pdfStyles = StyleSheet.create({
     textAlign: 'justify',
   },
 
-  // Section image in right column
+  // Section image in right column for page 5
   page5SectionImage: {
     width: '100%',
     height: 'auto',
     maxHeight: '80%',
+    objectFit: 'contain',
+  },
+
+  // Section image in right column for page 4
+  page4SectionImage: {
+    width: '100%',
+    height: 'auto',
+    maxHeight: '70%',
     objectFit: 'contain',
   },
   
@@ -364,6 +372,18 @@ export const pdfStyles = StyleSheet.create({
     borderRadius: 4,
     alignSelf: 'center',
     marginTop: 'auto',
+  },
+
+  // Portrait image fixed at absolute bottom
+  page2PortraitImageFixed: {
+    position: 'absolute',
+    bottom: 100, // Above footer
+    right: 40,
+    width: 120,
+    height: 140,
+    objectFit: 'cover',
+    borderRadius: 4,
+    zIndex: 15,
   },
 
   // Portrait image positioned on left side with scaling
