@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import PDFContentManager from './PDFContentManager';
 import FooterTemplateManager from './FooterTemplateManager';
+import PageAnalyzer from './PageAnalyzer';
 import { useSectorConfig } from '@/hooks/useSectorConfig';
 import GeneralSettingsManager from './GeneralSettingsManager';
 import AuditLogViewer from './AuditLogViewer';
@@ -121,10 +122,11 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="sectors" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="sectors">Sector Management</TabsTrigger>
             <TabsTrigger value="pdf">PDF Beheer</TabsTrigger>
             <TabsTrigger value="footer">Footer Templates</TabsTrigger>
+            <TabsTrigger value="analyzer">Pagina Analyzer</TabsTrigger>
             <TabsTrigger value="settings">Algemene Instellingen</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
           </TabsList>
@@ -352,6 +354,18 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent className="p-6">
                 <FooterTemplateManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="analyzer">
+            <Card className="shadow-lg">
+              <CardHeader className="bg-gradient-card border-b">
+                <CardTitle className="text-xl">PDF Pagina Analyzer</CardTitle>
+                <p className="text-muted-foreground">Visuele analyse van PDF pagina elementen en layout</p>
+              </CardHeader>
+              <CardContent className="p-6">
+                <PageAnalyzer />
               </CardContent>
             </Card>
           </TabsContent>
