@@ -789,8 +789,8 @@ export const pdfStyles = StyleSheet.create({
   page3ColumnTitle: {
     fontSize: 14, // Reduced font size
     fontWeight: 'bold',
-    color: '#0281BD',
-    marginBottom: 24, // Increased from 12 to 24 for more white space
+    color: '#172342', // Dark blue
+    marginBottom: 14, // Changed to 14px as requested
     textDecoration: 'underline',
   },
   
@@ -1658,5 +1658,72 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 12,
     color: '#374151',
     lineHeight: 1.4,
+  },
+
+  // Add missing styles for the requested changes
+  page3HorizontalDottedLine: {
+    width: '100%',
+    height: 2,
+    backgroundColor: '#172342', // Dark blue
+    marginTop: 15,
+    marginBottom: 15,
+    borderRadius: 1,
+  },
+
+  page3FooterLogoImage: {
+    width: 50,
+    height: 30,
+    objectFit: 'contain',
+  },
+
+  page4HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
+  },
+
+  page4Content: {
+    flex: 1,
+    paddingHorizontal: 40,
+  },
+
+  page4ImageMoved: {
+    width: 350,
+    height: 300,
+    borderRadius: 12,
+    objectFit: 'cover',
+    marginTop: 56, // 2cm down
+  },
+
+  page4RightSection: {
+    width: '50%',
+    paddingLeft: 30,
+    alignItems: 'center',
+  },
+
+  page5HeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    paddingTop: 24, // 0.8cm top margin
+    marginLeft: 20, // 0.7cm left margin (changed from 1.5cm)
+  },
+
+  page5FooterLogoImage: {
+    width: 50,
+    height: 30,
+    objectFit: 'contain',
+  },
+
+  page5PageNumberBoxWider: {
+    backgroundColor: '#f3f4f6',
+    paddingHorizontal: 20, // Wider than original
+    paddingVertical: 8,
+    borderRadius: 15,
+    minWidth: 70, // Wider than original
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

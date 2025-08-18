@@ -107,7 +107,14 @@ const PDFFooter: React.FC<PDFFooterProps> = ({
 
   const renderLogo = () => {
     console.log(`🖼️ Rendering logo for page ${pageNumber}`);
-    // Always use text logo for consistency
+    // Use logo from PDF management if available, otherwise show text
+    if (logoUrl) {
+      return (
+        <View style={styles.logoContainer}>
+          <Image src={logoUrl} style={styles.logo} />
+        </View>
+      );
+    }
     return (
       <View style={styles.logoContainer}>
         <Text style={{ 
