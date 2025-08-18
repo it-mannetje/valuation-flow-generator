@@ -671,12 +671,6 @@ export const pdfStyles = StyleSheet.create({
     height: 40,
   },
   
-  footerLogo: {
-    position: 'absolute',
-    bottom: 60,
-    width: 80,
-    height: 30,
-  },
   
   // ========== PAGE 3 STYLES ==========
   

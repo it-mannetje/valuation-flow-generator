@@ -235,17 +235,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                 src={page.logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
               />
               
-              {/* White footer bar with logo and page number */}
-              <View style={pdfStyles.page2Footer}>
-                <View style={pdfStyles.page2FooterLeft}>
-                  <Text style={pdfStyles.page2FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page2FooterText}>Corporate Finance</Text>
-                </View>
-                <View style={pdfStyles.page2FooterRight}>
-                  <View style={pdfStyles.page2DottedLine} />
-                  <Text style={pdfStyles.page2PageNumberText}>2</Text>
-                </View>
-              </View>
             </Page>
           );
         }
@@ -352,17 +341,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                 </View>
               </View>
               
-              {/* White footer bar with logo and page number */}
-              <View style={pdfStyles.page3Footer}>
-                <View style={pdfStyles.page3FooterLeft}>
-                  <Text style={pdfStyles.page3FooterLogo}>fbm</Text>
-                  <Text style={pdfStyles.page3FooterText}>Corporate Finance</Text>
-                </View>
-                <View style={pdfStyles.page3FooterRight}>
-                  <View style={pdfStyles.page3DottedLine} />
-                  <Text style={pdfStyles.page3PageNumberText}>3</Text>
-                </View>
-              </View>
             </Page>
           );
         }
@@ -391,17 +369,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               {/* Page Content */}
               {page.content?.content && renderContentSections(page.content.content, page)}
 
-              {/* Footer Logo */}
-              {page.footer_logo_url && renderLogo(page.footer_logo_url, [
-                pdfStyles.footerLogo,
-                { 
-                  left: page.footer_logo_position === 'center' ? '45%' : 
-                        page.footer_logo_position === 'right' ? 'auto' : 20,
-                  right: page.footer_logo_position === 'right' ? 20 : 'auto'
-                }
-              ])}
-
-              <Text style={pdfStyles.pageNumber}>{page.page_number}</Text>
             </View>
           </Page>
         );
