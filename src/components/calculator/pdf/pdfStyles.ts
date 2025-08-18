@@ -347,7 +347,7 @@ export const pdfStyles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 56.69, // Changed to match footer template height
+    height: 42.51, // Changed to match footer template height
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -45,7 +45,7 @@ const createFooterStyles = (config: FooterConfig) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 40,
-    zIndex: 10,
+    zIndex: 100,
   },
   logoContainer: {
     flex: config.logoPosition === 'center' ? 1 : 0,

@@ -29,7 +29,7 @@ export default function FooterTemplateManager() {
     description: '',
     template_type: 'components' as 'components' | 'full_image',
     layout_config: {
-      height: '56.69',
+      height: '42.51',
       backgroundColor: '#FFFFFF',
       logoPosition: 'left' as const,
       logoMaxWidth: 80,
@@ -391,8 +391,12 @@ export default function FooterTemplateManager() {
                           className="mb-2"
                         />
                         {(template.logo_url || template.full_image_url) && (
-                          <div className="flex items-center gap-2">
-                            <ImageIcon className="w-4 h-4" />
+                          <div className="flex flex-col gap-2">
+                            <img 
+                              src={template.template_type === 'full_image' ? template.full_image_url : template.logo_url} 
+                              alt="Preview" 
+                              className="w-20 h-10 object-contain border rounded"
+                            />
                             <span className="text-xs text-muted-foreground">
                               Huidige {template.template_type === 'full_image' ? 'afbeelding' : 'logo'} behouden als geen nieuw bestand gekozen
                             </span>
@@ -401,8 +405,12 @@ export default function FooterTemplateManager() {
                       </div>
                     ) : (
                       (template.logo_url || template.full_image_url) ? (
-                        <div className="flex items-center gap-2">
-                          <ImageIcon className="w-4 h-4" />
+                        <div className="flex flex-col gap-2">
+                          <img 
+                            src={template.template_type === 'full_image' ? template.full_image_url : template.logo_url} 
+                            alt="Template preview" 
+                            className="w-20 h-10 object-contain border rounded"
+                          />
                           <span className="text-sm text-muted-foreground">
                             {template.template_type === 'full_image' ? 'Afbeelding' : 'Logo'} aanwezig
                           </span>
