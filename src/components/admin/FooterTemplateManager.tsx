@@ -120,6 +120,16 @@ export default function FooterTemplateManager() {
   };
 
   const handleCreateTemplate = async () => {
+    // Validation
+    if (!newTemplate.name.trim()) {
+      toast({
+        title: "Fout",
+        description: "Template naam is verplicht",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       let logoUrl = null;
       let fullImageUrl = null;
@@ -143,7 +153,7 @@ export default function FooterTemplateManager() {
           template_type: newTemplate.template_type,
           logo_url: logoUrl,
           full_image_url: fullImageUrl,
-          layout_config: newTemplate.layout_config as any
+          layout_config: newTemplate.layout_config
         })
         .select()
         .single();
@@ -156,7 +166,31 @@ export default function FooterTemplateManager() {
         name: '',
         description: '',
         template_type: 'components',
-        layout_config: newTemplate.layout_config
+        layout_config: {
+          height: '42.51',
+          backgroundColor: '#FFFFFF',
+          logoPosition: 'left' as const,
+          logoMaxWidth: 80,
+          logoMaxHeight: 30,
+          pageNumberPosition: 'right' as const,
+          pageNumberStyle: {
+            backgroundColor: '#F3F4F6',
+            borderRadius: 15,
+            width: '85.04',
+            height: '28.35',
+            color: '#374151',
+            fontSize: 12,
+            fontWeight: 'bold',
+            borderColor: '#E5E7EB',
+            borderWidth: 0
+          },
+          dottedLineStyle: {
+            color: '#2563EB',
+            width: 2,
+            height: 20,
+            marginRight: 10
+          }
+        }
       });
       setSelectedLogo(null);
 
