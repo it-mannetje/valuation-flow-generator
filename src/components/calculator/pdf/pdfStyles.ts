@@ -349,6 +349,23 @@ export const pdfStyles = StyleSheet.create({
     zIndex: 5,
   },
 
+  // Text only container for showing all text
+  page2TextOnlyContainer: {
+    flex: 1,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  // Portrait image positioned at bottom
+  page2PortraitImageBottom: {
+    width: 120,
+    height: 140,
+    objectFit: 'cover',
+    borderRadius: 4,
+    alignSelf: 'center',
+    marginTop: 'auto',
+  },
+
   // Portrait image positioned on left side with scaling
   page2PortraitImageLeft: {
     width: '100%',
@@ -1410,6 +1427,25 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 15,
   },
 
+  // Page 4 sector name style with blue color
+  page4SectorNameBlue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#0281BD', // Blue color as requested
+    marginBottom: 8,
+    marginTop: 15,
+  },
+
+  // Page 4 image scaled style
+  page4ImageScaled: {
+    width: '100%',
+    height: 'auto',
+    maxHeight: 400,
+    borderRadius: 12,
+    objectFit: 'contain',
+    marginTop: 20,
+  },
+
   // Page 5 section 2 with 12px font size
   page5Section2Small: {
     fontSize: 12,
@@ -1418,6 +1454,24 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 12,
     textAlign: 'justify',
     marginTop: 15,
+  },
+
+  // Page 5 section 2 text with 10px font size (no "Sectie 2:" prefix)
+  page5Section2SmallText: {
+    fontSize: 10, // 10px as requested
+    lineHeight: 1.4,
+    color: '#374151',
+    marginBottom: 12,
+    textAlign: 'justify',
+    marginTop: 15,
+  },
+
+  // Page 5 section image scaled style
+  page5SectionImageScaled: {
+    width: '100%',
+    height: 'auto',
+    maxHeight: '80%',
+    objectFit: 'contain',
   },
   
   // Company logos grid
