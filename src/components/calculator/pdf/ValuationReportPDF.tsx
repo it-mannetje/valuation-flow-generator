@@ -465,11 +465,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
           {/* Right section with image from PDF management and section 2 text */}
           <View style={pdfStyles.page4RightColumn}>
-            {/* Image from pdf management - scaled if needed */}
-            {getPageData(4).image1_url && (
+            {/* Image from pdf management - using same logic as page 2 */}
+            {(getPageData(4).image1_url || getPageData(4).middle_image_url) && (
               <Image 
-                style={pdfStyles.page4ImageScaled} 
-                src={getPageData(4).image1_url}
+                style={pdfStyles.page4SectionImage}
+                src={getPageData(4).image1_url || getPageData(4).middle_image_url}
               />
             )}
             
@@ -519,11 +519,11 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           
           {/* Right section - image only (50% width) */}
           <View style={pdfStyles.page5RightColumn}>
-            {/* Image from pdf management - scaled if needed */}
-            {getPageData(5).image1_url && (
+            {/* Image from pdf management - using same logic as page 2 */}
+            {(getPageData(5).image1_url || getPageData(5).middle_image_url) && (
               <Image 
-                style={pdfStyles.page5SectionImageScaled} 
-                src={getPageData(5).image1_url}
+                style={pdfStyles.page5SectionImage}
+                src={getPageData(5).image1_url || getPageData(5).middle_image_url}
               />
             )}
           </View>

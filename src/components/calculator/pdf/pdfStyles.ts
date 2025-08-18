@@ -264,9 +264,9 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 20,
   },
 
-  // Section 2 text - normal paragraph
+  // Section 2 text - 11px font size
   page5Section2Text: {
-    fontSize: 12,
+    fontSize: 11, // Changed to 11px as requested
     lineHeight: 1.5,
     color: '#374151',
     textAlign: 'justify',
@@ -288,21 +288,21 @@ export const pdfStyles = StyleSheet.create({
     objectFit: 'contain',
   },
   
-  // Text content paragraphs - dark grey, font-size 10px
+  // Text content paragraphs - dark grey, adjusted font-size
   page2TextContent: {
-    fontSize: 10, // Changed from 12 to 10px
-    lineHeight: 1.5,
+    fontSize: 9, // Decreased further to fit all text
+    lineHeight: 1.4,
     color: '#4b5563', // Dark grey
     textAlign: 'justify' as const,
-    marginBottom: 10,
+    marginBottom: 8,
   },
 
   headerLogo: {
     position: 'absolute' as const,
     top: 15,
     right: 25,
-    width: 69, // Increased by 15% (60 * 1.15 = 69)
-    height: 46, // Increased by 15% (40 * 1.15 = 46)
+    width: 80, // Increased logo size further
+    height: 53, // Increased logo size further
     objectFit: 'contain' as const,
   },
 
@@ -374,11 +374,11 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 'auto',
   },
 
-  // Portrait image fixed at absolute bottom
+  // Portrait image fixed at absolute bottom left
   page2PortraitImageFixed: {
     position: 'absolute',
-    bottom: 100, // Above footer
-    right: 40,
+    bottom: 100, // Above footer, align with left section image bottom
+    left: 0, // 0 margin left
     width: 120,
     height: 140,
     objectFit: 'cover',
@@ -883,6 +883,7 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8, // Reduced gap
     marginTop: 8, // Reduced margin
+    marginBottom: 5, // Decreased bottom margin on graphic
   },
   
   page3Image: {
@@ -1422,10 +1423,10 @@ export const pdfStyles = StyleSheet.create({
   },
 
   page5Section1Text: {
-    fontSize: 14, // Increase font-size Text section 1
+    fontSize: 14, // Use same font as page 4 sector name
     lineHeight: 1.4,
-    color: '#0281BD',
-    marginBottom: 12,
+    color: '#0281BD', // Blue color to match page 4 sector name
+    marginBottom: 8, // Decreased margin below Sectie 1 paragraph
     textAlign: 'justify',
   },
 
@@ -1476,9 +1477,9 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 15,
   },
 
-  // Page 5 section 2 text with 10px font size (no "Sectie 2:" prefix)
+  // Page 5 section 2 text with 11px font size (no "Sectie 2:" prefix)
   page5Section2SmallText: {
-    fontSize: 10, // 10px as requested
+    fontSize: 11, // Changed to 11px as requested
     lineHeight: 1.4,
     color: '#374151',
     marginBottom: 12,
