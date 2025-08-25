@@ -336,7 +336,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                   name="employees"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) werken er? *</FormLabel>
+                      <FormLabel className="text-base font-medium">Hoeveel medewerkers (FTE) heeft u? *</FormLabel>
                        <Select onValueChange={(value) => { 
                          field.onChange(parseInt(value));
                          // Store display value based on selection
@@ -369,7 +369,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                 name="largestClientDependency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Voor hoeveel van mijn omzet ben ik afhankelijk van mijn grootste klant?</FormLabel>
+                    <FormLabel className="text-base font-medium">Hoeveel procent van uw omzet is afhankelijk van uw grootste drie klanten?</FormLabel>
                      <Select onValueChange={(value) => {
                        field.onChange(parseInt(value));
                        // Store display value based on selection
@@ -400,7 +400,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                 name="largestSupplierRisk"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">Als mijn grootste toeleverancier er mee ophoudt dan: *</FormLabel>
+                    <FormLabel className="text-base font-medium">Welke impact heeft het wegvallen van uw grootste leverancier? *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                          <SelectTrigger className="h-12 bg-input text-black">
