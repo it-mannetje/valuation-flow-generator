@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -89,6 +89,12 @@ const AdminLogin = () => {
               {loading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
+          <div className="mt-4 text-center text-sm">
+            Don't have an account?{' '}
+            <Link to="/admin/signup" className="text-primary hover:underline">
+              Sign up
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
