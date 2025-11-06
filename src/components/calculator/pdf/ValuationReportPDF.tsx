@@ -272,10 +272,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
+        {/* Dynamic Footer */}
+        {renderFooter(3)}
       </Page>
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
+        {renderBackgroundImage(getPageData(4).background)}
+        
         {/* Main content layout */}
         <View style={pdfStyles.page4MainContent}>
           {/* Full width section - Section 1 text and sector text */}
