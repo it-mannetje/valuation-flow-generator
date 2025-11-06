@@ -448,7 +448,7 @@ export default function PDFContentManager() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            {pages.map((page) => (
+            {pages.filter(page => page.page_number !== 5).map((page) => (
               <Button
                 key={page.id}
                 variant={selectedPage?.id === page.id ? "default" : "outline"}
