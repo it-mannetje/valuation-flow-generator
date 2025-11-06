@@ -19,7 +19,7 @@ export const pdfStyles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '75%', // Cover bottom 75% of page
-    objectFit: 'cover',
+    objectFit: 'contain',
     zIndex: 0,
   },
   
@@ -106,7 +106,7 @@ export const pdfStyles = StyleSheet.create({
   coverMainImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
   },
   
   // Company info positioned in white area of background image (moved left)
@@ -185,7 +185,7 @@ export const pdfStyles = StyleSheet.create({
   page2MainImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
   },
   
   // Right column with text content (55% width)
