@@ -130,20 +130,9 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         if (page.page_number === 1) {
           return (
             <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
-              {/* Blue header section */}
-              <View style={pdfStyles.coverHeaderSection}>
-                <View style={pdfStyles.headerLeftContent}>
-                  <Text style={pdfStyles.headerTitle}>Rapport waardebepaling</Text>
-                  <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
-                  
-                </View>
-                {/* Logo in header */}
-                {page.top_logo_url && renderLogo(page.top_logo_url, pdfStyles.headerLogo)}
-              </View>
-              
-              {/* Main content area with image and company info */}
+              {/* Main content area with image only */}
               <View style={pdfStyles.coverMainContent}>
-                {/* Left section - Main image (60% width) */}
+                {/* Full width image */}
                 <View style={pdfStyles.coverImageSection}>
                   {page.background_image_url && (
                     <Image 
@@ -151,16 +140,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                       src={page.background_image_url} 
                     />
                   )}
-                </View>
-                
-                {/* Right section - Company info (40% width) */}
-                <View style={pdfStyles.coverCompanySection}>
-                  {/* Decorative dotted line */}
-                  <View style={pdfStyles.companyDecorativeLine} />
-                  
-                  {/* Company name and date */}
-                  <Text style={pdfStyles.companyNameLarge}>{contactData.companyName}</Text>
-                  <Text style={pdfStyles.companyDate}>[{currentDate}]</Text>
                 </View>
               </View>
             </Page>
@@ -171,10 +150,9 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         if (page.page_number === 2) {
           return (
             <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
-              
-              {/* Main content area with two columns */}
+              {/* Full width image only */}
               <View style={pdfStyles.page2Layout}>
-                {/* Left column - Main image (50%) */}
+                {/* Full width image */}
                 <View style={pdfStyles.page2LeftColumn}>
                   {page.background_image_url ? (
                     <Image 
@@ -188,53 +166,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
                     />
                   )}
                 </View>
-                
-                {/* Right column - Text content (50%) */}
-                <View style={pdfStyles.page2RightColumn}>
-                  <Text style={pdfStyles.page2Title}>Voorwoord</Text>
-                  
-                  {page.content?.content ? (
-                    renderContentSections(page.content.content, page)
-                  ) : (
-                    <>
-                      <Text style={pdfStyles.page2Paragraph}>
-                        Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
-                        FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
-                        Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
-                        een open houding en bovenal: advies met karakter.
-                      </Text>
-                      <Text style={pdfStyles.page2Paragraph}>
-                        Met een persoonlijke benadering en diepgaande expertise helpen we middelgrote en 
-                        grote bedrijven bij complexe vraagstukken op het gebied van fusies en overnames, 
-                        financieringen, herstructureringen en bedrijfswaarderingen. Ons team van ervaren 
-                        professionals, zelf vaak ook ondernemer, kijkt altijd met het perspectief van de klant. 
-                        Niet vanuit modellen of theorie, maar met gevoel voor de praktijk, creativiteit en lef. 
-                        We zijn trots op onze rol als sparringpartner en oplossingsgerichte adviseur voor meer 
-                        dan 500 ondernemingen in uiteenlopende sectoren. Of het nu gaat om software, 
-                        industrie, vastgoed of automotive: onze focus ligt op het realiseren van waarde en het 
-                        benutten van kansen.
-                      </Text>
-                      <Text style={pdfStyles.page2Paragraph}>
-                        FBM Corporate Finance is gebouwd op mensen met karakter. Geen 
-                        standaardadviseurs, maar betrokken professionals die verder kijken dan de cijfers. 
-                        Graag maken we kennis en gaan we samen het gesprek aan, laagdrempelig en altijd 
-                        met een goed kop koffie.
-                      </Text>
-                      
-                      <Text style={pdfStyles.page2Greeting}>Hartelijke groet,</Text>
-                      <Text style={pdfStyles.page2SignatureName}>Pieter Westland</Text>
-                      <Text style={pdfStyles.page2SignatureTitle}>Namens het team van FBM Corporate Finance</Text>
-                    </>
-                  )}
-                </View>
               </View>
-              
-              {/* Portrait image centered over both columns */}
-              <Image 
-                style={pdfStyles.page2PortraitImage} 
-                src={page.logo_image_url || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=180"} 
-              />
-              
             </Page>
           );
         }
@@ -257,16 +189,6 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
               {page.background_image_url && renderBackgroundImage(page.background_image_url)}
               
               <View style={pdfStyles.content}>
-                {/* Header with page number and title */}
-                <View style={pdfStyles.page3Header}>
-                  <View style={pdfStyles.page3HeaderNumber}>
-                    <Text style={pdfStyles.page3Number}>3</Text>
-                  </View>
-                  <View style={pdfStyles.page3HeaderTitle}>
-                    <Text style={pdfStyles.page3Title}>Indicatieve calculatie</Text>
-                  </View>
-                </View>
-                
                 {/* Main content area with two columns */}
                 <View style={pdfStyles.page3MainContent}>
                   {/* Left column - Input data */}
@@ -346,29 +268,19 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         }
 
         // Regular pages (4+)
+        // Skip page 5
+        if (page.page_number === 5) {
+          return null;
+        }
+
         return (
           <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
             {/* Background Image */}
             {renderBackgroundImage(page.background_image_url)}
 
-            {/* Top Logo */}
-            {page.top_logo_url && renderLogo(page.top_logo_url, [
-              pdfStyles.topLogo,
-              { 
-                left: page.top_logo_position === 'center' ? '45%' : 
-                      page.top_logo_position === 'right' ? 'auto' : 20,
-                right: page.top_logo_position === 'right' ? 20 : 'auto'
-              }
-            ])}
-
             <View style={pdfStyles.content}>
-              <View style={pdfStyles.pageHeader}>
-                <Text style={pdfStyles.fbmLogo}>fbm</Text>
-              </View>
-
               {/* Page Content */}
               {page.content?.content && renderContentSections(page.content.content, page)}
-
             </View>
           </Page>
         );

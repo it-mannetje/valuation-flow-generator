@@ -161,23 +161,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
     <Document>
       {/* Page 1 - Cover */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Blue header section */}
-        <View style={pdfStyles.coverHeaderSection}>
-          <View style={pdfStyles.headerLeftContent}>
-            <Text style={pdfStyles.headerTitle}>
-              {getPageData(1).content?.title || "Rapport waardebepaling"}
-            </Text>
-            <Text style={pdfStyles.headerConfidential}>STRICTLY CONFIDENTIAL</Text>
-          </View>
-          {/* Logo in upper right corner - fetched from PDF management */}
-          {getPageData(1).content?.logo_url ? (
-            renderLogo(getPageData(1).content.logo_url, pdfStyles.headerLogo)
-          ) : null}
-        </View>
-        
-        {/* Main content area with image and company info */}
+        {/* Main content area with image only */}
         <View style={pdfStyles.coverMainContent}>
-          {/* Left section - Main image (60% width) */}
+          {/* Full width image */}
           <View style={pdfStyles.coverImageSection}>
             {getPageData(1).background && (
               <Image 
@@ -185,16 +171,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 src={getPageData(1).background} 
               />
             )}
-          </View>
-          
-          {/* Right section - Company info (40% width) */}
-          <View style={pdfStyles.coverCompanySection}>
-            {/* Decorative dotted line */}
-            <View style={pdfStyles.companyDecorativeLine} />
-            
-            {/* Company name and date */}
-            <Text style={pdfStyles.companyNameLarge}>{contactData.companyName}</Text>
-            <Text style={pdfStyles.companyDate}>[{currentDate}]</Text>
           </View>
         </View>
         
@@ -204,9 +180,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 2 - New Layout */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Main content area with two columns */}
+        {/* Full width image only */}
         <View style={pdfStyles.page2Layout}>
-          {/* Left column - Image (45%) */}
+          {/* Full width image */}
           <View style={pdfStyles.page2LeftColumn}>
             {getPageData(2).background && (
               <Image 
@@ -214,47 +190,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 src={getPageData(2).background} 
               />
             )}
-          </View>
-          
-          {/* Right column - Title and text (55%) */}
-          <View style={pdfStyles.page2RightColumn}>
-            <Text style={pdfStyles.page2Title}>
-              {getPageData(2).page_name || "Voorwoord"}
-            </Text>
-            
-            {/* Show all section 1 text */}
-            <View style={pdfStyles.page2TextOnlyContainer}>
-              {getPageData(2).content?.content ? (
-                 getPageData(2).content.content.map((section: any, index: number) => (
-                   <Text key={index} style={pdfStyles.page2TextContent}>
-                     {section.text || ''}
-                   </Text>
-                 ))
-               ) : (
-                 <Text style={pdfStyles.page2TextContent}>
-                  Ondernemen is kansen zien, risico's inschatten en soms moeilijke keuzes maken. Bij 
-                  FBM Corporate Finance begrijpen we als geen ander wat daar allemaal bij komt kijken. 
-                  Wij staan ondernemers bij in belangrijke financiële beslissingen, met een scherpe blik, 
-                  een open houding en bovenal: advies met karakter. Met een persoonlijke benadering en 
-                  diepgaande expertise helpen we middelgrote en grote bedrijven bij complexe vraagstukken 
-                  op het gebied van fusies en overnames, financieringen, herstructureringen en 
-                  bedrijfswaarderingen.
-                </Text>
-              )}
-            </View>
-            
-            {/* Portrait photo positioned absolutely at bottom */}
-            {getPageData(2).image1_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImageFixed} 
-                src={getPageData(2).image1_url} 
-              />
-            ) : getPageData(2).middle_image_url ? (
-              <Image 
-                style={pdfStyles.page2PortraitImageFixed} 
-                src={getPageData(2).middle_image_url} 
-              />
-            ) : null}
           </View>
         </View>
         
@@ -267,16 +202,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderBackgroundImage(getPageData(3).background)}
         
         <View style={pdfStyles.content}>
-          {/* Header with page number and title */}
-          <View style={pdfStyles.page3Header}>
-            <View style={pdfStyles.page3HeaderNumber}>
-              <Text style={pdfStyles.page3Number}>3</Text>
-            </View>
-            <View style={pdfStyles.page3HeaderTitle}>
-              <Text style={pdfStyles.page3Title}>Indicatieve calculatie</Text>
-            </View>
-          </View>
-          
           {/* Main content area with two columns */}
           <View style={pdfStyles.page3MainContent}>
             {/* Left column - Input data */}
@@ -427,19 +352,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 4 - Marktontwikkelingen */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Header section with number and title */}
-        <View style={pdfStyles.page4HeaderContainer}>
-          <View style={pdfStyles.page4HeaderNumber}>
-            <Text style={pdfStyles.page4Number}>4</Text>
-          </View>
-          <View style={pdfStyles.page4HeaderTitle}>
-            <Text style={pdfStyles.page4HeaderTitleText}>Markontwikkelingen</Text>
-          </View>
-        </View>
-        
         {/* Main content layout */}
         <View style={pdfStyles.page4MainContent}>
-          {/* Left section - Section 1 text and sector text */}
+          {/* Full width section - Section 1 text and sector text */}
           <View style={pdfStyles.page4LeftColumn}>
             {/* Section 1 text from PDF management */}
             {getPageData(4).content?.content && getPageData(4).content.content[0] && (
@@ -460,95 +375,21 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
             </Text>
           </View>
-
-          {/* Right section with image from PDF management and section 2 text */}
-          <View style={pdfStyles.page4RightColumn}>
-            {/* Image from pdf management - check all possible image properties */}
-            {(getPageData(4).image1_url || getPageData(4).background || getPageData(4).middle_image_url || getPageData(4).image2_url) && (
-              <Image 
-                style={pdfStyles.page4SectionImage}
-                src={getPageData(4).image1_url || getPageData(4).background || getPageData(4).middle_image_url || getPageData(4).image2_url}
-              />
-            )}
-            
-            {/* Section 2 text below image */}
-            {getPageData(4).content?.content && getPageData(4).content.content[1] && (
-              <Text style={pdfStyles.page4ContentText}>
-                {getPageData(4).content.content[1].text || ''}
-              </Text>
-            )}
-          </View>
         </View>
         
         {/* Dynamic Footer */}
         {renderFooter(4)}
       </Page>
 
-      {/* Page 5 - Bedrijfswaardering */}
-      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Header section with number and title - decreased height by 10px */}
-        <View style={pdfStyles.page5HeaderContainer}>
-          <View style={pdfStyles.page5HeaderNumber}>
-            <Text style={pdfStyles.page5Number}>5</Text>
-          </View>
-          <View style={pdfStyles.page5HeaderTitleSmaller}>
-            <Text style={pdfStyles.page5TitleWhite}>Business Valuation</Text>
-          </View>
-        </View>
-
-        {/* Main content area with new layout */}
-        <View style={pdfStyles.page5MainContent}>
-          {/* Left section - text content (50% width) */}
-          <View style={pdfStyles.page5LeftColumnWider}>
-            {/* Section 1 from PDF management with increased font size */}
-            {getPageData(5).content?.content && getPageData(5).content.content[0] && (
-              <Text style={pdfStyles.page5Section1Text}>
-                {getPageData(5).content.content[0].text || ''}
-              </Text>
-            )}
-            
-            {/* Section 2 text with 10px font size - remove "Sectie 2:" prefix */}
-            {getPageData(5).content?.content && getPageData(5).content.content[1] && (
-              <Text style={pdfStyles.page5Section2SmallText}>
-                {getPageData(5).content.content[1].text || ''}
-              </Text>
-            )}
-          </View>
-          
-          {/* Right section - image only (50% width) */}
-          <View style={pdfStyles.page5RightColumn}>
-            {/* Image from pdf management - check all possible image properties */}
-            {(getPageData(5).image1_url || getPageData(5).background || getPageData(5).middle_image_url || getPageData(5).image2_url) && (
-              <Image 
-                style={pdfStyles.page5SectionImage}
-                src={getPageData(5).image1_url || getPageData(5).background || getPageData(5).middle_image_url || getPageData(5).image2_url}
-              />
-            )}
-          </View>
-        </View>
-        
-        {/* Dynamic Footer */}
-        {renderFooter(5)}
-      </Page>
-
       {/* Page 6 - Final Cover Page */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Background image covering full width with 10% header space */}
+        {/* Background image covering full width */}
         <View style={pdfStyles.page6FullBackground}>
           {getPageData(6).background && (
             <Image 
               style={pdfStyles.page6FullBackgroundImage} 
               src={getPageData(6).background} 
             />
-          )}
-        </View>
-        
-        {/* Page title on white background over image */}
-        <View style={pdfStyles.page6TitleOverlay}>
-          <Text style={pdfStyles.page6WhiteTitle}>{getPageData(6).page_name || "Titel vanuit pdf beheer"}</Text>
-          
-          {getPageData(6).content?.section1 && (
-            <Text style={pdfStyles.page6Section1Text}>{getPageData(6).content.section1}</Text>
           )}
         </View>
         
