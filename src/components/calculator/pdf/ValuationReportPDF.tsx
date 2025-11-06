@@ -201,101 +201,75 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
-        <View style={pdfStyles.content}>
-          {/* Main content area with two columns */}
-          <View style={pdfStyles.page3MainContent}>
-            {/* Left column - Input data */}
-            <View style={pdfStyles.page3LeftColumn}>
-              <Text style={pdfStyles.page3ColumnTitle}>Ingevoerde gegevens</Text>
-              
-              <View style={pdfStyles.page3DataList}>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Omzet in het afgelopen jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Aandeel jaarlijks terugkerende omzet</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.recurringRevenuePercentageDisplay || `${companyData.recurringRevenuePercentage}%`}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Resultaat vorig boekjaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.result2024)}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Verwacht resultaat dit boekjaar</Text>
-                  <Text style={pdfStyles.page3Value}>{formatCurrency(companyData.expectedResult2025)}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Verlies in de afgelopen 3 jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.wasLossmaking ? 'Ja' : 'Nee'}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Vooruitzichten</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.prospects}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Gemiddelde investering per jaar</Text>
-                  <Text style={pdfStyles.page3Value}>{savedValuationData?.average_yearly_investment ? formatCurrency(savedValuationData.average_yearly_investment) : formatCurrency(companyData.averageYearlyInvestment || 0)}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Sector</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Aantal (FTE) medewerkers</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.employeesDisplay || companyData.employees}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Omzet via de grootste klant</Text>
-                  <Text style={pdfStyles.page3Value}>{companyData.largestCustomerPercentageDisplay || companyData.largestClientDependencyDisplay || `${companyData.largestClientDependency}%`}</Text>
-                </View>
-                <View style={pdfStyles.page3DataRow}>
-                  <Text style={pdfStyles.page3Label}>Afhankelijkheid van grootste toeleverancier</Text>
-                  <Text style={pdfStyles.page3Value}>Geen enkel probleem</Text>
-                </View>
-              </View>
-            </View>
-            
-            {/* Right column - Key assumptions and results */}
-            <View style={pdfStyles.page3RightColumn}>
-              <Text style={pdfStyles.page3ColumnTitle}>Belangrijkste uitgangspunten</Text>
-              
-              {/* Key metrics boxes - 2x2 grid layout */}
-              <View style={pdfStyles.page3MetricsContainer}>
-                {/* First row */}
-                <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>EBITDA (Adjusted)</Text>
-                  </View>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>{currentDate}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Waarderingsmoment</Text>
-                  </View>
-                </View>
-                {/* Second row */}
-                <View style={pdfStyles.page3MetricsGrid}>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <Text style={pdfStyles.page3MetricValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
-                    <Text style={pdfStyles.page3MetricLabel}>Ondernemingswaarde</Text>
-                  </View>
-                  <View style={pdfStyles.page3MetricBox}>
-                    <View style={pdfStyles.page3MultiplierContainer}>
-                      <Text style={pdfStyles.page3MultiplierValue}>{savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}</Text>
-                      <Text style={pdfStyles.page3MultiplierText}> x EBITDA</Text>
-                    </View>
-                    <Text style={pdfStyles.page3MetricLabel}>Multiple op EBITDA</Text>
-                  </View>
-                </View>
-              </View>
-              
-              {/* Disclaimer text */}
-              <Text style={pdfStyles.page3Disclaimer}>
-                Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
-              </Text>
-            </View>
+        {/* Left side data fields */}
+        <View style={{ position: 'absolute', left: 50, top: 350 }}>
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Omzet</Text>
+            <Text style={{ fontSize: 16, color: '#000000', fontWeight: 'bold' }}>{savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}</Text>
           </View>
           
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>EBITDA</Text>
+            <Text style={{ fontSize: 16, color: '#000000', fontWeight: 'bold' }}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>FTE</Text>
+            <Text style={{ fontSize: 16, color: '#000000', fontWeight: 'bold' }}>{companyData.employeesDisplay || companyData.employees}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Sector</Text>
+            <Text style={{ fontSize: 16, color: '#000000', fontWeight: 'bold' }}>{companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}</Text>
+          </View>
+        </View>
+        
+        {/* Right side data fields */}
+        <View style={{ position: 'absolute', right: 50, top: 200 }}>
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Score</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>{companyData.prospects || 'Gelijk'}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Multiple</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>{savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>EBITDA</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>€ {Math.round(estimatedEbitda).toLocaleString('nl-NL')}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Waarderingsmoment</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>{currentDate}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Ondernemingswaarde</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Low Multiple</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>{(valuationResult.multiple - 0.5).toFixed(1)}x</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>High Multiple</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>{(valuationResult.multiple + 0.5).toFixed(1)}x</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Waarde Laag</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>€ {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')}</Text>
+          </View>
+          
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 10, color: '#666666', marginBottom: 4 }}>Waarde Hoog</Text>
+            <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>€ {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}</Text>
+          </View>
         </View>
         
       </Page>
