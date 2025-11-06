@@ -129,7 +129,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         // Cover page gets special layout
         if (page.page_number === 1) {
           return (
-            <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+            <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
               {/* Blue header section */}
               <View style={pdfStyles.coverHeaderSection}>
                 <View style={pdfStyles.headerLeftContent}>
@@ -170,7 +170,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
         // Page 2 - Foreword with special layout
         if (page.page_number === 2) {
           return (
-            <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+            <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
               
               {/* Main content area with two columns */}
               <View style={pdfStyles.page2Layout}>
@@ -253,7 +253,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
           const estimatedEBITDA = Math.round(valuationResult.baseValuation / valuationResult.multiple);
 
           return (
-            <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+            <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
               {page.background_image_url && renderBackgroundImage(page.background_image_url)}
               
               <View style={pdfStyles.content}>
@@ -347,7 +347,7 @@ const AdminPreviewPDF: React.FC<AdminPreviewPDFProps> = ({
 
         // Regular pages (4+)
         return (
-          <Page key={page.id} size="A4" orientation="landscape" style={pdfStyles.page}>
+          <Page key={page.id} size="A4" orientation="portrait" style={pdfStyles.page}>
             {/* Background Image */}
             {renderBackgroundImage(page.background_image_url)}
 

@@ -160,7 +160,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
   return (
     <Document>
       {/* Page 1 - Cover */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Blue header section */}
         <View style={pdfStyles.coverHeaderSection}>
           <View style={pdfStyles.headerLeftContent}>
@@ -203,7 +203,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 2 - New Layout */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Main content area with two columns */}
         <View style={pdfStyles.page2Layout}>
           {/* Left column - Image (45%) */}
@@ -263,7 +263,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 3 - Calculation Results */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
         <View style={pdfStyles.content}>
@@ -426,7 +426,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 4 - Marktontwikkelingen */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Header section with number and title */}
         <View style={pdfStyles.page4HeaderContainer}>
           <View style={pdfStyles.page4HeaderNumber}>
@@ -485,7 +485,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 5 - Bedrijfswaardering */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Header section with number and title - decreased height by 10px */}
         <View style={pdfStyles.page5HeaderContainer}>
           <View style={pdfStyles.page5HeaderNumber}>
@@ -532,7 +532,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
       </Page>
 
       {/* Page 6 - Final Cover Page */}
-      <Page size="A4" orientation="landscape" style={pdfStyles.page}>
+      <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Background image covering full width with 10% header space */}
         <View style={pdfStyles.page6FullBackground}>
           {getPageData(6).background && (
