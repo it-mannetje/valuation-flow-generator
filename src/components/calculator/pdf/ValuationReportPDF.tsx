@@ -254,26 +254,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                   <Text style={pdfStyles.page3Value}>Geen enkel probleem</Text>
                 </View>
               </View>
-              
-              {/* Business images */}
-              <View style={pdfStyles.page3Images}>
-                {getPageData(3).image1_url && (
-                  <Image 
-                    style={pdfStyles.page3Image} 
-                    src={getPageData(3).image1_url}
-                  />
-                )}
-                {getPageData(3).image2_url && (
-                  <Image 
-                    style={pdfStyles.page3Image} 
-                    src={getPageData(3).image2_url}
-                  />
-                )}
-              </View>
             </View>
-            
-            {/* Dotted separator line */}
-            <View style={pdfStyles.page3Separator} />
             
             {/* Right column - Key assumptions and results */}
             <View style={pdfStyles.page3RightColumn}>
@@ -312,37 +293,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               <Text style={pdfStyles.page3Disclaimer}>
                 Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
               </Text>
-              
-              {/* Horizontal dotted line after disclaimer */}
-              <View style={pdfStyles.page3HorizontalDottedLine} />
-              
-              {/* Bandwidth chart */}
-              <View style={pdfStyles.page3ChartContainer}>
-                <Text style={pdfStyles.page3ChartTitle}>Indicatieve bandbreedte</Text>
-                
-                {/* Added spacing after "Indicatieve bandbreedte" */}
-                <View style={pdfStyles.page3SpacingAfterTitle}></View>
-                
-                <View style={pdfStyles.page3Chart}>
-                  {/* Chart bars */}
-                  <View style={pdfStyles.page3ChartBars}>
-                    <View style={pdfStyles.page3ChartBar1}>
-                      <View style={pdfStyles.page3Bar1} />
-                    <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')}</Text>
-                    </View>
-                    <View style={pdfStyles.page3ChartBar2}>
-                      <View style={pdfStyles.page3Bar2} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}</Text>
-                    </View>
-                    <View style={pdfStyles.page3ChartBar3}>
-                      <View style={pdfStyles.page3Bar3} />
-                      <Text style={pdfStyles.page3BarValue}>€ {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}</Text>
-                    </View>
-                  </View>
-                  
-                  {/* Chart baseline - removed second grey line */}
-                </View>
-              </View>
             </View>
           </View>
           
