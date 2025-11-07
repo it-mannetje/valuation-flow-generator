@@ -195,12 +195,27 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 3 - Calculation Results - Redesigned Layout */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(3).background)}
+        {/* Background Image - Full Page */}
+        {getPageData(3).background && (
+          <Image 
+            src={getPageData(3).background} 
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
         
-        {/* Main Content Container */}
+        {/* Content Overlay - Absolutely Positioned */}
         <View style={{
-          padding: 50,
-          paddingTop: 80,
+          position: 'absolute',
+          top: 80,
+          left: 50,
+          right: 50,
         }}>
           
           {/* Top Section - Intro Text */}
@@ -503,60 +518,51 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           />
         )}
         
-        {/* Content Overlay - Positioned to match design */}
-        
-        {/* Main Heading from Section 1 - Top of page */}
-        {getPageData(4).content?.content && getPageData(4).content.content[0] && (
-          <View style={{
-            position: 'absolute',
-            top: 100,
-            left: 60,
-            right: 60,
-          }}>
-            <Text style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: '#1e3a8a',
-              lineHeight: 1.3,
+        {/* Content Overlay - Sector Information */}
+        {companyData.sector && sectors.length > 0 && (() => {
+          const sectorConfig = sectors.find(s => s.id === companyData.sector);
+          return (
+            <View style={{
+              position: 'absolute',
+              top: 150,
+              left: 60,
+              right: 60,
             }}>
-              {getPageData(4).content.content[0].text || ''}
-            </Text>
-          </View>
-        )}
+              {/* Sector Name */}
+              <Text style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: '#1e3a8a',
+                marginBottom: 15,
+              }}>
+                {sectorConfig?.name || ''}
+              </Text>
 
-        {/* Sector Name - Bold Blue */}
-        {companyData.sector && sectors.length > 0 && (
-          <View style={{
-            position: 'absolute',
-            top: 200,
-            left: 60,
-          }}>
-            <Text style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              color: '#1e3a8a',
-              marginBottom: 15,
-            }}>
-              {sectors.find(s => s.id === companyData.sector)?.name || ''}
-            </Text>
-          </View>
-        )}
+              {/* Sector Description */}
+              {sectorConfig?.description && (
+                <Text style={{
+                  fontSize: 11,
+                  lineHeight: 1.6,
+                  color: '#1f2937',
+                  marginBottom: 15,
+                }}>
+                  {sectorConfig.description}
+                </Text>
+              )}
 
-        {/* Sector Description Text */}
-        <View style={{
-          position: 'absolute',
-          top: 240,
-          left: 60,
-          right: 60,
-        }}>
-          <Text style={{
-            fontSize: 10,
-            lineHeight: 1.7,
-            color: '#1f2937',
-          }}>
-            {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
-          </Text>
-        </View>
+              {/* Sector Specific Text */}
+              {sectorConfig?.text && (
+                <Text style={{
+                  fontSize: 10,
+                  lineHeight: 1.7,
+                  color: '#1f2937',
+                }}>
+                  {sectorConfig.text}
+                </Text>
+              )}
+            </View>
+          );
+        })()}
         
       </Page>
 
