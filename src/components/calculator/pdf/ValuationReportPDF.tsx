@@ -174,8 +174,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(1)}
       </Page>
 
       {/* Page 2 - New Layout */}
@@ -193,8 +191,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(2)}
       </Page>
 
       {/* Page 3 - Calculation Results - Redesigned Layout */}
@@ -487,8 +483,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(3)}
       </Page>
 
       {/* Page 4 - Market Developments - Data OVER Background Image */}
@@ -564,11 +558,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </Text>
         </View>
         
-        {/* Dynamic Footer */}
-        {renderFooter(4)}
       </Page>
 
-      {/* Page 6 - Final Cover Page */}
+      {/* Page 5 - Final Cover Page (formerly Page 6) */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {/* Background image covering full width */}
         <View style={pdfStyles.page6FullBackground}>
@@ -579,18 +571,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             />
           )}
         </View>
-        
-        {/* Section 2 text at bottom with 25% left margin */}
-        {getPageData(6).content?.section2 && (
-          <View style={pdfStyles.page6BottomText}>
-            <Text style={pdfStyles.page6Section2Text}>
-              {getPageData(6).content.section2}
-            </Text>
-          </View>
-        )}
-        
-        {/* Dynamic Footer */}
-        {renderFooter(6)}
       </Page>
     </Document>
   );
