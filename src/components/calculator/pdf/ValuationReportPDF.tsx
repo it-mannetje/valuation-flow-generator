@@ -197,157 +197,292 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderFooter(2)}
       </Page>
 
-      {/* Page 3 - Calculation Results */}
+      {/* Page 3 - Calculation Results - Redesigned Layout */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
         {renderBackgroundImage(getPageData(3).background)}
         
         {/* Main Content Container */}
-        <View style={{ padding: '50 50 100 50' }}>
+        <View style={{
+          padding: 50,
+          paddingTop: 80,
+        }}>
+          
           {/* Top Section - Intro Text */}
           <View style={{ marginBottom: 20 }}>
-            <Text style={{ fontSize: 11, color: '#1f2937', lineHeight: 1.6, marginBottom: 8 }}>
+            <Text style={{
+              fontSize: 11,
+              lineHeight: 1.6,
+              color: '#1f2937',
+              marginBottom: 8,
+            }}>
               Op basis van de door jou ingevoerde gegevens scoort de multiple van je bedrijf {companyData.prospects === 'Hoger' ? 'hoger' : companyData.prospects === 'Lager' ? 'lager' : 'gelijk'} dan het gemiddelde in jouw sector.
             </Text>
-            <Text style={{ fontSize: 11, color: '#1f2937', lineHeight: 1.6 }}>
+            <Text style={{
+              fontSize: 11,
+              lineHeight: 1.6,
+              color: '#1f2937',
+            }}>
               Dit brengt jouw indicatieve bedrijfswaarde op een bedrag tussen:
             </Text>
           </View>
 
-          {/* Main Section Title */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#1e3a8a' }}>
+          {/* Main Title */}
+          <View style={{ marginBottom: 30, marginTop: 20 }}>
+            <Text style={{
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: '#1e3a8a',
+            }}>
               Uitkomst indicatieve waarde
             </Text>
           </View>
 
           {/* Two Column Layout */}
-          <View style={{ flexDirection: 'row', gap: 20, marginBottom: 30 }}>
-            {/* LEFT COLUMN - Indicatieve calculatie */}
-            <View style={{ width: 220 }}>
-              <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1e3a8a', marginBottom: 20 }}>
+          <View style={{
+            flexDirection: 'row',
+            gap: 30,
+            marginBottom: 30,
+          }}>
+            
+            {/* LEFT COLUMN - Multiple Indicator */}
+            <View style={{
+              width: '45%',
+            }}>
+              <Text style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: '#1f2937',
+                marginBottom: 20,
+              }}>
                 Indicatieve calculatie
               </Text>
               
-              {/* Multiple Gauge */}
-              <View style={{ alignItems: 'center', marginTop: 40 }}>
-                {/* Scale numbers */}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 12 }}>
-                  <Text style={{ fontSize: 16, color: '#666666' }}>
+              {/* Multiple Gauge Visual */}
+              <View style={{
+                marginTop: 40,
+                marginBottom: 20,
+              }}>
+                {/* Scale Line */}
+                <View style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 8,
+                }}>
+                  <Text style={{ fontSize: 12, color: '#6b7280' }}>
                     {(valuationResult.multiple - 0.5).toFixed(1)}
                   </Text>
-                  <Text style={{ fontSize: 16, color: '#666666' }}>
+                  <Text style={{ fontSize: 12, color: '#6b7280' }}>
                     {(valuationResult.multiple + 0.5).toFixed(1)}
                   </Text>
                 </View>
                 
-                {/* Center highlighted value */}
-                <View style={{ 
-                  backgroundColor: '#1e3a8a', 
-                  padding: '12 24',
-                  borderRadius: 4,
-                  marginBottom: 12
-                }}>
-                  <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#ffffff' }}>
-                    {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
-                  </Text>
-                </View>
+                {/* Horizontal Line */}
+                <View style={{
+                  height: 2,
+                  backgroundColor: '#d1d5db',
+                  marginBottom: 15,
+                  position: 'relative',
+                }} />
                 
-                {/* Visual scale line */}
-                <View style={{ 
-                  width: '100%', 
-                  height: 2, 
-                  backgroundColor: '#cbd5e1',
-                  position: 'relative'
+                {/* Center Multiple Value - Highlighted */}
+                <View style={{
+                  alignItems: 'center',
+                  marginTop: -25,
                 }}>
                   <View style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: -4,
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    backgroundColor: '#1e3a8a'
-                  }} />
+                    backgroundColor: '#1e3a8a',
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    borderRadius: 4,
+                  }}>
+                    <Text style={{
+                      fontSize: 28,
+                      fontWeight: 'bold',
+                      color: '#ffffff',
+                    }}>
+                      {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
+                    </Text>
+                  </View>
+                </View>
+                
+                {/* Multiple Range Labels */}
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 15,
+                }}>
+                  <View>
+                    <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 2 }}>
+                      Low
+                    </Text>
+                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#1f2937' }}>
+                      {(valuationResult.multiple - 0.5).toFixed(1)}x
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'flex-end' }}>
+                    <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 2 }}>
+                      High
+                    </Text>
+                    <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#1f2937' }}>
+                      {(valuationResult.multiple + 0.5).toFixed(1)}x
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
 
-            {/* RIGHT COLUMN - Ingevulde gegevens */}
-            <View style={{ width: 260 }}>
-              <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1e3a8a', marginBottom: 16 }}>
+            {/* RIGHT COLUMN - Data Fields */}
+            <View style={{
+              width: '55%',
+            }}>
+              <Text style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: '#1f2937',
+                marginBottom: 20,
+              }}>
                 Ingevulde gegevens
               </Text>
               
-              {/* Data boxes */}
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>OMZET</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}
-                </Text>
-              </View>
-              
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>EBITDA (ADJUSTED)</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
-                </Text>
-              </View>
-              
-              {/* ONDERNEMINGSWAARDE - Most Prominent */}
-              <View style={{ backgroundColor: '#dbeafe', padding: 14, marginBottom: 8, borderRadius: 4, borderWidth: 2, borderColor: '#1e3a8a' }}>
-                <Text style={{ fontSize: 9, color: '#1e3a8a', marginBottom: 2 }}>ONDERNEMINGSWAARDE</Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#1e3a8a' }}>
-                  € {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')},-
-                </Text>
-              </View>
-              
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>WAARDERINGSMOMENT</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {currentDate}
-                </Text>
-              </View>
-              
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>MULTIPLE OP EBITDA</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x EBITDA
-                </Text>
-              </View>
-              
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>FTE</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {companyData.employeesDisplay || companyData.employees}
-                </Text>
-              </View>
-              
-              <View style={{ backgroundColor: '#f8f9fa', padding: 12, marginBottom: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 9, color: '#666666', marginBottom: 2 }}>SECTOR</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {companyData.sector && sectors.length > 0 ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector : valuationResult.sector}
-                </Text>
+              {/* Data Fields Container */}
+              <View style={{ gap: 8 }}>
+                
+                {/* OMZET */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    OMZET
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}
+                  </Text>
+                </View>
+
+                {/* EBITDA */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    EBITDA (ADJUSTED)
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    € {Math.round(estimatedEbitda).toLocaleString('nl-NL')}
+                  </Text>
+                </View>
+
+                {/* ONDERNEMINGSWAARDE - MOST PROMINENT */}
+                <View style={{
+                  backgroundColor: '#1e3a8a',
+                  padding: 14,
+                  borderRadius: 4,
+                  marginVertical: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#e5e7eb', marginBottom: 3 }}>
+                    ONDERNEMINGSWAARDE
+                  </Text>
+                  <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#ffffff' }}>
+                    € {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}
+                  </Text>
+                </View>
+
+                {/* WAARDERINGSMOMENT */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    WAARDERINGSMOMENT
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {currentDate}
+                  </Text>
+                </View>
+
+                {/* MULTIPLE OP EBITDA */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    MULTIPLE OP EBITDA
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x EBITDA
+                  </Text>
+                </View>
+
+                {/* FTE */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    FTE
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {companyData.employeesDisplay || companyData.employees}
+                  </Text>
+                </View>
+
+                {/* SECTOR */}
+                <View style={{
+                  backgroundColor: '#f8f9fa',
+                  padding: 12,
+                  borderRadius: 4,
+                }}>
+                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                    SECTOR
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {companyData.sector && sectors.length > 0 
+                      ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector 
+                      : valuationResult.sector}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
 
           {/* Bottom Section - Value Range */}
-          <View style={{ 
-            backgroundColor: '#1e3a8a', 
+          <View style={{
+            backgroundColor: '#1e3a8a',
             padding: 20,
-            borderRadius: 4,
+            borderRadius: 6,
             alignItems: 'center',
-            marginBottom: 16
+            marginTop: 20,
+            marginBottom: 15,
           }}>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#ffffff', textAlign: 'center' }}>
-              € {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')},- - € {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')},-
+            <Text style={{
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: '#ffffff',
+              letterSpacing: 0.5,
+            }}>
+              € {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')} - € {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')}
             </Text>
           </View>
 
           {/* Disclaimer */}
-          <View>
-            <Text style={{ fontSize: 8, color: '#666666', lineHeight: 1.4, textAlign: 'center' }}>
-              Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
+          <View style={{
+            marginTop: 10,
+          }}>
+            <Text style={{
+              fontSize: 8,
+              color: '#6b7280',
+              lineHeight: 1.4,
+              textAlign: 'center',
+            }}>
+              Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. 
+              Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
             </Text>
           </View>
         </View>
