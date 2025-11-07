@@ -213,24 +213,24 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Content Overlay - Absolutely Positioned */}
         <View style={{
           position: 'absolute',
-          top: 80,
+          top: 60,
           left: 50,
           right: 50,
         }}>
           
           {/* Top Section - Intro Text */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{ marginBottom: 12 }}>
             <Text style={{
-              fontSize: 11,
-              lineHeight: 1.6,
+              fontSize: 10,
+              lineHeight: 1.4,
               color: '#1f2937',
-              marginBottom: 8,
+              marginBottom: 6,
             }}>
               Op basis van de door jou ingevoerde gegevens scoort de multiple van je bedrijf {companyData.prospects === 'Hoger' ? 'hoger' : companyData.prospects === 'Lager' ? 'lager' : 'gelijk'} dan het gemiddelde in jouw sector.
             </Text>
             <Text style={{
-              fontSize: 11,
-              lineHeight: 1.6,
+              fontSize: 10,
+              lineHeight: 1.4,
               color: '#1f2937',
             }}>
               Dit brengt jouw indicatieve bedrijfswaarde op een bedrag tussen:
@@ -238,9 +238,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           </View>
 
           {/* Main Title */}
-          <View style={{ marginBottom: 30, marginTop: 20 }}>
+          <View style={{ marginBottom: 18, marginTop: 12 }}>
             <Text style={{
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: 'bold',
               color: '#1e3a8a',
             }}>
@@ -251,8 +251,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           {/* Two Column Layout */}
           <View style={{
             flexDirection: 'row',
-            gap: 30,
-            marginBottom: 30,
+            gap: 20,
+            marginBottom: 18,
           }}>
             
             {/* LEFT COLUMN - Multiple Indicator */}
@@ -260,18 +260,18 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               width: '45%',
             }}>
               <Text style={{
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 'bold',
                 color: '#1f2937',
-                marginBottom: 20,
+                marginBottom: 12,
               }}>
                 Indicatieve calculatie
               </Text>
               
               {/* Multiple Gauge Visual */}
               <View style={{
-                marginTop: 40,
-                marginBottom: 20,
+                marginTop: 25,
+                marginBottom: 15,
               }}>
                 {/* Scale Line */}
                 <View style={{
@@ -348,27 +348,27 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               width: '55%',
             }}>
               <Text style={{
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 'bold',
                 color: '#1f2937',
-                marginBottom: 20,
+                marginBottom: 12,
               }}>
                 Ingevulde gegevens
               </Text>
               
               {/* Data Fields Container */}
-              <View style={{ gap: 8 }}>
+              <View style={{ gap: 6 }}>
                 
                 {/* OMZET */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     OMZET
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     {savedValuationData?.revenue_range_display || companyData.lastYearRevenueDisplay || 'Niet ingevuld'}
                   </Text>
                 </View>
@@ -376,13 +376,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* EBITDA */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     EBITDA (ADJUSTED)
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     € {Math.round(estimatedEbitda).toLocaleString('nl-NL')}
                   </Text>
                 </View>
@@ -390,14 +390,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* ONDERNEMINGSWAARDE - MOST PROMINENT */}
                 <View style={{
                   backgroundColor: '#1e3a8a',
-                  padding: 14,
+                  padding: 10,
                   borderRadius: 4,
-                  marginVertical: 4,
+                  marginVertical: 2,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#e5e7eb', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#e5e7eb', marginBottom: 2 }}>
                     ONDERNEMINGSWAARDE
                   </Text>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#ffffff' }}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#ffffff' }}>
                     € {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')}
                   </Text>
                 </View>
@@ -405,13 +405,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* WAARDERINGSMOMENT */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     WAARDERINGSMOMENT
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     {currentDate}
                   </Text>
                 </View>
@@ -419,13 +419,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* MULTIPLE OP EBITDA */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     MULTIPLE OP EBITDA
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x EBITDA
                   </Text>
                 </View>
@@ -433,13 +433,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* FTE */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     FTE
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     {companyData.employeesDisplay || companyData.employees}
                   </Text>
                 </View>
@@ -447,13 +447,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 {/* SECTOR */}
                 <View style={{
                   backgroundColor: '#f8f9fa',
-                  padding: 12,
+                  padding: 8,
                   borderRadius: 4,
                 }}>
-                  <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 2 }}>
                     SECTOR
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
                     {companyData.sector && sectors.length > 0 
                       ? sectors.find(s => s.id === companyData.sector)?.name || valuationResult.sector 
                       : valuationResult.sector}
@@ -466,14 +466,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           {/* Bottom Section - Value Range */}
           <View style={{
             backgroundColor: '#1e3a8a',
-            padding: 20,
+            padding: 16,
             borderRadius: 6,
             alignItems: 'center',
-            marginTop: 20,
-            marginBottom: 15,
+            marginTop: 15,
+            marginBottom: 12,
           }}>
             <Text style={{
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: 'bold',
               color: '#ffffff',
               letterSpacing: 0.5,
@@ -484,12 +484,12 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
           {/* Disclaimer */}
           <View style={{
-            marginTop: 10,
+            marginTop: 8,
           }}>
             <Text style={{
-              fontSize: 8,
+              fontSize: 7,
               color: '#6b7280',
-              lineHeight: 1.4,
+              lineHeight: 1.3,
               textAlign: 'center',
             }}>
               Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. 
@@ -524,16 +524,17 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           return (
             <View style={{
               position: 'absolute',
-              top: 150,
+              top: 100,
               left: 60,
               right: 60,
+              bottom: 60,
             }}>
               {/* Sector Name */}
               <Text style={{
-                fontSize: 18,
+                fontSize: 22,
                 fontWeight: 'bold',
                 color: '#1e3a8a',
-                marginBottom: 15,
+                marginBottom: 20,
               }}>
                 {sectorConfig?.name || ''}
               </Text>
@@ -541,10 +542,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {/* Sector Description */}
               {sectorConfig?.description && (
                 <Text style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   lineHeight: 1.6,
                   color: '#1f2937',
-                  marginBottom: 15,
+                  marginBottom: 20,
                 }}>
                   {sectorConfig.description}
                 </Text>
@@ -553,7 +554,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               {/* Sector Specific Text */}
               {sectorConfig?.text && (
                 <Text style={{
-                  fontSize: 10,
+                  fontSize: 11,
                   lineHeight: 1.7,
                   color: '#1f2937',
                 }}>
