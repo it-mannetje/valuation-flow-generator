@@ -491,50 +491,77 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {renderFooter(3)}
       </Page>
 
-      {/* Page 4 - Marktontwikkelingen */}
+      {/* Page 4 - Market Developments - Data OVER Background Image */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {renderBackgroundImage(getPageData(4).background)}
         
-        {/* Main content container with proper spacing */}
-        <View style={{ padding: '80 50 100 50' }}>
-          {/* Main Heading */}
-          <View style={{ marginBottom: 30 }}>
-            {getPageData(4).content?.content && getPageData(4).content.content[0] && (
-              <Text style={{ 
-                fontSize: 22, 
-                fontWeight: 'bold', 
-                color: '#1e3a8a', 
-                lineHeight: 1.3,
-                maxWidth: 480
-              }}>
-                {getPageData(4).content.content[0].text || ''}
-              </Text>
-            )}
-          </View>
-
-          {/* Sector Name - Bold Blue */}
-          {companyData.sector && sectors.length > 0 && (
-            <View style={{ marginBottom: 12 }}>
-              <Text style={{ 
-                fontSize: 18, 
-                fontWeight: 'bold', 
-                color: '#1e3a8a'
-              }}>
-                {sectors.find(s => s.id === companyData.sector)?.name || ''}
-              </Text>
-            </View>
-          )}
-
-          {/* Sector Description */}
-          <View style={{ maxWidth: 480 }}>
-            <Text style={{ 
-              fontSize: 11, 
-              color: '#1f2937', 
-              lineHeight: 1.7
+        {/* Background Image - Full Page */}
+        {getPageData(4).background && (
+          <Image 
+            src={getPageData(4).background} 
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+        
+        {/* Content Overlay - Positioned to match design */}
+        
+        {/* Main Heading from Section 1 - Top of page */}
+        {getPageData(4).content?.content && getPageData(4).content.content[0] && (
+          <View style={{
+            position: 'absolute',
+            top: 100,
+            left: 60,
+            right: 60,
+          }}>
+            <Text style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: '#1e3a8a',
+              lineHeight: 1.3,
             }}>
-              {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
+              {getPageData(4).content.content[0].text || ''}
             </Text>
           </View>
+        )}
+
+        {/* Sector Name - Bold Blue */}
+        {companyData.sector && sectors.length > 0 && (
+          <View style={{
+            position: 'absolute',
+            top: 200,
+            left: 60,
+          }}>
+            <Text style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: '#1e3a8a',
+              marginBottom: 15,
+            }}>
+              {sectors.find(s => s.id === companyData.sector)?.name || ''}
+            </Text>
+          </View>
+        )}
+
+        {/* Sector Description Text */}
+        <View style={{
+          position: 'absolute',
+          top: 240,
+          left: 60,
+          right: 60,
+        }}>
+          <Text style={{
+            fontSize: 10,
+            lineHeight: 1.7,
+            color: '#1f2937',
+          }}>
+            {getSectorText() || 'De overnamemarkt in de sector kent een sterke dynamiek.'}
+          </Text>
         </View>
         
         {/* Dynamic Footer */}
