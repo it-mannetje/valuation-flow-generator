@@ -213,40 +213,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
         {/* Content Overlay - Absolutely Positioned */}
         <View style={{
           position: 'absolute',
-          top: 60,
+          top: 80,
           left: 50,
           right: 50,
         }}>
-          
-          {/* Top Section - Intro Text */}
-          <View style={{ marginBottom: 12 }}>
-            <Text style={{
-              fontSize: 10,
-              lineHeight: 1.4,
-              color: '#1f2937',
-              marginBottom: 6,
-            }}>
-              Op basis van de door jou ingevoerde gegevens scoort de multiple van je bedrijf {companyData.prospects === 'Hoger' ? 'hoger' : companyData.prospects === 'Lager' ? 'lager' : 'gelijk'} dan het gemiddelde in jouw sector.
-            </Text>
-            <Text style={{
-              fontSize: 10,
-              lineHeight: 1.4,
-              color: '#1f2937',
-            }}>
-              Dit brengt jouw indicatieve bedrijfswaarde op een bedrag tussen:
-            </Text>
-          </View>
-
-          {/* Main Title */}
-          <View style={{ marginBottom: 18, marginTop: 12 }}>
-            <Text style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: '#1e3a8a',
-            }}>
-              Uitkomst indicatieve waarde
-            </Text>
-          </View>
 
           {/* Two Column Layout */}
           <View style={{
@@ -259,14 +229,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={{
               width: '45%',
             }}>
-              <Text style={{
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: '#1f2937',
-                marginBottom: 12,
-              }}>
-                Indicatieve calculatie
-              </Text>
               
               {/* Multiple Gauge Visual */}
               <View style={{
@@ -347,14 +309,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             <View style={{
               width: '55%',
             }}>
-              <Text style={{
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: '#1f2937',
-                marginBottom: 12,
-              }}>
-                Ingevulde gegevens
-              </Text>
               
               {/* Data Fields Container */}
               <View style={{ gap: 6 }}>
@@ -482,20 +436,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             </Text>
           </View>
 
-          {/* Disclaimer */}
-          <View style={{
-            marginTop: 8,
-          }}>
-            <Text style={{
-              fontSize: 7,
-              color: '#6b7280',
-              lineHeight: 1.3,
-              textAlign: 'center',
-            }}>
-              Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. 
-              Neem contact met ons op om de exacte waarde van jouw bedrijf te bepalen.
-            </Text>
-          </View>
         </View>
         
       </Page>
