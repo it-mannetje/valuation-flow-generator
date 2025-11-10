@@ -210,292 +210,330 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           />
         )}
         
-        {/* Main Content Container */}
+        {/* Two Column Layout */}
         <View style={{
           position: 'absolute',
           top: 70,
           left: 50,
           right: 50,
           bottom: 50,
+          flexDirection: 'row',
+          gap: 30,
         }}>
           
-          {/* Header Title */}
-          <Text style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            color: '#0891b2',
-            textAlign: 'center',
-            marginBottom: 20,
-          }}>
-            Indicatieve calculatie
-          </Text>
-
-          {/* Intro Text */}
-          <Text style={{
-            fontSize: 10,
-            textAlign: 'center',
-            color: '#1f2937',
-            marginBottom: 15,
-            lineHeight: 1.5,
-          }}>
-            Op basis van de door jou <Text style={{ textDecoration: 'underline' }}>ingevoerde</Text> gegevens scoort{'\n'}
-            de multiple van je bedrijf <Text style={{ color: '#10b981', fontWeight: 'bold' }}>hoger</Text> dan het gemiddelde{'\n'}
-            in jouw sector.
-          </Text>
-
-          {/* Large Multiple Display */}
-          <View style={{
-            alignItems: 'center',
-            marginBottom: 10,
-          }}>
-            <View style={{
-              border: '3px solid #ef4444',
-              paddingVertical: 20,
-              paddingHorizontal: 60,
-              backgroundColor: '#ffffff',
+          {/* LEFT COLUMN - Ingevulde gegevens */}
+          <View style={{ width: '30%' }}>
+            <Text style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: '#0891b2',
+              marginBottom: 20,
             }}>
-              <Text style={{
-                fontSize: 64,
-                fontWeight: 'bold',
-                color: '#10b981',
-                letterSpacing: -1,
-              }}>
-                {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
+              Ingevulde gegevens
+            </Text>
+
+            {/* OMZET */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                OMZET
+              </Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
+              </Text>
+            </View>
+
+            {/* EBITDA */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                EBITDA
+              </Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+              </Text>
+            </View>
+
+            {/* FTE */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                FTE
+              </Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                {companyData.employees}
+              </Text>
+            </View>
+
+            {/* SECTOR */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 3 }}>
+                SECTOR
+              </Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
               </Text>
             </View>
           </View>
 
-          {/* Subtitle */}
-          <Text style={{
-            fontSize: 9,
-            textAlign: 'center',
-            color: '#1f2937',
-            marginBottom: 15,
-          }}>
-            Dat is de uitkomst van de FBM waardebepalingstool.
-          </Text>
+          {/* RIGHT COLUMN - Main Content */}
+          <View style={{ width: '70%' }}>
+            
+            {/* Header Title */}
+            <Text style={{
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: '#0891b2',
+              textAlign: 'center',
+              marginBottom: 20,
+            }}>
+              Indicatieve calculatie
+            </Text>
 
-          {/* Dotted Separator */}
-          <View style={{
-            borderBottom: '1px dotted #d1d5db',
-            marginBottom: 15,
-          }} />
+            {/* Intro Text */}
+            <Text style={{
+              fontSize: 10,
+              textAlign: 'center',
+              color: '#1f2937',
+              marginBottom: 15,
+              lineHeight: 1.5,
+            }}>
+              Op basis van de door jou ingevoerde gegevens scoort{'\n'}
+              de multiple van je bedrijf <Text style={{ color: '#10b981', fontWeight: 'bold' }}>hoger</Text> dan het gemiddelde{'\n'}
+              in jouw sector.
+            </Text>
 
-          {/* Section Title */}
-          <Text style={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            color: '#0891b2',
-            textAlign: 'center',
-            marginBottom: 15,
-          }}>
-            Uitkomst indicatieve waarde
-          </Text>
-
-          {/* Data Grid - 2x2 */}
-          <View style={{
-            flexDirection: 'row',
-            gap: 15,
-            marginBottom: 15,
-          }}>
-            {/* Left Column */}
-            <View style={{ width: '50%' }}>
-              {/* EBITDA (ADJUSTED) */}
+            {/* Large Multiple Display */}
+            <View style={{
+              alignItems: 'center',
+              marginBottom: 10,
+            }}>
               <View style={{
-                border: '2px solid #ef4444',
-                padding: 10,
-                backgroundColor: '#ffffff',
-                marginBottom: 15,
-              }}>
-                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
-                  EBITDA (ADJUSTED)
-                </Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
-                </Text>
-              </View>
-
-              {/* ONDERNEMINGSWAARDE */}
-              <View style={{
-                border: '2px solid #ef4444',
-                padding: 10,
+                border: '3px solid #ef4444',
+                paddingVertical: 20,
+                paddingHorizontal: 60,
                 backgroundColor: '#ffffff',
               }}>
-                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
-                  ONDERNEMINGSWAARDE
-                </Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  € {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')},-
-                </Text>
-              </View>
-            </View>
-
-            {/* Right Column */}
-            <View style={{ width: '50%' }}>
-              {/* WAARDERINGSMOMENT */}
-              <View style={{
-                border: '2px solid #ef4444',
-                padding: 10,
-                backgroundColor: '#ffffff',
-                marginBottom: 15,
-              }}>
-                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
-                  WAARDERINGSMOMENT
-                </Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
-                  {currentDate}
-                </Text>
-              </View>
-
-              {/* MULTIPLE OP EBITDA */}
-              <View style={{
-                border: '2px solid #ef4444',
-                padding: 10,
-                backgroundColor: '#ffffff',
-              }}>
-                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
-                  MULTIPLE OP EBITDA
-                </Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                <Text style={{
+                  fontSize: 64,
+                  fontWeight: 'bold',
+                  color: '#10b981',
+                  letterSpacing: -1,
+                }}>
                   {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
                 </Text>
               </View>
             </View>
-          </View>
 
-          {/* Dotted Separator */}
-          <View style={{
-            borderBottom: '1px dotted #d1d5db',
-            marginBottom: 15,
-          }} />
-
-          {/* Bottom Text */}
-          <Text style={{
-            fontSize: 10,
-            textAlign: 'center',
-            color: '#1f2937',
-            marginBottom: 15,
-          }}>
-            Dit brengt jouw indicatieve bedrijfswaarde{'\n'}
-            op een bedrag tussen:
-          </Text>
-
-          {/* Bar Chart Simulation */}
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            height: 80,
-            marginBottom: 10,
-            gap: 4,
-          }}>
-            {/* Generate bars from multiple -0.5 to +0.5 */}
-            {Array.from({ length: 21 }, (_, i) => {
-              const barMultiple = valuationResult.multiple - 0.5 + (i * 0.05);
-              const isCenter = Math.abs(barMultiple - valuationResult.multiple) < 0.025;
-              const barHeight = 40 + (Math.random() * 30); // Varied heights
-              
-              return (
-                <View key={i} style={{
-                  width: 12,
-                  height: barHeight,
-                  backgroundColor: isCenter ? '#10b981' : '#0891b2',
-                  borderRadius: 2,
-                }} />
-              );
-            })}
-          </View>
-
-          {/* Multiple Range Labels */}
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 15,
-            paddingHorizontal: 10,
-          }}>
-            <View style={{
-              border: '2px solid #ef4444',
-              padding: 4,
-              paddingHorizontal: 8,
-              backgroundColor: '#ffffff',
+            {/* Subtitle */}
+            <Text style={{
+              fontSize: 9,
+              textAlign: 'center',
+              color: '#1f2937',
+              marginBottom: 15,
             }}>
-              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
-                {(valuationResult.multiple - 0.5).toFixed(1)}
-              </Text>
-            </View>
-            <View style={{
-              border: '2px solid #10b981',
-              padding: 4,
-              paddingHorizontal: 8,
-              backgroundColor: '#ffffff',
-            }}>
-              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#10b981' }}>
-                {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}
-              </Text>
-            </View>
-            <View style={{
-              border: '2px solid #ef4444',
-              padding: 4,
-              paddingHorizontal: 8,
-              backgroundColor: '#ffffff',
-            }}>
-              <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
-                {(valuationResult.multiple + 0.5).toFixed(1)}
-              </Text>
-            </View>
-          </View>
+              Dat is de uitkomst van de FBM waardebepalingstool.
+            </Text>
 
-          {/* Value Range */}
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
+            {/* Dotted Separator */}
             <View style={{
-              border: '2px solid #ef4444',
-              padding: 8,
-              paddingHorizontal: 15,
-              backgroundColor: '#ffffff',
+              borderBottom: '1px dotted #d1d5db',
+              marginBottom: 15,
+            }} />
+
+            {/* Section Title */}
+            <Text style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#0891b2',
+              textAlign: 'center',
+              marginBottom: 15,
             }}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')},-
-              </Text>
-            </View>
-            
+              Uitkomst indicatieve waarde
+            </Text>
+
+            {/* Data Grid - 2x2 - WITHOUT BORDERS */}
             <View style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              gap: 10,
+              gap: 15,
+              marginBottom: 15,
             }}>
-              <View style={{ width: 40, borderBottom: '2px solid #6b7280' }} />
-              <Text style={{ fontSize: 18, color: '#6b7280' }}>⟷</Text>
-              <View style={{ width: 40, borderBottom: '2px solid #6b7280' }} />
+              {/* Left Column */}
+              <View style={{ width: '50%' }}>
+                {/* EBITDA (ADJUSTED) */}
+                <View style={{
+                  padding: 10,
+                  marginBottom: 15,
+                }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
+                    EBITDA (ADJUSTED)
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+                  </Text>
+                </View>
+
+                {/* ONDERNEMINGSWAARDE */}
+                <View style={{
+                  padding: 10,
+                }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
+                    ONDERNEMINGSWAARDE
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    € {Math.round(valuationResult.baseValuation).toLocaleString('nl-NL')},-
+                  </Text>
+                </View>
+              </View>
+
+              {/* Right Column */}
+              <View style={{ width: '50%' }}>
+                {/* WAARDERINGSMOMENT */}
+                <View style={{
+                  padding: 10,
+                  marginBottom: 15,
+                }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
+                    WAARDERINGSMOMENT
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {currentDate}
+                  </Text>
+                </View>
+
+                {/* MULTIPLE OP EBITDA */}
+                <View style={{
+                  padding: 10,
+                }}>
+                  <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3 }}>
+                    MULTIPLE OP EBITDA
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#000000' }}>
+                    {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
+                  </Text>
+                </View>
+              </View>
             </View>
 
+            {/* Dotted Separator */}
             <View style={{
-              border: '2px solid #ef4444',
-              padding: 8,
-              paddingHorizontal: 15,
-              backgroundColor: '#ffffff',
+              borderBottom: '1px dotted #d1d5db',
+              marginBottom: 15,
+            }} />
+
+            {/* Bottom Text */}
+            <Text style={{
+              fontSize: 10,
+              textAlign: 'center',
+              color: '#1f2937',
+              marginBottom: 15,
             }}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')},-
-              </Text>
+              Dit brengt jouw indicatieve bedrijfswaarde{'\n'}
+              op een bedrag tussen:
+            </Text>
+
+            {/* Bar Chart - Matching Design */}
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              height: 60,
+              marginBottom: 10,
+              gap: 3,
+            }}>
+              {/* Generate 11 bars with consistent pattern */}
+              {Array.from({ length: 11 }, (_, i) => {
+                const isCenter = i === 5; // Center bar
+                const barHeight = isCenter ? 60 : 35 + (Math.abs(5 - i) * 3); // Higher in center, lower at edges
+                
+                return (
+                  <View key={i} style={{
+                    width: 16,
+                    height: barHeight,
+                    backgroundColor: isCenter ? '#10b981' : '#0891b2',
+                  }} />
+                );
+              })}
             </View>
+
+            {/* Multiple Range Labels - WITHOUT BORDERS */}
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 15,
+              paddingHorizontal: 10,
+            }}>
+              <View style={{
+                padding: 4,
+                paddingHorizontal: 8,
+              }}>
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                  {(valuationResult.multiple - 0.5).toFixed(1)}
+                </Text>
+              </View>
+              <View style={{
+                padding: 4,
+                paddingHorizontal: 8,
+              }}>
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#10b981' }}>
+                  {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}
+                </Text>
+              </View>
+              <View style={{
+                padding: 4,
+                paddingHorizontal: 8,
+              }}>
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
+                  {(valuationResult.multiple + 0.5).toFixed(1)}
+                </Text>
+              </View>
+            </View>
+
+            {/* Value Range - WITHOUT BORDERS */}
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 15,
+            }}>
+              <View style={{
+                padding: 8,
+                paddingHorizontal: 15,
+              }}>
+                <Text style={{ fontSize: 13, fontWeight: 'bold', color: '#000000' }}>
+                  € {Math.round(valuationResult.minValuation).toLocaleString('nl-NL')},-
+                </Text>
+              </View>
+              
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 10,
+              }}>
+                <View style={{ width: 40, borderBottom: '2px solid #6b7280' }} />
+                <Text style={{ fontSize: 18, color: '#6b7280' }}>⟷</Text>
+                <View style={{ width: 40, borderBottom: '2px solid #6b7280' }} />
+              </View>
+
+              <View style={{
+                padding: 8,
+                paddingHorizontal: 15,
+              }}>
+                <Text style={{ fontSize: 13, fontWeight: 'bold', color: '#000000' }}>
+                  € {Math.round(valuationResult.maxValuation).toLocaleString('nl-NL')},-
+                </Text>
+              </View>
+            </View>
+
+            {/* Disclaimer */}
+            <Text style={{
+              fontSize: 8,
+              textAlign: 'center',
+              color: '#6b7280',
+              lineHeight: 1.4,
+            }}>
+              Disclaimer: Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde{'\n'}
+              uitgangspunten. Neem <Text style={{ color: '#0891b2', textDecoration: 'underline' }}>contact</Text> met ons op om de exacte waarde van jouw bedrijf te bepalen.
+            </Text>
+
           </View>
-
-          {/* Disclaimer */}
-          <Text style={{
-            fontSize: 8,
-            textAlign: 'center',
-            color: '#6b7280',
-            lineHeight: 1.4,
-          }}>
-            Disclaimer: Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde{'\n'}
-            uitgangspunten. Neem <Text style={{ color: '#0891b2', textDecoration: 'underline' }}>contact</Text> met ons op om de exacte waarde van jouw bedrijf te bepalen.
-          </Text>
-
         </View>
         
       </Page>
