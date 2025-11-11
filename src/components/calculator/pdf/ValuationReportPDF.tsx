@@ -562,47 +562,53 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           return (
             <View style={{
               position: 'absolute',
-              top: 80,
-              left: 60,
-              right: 60,
-              bottom: 60,
+              top: 120,
+              left: 80,
+              right: 80,
             }}>
-              {/* Header Text - First textblock */}
-              {sectorConfig?.headerText && (
-                <Text style={{
-                  fontSize: 26,
-                  fontWeight: 'bold',
-                  color: '#0891b2',
-                  marginBottom: 25,
-                  lineHeight: 1.3,
-                }}>
-                  {sectorConfig.headerText}
-                </Text>
-              )}
+              {/* White content box matching design */}
+              <View style={{
+                backgroundColor: '#FFFFFF',
+                padding: 30,
+                borderRadius: 8,
+              }}>
+                {/* Header Text - First textblock (blue, large, bold) */}
+                {sectorConfig?.headerText && (
+                  <Text style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: '#3B82F6',
+                    marginBottom: 20,
+                    lineHeight: 1.4,
+                  }}>
+                    {sectorConfig.headerText}
+                  </Text>
+                )}
 
-              {/* Description - Second textblock */}
-              {sectorConfig?.description && (
-                <Text style={{
-                  fontSize: 11,
-                  lineHeight: 1.7,
-                  color: '#000000',
-                  marginBottom: 20,
-                  fontWeight: 'bold',
-                }}>
-                  {sectorConfig.description}
-                </Text>
-              )}
+                {/* Description - Second textblock (bold black) */}
+                {sectorConfig?.description && (
+                  <Text style={{
+                    fontSize: 10,
+                    lineHeight: 1.6,
+                    color: '#000000',
+                    marginBottom: 16,
+                    fontWeight: 'bold',
+                  }}>
+                    {sectorConfig.description}
+                  </Text>
+                )}
 
-              {/* Sector Specific Text - Third textblock */}
-              {sectorConfig?.text && (
-                <Text style={{
-                  fontSize: 11,
-                  lineHeight: 1.7,
-                  color: '#000000',
-                }}>
-                  {sectorConfig.text}
-                </Text>
-              )}
+                {/* Sector Specific Text - Third textblock (regular black) */}
+                {sectorConfig?.text && (
+                  <Text style={{
+                    fontSize: 10,
+                    lineHeight: 1.6,
+                    color: '#000000',
+                  }}>
+                    {sectorConfig.text}
+                  </Text>
+                )}
+              </View>
             </View>
           );
         })()}

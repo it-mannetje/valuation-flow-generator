@@ -19,7 +19,17 @@ export function useSectorConfig() {
 
       if (error) throw error;
 
-      setSectors(data || []);
+      // Map database fields to TypeScript interface
+      const mappedData = (data || []).map(sector => ({
+        id: sector.id,
+        name: sector.name,
+        multiple: sector.multiple,
+        description: sector.description,
+        text: sector.text,
+        headerText: sector.header_text || ''
+      }));
+
+      setSectors(mappedData);
       setError(null);
     } catch (err) {
       console.error('Error fetching sectors:', err);
