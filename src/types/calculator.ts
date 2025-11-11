@@ -56,6 +56,7 @@ export interface SectorConfig {
   multiple: number;
   description: string;
   text: string;
+  headerText?: string;
 }
 
 export interface CalculatorState {

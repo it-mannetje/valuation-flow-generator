@@ -37,7 +37,8 @@ export function useSectorConfig() {
           name: sector.name,
           multiple: sector.multiple,
           description: sector.description,
-          text: sector.text
+          text: sector.text,
+          header_text: sector.headerText
         })
         .eq('id', sector.id);
 
@@ -74,7 +75,8 @@ export function useSectorConfig() {
           name: sectorData.name,
           multiple: sectorData.multiple,
           description: sectorData.description,
-          text: sectorData.text
+          text: sectorData.text,
+          header_text: sectorData.headerText
         });
 
       if (error) throw error;

@@ -27,7 +27,8 @@ export default function AdminDashboard() {
     name: '',
     multiple: 0,
     description: '',
-    text: ''
+    text: '',
+    headerText: ''
   });
   const { toast } = useToast();
 
@@ -87,7 +88,7 @@ export default function AdminDashboard() {
     const success = await createSector(newSectorData);
     if (success) {
       setShowCreateForm(false);
-      setNewSectorData({ name: '', multiple: 0, description: '', text: '' });
+      setNewSectorData({ name: '', multiple: 0, description: '', text: '', headerText: '' });
     }
   };
 
@@ -271,6 +272,15 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div>
+                        <Label htmlFor="new-sector-header">Header Tekst</Label>
+                        <Input
+                          id="new-sector-header"
+                          value={newSectorData.headerText}
+                          onChange={(e) => setNewSectorData(prev => ({ ...prev, headerText: e.target.value }))}
+                          placeholder="Header tekst voor deze sector"
+                        />
+                      </div>
+                      <div>
                         <Label htmlFor="new-sector-text">Sectorspecifieke Tekst</Label>
                         <Textarea
                           id="new-sector-text"
@@ -313,6 +323,15 @@ export default function AdminDashboard() {
                           id="sector-description"
                           value={editData.description || ''}
                           onChange={(e) => setEditData(prev => ({ ...prev, description: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="sector-header">Header Tekst</Label>
+                        <Input
+                          id="sector-header"
+                          value={editData.headerText || ''}
+                          onChange={(e) => setEditData(prev => ({ ...prev, headerText: e.target.value }))}
+                          placeholder="Header tekst voor deze sector"
                         />
                       </div>
                       <div>
