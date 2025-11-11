@@ -562,39 +562,43 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           return (
             <View style={{
               position: 'absolute',
-              top: 100,
+              top: 80,
               left: 60,
               right: 60,
               bottom: 60,
             }}>
-              {/* Sector Name */}
-              <Text style={{
-                fontSize: 22,
-                fontWeight: 'bold',
-                color: '#1e3a8a',
-                marginBottom: 20,
-              }}>
-                {sectorConfig?.name || ''}
-              </Text>
+              {/* Header Text - First textblock */}
+              {sectorConfig?.headerText && (
+                <Text style={{
+                  fontSize: 26,
+                  fontWeight: 'bold',
+                  color: '#0891b2',
+                  marginBottom: 25,
+                  lineHeight: 1.3,
+                }}>
+                  {sectorConfig.headerText}
+                </Text>
+              )}
 
-              {/* Sector Description */}
+              {/* Description - Second textblock */}
               {sectorConfig?.description && (
                 <Text style={{
-                  fontSize: 12,
-                  lineHeight: 1.6,
-                  color: '#1f2937',
+                  fontSize: 11,
+                  lineHeight: 1.7,
+                  color: '#000000',
                   marginBottom: 20,
+                  fontWeight: 'bold',
                 }}>
                   {sectorConfig.description}
                 </Text>
               )}
 
-              {/* Sector Specific Text */}
+              {/* Sector Specific Text - Third textblock */}
               {sectorConfig?.text && (
                 <Text style={{
                   fontSize: 11,
                   lineHeight: 1.7,
-                  color: '#1f2937',
+                  color: '#000000',
                 }}>
                   {sectorConfig.text}
                 </Text>
