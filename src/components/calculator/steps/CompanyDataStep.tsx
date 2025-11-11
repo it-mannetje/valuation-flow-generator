@@ -318,10 +318,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                          <SelectContent>
                            {sectors.map((sector) => (
                              <SelectItem key={sector.id} value={sector.id}>
-                               <div className="flex flex-col">
-                                 <span className="font-medium">{sector.name}</span>
-                                 <span className="text-sm text-muted-foreground">{sector.description}</span>
-                               </div>
+                               {sector.name}
                              </SelectItem>
                            ))}
                          </SelectContent>
