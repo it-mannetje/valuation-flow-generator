@@ -27,7 +27,7 @@ export default function AuditLogViewer() {
   const [filter, setFilter] = useState({
     table: 'all',
     operation: 'all',
-    limit: '50'
+    limit: '25'
   });
   const { toast } = useToast();
 
@@ -40,7 +40,7 @@ export default function AuditLogViewer() {
     try {
       let query = supabase
         .from('audit_logs')
-        .select('*')
+        .select('id, table_name, operation, old_values, new_values, user_id, created_at')
         .order('created_at', { ascending: false })
         .limit(parseInt(filter.limit));
 
@@ -59,8 +59,8 @@ export default function AuditLogViewer() {
     } catch (error) {
       console.error('Error fetching audit logs:', error);
       toast({
-        title: "Fout",
-        description: "Kon audit logs niet laden",
+        title: "Error",
+        description: "Could not load audit logs",
         variant: "destructive",
       });
     } finally {
@@ -79,10 +79,10 @@ export default function AuditLogViewer() {
 
   const formatChangeDetails = (oldValues: any, newValues: any, operation: string) => {
     if (operation === 'INSERT') {
-      return `Nieuw record aangemaakt`;
+      return `New record created`;
     }
     if (operation === 'DELETE') {
-      return `Record verwijderd`;
+      return `Record deleted`;
     }
     if (operation === 'UPDATE' && oldValues && newValues) {
       const changes: string[] = [];
@@ -92,9 +92,9 @@ export default function AuditLogViewer() {
           changes.push(`${key}: ${oldValues[key]} → ${newValues[key]}`);
         }
       });
-      return changes.length > 0 ? changes.join(', ') : 'Geen wijzigingen gedetecteerd';
+      return changes.length > 0 ? changes.join(', ') : 'No changes detected';
     }
-    return 'Geen details beschikbaar';
+    return 'No details available';
   };
 
   return (
@@ -110,47 +110,46 @@ export default function AuditLogViewer() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <Label htmlFor="table-filter">Tabel</Label>
+              <Label htmlFor="table-filter">Table</Label>
               <Select value={filter.table} onValueChange={(value) => setFilter(prev => ({ ...prev, table: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Alle tabellen</SelectItem>
-                  <SelectItem value="pdf_pages">PDF Pagina's</SelectItem>
+                  <SelectItem value="all">All tables</SelectItem>
+                  <SelectItem value="pdf_pages">PDF Pages</SelectItem>
                   <SelectItem value="footer_templates">Footer Templates</SelectItem>
-                  <SelectItem value="general_settings">Algemene Instellingen</SelectItem>
-                  <SelectItem value="sector_configs">Sector Configuraties</SelectItem>
+                  <SelectItem value="general_settings">General Settings</SelectItem>
+                  <SelectItem value="sector_configs">Sector Configurations</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="operation-filter">Operatie</Label>
+              <Label htmlFor="operation-filter">Operation</Label>
               <Select value={filter.operation} onValueChange={(value) => setFilter(prev => ({ ...prev, operation: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Alle operaties</SelectItem>
-                  <SelectItem value="INSERT">Toevoegen</SelectItem>
-                  <SelectItem value="UPDATE">Wijzigen</SelectItem>
-                  <SelectItem value="DELETE">Verwijderen</SelectItem>
+                  <SelectItem value="all">All operations</SelectItem>
+                  <SelectItem value="INSERT">Insert</SelectItem>
+                  <SelectItem value="UPDATE">Update</SelectItem>
+                  <SelectItem value="DELETE">Delete</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="limit-filter">Aantal records</Label>
+              <Label htmlFor="limit-filter">Number of records</Label>
               <Select value={filter.limit} onValueChange={(value) => setFilter(prev => ({ ...prev, limit: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
                   <SelectItem value="25">25</SelectItem>
                   <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                  <SelectItem value="250">250</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -158,7 +157,7 @@ export default function AuditLogViewer() {
             <div className="flex items-end">
               <Button onClick={fetchAuditLogs} disabled={loading}>
                 <RefreshCw className="w-4 h-4 mr-2" />
-                Vernieuwen
+                Refresh
               </Button>
             </div>
           </div>
@@ -173,31 +172,31 @@ export default function AuditLogViewer() {
             Audit Log
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Overzicht van alle wijzigingen aan de database configuratie
+            Overview of all changes to the database configuration
           </p>
         </CardHeader>
         <CardContent>
           {loading ? (
             <div className="flex justify-center p-8">
-              <div>Laden van audit logs...</div>
+              <div>Loading audit logs...</div>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Tijdstip</TableHead>
-                    <TableHead>Tabel</TableHead>
-                    <TableHead>Operatie</TableHead>
-                    <TableHead>Wijzigingen</TableHead>
-                    <TableHead>Gebruiker ID</TableHead>
+                    <TableHead>Timestamp</TableHead>
+                    <TableHead>Table</TableHead>
+                    <TableHead>Operation</TableHead>
+                    <TableHead>Changes</TableHead>
+                    <TableHead>User ID</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {logs.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        Geen audit logs gevonden met de huidige filters
+                        No audit logs found with current filters
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -221,7 +220,7 @@ export default function AuditLogViewer() {
                         </TableCell>
                         <TableCell>
                           <span className="text-xs text-muted-foreground font-mono">
-                            {log.user_id ? log.user_id.substring(0, 8) + '...' : 'Systeem'}
+                            {log.user_id ? log.user_id.substring(0, 8) + '...' : 'System'}
                           </span>
                         </TableCell>
                       </TableRow>

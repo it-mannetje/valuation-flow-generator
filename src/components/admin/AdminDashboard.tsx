@@ -13,7 +13,6 @@ import { Settings, Edit, Save, RotateCcw, Upload, Download, Loader2, Plus, Trash
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import PDFContentManager from './PDFContentManager';
-import FooterTemplateManager from './FooterTemplateManager';
 import { useSectorConfig } from '@/hooks/useSectorConfig';
 import GeneralSettingsManager from './GeneralSettingsManager';
 import AuditLogViewer from './AuditLogViewer';
@@ -70,16 +69,16 @@ export default function AdminDashboard() {
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Instellingen Geëxporteerd",
-      description: "Sector instellingen zijn gedownload als JSON bestand.",
+      title: "Settings Exported",
+      description: "Sector settings have been downloaded as a JSON file.",
     });
   };
 
   const handleCreateSector = async () => {
     if (!newSectorData.name || !newSectorData.description || newSectorData.multiple <= 0) {
       toast({
-        title: "Validatiefout",
-        description: "Vul alle velden correct in.",
+        title: "Validation Error",
+        description: "Please fill in all fields correctly.",
         variant: "destructive",
       });
       return;
@@ -93,7 +92,7 @@ export default function AdminDashboard() {
   };
 
   const handleDeleteSector = async (sectorId: string) => {
-    if (confirm('Weet u zeker dat u deze sector wilt verwijderen?')) {
+    if (confirm('Are you sure you want to delete this sector?')) {
       await deleteSector(sectorId);
     }
   };
@@ -101,7 +100,7 @@ export default function AdminDashboard() {
   const handleBulkUpdate = () => {
     toast({
       title: "Bulk Update",
-      description: "Bulk update functionaliteit wordt ontwikkeld.",
+      description: "Bulk update functionality is under development.",
     });
   };
 
@@ -116,17 +115,16 @@ export default function AdminDashboard() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
-              <p className="text-muted-foreground">Beheer sector instellingen en waardering parameters</p>
+              <p className="text-muted-foreground">Manage sector settings and valuation parameters</p>
             </div>
           </div>
         </div>
 
         <Tabs defaultValue="sectors" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="sectors">Sector Management</TabsTrigger>
-            <TabsTrigger value="pdf">PDF Beheer</TabsTrigger>
-            <TabsTrigger value="footer">Footer Templates</TabsTrigger>
-            <TabsTrigger value="settings">Algemene Instellingen</TabsTrigger>
+            <TabsTrigger value="pdf">PDF Management</TabsTrigger>
+            <TabsTrigger value="settings">General Settings</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
           </TabsList>
 
@@ -135,13 +133,13 @@ export default function AdminDashboard() {
               <CardHeader className="bg-gradient-card border-b">
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle className="text-xl">Sector Configuratie</CardTitle>
-                    <p className="text-muted-foreground">Beheer EBITDA multiples en sectorspecifieke teksten</p>
+                    <CardTitle className="text-xl">Sector Configuration</CardTitle>
+                    <p className="text-muted-foreground">Manage EBITDA multiples and sector-specific texts</p>
                   </div>
                   <div className="flex gap-2">
                     <Button onClick={() => setShowCreateForm(true)}>
                       <Plus className="w-4 h-4 mr-2" />
-                      Nieuwe Sector
+                      New Sector
                     </Button>
                     <Button variant="outline" onClick={handleExportSettings}>
                       <Download className="w-4 h-4 mr-2" />
@@ -159,7 +157,7 @@ export default function AdminDashboard() {
                 {isLoading ? (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="w-8 h-8 animate-spin" />
-                    <span className="ml-2">Laden van sector configuraties...</span>
+                    <span className="ml-2">Loading sector configurations...</span>
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
@@ -167,10 +165,10 @@ export default function AdminDashboard() {
                       <TableHeader>
                         <TableRow>
                           <TableHead>Sector</TableHead>
-                          <TableHead>Beschrijving</TableHead>
+                          <TableHead>Description</TableHead>
                           <TableHead>Multiple</TableHead>
                           <TableHead>Status</TableHead>
-                          <TableHead className="w-32">Acties</TableHead>
+                          <TableHead className="w-32">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -195,7 +193,7 @@ export default function AdminDashboard() {
                             )}
                           </TableCell>
                           <TableCell>
-                            <Badge variant="secondary">Actief</Badge>
+                            <Badge variant="secondary">Active</Badge>
                           </TableCell>
                           <TableCell>
                             {editingSector === sector.id ? (
@@ -237,17 +235,17 @@ export default function AdminDashboard() {
                 {showCreateForm && (
                   <Card className="mt-6">
                     <CardHeader>
-                      <CardTitle className="text-lg">Nieuwe Sector Toevoegen</CardTitle>
+                      <CardTitle className="text-lg">Add New Sector</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="new-sector-name">Sector Naam</Label>
+                          <Label htmlFor="new-sector-name">Sector Name</Label>
                           <Input
                             id="new-sector-name"
                             value={newSectorData.name}
                             onChange={(e) => setNewSectorData(prev => ({ ...prev, name: e.target.value }))}
-                            placeholder="bijv. Media, reclame & communicatie"
+                            placeholder="e.g. Media, advertising & communication"
                           />
                         </div>
                         <div>
@@ -263,39 +261,39 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                       <div>
-                        <Label htmlFor="new-sector-description">Beschrijving</Label>
+                        <Label htmlFor="new-sector-description">Description</Label>
                         <Input
                           id="new-sector-description"
                           value={newSectorData.description}
                           onChange={(e) => setNewSectorData(prev => ({ ...prev, description: e.target.value }))}
-                          placeholder="bijv. Media agencies, advertising, PR, communication"
+                          placeholder="e.g. Media agencies, advertising, PR, communication"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="new-sector-header">Header Tekst</Label>
+                        <Label htmlFor="new-sector-header">Header Text</Label>
                         <Input
                           id="new-sector-header"
                           value={newSectorData.headerText}
                           onChange={(e) => setNewSectorData(prev => ({ ...prev, headerText: e.target.value }))}
-                          placeholder="Header tekst voor deze sector"
+                          placeholder="Header text for this sector"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="new-sector-text">Sectorspecifieke Tekst</Label>
+                        <Label htmlFor="new-sector-text">Sector-Specific Text</Label>
                         <Textarea
                           id="new-sector-text"
                           rows={3}
                           value={newSectorData.text}
                           onChange={(e) => setNewSectorData(prev => ({ ...prev, text: e.target.value }))}
-                          placeholder="Tekst die in het PDF rapport wordt gebruikt voor deze sector..."
+                          placeholder="Text to be used in the PDF report for this sector..."
                         />
                       </div>
                       <div className="flex justify-end gap-2">
                         <Button variant="outline" onClick={() => setShowCreateForm(false)}>
-                          Annuleren
+                          Cancel
                         </Button>
                         <Button onClick={handleCreateSector}>
-                          Sector Toevoegen
+                          Add Sector
                         </Button>
                       </div>
                     </CardContent>
@@ -306,11 +304,11 @@ export default function AdminDashboard() {
                 {editingSector && (
                   <Card className="mt-6">
                     <CardHeader>
-                      <CardTitle className="text-lg">Sector Tekst Bewerken</CardTitle>
+                      <CardTitle className="text-lg">Edit Sector Text</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <Label htmlFor="sector-name">Sector Naam</Label>
+                        <Label htmlFor="sector-name">Sector Name</Label>
                         <Input
                           id="sector-name"
                           value={editData.name || ''}
@@ -318,7 +316,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div>
-                        <Label htmlFor="sector-description">Beschrijving</Label>
+                        <Label htmlFor="sector-description">Description</Label>
                         <Input
                           id="sector-description"
                           value={editData.description || ''}
@@ -326,22 +324,22 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div>
-                        <Label htmlFor="sector-header">Header Tekst</Label>
+                        <Label htmlFor="sector-header">Header Text</Label>
                         <Input
                           id="sector-header"
                           value={editData.headerText || ''}
                           onChange={(e) => setEditData(prev => ({ ...prev, headerText: e.target.value }))}
-                          placeholder="Header tekst voor deze sector"
+                          placeholder="Header text for this sector"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="sector-text">Sectorspecifieke Tekst</Label>
+                        <Label htmlFor="sector-text">Sector-Specific Text</Label>
                         <Textarea
                           id="sector-text"
                           rows={4}
                           value={editData.text || ''}
                           onChange={(e) => setEditData(prev => ({ ...prev, text: e.target.value }))}
-                          placeholder="Voer de sectorspecifieke tekst in voor het PDF rapport..."
+                          placeholder="Enter sector-specific text for the PDF report..."
                         />
                       </div>
                     </CardContent>
@@ -354,8 +352,8 @@ export default function AdminDashboard() {
           <TabsContent value="pdf">
             <Card className="shadow-lg">
               <CardHeader className="bg-gradient-card border-b">
-                <CardTitle className="text-xl">PDF Inhoud Beheer</CardTitle>
-                <p className="text-muted-foreground">Beheer teksten en afbeeldingen per PDF pagina</p>
+                <CardTitle className="text-xl">PDF Content Management</CardTitle>
+                <p className="text-muted-foreground">Manage texts and images per PDF page</p>
               </CardHeader>
               <CardContent className="p-6">
                 <PDFContentManager />
@@ -363,23 +361,11 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="footer">
-            <Card className="shadow-lg">
-              <CardHeader className="bg-gradient-card border-b">
-                <CardTitle className="text-xl">Footer Template Beheer</CardTitle>
-                <p className="text-muted-foreground">Beheer footer templates en instellingen per pagina</p>
-              </CardHeader>
-              <CardContent className="p-6">
-                <FooterTemplateManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
           <TabsContent value="settings">
             <Card className="shadow-lg">
               <CardHeader className="bg-gradient-card border-b">
-                <CardTitle>Algemene Instellingen</CardTitle>
-                <p className="text-muted-foreground">Configureer algemene parameters voor de calculator</p>
+                <CardTitle>General Settings</CardTitle>
+                <p className="text-muted-foreground">Configure general parameters for the calculator</p>
               </CardHeader>
               <CardContent className="p-6">
                 <GeneralSettingsManager />
@@ -391,7 +377,7 @@ export default function AdminDashboard() {
             <Card className="shadow-lg">
               <CardHeader className="bg-gradient-card border-b">
                 <CardTitle>Audit Log</CardTitle>
-                <p className="text-muted-foreground">Bekijk alle wijzigingen aan de database configuratie</p>
+                <p className="text-muted-foreground">View all changes to the database configuration</p>
               </CardHeader>
               <CardContent className="p-6">
                 <AuditLogViewer />
