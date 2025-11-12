@@ -13,14 +13,24 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        navigate('/admin');
-        return;
+      console.log('Checking auth...');
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        console.log('Auth check result:', { session: !!session, error });
+        
+        if (!session) {
+          console.log('No session, redirecting to /admin');
+          navigate('/admin');
+          return;
+        }
+        
+        console.log('Auth successful, loading dashboard');
+        setLoading(false);
+      } catch (err) {
+        console.error('Auth check error:', err);
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
 
     checkAuth();

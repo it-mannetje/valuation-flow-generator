@@ -11,11 +11,14 @@ export function useSectorConfig() {
 
   const fetchSectors = async () => {
     try {
+      console.log('Fetching sectors...');
       setIsLoading(true);
       const { data, error } = await supabase
         .from('sector_configs')
         .select('*')
         .order('name');
+
+      console.log('Sectors fetch result:', { data: data?.length, error });
 
       if (error) throw error;
 
@@ -29,12 +32,19 @@ export function useSectorConfig() {
         headerText: sector.header_text || ''
       }));
 
+      console.log('Mapped sectors:', mappedData.length);
       setSectors(mappedData);
       setError(null);
     } catch (err) {
       console.error('Error fetching sectors:', err);
-      setError('Fout bij laden van sector configuraties');
+      setError('Error loading sector configurations');
+      toast({
+        title: "Error",
+        description: "Failed to load sector configurations",
+        variant: "destructive",
+      });
     } finally {
+      console.log('Sectors loading complete');
       setIsLoading(false);
     }
   };
