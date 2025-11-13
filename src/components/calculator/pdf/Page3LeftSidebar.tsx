@@ -23,6 +23,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         borderRadius: 16,
         border: '1px solid #e2e8f0',
         padding: 28,
+        paddingTop: '20%',
         position: 'relative',
         flexDirection: 'column',
         height: '50%',
