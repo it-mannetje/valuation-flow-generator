@@ -29,7 +29,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         {/* Header with minimal line icon */}
         <View style={{
           flexDirection: 'column',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           marginBottom: 25,
         }}>
           {/* Minimal line icon - document/bar chart */}
