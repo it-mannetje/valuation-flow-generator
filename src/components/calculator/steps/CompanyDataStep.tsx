@@ -53,22 +53,22 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
   const form = useForm<CompanyData>({
     resolver: zodResolver(companyDataSchema),
   defaultValues: {
-      lastYearRevenue: data.lastYearRevenue || 0,
-      lastYearRevenueDisplay: data.lastYearRevenueDisplay || '',
-      recurringRevenuePercentage: data.recurringRevenuePercentage || 0,
-      result2024: data.result2024 || undefined,
-      expectedResult2025: data.expectedResult2025 || undefined,
+      lastYearRevenue: data.lastYearRevenue || 5000000,
+      lastYearRevenueDisplay: data.lastYearRevenueDisplay || '5.000.000',
+      recurringRevenuePercentage: data.recurringRevenuePercentage || 75,
+      result2024: data.result2024 ?? 450000,
+      expectedResult2025: data.expectedResult2025 ?? 500000,
       wasLossmaking: data.wasLossmaking || false,
-      prospects: data.prospects || '',
-      averageYearlyInvestment: data.averageYearlyInvestment || undefined,
+      prospects: data.prospects || 'stijgend',
+      averageYearlyInvestment: data.averageYearlyInvestment ?? 100000,
       sector: data.sector || '',
-      employees: data.employees || 0,
-      largestClientDependency: data.largestClientDependency || 0,
-      largestSupplierRisk: data.largestSupplierRisk || '',
-      managementParticipation: data.managementParticipation || false,
-      employeesDisplay: data.employeesDisplay || '',
-      largestClientDependencyDisplay: data.largestClientDependencyDisplay || '',
-      recurringRevenuePercentageDisplay: data.recurringRevenuePercentageDisplay || ''
+      employees: data.employees || 25,
+      largestClientDependency: data.largestClientDependency || 15,
+      largestSupplierRisk: data.largestSupplierRisk || 'laag',
+      managementParticipation: data.managementParticipation || true,
+      employeesDisplay: data.employeesDisplay || '25',
+      largestClientDependencyDisplay: data.largestClientDependencyDisplay || '15%',
+      recurringRevenuePercentageDisplay: data.recurringRevenuePercentageDisplay || '75%'
     }
   });
 
