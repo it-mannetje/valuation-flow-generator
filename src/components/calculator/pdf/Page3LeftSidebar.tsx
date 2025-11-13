@@ -19,71 +19,15 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
     <View
       style={{
         width: '30%',
-        backgroundColor: '#f8fafc',
-        borderRadius: 20,
-        padding: 20,
+        backgroundColor: '#ffffff',
+        borderRadius: 16,
+        border: '1px solid #e2e8f0',
+        padding: 28,
         position: 'relative',
         flexDirection: 'column',
         justifyContent: 'space-between',
       }}
     >
-      {/* Background dots pattern */}
-      <Svg
-        style={{
-          position: 'absolute',
-          bottom: 15,
-          left: 15,
-          opacity: 0.25,
-        }}
-        height="80"
-        width="80"
-      >
-        {[...Array(5)].map((_, i) =>
-          [...Array(5)].map((_, j) => (
-            <Circle
-              key={`${i}-${j}`}
-              cx={j * 8}
-              cy={i * 8}
-              r={0.8}
-              fill="#cbd5e1"
-            />
-          ))
-        )}
-      </Svg>
-
-      {/* Connecting curved line (visual link to right panel) */}
-      <Svg
-        style={{
-          position: 'absolute',
-          right: -10,
-          top: '35%',
-        }}
-        height="200"
-        width="40"
-      >
-        <Line
-          x1="0"
-          y1="0"
-          x2="40"
-          y2="200"
-          stroke="#e2e8f0"
-          strokeWidth={1.5}
-          strokeOpacity={0.6}
-        />
-      </Svg>
-
-      {/* Sidebar Card */}
-      <View
-        style={{
-          backgroundColor: '#ffffff',
-          borderRadius: 16,
-          border: '1px solid #e2e8f0',
-          padding: 28,
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '40%',
-        }}
-      >
         {/* Header */}
         <View
           style={{
@@ -384,7 +328,6 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
             </Text>
           </View>
         </View>
-      </View>
     </View>
   );
 };
