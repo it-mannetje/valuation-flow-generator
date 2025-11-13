@@ -34,6 +34,7 @@ const companyDataSchema = z.object({
   employees: z.number().min(1, 'Aantal werknemers moet minimaal 1 zijn'),
   largestClientDependency: z.number().min(0, 'Percentage moet minimaal 0% zijn').max(100, 'Percentage mag niet meer dan 100% zijn'),
   largestSupplierRisk: z.string().min(1, 'Selecteer een optie'),
+  managementParticipation: z.boolean(),
   
   // Display values (optioneel)
   employeesDisplay: z.string().optional(),
@@ -64,6 +65,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
       employees: data.employees || 0,
       largestClientDependency: data.largestClientDependency || 0,
       largestSupplierRisk: data.largestSupplierRisk || '',
+      managementParticipation: data.managementParticipation || false,
       employeesDisplay: data.employeesDisplay || '',
       largestClientDependencyDisplay: data.largestClientDependencyDisplay || '',
       recurringRevenuePercentageDisplay: data.recurringRevenuePercentageDisplay || ''
@@ -265,6 +267,33 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
                         <SelectItem value="stijgend">Stijgend</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="managementParticipation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base font-medium">Is er sprake van managementsparticipatie? *</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={(value) => field.onChange(value === 'true')}
+                        value={field.value ? 'true' : 'false'}
+                        className="flex gap-6"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="false" id="no-participation" />
+                          <Label htmlFor="no-participation">Nee</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="true" id="yes-participation" />
+                          <Label htmlFor="yes-participation">Ja</Label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

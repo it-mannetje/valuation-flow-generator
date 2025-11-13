@@ -221,88 +221,8 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           gap: 30,
         }}>
           
-          {/* LEFT COLUMN - Ingevulde gegevens */}
-          <View style={{ width: '30%', backgroundColor: '#f5f5f0', padding: 20, borderRadius: 8 }}>
-            <Text style={{
-              fontSize: 14,
-              fontWeight: 'bold',
-              color: '#0891b2',
-              marginBottom: 20,
-            }}>
-              Ingevulde gegevens
-            </Text>
-
-            {/* OMZET */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Omzet
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
-              </Text>
-            </View>
-
-            {/* EBITDA */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Ebitda
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
-              </Text>
-            </View>
-
-            {/* FTE */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Fte
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {companyData.employeesDisplay || companyData.employees}
-              </Text>
-            </View>
-
-            {/* SECTOR */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Sector
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
-              </Text>
-            </View>
-
-            {/* VERLIESLATEND VERLEDEN */}
-            <View style={{ marginBottom: 20 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Verlieslatendverleden
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {companyData.wasLossmaking ? 'Ja' : 'Nee'}
-              </Text>
-            </View>
-
-            {/* Image Section */}
-            {getPageData(3).image1_url && (
-              <View style={{ 
-                marginTop: 'auto',
-                borderRadius: 8,
-                overflow: 'hidden',
-              }}>
-                <Image 
-                  src={getPageData(3).image1_url} 
-                  style={{
-                    width: '100%',
-                    height: 120,
-                    objectFit: 'cover',
-                  }}
-                />
-              </View>
-            )}
-          </View>
-
-          {/* RIGHT COLUMN - Main Content */}
-          <View style={{ width: '70%', paddingLeft: 20 }}>
+          {/* LEFT COLUMN - Main Content */}
+          <View style={{ width: '70%', paddingRight: 20 }}>
             
             {/* Header Title */}
             <Text style={{
@@ -334,10 +254,10 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               marginBottom: 8,
             }}>
               <View style={{
-                border: '4px solid #dc2626',
                 paddingVertical: 15,
                 paddingHorizontal: 50,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#f0fdf4',
+                borderRadius: 8,
               }}>
                 <Text style={{
                   fontSize: 60,
@@ -554,6 +474,86 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               uitgangspunten. Neem <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>contact</Text> met ons op om de exacte waarde van jouw <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>bedrijf</Text> te bepalen.
             </Text>
 
+          </View>
+
+          {/* RIGHT COLUMN - Ingevulde gegevens */}
+          <View style={{ width: '30%', backgroundColor: '#f5f5f0', padding: 20, borderRadius: 8 }}>
+            <Text style={{
+              fontSize: 14,
+              fontWeight: 'bold',
+              color: '#0891b2',
+              marginBottom: 20,
+            }}>
+              Ingevulde gegevens
+            </Text>
+
+            {/* OMZET */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
+                Omzet
+              </Text>
+              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
+              </Text>
+            </View>
+
+            {/* EBITDA */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
+                Ebitda
+              </Text>
+              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+              </Text>
+            </View>
+
+            {/* FTE */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
+                Fte
+              </Text>
+              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                {companyData.employeesDisplay || companyData.employees}
+              </Text>
+            </View>
+
+            {/* SECTOR */}
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
+                Sector
+              </Text>
+              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
+              </Text>
+            </View>
+
+            {/* MANAGEMENTSPARTICIPATIE */}
+            <View style={{ marginBottom: 20 }}>
+              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
+                Managementsparticipatie
+              </Text>
+              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                {companyData.managementParticipation ? 'Ja' : 'Nee'}
+              </Text>
+            </View>
+
+            {/* Image Section */}
+            {getPageData(3).image1_url && (
+              <View style={{ 
+                marginTop: 'auto',
+                borderRadius: 8,
+                overflow: 'hidden',
+              }}>
+                <Image 
+                  src={getPageData(3).image1_url} 
+                  style={{
+                    width: '100%',
+                    height: 120,
+                    objectFit: 'cover',
+                  }}
+                />
+              </View>
+            )}
           </View>
         </View>
         
