@@ -26,7 +26,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         position: 'relative',
         flexDirection: 'column',
         justifyContent: 'center',
-        height: '30%',
+        height: '60%',
       }}
     >
         {/* Header */}
