@@ -76,9 +76,9 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
       <View
         style={{
           backgroundColor: '#ffffff',
-          borderRadius: 20,
-          border: '1px solid #e8eef2',
-          padding: 25,
+          borderRadius: 16,
+          border: '1px solid #e2e8f0',
+          padding: 28,
           flexDirection: 'column',
           justifyContent: 'space-between',
           height: '90%',
@@ -89,54 +89,55 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginBottom: 25,
+            marginBottom: 30,
           }}
         >
           {/* Icon (document style) */}
           <View
             style={{
-              width: 32,
-              height: 32,
-              marginBottom: 12,
-              border: '2px solid #94a3b8',
-              borderRadius: 6,
+              width: 48,
+              height: 48,
+              marginBottom: 14,
+              backgroundColor: '#f1f5f9',
+              borderRadius: 12,
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
             <View
               style={{
-                width: 18,
-                height: 22,
-                border: '1.5px solid #94a3b8',
-                borderRadius: 2,
+                width: 24,
+                height: 28,
+                border: '2px solid #64748b',
+                borderRadius: 3,
+                backgroundColor: '#ffffff',
               }}
             >
               <View
                 style={{
-                  width: 10,
-                  height: 1,
-                  backgroundColor: '#94a3b8',
-                  marginTop: 5,
-                  marginLeft: 4,
+                  width: 14,
+                  height: 1.5,
+                  backgroundColor: '#64748b',
+                  marginTop: 6,
+                  marginLeft: 5,
+                }}
+              />
+              <View
+                style={{
+                  width: 14,
+                  height: 1.5,
+                  backgroundColor: '#64748b',
+                  marginTop: 3,
+                  marginLeft: 5,
                 }}
               />
               <View
                 style={{
                   width: 10,
-                  height: 1,
-                  backgroundColor: '#94a3b8',
-                  marginTop: 2,
-                  marginLeft: 4,
-                }}
-              />
-              <View
-                style={{
-                  width: 6,
-                  height: 1,
-                  backgroundColor: '#94a3b8',
-                  marginTop: 2,
-                  marginLeft: 4,
+                  height: 1.5,
+                  backgroundColor: '#64748b',
+                  marginTop: 3,
+                  marginLeft: 5,
                 }}
               />
             </View>
@@ -144,10 +145,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
 
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 15,
               fontWeight: 600,
-              color: '#1a3b68',
-              letterSpacing: -0.2,
+              color: '#1e293b',
+              letterSpacing: -0.3,
             }}
           >
             Ingevulde gegevens
@@ -155,7 +156,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         </View>
 
         {/* Data Section */}
-        <View style={{ gap: 18 }}>
+        <View style={{ gap: 20 }}>
           {/* OMZET */}
           <View
             style={{
@@ -166,10 +167,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           >
             <Text
               style={{
-                fontSize: 10,
-                color: '#6b7c93',
+                fontSize: 9,
+                color: '#64748b',
                 fontWeight: 500,
-                letterSpacing: 0.3,
+                letterSpacing: 0.5,
               }}
             >
               OMZET
@@ -178,12 +179,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#1b2b4c',
+                color: '#1e293b',
               }}
             >
-              €
-              {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')}
-              ,-
+              € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
             </Text>
           </View>
 
@@ -197,10 +196,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           >
             <Text
               style={{
-                fontSize: 10,
-                color: '#6b7c93',
+                fontSize: 9,
+                color: '#64748b',
                 fontWeight: 500,
-                letterSpacing: 0.3,
+                letterSpacing: 0.5,
               }}
             >
               EBITDA
@@ -209,10 +208,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#1b2b4c',
+                color: '#1e293b',
               }}
             >
-              €{Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+              € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
             </Text>
           </View>
 
@@ -226,10 +225,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           >
             <Text
               style={{
-                fontSize: 10,
-                color: '#6b7c93',
+                fontSize: 9,
+                color: '#64748b',
                 fontWeight: 500,
-                letterSpacing: 0.3,
+                letterSpacing: 0.5,
               }}
             >
               FTE
@@ -238,7 +237,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#1b2b4c',
+                color: '#1e293b',
               }}
             >
               {companyData.employeesDisplay || companyData.employees}
@@ -255,10 +254,10 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           >
             <Text
               style={{
-                fontSize: 10,
-                color: '#6b7c93',
+                fontSize: 9,
+                color: '#64748b',
                 fontWeight: 500,
-                letterSpacing: 0.3,
+                letterSpacing: 0.5,
               }}
             >
               SECTOR
@@ -267,7 +266,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#1b2b4c',
+                color: '#1e293b',
                 textAlign: 'right',
                 maxWidth: '60%',
               }}
@@ -287,33 +286,33 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           >
             <Text
               style={{
-                fontSize: 10,
-                color: '#6b7c93',
+                fontSize: 9,
+                color: '#64748b',
                 fontWeight: 500,
-                letterSpacing: 0.3,
+                letterSpacing: 0.5,
               }}
             >
-              MANAGEMENT
+              MANAGEMENTPARTICIPATIE
             </Text>
             <Text
               style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#1b2b4c',
+                color: '#1e293b',
               }}
             >
-              {companyData.managementParticipation ? 'Ja' : 'Nee'}
+              {companyData.managementParticipation ? 'JA' : 'NEE'}
             </Text>
           </View>
         </View>
 
         {/* Bottom Section */}
-        <View style={{ marginTop: 25 }}>
+        <View style={{ marginTop: 30 }}>
           <View
             style={{
-              borderRadius: 12,
+              borderRadius: 16,
               overflow: 'hidden',
-              border: '2px solid #ffffff',
+              border: '1px solid #e2e8f0',
             }}
           >
             {image1Url ? (
@@ -321,15 +320,15 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 src={image1Url}
                 style={{
                   width: '100%',
-                  height: 110,
+                  height: 120,
                   objectFit: 'cover',
                 }}
               />
             ) : (
               <View
                 style={{
-                  backgroundColor: '#e0f2fe',
-                  height: 110,
+                  backgroundColor: '#dbeafe',
+                  height: 120,
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'relative',
@@ -342,34 +341,46 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundColor: '#0c5ea8',
-                    opacity: 0.15,
+                    backgroundColor: '#3b82f6',
+                    opacity: 0.1,
                   }}
                 />
                 <Text
                   style={{
-                    fontSize: 9,
+                    fontSize: 8,
                     color: '#64748b',
                     textAlign: 'center',
+                    lineHeight: 1.4,
                   }}
                 >
-                  Business Meeting{'\n'}Professional Office Scene
+                  Business Meeting{'\n'}Professional Office{'\n'}Scene
                 </Text>
               </View>
             )}
           </View>
 
           {/* Logo */}
-          <View style={{ marginTop: 15 }}>
+          <View style={{ marginTop: 18 }}>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: 700,
                 color: '#0c5ea8',
-                letterSpacing: 0.5,
+                letterSpacing: 0.3,
               }}
             >
-              fbm Corporate Finance
+              fbm Corpo-
+            </Text>
+            <Text
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: '#0c5ea8',
+                letterSpacing: 0.3,
+                marginTop: -2,
+              }}
+            >
+              rate Finance
             </Text>
           </View>
         </View>
