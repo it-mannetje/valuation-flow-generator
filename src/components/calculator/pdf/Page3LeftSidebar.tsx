@@ -81,7 +81,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           padding: 28,
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '40%',
+          height: '90%',
         }}
       >
         {/* Header */}
