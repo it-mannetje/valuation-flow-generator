@@ -221,8 +221,92 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           gap: 30,
         }}>
           
-          {/* LEFT COLUMN - Main Content */}
-          <View style={{ width: '70%', paddingRight: 20 }}>
+          {/* LEFT SIDEBAR - Ingevulde gegevens (Beige Background) */}
+          <View style={{ width: '28%', backgroundColor: '#f5f5f0', padding: 20, borderRadius: 8, flexDirection: 'column', justifyContent: 'space-between' }}>
+            <View>
+              {/* Header */}
+              <Text style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: '#334155',
+                marginBottom: 20,
+                textAlign: 'center',
+              }}>
+                Ingevulde gegevens
+              </Text>
+
+              {/* OMZET */}
+              <View style={{ marginBottom: 15 }}>
+                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                  Omzet
+                </Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                  € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
+                </Text>
+              </View>
+
+              {/* EBITDA */}
+              <View style={{ marginBottom: 15 }}>
+                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                  Ebitda
+                </Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                  € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+                </Text>
+              </View>
+
+              {/* FTE */}
+              <View style={{ marginBottom: 15 }}>
+                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                  Fte
+                </Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                  {companyData.employeesDisplay || companyData.employees}
+                </Text>
+              </View>
+
+              {/* SECTOR */}
+              <View style={{ marginBottom: 15 }}>
+                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                  Sector
+                </Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                  {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
+                </Text>
+              </View>
+
+              {/* MANAGEMENTSPARTICIPATIE */}
+              <View style={{ marginBottom: 20 }}>
+                <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                  Managementsparticipatie
+                </Text>
+                <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
+                  {companyData.managementParticipation ? 'JA' : 'NEE'}
+                </Text>
+              </View>
+            </View>
+
+            {/* Image Section at bottom */}
+            {getPageData(3).image1_url && (
+              <View style={{ 
+                marginTop: 'auto',
+                borderRadius: 8,
+                overflow: 'hidden',
+              }}>
+                <Image 
+                  src={getPageData(3).image1_url} 
+                  style={{
+                    width: '100%',
+                    height: 120,
+                    objectFit: 'cover',
+                  }}
+                />
+              </View>
+            )}
+          </View>
+
+          {/* RIGHT COLUMN - Main Content */}
+          <View style={{ width: '72%', paddingLeft: 20 }}>
             
             {/* Header Title */}
             <Text style={{
@@ -230,7 +314,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               fontWeight: 'bold',
               color: '#0891b2',
               textAlign: 'center',
-              marginBottom: 15,
+              marginBottom: 12,
             }}>
               Indicatieve calculatie
             </Text>
@@ -240,30 +324,32 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               fontSize: 9,
               textAlign: 'center',
               color: '#1f2937',
-              marginBottom: 12,
-              lineHeight: 1.4,
+              marginBottom: 10,
+              lineHeight: 1.5,
             }}>
               Op basis van de door jou ingevoerde gegevens scoort{'\n'}
               de multiple van je bedrijf <Text style={{ color: '#10b981', fontWeight: 'bold' }}>hoger</Text> dan het gemiddelde{'\n'}
               in jouw sector.
             </Text>
 
-            {/* Large Multiple Display */}
+            {/* Large Multiple Display with circular gradient background */}
             <View style={{
               alignItems: 'center',
               marginBottom: 8,
             }}>
               <View style={{
-                paddingVertical: 15,
-                paddingHorizontal: 50,
-                backgroundColor: '#f0fdf4',
-                borderRadius: 8,
+                width: 180,
+                height: 180,
+                borderRadius: 90,
+                backgroundColor: '#d1fae5',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
                 <Text style={{
-                  fontSize: 60,
+                  fontSize: 72,
                   fontWeight: 'bold',
                   color: '#10b981',
-                  letterSpacing: -2,
+                  letterSpacing: -3,
                 }}>
                   {savedValuationData?.multiplier?.toFixed(1) || valuationResult.multiple.toFixed(1)}x
                 </Text>
@@ -282,7 +368,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
             {/* Dotted Separator */}
             <View style={{
-              borderBottom: '1px dotted #9ca3af',
+              borderBottom: '1px dotted #cbd5e1',
               marginBottom: 12,
             }} />
 
@@ -300,7 +386,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             {/* Data Grid - 2x2 */}
             <View style={{
               flexDirection: 'row',
-              gap: 12,
+              gap: 15,
               marginBottom: 12,
             }}>
               {/* Left Column */}
@@ -362,7 +448,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
             {/* Dotted Separator */}
             <View style={{
-              borderBottom: '1px dotted #9ca3af',
+              borderBottom: '1px dotted #cbd5e1',
               marginBottom: 12,
             }} />
 
@@ -378,7 +464,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               op een bedrag tussen:
             </Text>
 
-            {/* Bar Chart - Matching Design */}
+            {/* Bar Chart */}
             <View style={{
               flexDirection: 'row',
               alignItems: 'flex-end',
@@ -387,31 +473,27 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               marginBottom: 8,
               gap: 2,
             }}>
-              {/* Generate 13 bars with gradient pattern */}
               {Array.from({ length: 13 }, (_, i) => {
                 const centerIndex = 6;
                 const distanceFromCenter = Math.abs(centerIndex - i);
                 const isCenter = i === centerIndex;
                 
-                // Calculate height - center is tallest, gradually decrease towards edges
                 const maxHeight = 70;
                 const minHeight = 30;
                 const heightRange = maxHeight - minHeight;
                 const heightStep = heightRange / centerIndex;
                 const barHeight = maxHeight - (distanceFromCenter * heightStep * 0.8);
                 
-                // Color gradient from blue to green in center
-                const isNearCenter = distanceFromCenter <= 2;
-                let backgroundColor = '#0891b2'; // Blue
-                if (isCenter) backgroundColor = '#10b981'; // Green
-                else if (i === centerIndex - 1 || i === centerIndex + 1) backgroundColor = '#0d9488'; // Teal
+                let backgroundColor = '#0891b2';
+                if (isCenter) backgroundColor = '#10b981';
+                else if (i === centerIndex - 1 || i === centerIndex + 1) backgroundColor = '#14b8a6';
                 
                 return (
                   <View key={i} style={{
                     width: 14,
                     height: barHeight,
                     backgroundColor,
-                    borderRadius: 1,
+                    borderRadius: 2,
                   }} />
                 );
               })}
@@ -452,9 +534,9 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 alignItems: 'center',
                 gap: 8,
               }}>
-                <View style={{ width: 35, borderBottom: '1.5px solid #9ca3af' }} />
+                <View style={{ width: 40, borderBottom: '1.5px solid #9ca3af' }} />
                 <Text style={{ fontSize: 14, color: '#9ca3af' }}>⟷</Text>
-                <View style={{ width: 35, borderBottom: '1.5px solid #9ca3af' }} />
+                <View style={{ width: 40, borderBottom: '1.5px solid #9ca3af' }} />
               </View>
 
               <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000000' }}>
@@ -467,93 +549,12 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               fontSize: 7,
               textAlign: 'center',
               color: '#6b7280',
-              lineHeight: 1.3,
+              lineHeight: 1.4,
               paddingHorizontal: 10,
             }}>
-              Disclaimer: Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde{'\n'}
-              uitgangspunten. Neem <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>contact</Text> met ons op om de exacte waarde van jouw <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>bedrijf</Text> te bepalen.
+              Disclaimer: Dit is een indicatieve waardering op basis van een aantal gestandaardiseerde uitgangspunten. Neem <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>contact</Text> met ons op om de exacte waarde van jouw <Text style={{ color: '#0891b2', fontWeight: 'bold' }}>bedrijf</Text> te bepalen.
             </Text>
 
-          </View>
-
-          {/* RIGHT COLUMN - Ingevulde gegevens */}
-          <View style={{ width: '30%', backgroundColor: '#f5f5f0', padding: 20, borderRadius: 8 }}>
-            <Text style={{
-              fontSize: 14,
-              fontWeight: 'bold',
-              color: '#0891b2',
-              marginBottom: 20,
-            }}>
-              Ingevulde gegevens
-            </Text>
-
-            {/* OMZET */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Omzet
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
-              </Text>
-            </View>
-
-            {/* EBITDA */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Ebitda
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
-              </Text>
-            </View>
-
-            {/* FTE */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Fte
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {companyData.employeesDisplay || companyData.employees}
-              </Text>
-            </View>
-
-            {/* SECTOR */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Sector
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
-              </Text>
-            </View>
-
-            {/* MANAGEMENTSPARTICIPATIE */}
-            <View style={{ marginBottom: 20 }}>
-              <Text style={{ fontSize: 8, color: '#6b7280', marginBottom: 3, textTransform: 'uppercase' }}>
-                Managementsparticipatie
-              </Text>
-              <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#000000' }}>
-                {companyData.managementParticipation ? 'Ja' : 'Nee'}
-              </Text>
-            </View>
-
-            {/* Image Section */}
-            {getPageData(3).image1_url && (
-              <View style={{ 
-                marginTop: 'auto',
-                borderRadius: 8,
-                overflow: 'hidden',
-              }}>
-                <Image 
-                  src={getPageData(3).image1_url} 
-                  style={{
-                    width: '100%',
-                    height: 120,
-                    objectFit: 'cover',
-                  }}
-                />
-              </View>
-            )}
           </View>
         </View>
         
