@@ -195,15 +195,37 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
       {/* Page 3 - Calculation Results - Complete Redesign */}
       <Page size="A4" orientation="portrait" style={pdfStyles.page}>
-        {/* Gradient Background - Light Blue */}
+        {/* Gradient background from light gray to pale mint - using solid color approximation */}
         <View style={{
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: '#f0f9ff',
+          backgroundColor: '#f2f8fa',
         }} />
+
+        {/* White dot pattern at bottom */}
+        <View style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 200,
+          opacity: 0.5,
+        }}>
+          {[...Array(20)].map((_, i) => (
+            <View key={i} style={{
+              position: 'absolute',
+              bottom: 20 + (i % 5) * 30,
+              left: 30 + Math.floor(i / 5) * 50,
+              width: 4,
+              height: 4,
+              borderRadius: 2,
+              backgroundColor: '#ffffff',
+            }} />
+          ))}
+        </View>
 
         {/* Background Image - Optional overlay */}
         {getPageData(3).background && (
@@ -216,7 +238,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: 0.3,
+              opacity: 0.2,
             }}
           />
         )}
@@ -236,69 +258,89 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
           <View style={{ 
             width: '30%', 
             backgroundColor: '#ffffff', 
-            padding: 20, 
-            borderRadius: 12,
+            padding: 30, 
+            borderRadius: 20,
             flexDirection: 'column', 
             justifyContent: 'space-between',
-            border: '1px solid #e2e8f0',
+            border: '1px solid #e8eef2',
           }}>
             <View>
-              {/* Header with document icon */}
+              {/* Header with minimal line icon */}
               <View style={{
                 flexDirection: 'column',
-                alignItems: 'center',
-                marginBottom: 20,
-                paddingBottom: 15,
-                borderBottom: '2px solid #e2e8f0',
+                alignItems: 'flex-start',
+                marginBottom: 25,
               }}>
-                {/* Document Icon Placeholder - represented with text */}
+                {/* Minimal line icon - document/bar chart */}
                 <View style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 8,
-                  backgroundColor: '#f1f5f9',
-                  marginBottom: 10,
+                  width: 32,
+                  height: 32,
+                  marginBottom: 12,
+                  border: '2px solid #94a3b8',
+                  borderRadius: 6,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  <Text style={{ fontSize: 20, color: '#64748b' }}>📄</Text>
+                  <View style={{ 
+                    width: 18, 
+                    height: 22, 
+                    border: '1.5px solid #94a3b8',
+                    borderRadius: 2,
+                  }}>
+                    {/* Document lines */}
+                    <View style={{ width: 10, height: 1, backgroundColor: '#94a3b8', marginTop: 5, marginLeft: 4 }} />
+                    <View style={{ width: 10, height: 1, backgroundColor: '#94a3b8', marginTop: 2, marginLeft: 4 }} />
+                    <View style={{ width: 6, height: 1, backgroundColor: '#94a3b8', marginTop: 2, marginLeft: 4 }} />
+                  </View>
                 </View>
                 <Text style={{
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  color: '#1e293b',
-                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: '#1a3b68',
+                  letterSpacing: -0.2,
                 }}>
                   Ingevulde gegevens
                 </Text>
               </View>
 
-              {/* Data Fields */}
-              <View style={{ gap: 14 }}>
+              {/* Data Section - Two Column Layout */}
+              <View style={{ gap: 18 }}>
                 {/* OMZET */}
-                <View>
-                  <Text style={{ fontSize: 8, color: '#64748b', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: 0.5 }}>
-                    Omzet
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <Text style={{ fontSize: 10, color: '#6b7c93', fontWeight: 500, letterSpacing: 0.3 }}>
+                    OMZET
                   </Text>
-                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1e293b' }}>
-                    € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
+                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#1b2b4c' }}>
+                    €{Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
                   </Text>
                 </View>
 
                 {/* EBITDA */}
-                <View>
-                  <Text style={{ fontSize: 8, color: '#64748b', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: 0.5 }}>
-                    Ebitda
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <Text style={{ fontSize: 10, color: '#6b7c93', fontWeight: 500, letterSpacing: 0.3 }}>
+                    EBITDA
                   </Text>
-                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1e293b' }}>
-                    € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
+                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#1b2b4c' }}>
+                    €{Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
                   </Text>
                 </View>
 
                 {/* FTE */}
-                <View>
-                  <Text style={{ fontSize: 8, color: '#64748b', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: 0.5 }}>
-                    Fte
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <Text style={{ fontSize: 10, color: '#6b7c93', fontWeight: 500, letterSpacing: 0.3 }}>
+                    FTE
                   </Text>
                   <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1e293b' }}>
                     {companyData.employeesDisplay || companyData.employees}
@@ -306,45 +348,87 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
                 </View>
 
                 {/* SECTOR */}
-                <View>
-                  <Text style={{ fontSize: 8, color: '#64748b', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: 0.5 }}>
-                    Sector
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <Text style={{ fontSize: 10, color: '#6b7c93', fontWeight: 500, letterSpacing: 0.3 }}>
+                    SECTOR
                   </Text>
-                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1e293b' }}>
+                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#1b2b4c', textAlign: 'right', maxWidth: '60%' }}>
                     {sectors.find(s => s.id === companyData.sector)?.name || companyData.sector}
                   </Text>
                 </View>
 
                 {/* MANAGEMENTSPARTICIPATIE */}
-                <View>
-                  <Text style={{ fontSize: 8, color: '#64748b', marginBottom: 3, textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: 0.5 }}>
-                    Managementsparticipatie
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <Text style={{ fontSize: 10, color: '#6b7c93', fontWeight: 500, letterSpacing: 0.3 }}>
+                    MANAGEMENT
                   </Text>
-                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1e293b' }}>
-                    {companyData.managementParticipation ? 'JA' : 'NEE'}
+                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#1b2b4c' }}>
+                    {companyData.managementParticipation ? 'Ja' : 'Nee'}
                   </Text>
                 </View>
               </View>
             </View>
 
-            {/* Image Section at bottom */}
-            {getPageData(3).image1_url && (
-              <View style={{ 
-                marginTop: 20,
-                borderRadius: 8,
+            {/* Business Meeting Image at Bottom */}
+            <View style={{ marginTop: 30 }}>
+              <View style={{
+                borderRadius: 12,
                 overflow: 'hidden',
-                border: '1px solid #e2e8f0',
+                border: '2px solid #ffffff',
               }}>
-                <Image 
-                  src={getPageData(3).image1_url} 
-                  style={{
-                    width: '100%',
-                    height: 110,
-                    objectFit: 'cover',
-                  }}
-                />
+                {getPageData(3).image1_url ? (
+                  <Image 
+                    src={getPageData(3).image1_url} 
+                    style={{
+                      width: '100%',
+                      height: 120,
+                      objectFit: 'cover',
+                    }}
+                  />
+                ) : (
+                  <View style={{
+                    backgroundColor: '#e0f2fe',
+                    height: 120,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                  }}>
+                    <View style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: '#0c5ea8',
+                      opacity: 0.15,
+                    }} />
+                    <Text style={{ fontSize: 9, color: '#64748b', textAlign: 'center' }}>
+                      Business Meeting{'\n'}Professional Office Scene
+                    </Text>
+                  </View>
+                )}
               </View>
-            )}
+              
+              {/* FBM Logo */}
+              <View style={{ marginTop: 15 }}>
+                <Text style={{ 
+                  fontSize: 12, 
+                  fontWeight: 700, 
+                  color: '#0c5ea8',
+                  letterSpacing: 0.5,
+                }}>
+                  fbm Corporate Finance
+                </Text>
+              </View>
+            </View>
           </View>
 
           {/* RIGHT COLUMN - Main Content Card */}
