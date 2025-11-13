@@ -21,6 +21,7 @@ export interface CompanyData {
   largestCustomerPercentage?: number;
   largestCustomerPercentageDisplay?: string;
   largestSupplierRisk: string;
+  managementParticipation: boolean;
   
   // Display values for ranges
   employeesDisplay?: string;
