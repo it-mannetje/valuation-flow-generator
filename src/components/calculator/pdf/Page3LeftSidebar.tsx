@@ -100,13 +100,13 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         </View>
 
         {/* Data Section */}
-        <View style={{ gap: 12 }}>
+        <View style={{ gap: 16 }}>
           {/* OMZET */}
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               alignItems: 'center',
+              gap: 4,
             }}
           >
             <Text
@@ -115,15 +115,17 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 color: '#64748b',
                 fontWeight: 500,
                 letterSpacing: 0.5,
+                textAlign: 'center',
               }}
             >
               OMZET
             </Text>
             <Text
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: '#1e293b',
+                textAlign: 'center',
               }}
             >
               € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
@@ -133,9 +135,9 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           {/* EBITDA */}
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               alignItems: 'center',
+              gap: 4,
             }}
           >
             <Text
@@ -144,15 +146,17 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 color: '#64748b',
                 fontWeight: 500,
                 letterSpacing: 0.5,
+                textAlign: 'center',
               }}
             >
               EBITDA
             </Text>
             <Text
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: '#1e293b',
+                textAlign: 'center',
               }}
             >
               € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
@@ -162,9 +166,9 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           {/* FTE */}
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               alignItems: 'center',
+              gap: 4,
             }}
           >
             <Text
@@ -173,15 +177,17 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 color: '#64748b',
                 fontWeight: 500,
                 letterSpacing: 0.5,
+                textAlign: 'center',
               }}
             >
               FTE
             </Text>
             <Text
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: '#1e293b',
+                textAlign: 'center',
               }}
             >
               {companyData.employeesDisplay || companyData.employees}
@@ -191,9 +197,9 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           {/* SECTOR */}
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               alignItems: 'center',
+              gap: 4,
             }}
           >
             <Text
@@ -202,17 +208,17 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 color: '#64748b',
                 fontWeight: 500,
                 letterSpacing: 0.5,
+                textAlign: 'center',
               }}
             >
               SECTOR
             </Text>
             <Text
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: '#1e293b',
-                textAlign: 'right',
-                maxWidth: '60%',
+                textAlign: 'center',
               }}
             >
               {sectors.find((s) => s.id === companyData.sector)?.name ||
@@ -223,9 +229,9 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           {/* MANAGEMENTPARTICIPATIE */}
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               alignItems: 'center',
+              gap: 4,
             }}
           >
             <Text
@@ -234,15 +240,17 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
                 color: '#64748b',
                 fontWeight: 500,
                 letterSpacing: 0.5,
+                textAlign: 'center',
               }}
             >
               MANAGEMENTPARTICIPATIE
             </Text>
             <Text
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: '#1e293b',
+                textAlign: 'center',
               }}
             >
               {companyData.managementParticipation ? 'JA' : 'NEE'}
