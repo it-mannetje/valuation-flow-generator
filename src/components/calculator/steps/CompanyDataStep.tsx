@@ -61,7 +61,7 @@ export default function CompanyDataStep({ data, onSubmit, isLoading = false }: C
       wasLossmaking: data.wasLossmaking || false,
       prospects: data.prospects || 'stijgend',
       averageYearlyInvestment: data.averageYearlyInvestment ?? 100000,
-      sector: data.sector || '',
+      sector: data.sector || 'ict',
       employees: data.employees || 25,
       largestClientDependency: data.largestClientDependency || 15,
       largestSupplierRisk: data.largestSupplierRisk || 'laag',

@@ -31,12 +31,12 @@ export default function ContactDataStep({ data, valuationResult, onSubmit, onBac
   const form = useForm<ContactData>({
     resolver: zodResolver(contactDataSchema),
     defaultValues: {
-      firstName: data.firstName || '',
-      lastName: data.lastName || '',
-      email: data.email || '',
-      phone: data.phone || '',
-      companyName: data.companyName || '',
-      position: data.position || ''
+      firstName: data.firstName || 'Jan',
+      lastName: data.lastName || 'de Vries',
+      email: data.email || 'jan.devries@example.com',
+      phone: data.phone || '0612345678',
+      companyName: data.companyName || 'Test Bedrijf BV',
+      position: data.position || 'Managing Director'
     }
   });
 
