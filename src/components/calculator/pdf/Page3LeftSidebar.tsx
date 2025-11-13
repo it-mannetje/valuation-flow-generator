@@ -25,7 +25,8 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         padding: 28,
         position: 'relative',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        height: '30%',
       }}
     >
         {/* Header */}
@@ -33,7 +34,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginBottom: 30,
+            marginBottom: 20,
           }}
         >
           {/* Icon (document style) */}
@@ -100,7 +101,7 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         </View>
 
         {/* Data Section */}
-        <View style={{ gap: 20 }}>
+        <View style={{ gap: 12 }}>
           {/* OMZET */}
           <View
             style={{
@@ -250,84 +251,6 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           </View>
         </View>
 
-        {/* Bottom Section */}
-        <View style={{ marginTop: 30 }}>
-          <View
-            style={{
-              borderRadius: 16,
-              overflow: 'hidden',
-              border: '1px solid #e2e8f0',
-            }}
-          >
-            {image1Url ? (
-              <Image
-                src={image1Url}
-                style={{
-                  width: '100%',
-                  height: 120,
-                  objectFit: 'cover',
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  backgroundColor: '#dbeafe',
-                  height: 120,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
-                }}
-              >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: '#3b82f6',
-                    opacity: 0.1,
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: 8,
-                    color: '#64748b',
-                    textAlign: 'center',
-                    lineHeight: 1.4,
-                  }}
-                >
-                  Business Meeting{'\n'}Professional Office{'\n'}Scene
-                </Text>
-              </View>
-            )}
-          </View>
-
-          {/* Logo */}
-          <View style={{ marginTop: 18 }}>
-            <Text
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: '#0c5ea8',
-                letterSpacing: 0.3,
-              }}
-            >
-              fbm Corpo-
-            </Text>
-            <Text
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: '#0c5ea8',
-                letterSpacing: 0.3,
-                marginTop: -2,
-              }}
-            >
-              rate Finance
-            </Text>
-          </View>
-        </View>
     </View>
   );
 };
