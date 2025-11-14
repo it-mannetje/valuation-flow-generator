@@ -18,16 +18,20 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
     <View
       style={{
         width: "30%",
+        display: "flex",
+        flexDirection: "column",
+        gap: 20,
+      }}
+    >
+      {/* Top Content Section with Background */}
+      <View style={{ 
+        display: "flex", 
+        flexDirection: "column", 
+        gap: 20,
         backgroundColor: "#f8fafc",
         padding: 24,
         borderRadius: 12,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      {/* Top Content Section */}
-      <View style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      }}>
         {/* Header with Icon */}
         <View
           style={{
@@ -235,10 +239,10 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
             {companyData.managementParticipation ? 'JA' : 'NEE'}
           </Text>
         </View>
-        </View>
+      </View>
       </View>
 
-      {/* Image Section at Bottom */}
+      {/* Image Section at Bottom - Separate Background */}
       <View
         style={{
           width: "100%",
