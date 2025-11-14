@@ -218,14 +218,14 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             sectors={sectors}
           />
 
-          {/* White connector line from left div top to right div top */}
+          {/* White connector line from middle of left div to top 5% of right div */}
           <Svg 
             width="320" 
             height="20" 
             style={{
               position: 'absolute',
               left: '11%',
-              top: '0%',
+              top: '15%',
               opacity: 0.85,
             }}
           >
