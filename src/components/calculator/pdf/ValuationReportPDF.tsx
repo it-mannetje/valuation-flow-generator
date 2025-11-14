@@ -218,42 +218,35 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             sectors={sectors}
           />
 
-          {/* Smooth Curved Connector Line */}
+          {/* Thin White Connector Line */}
           <Svg 
             width="140" 
-            height="100" 
+            height="80" 
             style={{
               position: 'absolute',
               left: '27.5%',
-              top: '10.5%',
-              opacity: 0.7,
+              top: '3%',
+              opacity: 0.8,
             }}
           >
-            <Defs>
-              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.5" />
-                <Stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
-                <Stop offset="100%" stopColor="#10b981" stopOpacity="0.5" />
-              </LinearGradient>
-            </Defs>
-            {/* Main curved connector line - from left top-middle to right top 10% */}
+            {/* Main curved connector line - from left top-middle to right top 3% */}
             <Path
-              d="M 5 10 C 40 5, 90 5, 130 15"
-              stroke="url(#connectorGradient)"
-              strokeWidth="1.5"
+              d="M 5 8 C 40 6, 90 6, 135 10"
+              stroke="#ffffff"
+              strokeWidth="1.2"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            {/* Subtle shadow/glow effect */}
+            {/* Subtle shadow for depth */}
             <Path
-              d="M 5 10 C 40 5, 90 5, 130 15"
-              stroke="#0891b2"
-              strokeWidth="3.5"
+              d="M 5 8 C 40 6, 90 6, 135 10"
+              stroke="#ffffff"
+              strokeWidth="2.5"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
-              opacity="0.08"
+              opacity="0.15"
             />
           </Svg>
 
