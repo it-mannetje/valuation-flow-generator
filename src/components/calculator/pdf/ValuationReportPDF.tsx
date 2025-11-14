@@ -5,7 +5,7 @@ import { formatCurrency } from '@/lib/calculator';
 import { pdfStyles } from './pdfStyles';
 import PDFFooter from './PDFFooter';
 import Page3Background from './Page3Background';
-import Page3LeftSidebar from './Page3LeftSidebar';
+import { Page3LeftSidebar } from './Page3LeftSidebar';
 
 import { FooterTemplate, PageFooter, FooterConfig } from '@/types/footer';
 
