@@ -220,25 +220,25 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
 
           {/* Smooth Curved Connector Line */}
           <Svg 
-            width="120" 
-            height="200" 
+            width="140" 
+            height="100" 
             style={{
               position: 'absolute',
-              left: '28%',
-              top: '15%',
-              opacity: 0.8,
+              left: '27.5%',
+              top: '10.5%',
+              opacity: 0.7,
             }}
           >
             <Defs>
-              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.4" />
-                <Stop offset="50%" stopColor="#06b6d4" stopOpacity="0.6" />
-                <Stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
+              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.5" />
+                <Stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
+                <Stop offset="100%" stopColor="#10b981" stopOpacity="0.5" />
               </LinearGradient>
             </Defs>
-            {/* Main curved connector line */}
+            {/* Main curved connector line - from left top-middle to right top 10% */}
             <Path
-              d="M 0 20 C 40 20, 60 80, 110 100"
+              d="M 5 10 C 40 5, 90 5, 130 15"
               stroke="url(#connectorGradient)"
               strokeWidth="1.5"
               fill="none"
@@ -247,13 +247,13 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             />
             {/* Subtle shadow/glow effect */}
             <Path
-              d="M 0 20 C 40 20, 60 80, 110 100"
+              d="M 5 10 C 40 5, 90 5, 130 15"
               stroke="#0891b2"
-              strokeWidth="3"
+              strokeWidth="3.5"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
-              opacity="0.1"
+              opacity="0.08"
             />
           </Svg>
 
