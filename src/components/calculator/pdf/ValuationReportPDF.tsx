@@ -218,39 +218,42 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             sectors={sectors}
           />
 
-          {/* Curved Connector Line */}
+          {/* Smooth Curved Connector Line */}
           <Svg 
-            width="60" 
-            height="300" 
+            width="120" 
+            height="200" 
             style={{
               position: 'absolute',
-              left: '30%',
-              top: '25%',
-              opacity: 0.6,
+              left: '28%',
+              top: '15%',
+              opacity: 0.8,
             }}
           >
             <Defs>
-              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.3" />
-                <Stop offset="50%" stopColor="#10b981" stopOpacity="0.5" />
-                <Stop offset="100%" stopColor="#0891b2" stopOpacity="0.3" />
+              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.4" />
+                <Stop offset="50%" stopColor="#06b6d4" stopOpacity="0.6" />
+                <Stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
               </LinearGradient>
             </Defs>
+            {/* Main curved connector line */}
             <Path
-              d="M 0 150 Q 30 150, 60 150"
+              d="M 0 20 C 40 20, 60 80, 110 100"
               stroke="url(#connectorGradient)"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            {/* Shadow effect - second path slightly offset */}
-            <Path
-              d="M 0 152 Q 30 152, 60 152"
-              stroke="#0891b2"
               strokeWidth="1.5"
               fill="none"
               strokeLinecap="round"
-              opacity="0.15"
+              strokeLinejoin="round"
+            />
+            {/* Subtle shadow/glow effect */}
+            <Path
+              d="M 0 20 C 40 20, 60 80, 110 100"
+              stroke="#0891b2"
+              strokeWidth="3"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.1"
             />
           </Svg>
 
