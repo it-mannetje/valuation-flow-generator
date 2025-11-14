@@ -1,19 +1,18 @@
 import React from "react";
 import { View, Text, Image, Circle, Svg, Line } from "@react-pdf/renderer";
 import { CompanyData, SectorConfig } from "@/types/calculator";
+import sidebarImage from "@/assets/sidebar-business.jpg";
 
 interface Page3LeftSidebarProps {
   companyData: CompanyData;
   estimatedEbitda: number;
   sectors: SectorConfig[];
-  image1Url: string;
 }
 
 export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
   companyData,
   estimatedEbitda,
   sectors,
-  image1Url,
 }) => {
   return (
     <View
@@ -21,23 +20,23 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         width: "30%",
         backgroundColor: "#f8fafc",
         padding: 24,
-        paddingTop: 24,
         borderRadius: 12,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
-        gap: 20,
+        justifyContent: "space-between",
       }}
     >
-      {/* Header with Icon */}
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 12,
-        }}
-      >
+      {/* Top Content Section */}
+      <View style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        {/* Header with Icon */}
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
         {/* Modern Info Icon */}
         <View
           style={{
@@ -236,27 +235,25 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
             {companyData.managementParticipation ? 'JA' : 'NEE'}
           </Text>
         </View>
+        </View>
       </View>
 
-      {/* Image Section */}
-      {image1Url && (
-        <View
+      {/* Image Section at Bottom */}
+      <View
+        style={{
+          width: "100%",
+        }}
+      >
+        <Image
+          src={sidebarImage}
           style={{
             width: "100%",
-            marginTop: 12,
+            height: 140,
+            borderRadius: 8,
+            objectFit: "cover",
           }}
-        >
-          <Image
-            src={image1Url}
-            style={{
-              width: "100%",
-              height: 120,
-              borderRadius: 8,
-              objectFit: "cover",
-            }}
-          />
-        </View>
-      )}
+        />
+      </View>
     </View>
   );
 };
