@@ -20,17 +20,17 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         width: "30%",
         display: "flex",
         flexDirection: "column",
-        gap: 20,
+        gap: 16,
       }}
     >
-      {/* Top Content Section with Background */}
+      {/* Top Content Section - White Box */}
       <View style={{ 
         display: "flex", 
         flexDirection: "column", 
         gap: 20,
-        backgroundColor: "#f8fafc",
+        backgroundColor: "#ffffff",
         padding: 24,
-        borderRadius: 12,
+        borderRadius: 16,
       }}>
         {/* Header with Icon */}
         <View
@@ -242,7 +242,7 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
       </View>
       </View>
 
-      {/* Image Section at Bottom - Separate Background */}
+      {/* Image Section at Bottom - Separate */}
       <View
         style={{
           width: "100%",
@@ -252,8 +252,8 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
           src={sidebarImage}
           style={{
             width: "100%",
-            height: 140,
-            borderRadius: 8,
+            height: 160,
+            borderRadius: 16,
             objectFit: "cover",
           }}
         />

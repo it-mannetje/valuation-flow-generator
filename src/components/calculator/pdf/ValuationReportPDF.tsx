@@ -223,8 +223,7 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             width: '70%', 
             backgroundColor: '#ffffff',
             padding: 35,
-            borderRadius: 20,
-            border: '1px solid #e8eef2',
+            borderRadius: 16,
           }}>
             
             {/* Header Title */}
