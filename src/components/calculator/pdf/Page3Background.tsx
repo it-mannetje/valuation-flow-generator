@@ -8,14 +8,14 @@ interface Page3BackgroundProps {
 const Page3Background: React.FC<Page3BackgroundProps> = ({ backgroundImageUrl }) => {
   return (
     <>
-      {/* Gradient background from light gray to pale mint - using solid color approximation */}
+      {/* Light gray-green background matching reference design */}
       <View style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: '#f2f8fa',
+        backgroundColor: '#e8ede8',
       }} />
 
       {/* White dot pattern at bottom */}
