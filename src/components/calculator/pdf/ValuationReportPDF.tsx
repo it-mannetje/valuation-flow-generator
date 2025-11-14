@@ -218,33 +218,33 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             sectors={sectors}
           />
 
-          {/* White connector line from left div top border to right div top */}
+          {/* White connector line from left div top to right div top 5% */}
           <Svg 
-            width="200" 
-            height="15" 
+            width="250" 
+            height="20" 
             style={{
               position: 'absolute',
-              left: '8%',
-              top: 0,
-              opacity: 0.95,
+              left: '10%',
+              top: '0%',
+              opacity: 0.9,
             }}
           >
             {/* Clean horizontal connector line */}
             <Path
-              d="M 0 7 L 200 7"
+              d="M 0 10 L 250 10"
               stroke="#ffffff"
-              strokeWidth="1.2"
+              strokeWidth="1.5"
               fill="none"
               strokeLinecap="round"
             />
-            {/* Subtle shadow for depth */}
+            {/* Subtle glow for depth */}
             <Path
-              d="M 0 7 L 200 7"
+              d="M 0 10 L 250 10"
               stroke="#ffffff"
-              strokeWidth="2.5"
+              strokeWidth="3"
               fill="none"
               strokeLinecap="round"
-              opacity="0.15"
+              opacity="0.2"
             />
           </Svg>
 
