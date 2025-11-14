@@ -1,259 +1,62 @@
-import React from 'react';
-import { View, Text, Image, Svg, Circle, Line } from '@react-pdf/renderer';
-import { CompanyData, SectorConfig } from '@/types/calculator';
+import React from "react";
+import "./LeftPanel.css";
 
-interface Page3LeftSidebarProps {
-  companyData: CompanyData;
-  estimatedEbitda: number;
-  sectors: SectorConfig[];
-  image1Url?: string | null;
-}
-
-const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
-  companyData,
-  estimatedEbitda,
-  sectors,
-  image1Url,
-}) => {
+const LeftPanel = () => {
   return (
-    <View
-      style={{
-        width: '30%',
-        backgroundColor: '#ffffff',
-        borderRadius: 16,
-        border: '1px solid #e2e8f0',
-        padding: 28,
-        paddingTop: 24,
-        position: 'relative',
-        flexDirection: 'column',
-        height: '50%',
-        justifyContent: 'flex-start',
-      }}
-    >
-        {/* Header */}
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginBottom: 20,
-          }}
-        >
-          {/* Icon - Data/Info style */}
-          <View
-            style={{
-              width: 56,
-              height: 56,
-              marginBottom: 16,
-              backgroundColor: '#3b82f6',
-              borderRadius: 16,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Svg width="28" height="28" viewBox="0 0 24 24">
-              <Circle
-                cx="12"
-                cy="12"
-                r="2"
-                fill="white"
-                opacity="0.9"
-              />
-              <Line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="10"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                opacity="0.9"
-              />
-              <Line
-                x1="12"
-                y1="14"
-                x2="12"
-                y2="19"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                opacity="0.9"
-              />
-            </Svg>
-          </View>
+    <div className="left-column">
+      <div className="left-panel">
+        <div className="panel-header">
+          <div className="monitor-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" />
+              <path d="M8 21h8M12 17v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M12 8v4M10 10h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </div>
+          <h2 className="panel-title">Ingevulde gegevens</h2>
+        </div>
 
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 600,
-              color: '#1e293b',
-              letterSpacing: -0.3,
-            }}
-          >
-            Ingevulde gegevens
-          </Text>
-        </View>
+        <ul className="data-list">
+          <li className="data-item">
+            <div className="data-label">OMZET</div>
+            <div className="data-value">€ 8.100.000,-</div>
+          </li>
+          <li className="data-item">
+            <div className="data-label">EBITDA</div>
+            <div className="data-value">€ 3.100.000,-</div>
+          </li>
+          <li className="data-item">
+            <div className="data-label">FTE</div>
+            <div className="data-value">50-100</div>
+          </li>
+          <li className="data-item">
+            <div className="data-label">SECTOR</div>
+            <div className="data-value highlight">IT & SOFTWARE</div>
+          </li>
+          <li className="data-item">
+            <div className="data-label">MANAGEMENTSPARTICIPATIE</div>
+            <div className="data-value">JA</div>
+          </li>
+        </ul>
+      </div>
 
-        {/* Data Section */}
-        <View style={{ gap: 16 }}>
-          {/* OMZET */}
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: '#64748b',
-                fontWeight: 500,
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}
-            >
-              OMZET
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#1e293b',
-                textAlign: 'center',
-              }}
-            >
-              € {Math.round(companyData.lastYearRevenue).toLocaleString('nl-NL')},-
-            </Text>
-          </View>
+      <div className="left-image-section">
+        <img
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"
+          alt="Business meeting"
+          className="business-image"
+        />
+      </div>
 
-          {/* EBITDA */}
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: '#64748b',
-                fontWeight: 500,
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}
-            >
-              EBITDA
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#1e293b',
-                textAlign: 'center',
-              }}
-            >
-              € {Math.round(estimatedEbitda).toLocaleString('nl-NL')},-
-            </Text>
-          </View>
-
-          {/* FTE */}
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: '#64748b',
-                fontWeight: 500,
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}
-            >
-              FTE
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#1e293b',
-                textAlign: 'center',
-              }}
-            >
-              {companyData.employeesDisplay || companyData.employees}
-            </Text>
-          </View>
-
-          {/* SECTOR */}
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: '#64748b',
-                fontWeight: 500,
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}
-            >
-              SECTOR
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#1e293b',
-                textAlign: 'center',
-              }}
-            >
-              {sectors.find((s) => s.id === companyData.sector)?.name ||
-                companyData.sector}
-            </Text>
-          </View>
-
-          {/* MANAGEMENTPARTICIPATIE */}
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: '#64748b',
-                fontWeight: 500,
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}
-            >
-              MANAGEMENTPARTICIPATIE
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#1e293b',
-                textAlign: 'center',
-              }}
-            >
-              {companyData.managementParticipation ? 'JA' : 'NEE'}
-            </Text>
-          </View>
-        </View>
-
-    </View>
+      <div className="fbm-logo">
+        <div className="logo-icon"></div>
+        <div className="logo-text">
+          <span className="logo-fbm">fbm</span>
+          <span className="logo-finance">Corporate Finance</span>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Page3LeftSidebar;
+export default LeftPanel;
