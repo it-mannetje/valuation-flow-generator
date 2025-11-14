@@ -216,7 +216,6 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             companyData={companyData}
             estimatedEbitda={estimatedEbitda}
             sectors={sectors}
-            image1Url={getPageData(3).image1_url}
           />
 
           {/* RIGHT COLUMN - Main Content Card */}
