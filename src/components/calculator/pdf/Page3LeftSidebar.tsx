@@ -21,6 +21,7 @@ export const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         display: "flex",
         flexDirection: "column",
         gap: 16,
+        paddingTop: 32,
       }}
     >
       {/* Top Content Section - White Box */}
