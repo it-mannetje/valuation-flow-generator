@@ -23,10 +23,11 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
         borderRadius: 16,
         border: '1px solid #e2e8f0',
         padding: 28,
-        paddingTop: '20%',
+        paddingTop: 24,
         position: 'relative',
         flexDirection: 'column',
         height: '50%',
+        justifyContent: 'flex-start',
       }}
     >
         {/* Header */}
@@ -37,55 +38,47 @@ const Page3LeftSidebar: React.FC<Page3LeftSidebarProps> = ({
             marginBottom: 20,
           }}
         >
-          {/* Icon (document style) */}
+          {/* Icon - Data/Info style */}
           <View
             style={{
-              width: 48,
-              height: 48,
-              marginBottom: 14,
-              backgroundColor: '#f1f5f9',
-              borderRadius: 12,
+              width: 56,
+              height: 56,
+              marginBottom: 16,
+              backgroundColor: '#3b82f6',
+              borderRadius: 16,
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <View
-              style={{
-                width: 24,
-                height: 28,
-                border: '2px solid #64748b',
-                borderRadius: 3,
-                backgroundColor: '#ffffff',
-              }}
-            >
-              <View
-                style={{
-                  width: 14,
-                  height: 1.5,
-                  backgroundColor: '#64748b',
-                  marginTop: 6,
-                  marginLeft: 5,
-                }}
+            <Svg width="28" height="28" viewBox="0 0 24 24">
+              <Circle
+                cx="12"
+                cy="12"
+                r="2"
+                fill="white"
+                opacity="0.9"
               />
-              <View
-                style={{
-                  width: 14,
-                  height: 1.5,
-                  backgroundColor: '#64748b',
-                  marginTop: 3,
-                  marginLeft: 5,
-                }}
+              <Line
+                x1="12"
+                y1="5"
+                x2="12"
+                y2="10"
+                stroke="white"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                opacity="0.9"
               />
-              <View
-                style={{
-                  width: 10,
-                  height: 1.5,
-                  backgroundColor: '#64748b',
-                  marginTop: 3,
-                  marginLeft: 5,
-                }}
+              <Line
+                x1="12"
+                y1="14"
+                x2="12"
+                y2="19"
+                stroke="white"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                opacity="0.9"
               />
-            </View>
+            </Svg>
           </View>
 
           <Text
