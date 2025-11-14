@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, Image, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, pdf, Svg, Path, Defs, LinearGradient, Stop } from '@react-pdf/renderer';
 import { CompanyData, ContactData, ValuationResult, SectorConfig } from '@/types/calculator';
 import { formatCurrency } from '@/lib/calculator';
 import { pdfStyles } from './pdfStyles';
@@ -217,6 +217,42 @@ const ValuationReportPDF: React.FC<ValuationReportPDFProps> = ({
             estimatedEbitda={estimatedEbitda}
             sectors={sectors}
           />
+
+          {/* Curved Connector Line */}
+          <Svg 
+            width="60" 
+            height="300" 
+            style={{
+              position: 'absolute',
+              left: '30%',
+              top: '25%',
+              opacity: 0.6,
+            }}
+          >
+            <Defs>
+              <LinearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <Stop offset="0%" stopColor="#0891b2" stopOpacity="0.3" />
+                <Stop offset="50%" stopColor="#10b981" stopOpacity="0.5" />
+                <Stop offset="100%" stopColor="#0891b2" stopOpacity="0.3" />
+              </LinearGradient>
+            </Defs>
+            <Path
+              d="M 0 150 Q 30 150, 60 150"
+              stroke="url(#connectorGradient)"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+            />
+            {/* Shadow effect - second path slightly offset */}
+            <Path
+              d="M 0 152 Q 30 152, 60 152"
+              stroke="#0891b2"
+              strokeWidth="1.5"
+              fill="none"
+              strokeLinecap="round"
+              opacity="0.15"
+            />
+          </Svg>
 
           {/* RIGHT COLUMN - Main Content Card */}
           <View style={{ 
